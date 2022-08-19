@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 1 Mínimos Cuadrados Ordinarios | A Minimal Book Example</title>
+<meta name="author" content="John Doe">
+<meta name="description" content="&lt;p&gt;This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::bs4_book,
+set in the _output.yml file.&lt;/p&gt;">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 1 Mínimos Cuadrados Ordinarios | A Minimal Book Example">
+<meta property="og:type" content="book">
+<meta property="og:description" content="&lt;p&gt;This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::bs4_book,
+set in the _output.yml file.&lt;/p&gt;">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 1 Mínimos Cuadrados Ordinarios | A Minimal Book Example">
+<meta name="twitter:description" content="&lt;p&gt;This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::bs4_book,
+set in the _output.yml file.&lt;/p&gt;">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">A Minimal Book Example</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="active" href="index.html"><span class="header-section-number">1</span> Mínimos Cuadrados Ordinarios</a></li>
+<li><a class="" href="hello-bookdown.html"><span class="header-section-number">2</span> Hello bookdown</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><!--bookdown:title:end--><!--bookdown:title:start--><div id="mínimos-cuadrados-ordinarios" class="section level1" number="1">
+<h1>
+<span class="header-section-number">1</span> Mínimos Cuadrados Ordinarios<a class="anchor" aria-label="anchor" href="#m%C3%ADnimos-cuadrados-ordinarios"><i class="fas fa-link"></i></a>
+</h1>
+<div id="el-problema" class="section level2" number="1.1">
+<h2>
+<span class="header-section-number">1.1</span> El problema<a class="anchor" aria-label="anchor" href="#el-problema"><i class="fas fa-link"></i></a>
+</h2>
+<p>Recrodando que el método de MCO resulta en encontrar la combinación de valores de los estimadores de los parámetros <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> que permita minimizar la suma de los residuales (estimadores de los términos de erro <span class="math inline">\(\boldsymbol{\varepsilon}\)</span>) al cuadrado dada por:</p>
+<p><span class="math display">\[
+    \sum^{N}_{i=1}{e^2_i} = \sum^{N}_{i = 1}{(y_i - \mathbf{X}'_i \hat{\boldsymbol{\beta}})^2}
+\]</span></p>
+<p>Donde <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> denota el vector de estimadores <span class="math inline">\(\hat{\beta}_1, \ldots, \hat{\beta}_K\)</span> y dado que <span class="math inline">\((e_1, e_2, \ldots, e_n)'(e_1, e_2, \ldots, e_n) = {\mathbf{e'e}}\)</span>, el problema del método de MCO consiste en resolver el problema de óptimización:</p>
+<p><span class="math display">\[\begin{eqnarray*}
+Minimizar_{\hat{\boldsymbol \beta}} S(\hat{\boldsymbol \beta})  =  Minimizar_{\hat{\boldsymbol \beta}} \mathbf{e'e} \\
+    =  Minimizar_{\hat{\boldsymbol \beta}} (\mathbf{Y}-\mathbf{X}\hat{\boldsymbol \beta})'(\mathbf{Y}-\mathbf{X}\hat{\boldsymbol \beta})
+\end{eqnarray*}\]</span></p>
+<p>Expandiendo la expresión <span class="math inline">\(\mathbf{e'e}\)</span> obtenemos:
+<span class="math display">\[
+    \mathbf{e'e} = \mathbf{Y'Y} - 2 \mathbf{Y'X} \hat{\boldsymbol \beta} + \hat{\boldsymbol \beta}' \mathbf{X'X}\hat{\boldsymbol \beta}
+\]</span></p>
+<p>De esta forma obtenemos que las condiciones necesarias de un mínimo son:</p>
+<p><span class="math display">\[
+    \frac{\partial S(\hat{\boldsymbol \beta})}{\partial \hat{\boldsymbol \beta}} = -2{\mathbf{X'Y}} + 2{\mathbf{X'X}} \hat{\boldsymbol{\beta}} = \mathbf{0}
+\]</span>
+Y se pueden despejar las dadas por:</p>
+<p>Debido a que el objetivo es encontrar la matriz <span class="math inline">\(\hat{\boldsymbol\beta}\)</span> despejamos:</p>
+<p><span class="math display">\[\hat{\boldsymbol \beta} = (\mathbf{X'X})^{-1}\mathbf{X'Y}
+\]</span>
+<span class="math display">\[
+    \mathbf{X'X}\hat{\boldsymbol \beta} = \mathbf{X'Y}
+\]</span></p>
+<p>##Estimación
+Para la estimación utilizaremos el paquete “BatchGetSymbols”. Este paquete nos permitirá descargar información acerca de la bolsa de valores internacional.</p>
+<div id="dependencias" class="section level3" number="1.1.1">
+<h3>
+<span class="header-section-number">1.1.1</span> Dependencias<a class="anchor" aria-label="anchor" href="#dependencias"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#install.packages("pacman")</span></span>
+<span><span class="co">#pacman nos permite cargar varias librerias en una sola línea</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,<span class="va">BatchGetSymbols</span>,<span class="va">ggplot2</span>, <span class="va">lubridate</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="descarga-de-los-valores" class="section level3" number="1.1.2">
+<h3>
+<span class="header-section-number">1.1.2</span> Descarga de los valores<a class="anchor" aria-label="anchor" href="#descarga-de-los-valores"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
+<span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span><span class="fl">365</span> <span class="co">#primer fecha</span></span>
+<span><span class="va">pd</span></span>
+<span><span class="co">#&gt; [1] "2021-08-19"</span></span>
+<span><span class="va">ld</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#última fecha</span></span>
+<span><span class="va">ld</span></span>
+<span><span class="co">#&gt; [1] "2022-08-19"</span></span>
+<span><span class="co">#Intervalos de tiempo</span></span>
+<span><span class="va">int</span><span class="op">&lt;-</span><span class="st">"monthly"</span></span>
+<span><span class="co">#Datos a elegir</span></span>
+<span><span class="va">dt</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AMZN"</span><span class="op">)</span></span>
+<span><span class="co">#Descargando los valores</span></span>
+<span><span class="op">?</span><span class="fu">BatchGetSymbols</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">data</span><span class="op">&lt;-</span> <span class="fu">BatchGetSymbols</span><span class="op">(</span>tickers <span class="op">=</span> <span class="va">dt</span>,</span>
+<span>                       first.date <span class="op">=</span> <span class="va">pd</span>,</span>
+<span>                       last.date <span class="op">=</span> <span class="va">ld</span>,</span>
+<span>                       freq.data <span class="op">=</span> <span class="va">int</span>,</span>
+<span>                       do.cache <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                       thresh.bad.data <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="co">#Generando data frame con los valores</span></span>
+<span><span class="va">data_precio</span><span class="op">&lt;-</span><span class="va">data</span><span class="op">$</span><span class="va">df.tickers</span></span></code></pre></div>
+</div>
+<div id="gráficas" class="section level3" number="1.1.3">
+<h3>
+<span class="header-section-number">1.1.3</span> Gráficas<a class="anchor" aria-label="anchor" href="#gr%C3%A1ficas"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sp_precio</span><span class="op">&lt;-</span><span class="fu">ggplot</span><span class="op">(</span><span class="va">data_precio</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">ref.date</span>, y<span class="op">=</span><span class="va">price.open</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span><span class="fl">2</span>, colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">+</span><span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Fecha"</span>, y<span class="op">=</span><span class="st">"Precio de apertura (USD)"</span>, title<span class="op">=</span><span class="st">"Precio de apertura de AMZN en el ultimo año"</span><span class="op">)</span><span class="op">+</span> <span class="fu">theme_light</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">sp_precio</span></span></code></pre></div>
+<div class="inline-figure"><img src="index_files/figure-html/unnamed-chunk-3-1.png" width="672"></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">sp_volumen</span><span class="op">&lt;-</span><span class="fu">ggplot</span><span class="op">(</span><span class="va">data_precio</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">ref.date</span>, y<span class="op">=</span><span class="va">volume</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span><span class="fl">2</span>, colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">+</span><span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Fecha"</span>, y<span class="op">=</span><span class="st">"Volumen"</span>, title<span class="op">=</span><span class="st">"Volumenes de AMZN en el ultimo año"</span><span class="op">)</span><span class="op">+</span> <span class="fu">theme_light</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">sp_volumen</span></span></code></pre></div>
+<div class="inline-figure"><img src="index_files/figure-html/unnamed-chunk-3-2.png" width="672"></div>
+</div>
+<div id="regresión-lineal-que-optiene-los-coeficientes-hatboldsymbol-beta" class="section level3" number="1.1.4">
+<h3>
+<span class="header-section-number">1.1.4</span> Regresión lineal que optiene los coeficientes <span class="math inline">\(\hat{\boldsymbol \beta}\)</span><a class="anchor" aria-label="anchor" href="#regresi%C3%B3n-lineal-que-optiene-los-coeficientes-hatboldsymbol-beta"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#datos estadísticos</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">data_precio</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"price.open"</span>,<span class="st">"volume"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    price.open        volume         </span></span>
+<span><span class="co">#&gt;  Min.   :106.3   Min.   :5.338e+08  </span></span>
+<span><span class="co">#&gt;  1st Qu.:135.0   1st Qu.:1.273e+09  </span></span>
+<span><span class="co">#&gt;  Median :159.7   Median :1.465e+09  </span></span>
+<span><span class="co">#&gt;  Mean   :151.1   Mean   :1.407e+09  </span></span>
+<span><span class="co">#&gt;  3rd Qu.:167.6   3rd Qu.:1.628e+09  </span></span>
+<span><span class="co">#&gt;  Max.   :177.2   Max.   :2.258e+09</span></span>
+<span><span class="co">#análisis de regresión lineal lm() y=precio,x=fecha</span></span>
+<span><span class="va">reg_tiempo_precio</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">price.open</span><span class="op">~</span><span class="va">ref.date</span>, data<span class="op">=</span><span class="va">data_precio</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">reg_tiempo_precio</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = price.open ~ ref.date, data = data_precio)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span><span class="co">#&gt; -21.4042 -10.1319  -0.2814  11.8496  22.2175 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;               Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept) 3127.64731  671.24128   4.659 0.000694 ***</span></span>
+<span><span class="co">#&gt; ref.date      -0.15646    0.03528  -4.434 0.001004 ** </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  </span></span>
+<span><span class="co">#&gt; 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 14.17 on 11 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.6413, Adjusted R-squared:  0.6087 </span></span>
+<span><span class="co">#&gt; F-statistic: 19.66 on 1 and 11 DF,  p-value: 0.001004</span></span>
+<span></span>
+<span><span class="co">#análisis de regresión lineal lm() y=volumen,x=fecha</span></span>
+<span><span class="va">reg_tiempo_volumen</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">volume</span><span class="op">~</span><span class="va">ref.date</span>, data<span class="op">=</span><span class="va">data_precio</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">reg_tiempo_volumen</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = volume ~ ref.date, data = data_precio)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;        Min         1Q     Median         3Q        Max </span></span>
+<span><span class="co">#&gt; -853671262  -49527288   15223912  212399437  751223038 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;               Estimate Std. Error t value Pr(&gt;|t|)</span></span>
+<span><span class="co">#&gt; (Intercept) -1.988e+10  2.050e+10  -0.970    0.353</span></span>
+<span><span class="co">#&gt; ref.date     1.119e+06  1.077e+06   1.039    0.321</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 432700000 on 11 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.0893, Adjusted R-squared:  0.006508 </span></span>
+<span><span class="co">#&gt; F-statistic: 1.079 on 1 and 11 DF,  p-value: 0.3213</span></span></code></pre></div>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="empty"></div>
+<div class="next"><a href="hello-bookdown.html"><span class="header-section-number">2</span> Hello bookdown</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#m%C3%ADnimos-cuadrados-ordinarios"><span class="header-section-number">1</span> Mínimos Cuadrados Ordinarios</a></li>
+<li>
+<a class="nav-link" href="#el-problema"><span class="header-section-number">1.1</span> El problema</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#dependencias"><span class="header-section-number">1.1.1</span> Dependencias</a></li>
+<li><a class="nav-link" href="#descarga-de-los-valores"><span class="header-section-number">1.1.2</span> Descarga de los valores</a></li>
+<li><a class="nav-link" href="#gr%C3%A1ficas"><span class="header-section-number">1.1.3</span> Gráficas</a></li>
+<li><a class="nav-link" href="#regresi%C3%B3n-lineal-que-optiene-los-coeficientes-hatboldsymbol-beta"><span class="header-section-number">1.1.4</span> Regresión lineal que optiene los coeficientes \(\hat{\boldsymbol \beta}\)</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rstudio/bookdown-demo/blob/master/index.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rstudio/bookdown-demo/edit/master/index.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>A Minimal Book Example</strong>" was written by John Doe. It was last built on 2022-08-19.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

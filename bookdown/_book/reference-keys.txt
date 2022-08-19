@@ -1,0 +1,8 @@
+mínimos-cuadrados-ordinarios
+el-problema
+dependencias
+descarga-de-los-valores
+gráficas
+regresión-lineal-que-optiene-los-coeficientes-hatboldsymbol-beta
+hello-bookdown
+a-section

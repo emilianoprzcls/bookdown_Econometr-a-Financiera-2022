@@ -1,0 +1,108 @@
+--- 
+title: "A Minimal Book Example"
+author: "John Doe"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This is a minimal example of using the bookdown package to write a book.
+  The HTML output format for this example is bookdown::bs4_book,
+  set in the _output.yml file.
+biblio-style: apalike
+csl: chicago-fullnote-bibliography.csl
+---
+
+# Mínimos Cuadrados Ordinarios
+## El problema
+Recrodando que el método de MCO resulta en encontrar la combinación de valores de los estimadores de los parámetros $\hat{\boldsymbol{\beta}}$ que permita minimizar la suma de los residuales (estimadores de los términos de erro $\boldsymbol{\varepsilon}$) al cuadrado dada por:
+
+$$
+    \sum^{N}_{i=1}{e^2_i} = \sum^{N}_{i = 1}{(y_i - \mathbf{X}'_i \hat{\boldsymbol{\beta}})^2}
+$$
+
+Donde $\hat{\boldsymbol{\beta}}$ denota el vector de estimadores $\hat{\beta}_1, \ldots, \hat{\beta}_K$ y dado que $(e_1, e_2, \ldots, e_n)'(e_1, e_2, \ldots, e_n) = {\mathbf{e'e}}$, el problema del método de MCO consiste en resolver el problema de óptimización:
+
+\begin{eqnarray*}
+Minimizar_{\hat{\boldsymbol \beta}} S(\hat{\boldsymbol \beta})  =  Minimizar_{\hat{\boldsymbol \beta}} \mathbf{e'e} \\
+    =  Minimizar_{\hat{\boldsymbol \beta}} (\mathbf{Y}-\mathbf{X}\hat{\boldsymbol \beta})'(\mathbf{Y}-\mathbf{X}\hat{\boldsymbol \beta})
+\end{eqnarray*}
+
+Expandiendo la expresión $\mathbf{e'e}$ obtenemos:
+$$
+    \mathbf{e'e} = \mathbf{Y'Y} - 2 \mathbf{Y'X} \hat{\boldsymbol \beta} + \hat{\boldsymbol \beta}' \mathbf{X'X}\hat{\boldsymbol \beta}
+$$
+
+De esta forma obtenemos que las condiciones necesarias de un mínimo son:
+
+$$
+    \frac{\partial S(\hat{\boldsymbol \beta})}{\partial \hat{\boldsymbol \beta}} = -2{\mathbf{X'Y}} + 2{\mathbf{X'X}} \hat{\boldsymbol{\beta}} = \mathbf{0}
+$$
+Y se pueden despejar las \textit{ecuaciones normales} dadas por:
+
+
+Debido a que el objetivo es encontrar la matriz $\hat{\boldsymbol\beta}$ despejamos:
+
+$$\hat{\boldsymbol \beta} = (\mathbf{X'X})^{-1}\mathbf{X'Y}
+$$
+$$
+    \mathbf{X'X}\hat{\boldsymbol \beta} = \mathbf{X'Y}
+$$
+
+##Estimación
+Para la estimación utilizaremos el paquete "BatchGetSymbols". Este paquete nos permitirá descargar información acerca de la bolsa de valores internacional. 
+
+### Dependencias
+```{r message=FALSE, warning=FALSE}
+#install.packages("pacman")
+#pacman nos permite cargar varias librerias en una sola línea
+library(pacman)
+pacman::p_load(tidyverse,BatchGetSymbols,ggplot2, lubridate)
+```
+### Descarga de los valores
+```{r message=FALSE, warning=FALSE}
+#Primero determinamos el lapso de tiempo
+pd<-Sys.Date()-365 #primer fecha
+pd
+ld<-Sys.Date() #última fecha
+ld
+#Intervalos de tiempo
+int<-"monthly"
+#Datos a elegir
+dt<-c("AMZN")
+#Descargando los valores
+?BatchGetSymbols()
+data<- BatchGetSymbols(tickers = dt,
+                       first.date = pd,
+                       last.date = ld,
+                       freq.data = int,
+                       do.cache = FALSE,
+                       thresh.bad.data = 0)
+#Generando data frame con los valores
+data_precio<-data$df.tickers
+```
+
+### Gráficas
+```{r message=FALSE, warning=FALSE}
+sp_precio<-ggplot(data_precio, aes(x=ref.date, y=price.open))+geom_point(size =2, colour = "black")+labs(x="Fecha", y="Precio de apertura (USD)", title="Precio de apertura de AMZN en el ultimo año")+ theme_light()
+sp_precio
+
+sp_volumen<-ggplot(data_precio, aes(x=ref.date, y=volume))+geom_point(size =2, colour = "black")+labs(x="Fecha", y="Volumen", title="Volumenes de AMZN en el ultimo año")+ theme_light()
+sp_volumen
+```
+
+### Regresión lineal que optiene los coeficientes $\hat{\boldsymbol \beta}$
+```{r message=FALSE, warning=FALSE}
+#datos estadísticos
+summary(data_precio[c("price.open","volume")])
+#análisis de regresión lineal lm() y=precio,x=fecha
+reg_tiempo_precio<-lm(price.open~ref.date, data=data_precio)
+summary(reg_tiempo_precio)
+
+#análisis de regresión lineal lm() y=volumen,x=fecha
+reg_tiempo_volumen<-lm(volume~ref.date, data=data_precio)
+summary(reg_tiempo_volumen)
+```
+
