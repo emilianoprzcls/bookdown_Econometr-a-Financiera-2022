@@ -51,7 +51,7 @@ $$
     \mathbf{X'X}\hat{\boldsymbol \beta} = \mathbf{X'Y}
 $$
 
-##Estimación
+## Estimación
 Para la estimación utilizaremos el paquete "BatchGetSymbols". Este paquete nos permitirá descargar información acerca de la bolsa de valores internacional. 
 
 ### Dependencias

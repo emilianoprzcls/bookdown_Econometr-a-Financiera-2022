@@ -90,11 +90,15 @@ Y se pueden despejar las dadas por:</p>
 <span class="math display">\[
     \mathbf{X'X}\hat{\boldsymbol \beta} = \mathbf{X'Y}
 \]</span></p>
-<p>##Estimación
-Para la estimación utilizaremos el paquete “BatchGetSymbols”. Este paquete nos permitirá descargar información acerca de la bolsa de valores internacional.</p>
-<div id="dependencias" class="section level3" number="1.1.1">
+</div>
+<div id="estimación" class="section level2" number="1.2">
+<h2>
+<span class="header-section-number">1.2</span> Estimación<a class="anchor" aria-label="anchor" href="#estimaci%C3%B3n"><i class="fas fa-link"></i></a>
+</h2>
+<p>Para la estimación utilizaremos el paquete “BatchGetSymbols”. Este paquete nos permitirá descargar información acerca de la bolsa de valores internacional.</p>
+<div id="dependencias" class="section level3" number="1.2.1">
 <h3>
-<span class="header-section-number">1.1.1</span> Dependencias<a class="anchor" aria-label="anchor" href="#dependencias"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.2.1</span> Dependencias<a class="anchor" aria-label="anchor" href="#dependencias"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#install.packages("pacman")</span></span>
@@ -102,9 +106,9 @@ Para la estimación utilizaremos el paquete “BatchGetSymbols”. Este paquete 
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span></span>
 <span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,<span class="va">BatchGetSymbols</span>,<span class="va">ggplot2</span>, <span class="va">lubridate</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="descarga-de-los-valores" class="section level3" number="1.1.2">
+<div id="descarga-de-los-valores" class="section level3" number="1.2.2">
 <h3>
-<span class="header-section-number">1.1.2</span> Descarga de los valores<a class="anchor" aria-label="anchor" href="#descarga-de-los-valores"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.2.2</span> Descarga de los valores<a class="anchor" aria-label="anchor" href="#descarga-de-los-valores"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
@@ -129,9 +133,9 @@ Para la estimación utilizaremos el paquete “BatchGetSymbols”. Este paquete 
 <span><span class="co">#Generando data frame con los valores</span></span>
 <span><span class="va">data_precio</span><span class="op">&lt;-</span><span class="va">data</span><span class="op">$</span><span class="va">df.tickers</span></span></code></pre></div>
 </div>
-<div id="gráficas" class="section level3" number="1.1.3">
+<div id="gráficas" class="section level3" number="1.2.3">
 <h3>
-<span class="header-section-number">1.1.3</span> Gráficas<a class="anchor" aria-label="anchor" href="#gr%C3%A1ficas"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.2.3</span> Gráficas<a class="anchor" aria-label="anchor" href="#gr%C3%A1ficas"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sp_precio</span><span class="op">&lt;-</span><span class="fu">ggplot</span><span class="op">(</span><span class="va">data_precio</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">ref.date</span>, y<span class="op">=</span><span class="va">price.open</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span><span class="fl">2</span>, colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">+</span><span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Fecha"</span>, y<span class="op">=</span><span class="st">"Precio de apertura (USD)"</span>, title<span class="op">=</span><span class="st">"Precio de apertura de AMZN en el ultimo año"</span><span class="op">)</span><span class="op">+</span> <span class="fu">theme_light</span><span class="op">(</span><span class="op">)</span></span>
@@ -143,9 +147,9 @@ Para la estimación utilizaremos el paquete “BatchGetSymbols”. Este paquete 
 <span><span class="va">sp_volumen</span></span></code></pre></div>
 <div class="inline-figure"><img src="index_files/figure-html/unnamed-chunk-3-2.png" width="672"></div>
 </div>
-<div id="regresión-lineal-que-optiene-los-coeficientes-hatboldsymbol-beta" class="section level3" number="1.1.4">
+<div id="regresión-lineal-que-optiene-los-coeficientes-hatboldsymbol-beta" class="section level3" number="1.2.4">
 <h3>
-<span class="header-section-number">1.1.4</span> Regresión lineal que optiene los coeficientes <span class="math inline">\(\hat{\boldsymbol \beta}\)</span><a class="anchor" aria-label="anchor" href="#regresi%C3%B3n-lineal-que-optiene-los-coeficientes-hatboldsymbol-beta"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.2.4</span> Regresión lineal que optiene los coeficientes <span class="math inline">\(\hat{\boldsymbol \beta}\)</span><a class="anchor" aria-label="anchor" href="#regresi%C3%B3n-lineal-que-optiene-los-coeficientes-hatboldsymbol-beta"><i class="fas fa-link"></i></a>
 </h3>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#datos estadísticos</span></span>
@@ -210,12 +214,13 @@ Para la estimación utilizaremos el paquete “BatchGetSymbols”. Este paquete 
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#m%C3%ADnimos-cuadrados-ordinarios"><span class="header-section-number">1</span> Mínimos Cuadrados Ordinarios</a></li>
+<li><a class="nav-link" href="#el-problema"><span class="header-section-number">1.1</span> El problema</a></li>
 <li>
-<a class="nav-link" href="#el-problema"><span class="header-section-number">1.1</span> El problema</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#dependencias"><span class="header-section-number">1.1.1</span> Dependencias</a></li>
-<li><a class="nav-link" href="#descarga-de-los-valores"><span class="header-section-number">1.1.2</span> Descarga de los valores</a></li>
-<li><a class="nav-link" href="#gr%C3%A1ficas"><span class="header-section-number">1.1.3</span> Gráficas</a></li>
-<li><a class="nav-link" href="#regresi%C3%B3n-lineal-que-optiene-los-coeficientes-hatboldsymbol-beta"><span class="header-section-number">1.1.4</span> Regresión lineal que optiene los coeficientes \(\hat{\boldsymbol \beta}\)</a></li>
+<a class="nav-link" href="#estimaci%C3%B3n"><span class="header-section-number">1.2</span> Estimación</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#dependencias"><span class="header-section-number">1.2.1</span> Dependencias</a></li>
+<li><a class="nav-link" href="#descarga-de-los-valores"><span class="header-section-number">1.2.2</span> Descarga de los valores</a></li>
+<li><a class="nav-link" href="#gr%C3%A1ficas"><span class="header-section-number">1.2.3</span> Gráficas</a></li>
+<li><a class="nav-link" href="#regresi%C3%B3n-lineal-que-optiene-los-coeficientes-hatboldsymbol-beta"><span class="header-section-number">1.2.4</span> Regresión lineal que optiene los coeficientes \(\hat{\boldsymbol \beta}\)</a></li>
 </ul>
 </li>
 </ul>

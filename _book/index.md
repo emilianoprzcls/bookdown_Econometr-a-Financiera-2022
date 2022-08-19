@@ -51,7 +51,7 @@ $$
     \mathbf{X'X}\hat{\boldsymbol \beta} = \mathbf{X'Y}
 $$
 
-##Estimación
+## Estimación
 Para la estimación utilizaremos el paquete "BatchGetSymbols". Este paquete nos permitirá descargar información acerca de la bolsa de valores internacional. 
 
 ### Dependencias
@@ -95,7 +95,7 @@ sp_precio<-ggplot(data_precio, aes(x=ref.date, y=price.open))+geom_point(size =2
 sp_precio
 ```
 
-<img src="index_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+![](index_files/figure-epub3/unnamed-chunk-3-1.png)<!-- -->
 
 ```r
 
@@ -103,7 +103,7 @@ sp_volumen<-ggplot(data_precio, aes(x=ref.date, y=volume))+geom_point(size =2, c
 sp_volumen
 ```
 
-<img src="index_files/figure-html/unnamed-chunk-3-2.png" width="672" />
+![](index_files/figure-epub3/unnamed-chunk-3-2.png)<!-- -->
 
 ### Regresión lineal que optiene los coeficientes $\hat{\boldsymbol \beta}$
 
