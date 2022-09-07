@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 3 Método Generalizado de Momentos (MGM) | Diplomado de Econometría Financiera</title>
+<meta name="author" content="Benjamin Oliva y Emiliano Pérez Caullieres">
+<meta name="description" content="3.1 El problema Retomemos el modelo de regresión lineal tal que: \[\begin{equation} y_i=X_i\beta+u_i   \label{Eq_reglin} \end{equation}\] Tomando en cuenta los principios de ortogonalidad...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 3 Método Generalizado de Momentos (MGM) | Diplomado de Econometría Financiera">
+<meta property="og:type" content="book">
+<meta property="og:description" content="3.1 El problema Retomemos el modelo de regresión lineal tal que: \[\begin{equation} y_i=X_i\beta+u_i   \label{Eq_reglin} \end{equation}\] Tomando en cuenta los principios de ortogonalidad...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 3 Método Generalizado de Momentos (MGM) | Diplomado de Econometría Financiera">
+<meta name="twitter:description" content="3.1 El problema Retomemos el modelo de regresión lineal tal que: \[\begin{equation} y_i=X_i\beta+u_i   \label{Eq_reglin} \end{equation}\] Tomando en cuenta los principios de ortogonalidad...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Diplomado de Econometría Financiera</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Mínimos Cuadrados Ordinarios</a></li>
+<li><a class="" href="m%C3%A1xima-verosimilitud.html"><span class="header-section-number">2</span> Máxima Verosimilitud</a></li>
+<li><a class="active" href="m%C3%A9todo-generalizado-de-momentos-mgm.html"><span class="header-section-number">3</span> Método Generalizado de Momentos (MGM)</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="método-generalizado-de-momentos-mgm" class="section level1" number="3">
+<h1>
+<span class="header-section-number">3</span> Método Generalizado de Momentos (MGM)<a class="anchor" aria-label="anchor" href="#m%C3%A9todo-generalizado-de-momentos-mgm"><i class="fas fa-link"></i></a>
+</h1>
+<div id="el-problema-2" class="section level2" number="3.1">
+<h2>
+<span class="header-section-number">3.1</span> El problema<a class="anchor" aria-label="anchor" href="#el-problema-2"><i class="fas fa-link"></i></a>
+</h2>
+<p>Retomemos el modelo de regresión lineal tal que:</p>
+<p><span class="math display">\[\begin{equation}
+y_i=X_i\beta+u_i
+    \label{Eq_reglin}
+\end{equation}\]</span></p>
+<p>Tomando en cuenta los principios de ortogonalidad (<span class="math inline">\(E(Z_iu_i)=0\)</span>) y (<span class="math inline">\(rankE(Z_i^{'}X_i)=0\)</span>) sabemos que <span class="math inline">\(\beta\)</span> es el único vector de <span class="math inline">\(N\times1\)</span> que resuelve las condiciones de momento de determinada población. En otras palabras, <span class="math inline">\(E[z_i^{'}(y_i-x_i\beta)]=0\)</span> es una solución y <span class="math inline">\(E[z_i^{'}(y_i-x_i\beta)]\neq0\)</span> <em>NO</em> es una solución. Debido a que la media muestral son estimadores consistentes de momentos de una población, se puede:</p>
+<p><span class="math display" id="eq:Eqreglin1asolu1">\[\begin{equation}
+N^{-1}\sum_{i=1}^{N}z_i^{'}(y_i-x_i\beta)=0
+\tag{3.1}
+\end{equation}\]</span></p>
+<p>Asumiendo que la ecuación <a href="m%C3%A9todo-generalizado-de-momentos-mgm.html#eq:Eqreglin1asolu1">(3.1)</a> tiene L ecuaciones lineales y K coeficientes <span class="math inline">\(\beta\)</span> desconocidos y <span class="math inline">\(K=L\)</span>, entonces la matriz <span class="math inline">\(\sum_{i=1}^{N}z_i^{'}x_i\)</span> debe ser no singular para encontrar los coeficientes de la siguiente manera.</p>
+<p><span class="math display" id="eq:Eqreglin1asolu2">\[\begin{equation}
+\hat{\beta}=N^{-1}\left[\sum_{i=1}^{N}z_i^{'}x_i\right]^{-1}\left[\sum_{i=1}^{N}z_i^{'}y_i\right]
+\tag{3.2}
+\end{equation}\]</span></p>
+<p>Para simplificar <a href="m%C3%A9todo-generalizado-de-momentos-mgm.html#eq:Eqreglin1asolu2">(3.2)</a> se puede nombrar Z juntando <span class="math inline">\(z_i\)</span> N veces para crear una matriz de tamaño <span class="math inline">\(NG\times L\)</span>. Lo mismo hacemos con X juntando <span class="math inline">\(x_i\)</span> para obtener una de <span class="math inline">\(NG\times K\)</span> y Y obteniendo una <span class="math inline">\(NG\times 1\)</span>. Obteniendo:</p>
+<p><span class="math display">\[\begin{equation}
+\hat{\beta}=[Z^{'}X]^{-1}[Z^{'}Y]
+\end{equation}\]</span></p>
+<p>Es importante tomar en cuenta cuando el caso en el que hay más ecuaciones lineales que coeficientes <span class="math inline">\(\beta\)</span>; es decir, <span class="math inline">\(L\geq K\)</span>. En estos casos es muy probrable que no haya solución, por lo que mejor que se puede estimar es pones la ecuación <a href="m%C3%A9todo-generalizado-de-momentos-mgm.html#eq:Eqreglin1asolu1">(3.1)</a>, tan pequeña como sea posible. Por lo mismo el paso que nos lleva a la ecuación <a href="m%C3%A9todo-generalizado-de-momentos-mgm.html#eq:Eqreglin1asolu2">(3.2)</a>, debe eliminarse <span class="math inline">\(N^{-1}\)</span>. El objetivo:</p>
+<p><span class="math display" id="eq:Eqreglin1asolu77">\[\begin{equation}
+\min_{\beta} \left[\sum_{i=1}^{N}z_i^{'}x_i\beta\right]^{-1}\left[\sum_{i=1}^{N}z_i^{'}y_i\beta\right]
+\tag{3.3}
+\end{equation}\]</span></p>
+<p>Así pues nombramos a W como una matriz simétrica de <span class="math inline">\(W\times W\)</span> donde se genera la variable <span class="math inline">\(b\)</span> que debemos minimizar que sustituye a <span class="math inline">\(\beta\)</span> creando una función cuadrática en la ecuación <a href="m%C3%A9todo-generalizado-de-momentos-mgm.html#eq:Eqreglin1asolu2">(3.2)</a>.
+<span class="math display" id="eq:Eqreglin1asolu78">\[\begin{equation}
+\min_{b}\left[\sum_{i=1}^{N}z_i^{'}x_ib\right]^{-1}\left[\sum_{i=1}^{N}z_i^{'}y_ib\right]
+\tag{3.4}
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+\therefore\hat{\beta}=[X^{'}Z\hat{W}Z^{'}X]^{-1}[X^{'}Z\hat{W}Z^{'}Y]
+\end{equation}\]</span></p>
+<p>Sin embargo, <span class="math inline">\(X^{'}Z\hat{W}Z^{'}X\)</span> debe ser no singular para que haya una solución. Para esto se asume que <span class="math inline">\(\hat{W}\)</span> tiene un limite de probabilidad no singular. Esto se describe como <span class="math inline">\(\hat{W}\xrightarrow[]{p}W\)</span> y <span class="math inline">\(N\xrightarrow[]{}W\infty\)</span> donde <span class="math inline">\(W\)</span> no es aleatorio, es una matriz positiva definida simétrica de <span class="math inline">\(L\times L\)</span>.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="m%C3%A1xima-verosimilitud.html"><span class="header-section-number">2</span> Máxima Verosimilitud</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#m%C3%A9todo-generalizado-de-momentos-mgm"><span class="header-section-number">3</span> Método Generalizado de Momentos (MGM)</a></li>
+<li><a class="nav-link" href="#el-problema-2"><span class="header-section-number">3.1</span> El problema</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rstudio/bookdown-demo/blob/master/02-MGM.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rstudio/bookdown-demo/edit/master/02-MGM.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-09-06.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

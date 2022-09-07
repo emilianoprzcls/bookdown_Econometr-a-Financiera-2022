@@ -1,7 +1,7 @@
 --- 
 title: "Diplomado de Econometría Financiera"
 author: "Benjamin Oliva y Emiliano Pérez Caullieres"
-date: "2022-08-19"
+date: "2022-09-06"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -15,7 +15,7 @@ csl: chicago-fullnote-bibliography.csl
 
 # Mínimos Cuadrados Ordinarios
 ## El problema
-Recrodando que el método de MCO resulta en encontrar la combinación de valores de los estimadores de los parámetros $\hat{\boldsymbol{\beta}}$ que permita minimizar la suma de los residuales (estimadores de los términos de erro $\boldsymbol{\varepsilon}$) al cuadrado dada por:
+Recordando que el método de MCO resulta en encontrar la combinación de valores de los estimadores de los parámetros $\hat{\boldsymbol{\beta}}$ que permita minimizar la suma de los residuales (estimadores de los términos de erro $\boldsymbol{\varepsilon}$) al cuadrado dada por:
 
 $$
     \sum^{N}_{i=1}{e^2_i} = \sum^{N}_{i = 1}{(y_i - \mathbf{X}'_i \hat{\boldsymbol{\beta}})^2}
@@ -49,7 +49,7 @@ $$
     \mathbf{X'X}\hat{\boldsymbol \beta} = \mathbf{X'Y}
 $$
 
-## Estimación
+## Estimación R
 Para la estimación utilizaremos el paquete "BatchGetSymbols". Este paquete nos permitirá descargar información acerca de la bolsa de valores internacional. 
 
 ### Dependencias
@@ -60,20 +60,23 @@ Para la estimación utilizaremos el paquete "BatchGetSymbols". Este paquete nos 
 library(pacman)
 pacman::p_load(tidyverse,BatchGetSymbols,ggplot2, lubridate)
 ```
+
 ### Descarga de los valores
+
 
 ```r
 #Primero determinamos el lapso de tiempo
 pd<-Sys.Date()-365 #primer fecha
 pd
-#> [1] "2021-08-19"
+#> [1] "2021-09-06"
 ld<-Sys.Date() #última fecha
 ld
-#> [1] "2022-08-19"
+#> [1] "2022-09-06"
 #Intervalos de tiempo
 int<-"monthly"
 #Datos a elegir
 dt<-c("AMZN")
+
 #Descargando los valores
 ?BatchGetSymbols()
 data<- BatchGetSymbols(tickers = dt,
@@ -82,14 +85,22 @@ data<- BatchGetSymbols(tickers = dt,
                        freq.data = int,
                        do.cache = FALSE,
                        thresh.bad.data = 0)
+
 #Generando data frame con los valores
 data_precio<-data$df.tickers
+colnames(data_precio)
+#>  [1] "ticker"              "ref.date"           
+#>  [3] "volume"              "price.open"         
+#>  [5] "price.high"          "price.low"          
+#>  [7] "price.close"         "price.adjusted"     
+#>  [9] "ret.adjusted.prices" "ret.closing.prices"
 ```
 
 ### Gráficas
 
+
 ```r
-sp_precio<-ggplot(data_precio, aes(x=ref.date, y=price.open))+geom_point(size =2, colour = "black")+labs(x="Fecha", y="Precio de apertura (USD)", title="Precio de apertura de AMZN en el ultimo año")+ theme_light()
+sp_precio<-ggplot(data_precio, aes(x=ref.date, y=price.open))+geom_point(size =2, colour = "black")+labs(x="Fecha", y="Precio de apertura (USD)", title="Precio de apertura de AMZN en el ultimo año")+ theme_light()+ geom_smooth(method = lm, se = TRUE)
 sp_precio
 ```
 
@@ -97,7 +108,7 @@ sp_precio
 
 ```r
 
-sp_volumen<-ggplot(data_precio, aes(x=ref.date, y=volume))+geom_point(size =2, colour = "black")+labs(x="Fecha", y="Volumen", title="Volumenes de AMZN en el ultimo año")+ theme_light()
+sp_volumen<-ggplot(data_precio, aes(x=ref.date, y=volume))+geom_point(size =2, colour = "black")+labs(x="Fecha", y="Volumen", title="Volumenes de AMZN en el ultimo año")+ theme_light()+ geom_smooth(method = lm, se = TRUE)
 sp_volumen
 ```
 
@@ -109,14 +120,15 @@ sp_volumen
 #datos estadísticos
 summary(data_precio[c("price.open","volume")])
 #>    price.open        volume         
-#>  Min.   :106.3   Min.   :5.338e+08  
-#>  1st Qu.:135.0   1st Qu.:1.273e+09  
-#>  Median :159.7   Median :1.465e+09  
-#>  Mean   :151.1   Mean   :1.407e+09  
+#>  Min.   :106.3   Min.   :1.140e+08  
+#>  1st Qu.:126.0   1st Qu.:1.273e+09  
+#>  Median :152.7   Median :1.465e+09  
+#>  Mean   :148.5   Mean   :1.392e+09  
 #>  3rd Qu.:167.6   3rd Qu.:1.628e+09  
 #>  Max.   :177.2   Max.   :2.258e+09
 #análisis de regresión lineal lm() y=precio,x=fecha
-reg_tiempo_precio<-lm(price.open~ref.date, data=data_precio)
+reg_tiempo_precio<-lm(price.open~ref.date, data=data_precio) 
+#¡Siempre se pone dentro de lm() la variable dependiente primero y luego la independiete!
 summary(reg_tiempo_precio)
 #> 
 #> Call:
@@ -124,19 +136,19 @@ summary(reg_tiempo_precio)
 #> 
 #> Residuals:
 #>      Min       1Q   Median       3Q      Max 
-#> -21.4042 -10.1319  -0.2814  11.8496  22.2175 
+#> -21.9379  -9.7257  -0.8686   9.1948  20.6055 
 #> 
 #> Coefficients:
 #>               Estimate Std. Error t value Pr(>|t|)    
-#> (Intercept) 3127.64731  671.24128   4.659 0.000694 ***
-#> ref.date      -0.15646    0.03528  -4.434 0.001004 ** 
+#> (Intercept) 3355.37814  615.12157   5.455 0.000199 ***
+#> ref.date      -0.16831    0.03228  -5.214 0.000288 ***
 #> ---
 #> Signif. codes:  
 #> 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
-#> Residual standard error: 14.17 on 11 degrees of freedom
-#> Multiple R-squared:  0.6413,	Adjusted R-squared:  0.6087 
-#> F-statistic: 19.66 on 1 and 11 DF,  p-value: 0.001004
+#> Residual standard error: 13.13 on 11 degrees of freedom
+#> Multiple R-squared:  0.7119,	Adjusted R-squared:  0.6857 
+#> F-statistic: 27.18 on 1 and 11 DF,  p-value: 0.0002884
 
 #análisis de regresión lineal lm() y=volumen,x=fecha
 reg_tiempo_volumen<-lm(volume~ref.date, data=data_precio)
@@ -147,15 +159,57 @@ summary(reg_tiempo_volumen)
 #> 
 #> Residuals:
 #>        Min         1Q     Median         3Q        Max 
-#> -853671262  -49527288   15223912  212399437  751223038 
+#> -1.133e+09 -1.780e+08  4.137e+07  2.347e+08  9.141e+08 
 #> 
 #> Coefficients:
 #>               Estimate Std. Error t value Pr(>|t|)
-#> (Intercept) -1.988e+10  2.050e+10  -0.970    0.353
-#> ref.date     1.119e+06  1.077e+06   1.039    0.321
+#> (Intercept)  1.659e+10  2.358e+10   0.704    0.496
+#> ref.date    -7.978e+05  1.237e+06  -0.645    0.532
 #> 
-#> Residual standard error: 432700000 on 11 degrees of freedom
-#> Multiple R-squared:  0.0893,	Adjusted R-squared:  0.006508 
-#> F-statistic: 1.079 on 1 and 11 DF,  p-value: 0.3213
+#> Residual standard error: 503100000 on 11 degrees of freedom
+#> Multiple R-squared:  0.03641,	Adjusted R-squared:  -0.05119 
+#> F-statistic: 0.4157 on 1 and 11 DF,  p-value: 0.5323
+```
+
+## Ejercicio
+El objetivo de este ejrcicio es simplemente que indiquen y modifiquen los errores en el código. Así pues, deberán descomentar *-quitar las #antes del código-* para empezar el ejercicio.
+
+### 1
+El objetivo de este código es explicar  la variable __"volume"__ con la variable __"price.high"__.
+
+```r
+#reg_tiempo_ej1<-lm(price.high~volume, data=data_precio)
+#sumary(reg_tiempo_ej1)
+
+```
+### 2
+El objetivo de este código es explicar  la variable __"volume"__ con la variable __"price.low"__.
+
+```r
+#reg_tiempo_ej2<-lm(price.low~volume, data=data_precio)
+#summary(reg_tiempo_ej1)
+
+```
+
+### 3 (opcional)
+El objetivo de este ejercicio es descargar los valores del stock de Tesla *BMV: TSLA* en los últimos *dos años*.
+
+
+```r
+#dt_ej3<-("TSLA")
+#pdej<-Sys.Date()-(365*3) #primer fecha
+#pdej
+#Descargando los valores
+#dataej3<- BatchgetSymbols(tickers = dt_ej3,
+                       #first.date = pdej,
+                       #last.date = ld,
+                       #freq.data = int,
+                       #do.cache = FALSE,
+                       #thresh.bad.data = 0)
+
+#Generando data frame con los valores
+#data_precio_ej2<-dataej3$df.tickers
+#1colnames(data_precio_ej2)
+
 ```
 

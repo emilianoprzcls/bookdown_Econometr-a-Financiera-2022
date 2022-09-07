@@ -15,7 +15,7 @@ csl: chicago-fullnote-bibliography.csl
 
 # Mínimos Cuadrados Ordinarios
 ## El problema
-Recrodando que el método de MCO resulta en encontrar la combinación de valores de los estimadores de los parámetros $\hat{\boldsymbol{\beta}}$ que permita minimizar la suma de los residuales (estimadores de los términos de erro $\boldsymbol{\varepsilon}$) al cuadrado dada por:
+Recordando que el método de MCO resulta en encontrar la combinación de valores de los estimadores de los parámetros $\hat{\boldsymbol{\beta}}$ que permita minimizar la suma de los residuales (estimadores de los términos de erro $\boldsymbol{\varepsilon}$) al cuadrado dada por:
 
 $$
     \sum^{N}_{i=1}{e^2_i} = \sum^{N}_{i = 1}{(y_i - \mathbf{X}'_i \hat{\boldsymbol{\beta}})^2}
@@ -49,7 +49,7 @@ $$
     \mathbf{X'X}\hat{\boldsymbol \beta} = \mathbf{X'Y}
 $$
 
-## Estimación
+## Estimación R
 Para la estimación utilizaremos el paquete "BatchGetSymbols". Este paquete nos permitirá descargar información acerca de la bolsa de valores internacional. 
 
 ### Dependencias
@@ -59,7 +59,9 @@ Para la estimación utilizaremos el paquete "BatchGetSymbols". Este paquete nos 
 library(pacman)
 pacman::p_load(tidyverse,BatchGetSymbols,ggplot2, lubridate)
 ```
+
 ### Descarga de los valores
+
 ```{r message=FALSE, warning=FALSE}
 #Primero determinamos el lapso de tiempo
 pd<-Sys.Date()-365 #primer fecha
@@ -70,6 +72,7 @@ ld
 int<-"monthly"
 #Datos a elegir
 dt<-c("AMZN")
+
 #Descargando los valores
 ?BatchGetSymbols()
 data<- BatchGetSymbols(tickers = dt,
@@ -78,16 +81,20 @@ data<- BatchGetSymbols(tickers = dt,
                        freq.data = int,
                        do.cache = FALSE,
                        thresh.bad.data = 0)
+
 #Generando data frame con los valores
 data_precio<-data$df.tickers
+colnames(data_precio)
+
 ```
 
 ### Gráficas
+
 ```{r message=FALSE, warning=FALSE}
-sp_precio<-ggplot(data_precio, aes(x=ref.date, y=price.open))+geom_point(size =2, colour = "black")+labs(x="Fecha", y="Precio de apertura (USD)", title="Precio de apertura de AMZN en el ultimo año")+ theme_light()
+sp_precio<-ggplot(data_precio, aes(x=ref.date, y=price.open))+geom_point(size =2, colour = "black")+labs(x="Fecha", y="Precio de apertura (USD)", title="Precio de apertura de AMZN en el ultimo año")+ theme_light()+ geom_smooth(method = lm, se = TRUE)
 sp_precio
 
-sp_volumen<-ggplot(data_precio, aes(x=ref.date, y=volume))+geom_point(size =2, colour = "black")+labs(x="Fecha", y="Volumen", title="Volumenes de AMZN en el ultimo año")+ theme_light()
+sp_volumen<-ggplot(data_precio, aes(x=ref.date, y=volume))+geom_point(size =2, colour = "black")+labs(x="Fecha", y="Volumen", title="Volumenes de AMZN en el ultimo año")+ theme_light()+ geom_smooth(method = lm, se = TRUE)
 sp_volumen
 ```
 
@@ -96,11 +103,51 @@ sp_volumen
 #datos estadísticos
 summary(data_precio[c("price.open","volume")])
 #análisis de regresión lineal lm() y=precio,x=fecha
-reg_tiempo_precio<-lm(price.open~ref.date, data=data_precio)
+reg_tiempo_precio<-lm(price.open~ref.date, data=data_precio) 
+#¡Siempre se pone dentro de lm() la variable dependiente primero y luego la independiete!
 summary(reg_tiempo_precio)
 
 #análisis de regresión lineal lm() y=volumen,x=fecha
 reg_tiempo_volumen<-lm(volume~ref.date, data=data_precio)
 summary(reg_tiempo_volumen)
+```
+
+## Ejercicio
+El objetivo de este ejrcicio es simplemente que indiquen y modifiquen los errores en el código. Así pues, deberán descomentar *-quitar las #antes del código-* para empezar el ejercicio.
+
+### 1
+El objetivo de este código es explicar  la variable __"volume"__ con la variable __"price.high"__.
+```{r}
+#reg_tiempo_ej1<-lm(price.high~volume, data=data_precio)
+#sumary(reg_tiempo_ej1)
+
+```
+### 2
+El objetivo de este código es explicar  la variable __"volume"__ con la variable __"price.low"__.
+```{r}
+#reg_tiempo_ej2<-lm(price.low~volume, data=data_precio)
+#summary(reg_tiempo_ej1)
+
+```
+
+### 3 (opcional)
+El objetivo de este ejercicio es descargar los valores del stock de Tesla *BMV: TSLA* en los últimos *dos años*.
+
+```{r message=FALSE, warning=FALSE}
+#dt_ej3<-("TSLA")
+#pdej<-Sys.Date()-(365*3) #primer fecha
+#pdej
+#Descargando los valores
+#dataej3<- BatchgetSymbols(tickers = dt_ej3,
+                       #first.date = pdej,
+                       #last.date = ld,
+                       #freq.data = int,
+                       #do.cache = FALSE,
+                       #thresh.bad.data = 0)
+
+#Generando data frame con los valores
+#data_precio_ej2<-dataej3$df.tickers
+#1colnames(data_precio_ej2)
+
 ```
 

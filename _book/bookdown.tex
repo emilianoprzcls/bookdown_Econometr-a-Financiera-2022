@@ -117,7 +117,7 @@
 
 \title{Diplomado de Econometría Financiera}
 \author{Benjamin Oliva y Emiliano Pérez Caullieres}
-\date{2022-08-19}
+\date{2022-09-06}
 
 \begin{document}
 \maketitle
@@ -132,7 +132,7 @@
 \hypertarget{el-problema}{%
 \section{El problema}\label{el-problema}}
 
-Recrodando que el método de MCO resulta en encontrar la combinación de valores de los estimadores de los parámetros \(\hat{\boldsymbol{\beta}}\) que permita minimizar la suma de los residuales (estimadores de los términos de erro \(\boldsymbol{\varepsilon}\)) al cuadrado dada por:
+Recordando que el método de MCO resulta en encontrar la combinación de valores de los estimadores de los parámetros \(\hat{\boldsymbol{\beta}}\) que permita minimizar la suma de los residuales (estimadores de los términos de erro \(\boldsymbol{\varepsilon}\)) al cuadrado dada por:
 
 \[
     \sum^{N}_{i=1}{e^2_i} = \sum^{N}_{i = 1}{(y_i - \mathbf{X}'_i \hat{\boldsymbol{\beta}})^2}
@@ -165,8 +165,8 @@ Debido a que el objetivo es encontrar la matriz \(\hat{\boldsymbol\beta}\) despe
     \mathbf{X'X}\hat{\boldsymbol \beta} = \mathbf{X'Y}
 \]
 
-\hypertarget{estimaciuxf3n}{%
-\section{Estimación}\label{estimaciuxf3n}}
+\hypertarget{estimaciuxf3n-r}{%
+\section{Estimación R}\label{estimaciuxf3n-r}}
 
 Para la estimación utilizaremos el paquete ``BatchGetSymbols''. Este paquete nos permitirá descargar información acerca de la bolsa de valores internacional.
 
@@ -190,14 +190,15 @@ Para la estimación utilizaremos el paquete ``BatchGetSymbols''. Este paquete no
 \CommentTok{\#Primero determinamos el lapso de tiempo}
 \NormalTok{pd}\OtherTok{\textless{}{-}}\FunctionTok{Sys.Date}\NormalTok{()}\SpecialCharTok{{-}}\DecValTok{365} \CommentTok{\#primer fecha}
 \NormalTok{pd}
-\CommentTok{\#\textgreater{} [1] "2021{-}08{-}19"}
+\CommentTok{\#\textgreater{} [1] "2021{-}09{-}06"}
 \NormalTok{ld}\OtherTok{\textless{}{-}}\FunctionTok{Sys.Date}\NormalTok{() }\CommentTok{\#última fecha}
 \NormalTok{ld}
-\CommentTok{\#\textgreater{} [1] "2022{-}08{-}19"}
+\CommentTok{\#\textgreater{} [1] "2022{-}09{-}06"}
 \CommentTok{\#Intervalos de tiempo}
 \NormalTok{int}\OtherTok{\textless{}{-}}\StringTok{"monthly"}
 \CommentTok{\#Datos a elegir}
 \NormalTok{dt}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"AMZN"}\NormalTok{)}
+
 \CommentTok{\#Descargando los valores}
 \NormalTok{?}\FunctionTok{BatchGetSymbols}\NormalTok{()}
 \NormalTok{data}\OtherTok{\textless{}{-}} \FunctionTok{BatchGetSymbols}\NormalTok{(}\AttributeTok{tickers =}\NormalTok{ dt,}
@@ -206,8 +207,15 @@ Para la estimación utilizaremos el paquete ``BatchGetSymbols''. Este paquete no
                        \AttributeTok{freq.data =}\NormalTok{ int,}
                        \AttributeTok{do.cache =} \ConstantTok{FALSE}\NormalTok{,}
                        \AttributeTok{thresh.bad.data =} \DecValTok{0}\NormalTok{)}
+
 \CommentTok{\#Generando data frame con los valores}
 \NormalTok{data\_precio}\OtherTok{\textless{}{-}}\NormalTok{data}\SpecialCharTok{$}\NormalTok{df.tickers}
+\FunctionTok{colnames}\NormalTok{(data\_precio)}
+\CommentTok{\#\textgreater{}  [1] "ticker"              "ref.date"           }
+\CommentTok{\#\textgreater{}  [3] "volume"              "price.open"         }
+\CommentTok{\#\textgreater{}  [5] "price.high"          "price.low"          }
+\CommentTok{\#\textgreater{}  [7] "price.close"         "price.adjusted"     }
+\CommentTok{\#\textgreater{}  [9] "ret.adjusted.prices" "ret.closing.prices"}
 \end{Highlighting}
 \end{Shaded}
 
@@ -216,7 +224,7 @@ Para la estimación utilizaremos el paquete ``BatchGetSymbols''. Este paquete no
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{sp\_precio}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(data\_precio, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{ref.date, }\AttributeTok{y=}\NormalTok{price.open))}\SpecialCharTok{+}\FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =}\DecValTok{2}\NormalTok{, }\AttributeTok{colour =} \StringTok{"black"}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Fecha"}\NormalTok{, }\AttributeTok{y=}\StringTok{"Precio de apertura (USD)"}\NormalTok{, }\AttributeTok{title=}\StringTok{"Precio de apertura de AMZN en el ultimo año"}\NormalTok{)}\SpecialCharTok{+} \FunctionTok{theme\_light}\NormalTok{()}
+\NormalTok{sp\_precio}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(data\_precio, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{ref.date, }\AttributeTok{y=}\NormalTok{price.open))}\SpecialCharTok{+}\FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =}\DecValTok{2}\NormalTok{, }\AttributeTok{colour =} \StringTok{"black"}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Fecha"}\NormalTok{, }\AttributeTok{y=}\StringTok{"Precio de apertura (USD)"}\NormalTok{, }\AttributeTok{title=}\StringTok{"Precio de apertura de AMZN en el ultimo año"}\NormalTok{)}\SpecialCharTok{+} \FunctionTok{theme\_light}\NormalTok{()}\SpecialCharTok{+} \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =}\NormalTok{ lm, }\AttributeTok{se =} \ConstantTok{TRUE}\NormalTok{)}
 \NormalTok{sp\_precio}
 \end{Highlighting}
 \end{Shaded}
@@ -226,7 +234,7 @@ Para la estimación utilizaremos el paquete ``BatchGetSymbols''. Este paquete no
 \begin{Shaded}
 \begin{Highlighting}[]
 
-\NormalTok{sp\_volumen}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(data\_precio, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{ref.date, }\AttributeTok{y=}\NormalTok{volume))}\SpecialCharTok{+}\FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =}\DecValTok{2}\NormalTok{, }\AttributeTok{colour =} \StringTok{"black"}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Fecha"}\NormalTok{, }\AttributeTok{y=}\StringTok{"Volumen"}\NormalTok{, }\AttributeTok{title=}\StringTok{"Volumenes de AMZN en el ultimo año"}\NormalTok{)}\SpecialCharTok{+} \FunctionTok{theme\_light}\NormalTok{()}
+\NormalTok{sp\_volumen}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(data\_precio, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{ref.date, }\AttributeTok{y=}\NormalTok{volume))}\SpecialCharTok{+}\FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =}\DecValTok{2}\NormalTok{, }\AttributeTok{colour =} \StringTok{"black"}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Fecha"}\NormalTok{, }\AttributeTok{y=}\StringTok{"Volumen"}\NormalTok{, }\AttributeTok{title=}\StringTok{"Volumenes de AMZN en el ultimo año"}\NormalTok{)}\SpecialCharTok{+} \FunctionTok{theme\_light}\NormalTok{()}\SpecialCharTok{+} \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =}\NormalTok{ lm, }\AttributeTok{se =} \ConstantTok{TRUE}\NormalTok{)}
 \NormalTok{sp\_volumen}
 \end{Highlighting}
 \end{Shaded}
@@ -241,14 +249,15 @@ Para la estimación utilizaremos el paquete ``BatchGetSymbols''. Este paquete no
 \CommentTok{\#datos estadísticos}
 \FunctionTok{summary}\NormalTok{(data\_precio[}\FunctionTok{c}\NormalTok{(}\StringTok{"price.open"}\NormalTok{,}\StringTok{"volume"}\NormalTok{)])}
 \CommentTok{\#\textgreater{}    price.open        volume         }
-\CommentTok{\#\textgreater{}  Min.   :106.3   Min.   :5.338e+08  }
-\CommentTok{\#\textgreater{}  1st Qu.:135.0   1st Qu.:1.273e+09  }
-\CommentTok{\#\textgreater{}  Median :159.7   Median :1.465e+09  }
-\CommentTok{\#\textgreater{}  Mean   :151.1   Mean   :1.407e+09  }
+\CommentTok{\#\textgreater{}  Min.   :106.3   Min.   :1.140e+08  }
+\CommentTok{\#\textgreater{}  1st Qu.:126.0   1st Qu.:1.273e+09  }
+\CommentTok{\#\textgreater{}  Median :152.7   Median :1.465e+09  }
+\CommentTok{\#\textgreater{}  Mean   :148.5   Mean   :1.392e+09  }
 \CommentTok{\#\textgreater{}  3rd Qu.:167.6   3rd Qu.:1.628e+09  }
 \CommentTok{\#\textgreater{}  Max.   :177.2   Max.   :2.258e+09}
 \CommentTok{\#análisis de regresión lineal lm() y=precio,x=fecha}
-\NormalTok{reg\_tiempo\_precio}\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(price.open}\SpecialCharTok{\textasciitilde{}}\NormalTok{ref.date, }\AttributeTok{data=}\NormalTok{data\_precio)}
+\NormalTok{reg\_tiempo\_precio}\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(price.open}\SpecialCharTok{\textasciitilde{}}\NormalTok{ref.date, }\AttributeTok{data=}\NormalTok{data\_precio) }
+\CommentTok{\#¡Siempre se pone dentro de lm() la variable dependiente primero y luego la independiete!}
 \FunctionTok{summary}\NormalTok{(reg\_tiempo\_precio)}
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} Call:}
@@ -256,19 +265,19 @@ Para la estimación utilizaremos el paquete ``BatchGetSymbols''. Este paquete no
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} Residuals:}
 \CommentTok{\#\textgreater{}      Min       1Q   Median       3Q      Max }
-\CommentTok{\#\textgreater{} {-}21.4042 {-}10.1319  {-}0.2814  11.8496  22.2175 }
+\CommentTok{\#\textgreater{} {-}21.9379  {-}9.7257  {-}0.8686   9.1948  20.6055 }
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} Coefficients:}
 \CommentTok{\#\textgreater{}               Estimate Std. Error t value Pr(\textgreater{}|t|)    }
-\CommentTok{\#\textgreater{} (Intercept) 3127.64731  671.24128   4.659 0.000694 ***}
-\CommentTok{\#\textgreater{} ref.date      {-}0.15646    0.03528  {-}4.434 0.001004 ** }
+\CommentTok{\#\textgreater{} (Intercept) 3355.37814  615.12157   5.455 0.000199 ***}
+\CommentTok{\#\textgreater{} ref.date      {-}0.16831    0.03228  {-}5.214 0.000288 ***}
 \CommentTok{\#\textgreater{} {-}{-}{-}}
 \CommentTok{\#\textgreater{} Signif. codes:  }
 \CommentTok{\#\textgreater{} 0 \textquotesingle{}***\textquotesingle{} 0.001 \textquotesingle{}**\textquotesingle{} 0.01 \textquotesingle{}*\textquotesingle{} 0.05 \textquotesingle{}.\textquotesingle{} 0.1 \textquotesingle{} \textquotesingle{} 1}
 \CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Residual standard error: 14.17 on 11 degrees of freedom}
-\CommentTok{\#\textgreater{} Multiple R{-}squared:  0.6413, Adjusted R{-}squared:  0.6087 }
-\CommentTok{\#\textgreater{} F{-}statistic: 19.66 on 1 and 11 DF,  p{-}value: 0.001004}
+\CommentTok{\#\textgreater{} Residual standard error: 13.13 on 11 degrees of freedom}
+\CommentTok{\#\textgreater{} Multiple R{-}squared:  0.7119, Adjusted R{-}squared:  0.6857 }
+\CommentTok{\#\textgreater{} F{-}statistic: 27.18 on 1 and 11 DF,  p{-}value: 0.0002884}
 
 \CommentTok{\#análisis de regresión lineal lm() y=volumen,x=fecha}
 \NormalTok{reg\_tiempo\_volumen}\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(volume}\SpecialCharTok{\textasciitilde{}}\NormalTok{ref.date, }\AttributeTok{data=}\NormalTok{data\_precio)}
@@ -279,34 +288,228 @@ Para la estimación utilizaremos el paquete ``BatchGetSymbols''. Este paquete no
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} Residuals:}
 \CommentTok{\#\textgreater{}        Min         1Q     Median         3Q        Max }
-\CommentTok{\#\textgreater{} {-}853671262  {-}49527288   15223912  212399437  751223038 }
+\CommentTok{\#\textgreater{} {-}1.133e+09 {-}1.780e+08  4.137e+07  2.347e+08  9.141e+08 }
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} Coefficients:}
 \CommentTok{\#\textgreater{}               Estimate Std. Error t value Pr(\textgreater{}|t|)}
-\CommentTok{\#\textgreater{} (Intercept) {-}1.988e+10  2.050e+10  {-}0.970    0.353}
-\CommentTok{\#\textgreater{} ref.date     1.119e+06  1.077e+06   1.039    0.321}
+\CommentTok{\#\textgreater{} (Intercept)  1.659e+10  2.358e+10   0.704    0.496}
+\CommentTok{\#\textgreater{} ref.date    {-}7.978e+05  1.237e+06  {-}0.645    0.532}
 \CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Residual standard error: 432700000 on 11 degrees of freedom}
-\CommentTok{\#\textgreater{} Multiple R{-}squared:  0.0893, Adjusted R{-}squared:  0.006508 }
-\CommentTok{\#\textgreater{} F{-}statistic: 1.079 on 1 and 11 DF,  p{-}value: 0.3213}
+\CommentTok{\#\textgreater{} Residual standard error: 503100000 on 11 degrees of freedom}
+\CommentTok{\#\textgreater{} Multiple R{-}squared:  0.03641,    Adjusted R{-}squared:  {-}0.05119 }
+\CommentTok{\#\textgreater{} F{-}statistic: 0.4157 on 1 and 11 DF,  p{-}value: 0.5323}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{hello-bookdown}{%
-\chapter{Hello bookdown}\label{hello-bookdown}}
+\hypertarget{ejercicio}{%
+\section{Ejercicio}\label{ejercicio}}
 
-All chapters start with a first-level heading followed by your chapter title, like the line above. There should be only one first-level heading (\texttt{\#}) per .Rmd file.
+El objetivo de este ejrcicio es simplemente que indiquen y modifiquen los errores en el código. Así pues, deberán descomentar \emph{-quitar las \#antes del código-} para empezar el ejercicio.
 
-\hypertarget{a-section}{%
-\section{A section}\label{a-section}}
+\hypertarget{section}{%
+\subsection{1}\label{section}}
 
-All chapter sections start with a second-level (\texttt{\#\#}) or higher heading followed by your section title, like the sections above and below here. You can have as many as you want within a chapter.
+El objetivo de este código es explicar la variable \textbf{``volume''} con la variable \textbf{``price.high''}.
 
-\hypertarget{an-unnumbered-section}{%
-\subsection*{An unnumbered section}\label{an-unnumbered-section}}
-\addcontentsline{toc}{subsection}{An unnumbered section}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#reg\_tiempo\_ej1\textless{}{-}lm(price.high\textasciitilde{}volume, data=data\_precio)}
+\CommentTok{\#sumary(reg\_tiempo\_ej1)}
+\end{Highlighting}
+\end{Shaded}
 
-Chapters and sections are numbered by default. To un-number a heading, add a \texttt{\{.unnumbered\}} or the shorter \texttt{\{-\}} at the end of the heading, like in this section.
+\hypertarget{section-1}{%
+\subsection{2}\label{section-1}}
+
+El objetivo de este código es explicar la variable \textbf{``volume''} con la variable \textbf{``price.low''}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#reg\_tiempo\_ej2\textless{}{-}lm(price.low\textasciitilde{}volume, data=data\_precio)}
+\CommentTok{\#summary(reg\_tiempo\_ej1)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{opcional}{%
+\subsection{3 (opcional)}\label{opcional}}
+
+El objetivo de este ejercicio es descargar los valores del stock de Tesla \emph{BMV: TSLA} en los últimos \emph{dos años}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#dt\_ej3\textless{}{-}("TSLA")}
+\CommentTok{\#pdej\textless{}{-}Sys.Date(){-}(365*3) \#primer fecha}
+\CommentTok{\#pdej}
+\CommentTok{\#Descargando los valores}
+\CommentTok{\#dataej3\textless{}{-} BatchgetSymbols(tickers = dt\_ej3,}
+                       \CommentTok{\#first.date = pdej,}
+                       \CommentTok{\#last.date = ld,}
+                       \CommentTok{\#freq.data = int,}
+                       \CommentTok{\#do.cache = FALSE,}
+                       \CommentTok{\#thresh.bad.data = 0)}
+
+\CommentTok{\#Generando data frame con los valores}
+\CommentTok{\#data\_precio\_ej2\textless{}{-}dataej3$df.tickers}
+\CommentTok{\#1colnames(data\_precio\_ej2)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{muxe1xima-verosimilitud}{%
+\chapter{Máxima Verosimilitud}\label{muxe1xima-verosimilitud}}
+
+\hypertarget{el-problema-1}{%
+\section{El problema}\label{el-problema-1}}
+
+Recordemos que dado \(f(y_i | \mathbf{x}_i)\) la función de densidad condicional de \(y_i\) dado \(\mathbf{x}_i\). Sea \(\boldsymbol{\theta}\) un conjunto de parámetros de la función. Entonces la función de densidad conjunta de variables aleatorias independientes \(\{ y_i : y_i \in \mathbb{R} \}\) dados los valores \(\{ \mathbf{x}_i : \mathbf{x}_i \in \mathbb{R}^K \}\) estará dada por:
+
+\begin{equation}
+    \Pi_{i = 1}^{n} f(y_i | \mathbf{x}_i; \boldsymbol{\theta}) = f(y_1, y_2, \ldots, y_n | \mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_n; \boldsymbol{\theta}) = L(\boldsymbol{\theta})
+    \label{eq:EqLikehood}
+\end{equation}
+
+A la ecuación \eqref{eq:EqLikehood} se le conoce como ecuación de verosimilitud. El problema de máxima verosimilitud entonces será:
+\begin{equation}
+    \max_{\boldsymbol{\theta} \in \boldsymbol{\Theta}} \Pi_{i = 1}^{n} f(y_i | \mathbf{x}_i; \boldsymbol{\theta}) = \max_{\boldsymbol{\theta} \in \boldsymbol{\Theta}} L(\boldsymbol{\theta})
+        \label{eq:EqMaxLike}
+\end{equation}
+
+Dado que el logaritmo natural es una transformación monotona, podemos decir que el problema de la ecuación \eqref{eq:EqMaxLike} es equivalente a:
+
+\begin{equation}
+     \max_{\boldsymbol{\theta} \in \boldsymbol{\Theta}} ln L(\boldsymbol{\theta}) = \max_{\boldsymbol{\theta} \in \boldsymbol{\Theta}} ln \Pi_{i = 1}^{n} f(y_i | \mathbf{x}_i; \boldsymbol{\theta}) = \max_{\boldsymbol{\theta} \in \boldsymbol{\Theta}} \sum_{i = 1}^{n} ln f(y_i | \mathbf{x}_i; \boldsymbol{\theta})
+            \label{eq:EqLogML}
+\end{equation}
+
+Para solucionnar el problema se tiene que determinar las condicones de primer y segundo orden, las cuales serán:
+\begin{equation}
+    \frac{\partial}{\partial \boldsymbol{\theta}} ln L(\boldsymbol{\theta}) = \nabla ln L(\boldsymbol{\theta})
+          \label{eq:MLCPO}
+\end{equation}
+
+\begin{equation}
+    \frac{\partial^2}{\partial^2 \boldsymbol{\theta}} ln L(\boldsymbol{\theta}) = \frac{\partial}{\partial \boldsymbol{\theta}} ln L(\boldsymbol{\theta}) \cdot  \frac{\partial}{\partial \boldsymbol{\theta}} ln L(\boldsymbol{\theta}') = H(\boldsymbol{\theta})
+             \label{eq:MLCSO}
+\end{equation}
+
+La solución estará dada por aquel valor de \(\hat{\boldsymbol{\theta}}\) que hace:
+\begin{equation*}
+    \frac{\partial}{\partial \boldsymbol{\theta}} ln L(\hat{\boldsymbol{\theta}}) = 0
+\end{equation*}
+
+A su vez, la varianza será aquella que resulta de:
+\begin{equation*}
+    Var[\hat{\boldsymbol{\theta}} | \mathbf{X}] = \left( - \mathbb{E}_{\hat{\boldsymbol{\theta}}}[H(\boldsymbol{\theta})] \right)^{-1}
+\end{equation*}
+
+\hypertarget{estimaciuxf3n-y-simunlaciuxf3n}{%
+\section{Estimación y simunlación}\label{estimaciuxf3n-y-simunlaciuxf3n}}
+
+\hypertarget{lanzar-una-moneda}{%
+\subsection{Lanzar una moneda}\label{lanzar-una-moneda}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}\CommentTok{\#esto sirve para siempre generar los mismos numeros aleatorios}
+\CommentTok{\#rbinom(numero observaciones,numero de ensayos,probabilidad de exito en cada ensayo)}
+\NormalTok{cara}\OtherTok{\textless{}{-}}\FunctionTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{100}\NormalTok{,}\FloatTok{0.5}\NormalTok{)}
+\NormalTok{cara}\CommentTok{\#esto nos dice de los 100 ensayos cuantos fueron cara}
+\CommentTok{\#\textgreater{} [1] 47}
+\NormalTok{sol}\OtherTok{\textless{}{-}}\DecValTok{100}\SpecialCharTok{{-}}\NormalTok{cara}
+\NormalTok{sol}
+\CommentTok{\#\textgreater{} [1] 53}
+
+
+\CommentTok{\#Ahora definiremos la función que encontrará la función de verosimilutud para determinado valor p}
+\CommentTok{\#}
+\NormalTok{verosimilitud }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(p)\{}
+  \FunctionTok{dbinom}\NormalTok{(cara, }\DecValTok{100}\NormalTok{, p)}
+\NormalTok{\}}
+
+\CommentTok{\#si suponemos que la probabilidad sesgada de que caiga cara es 40\%}
+\NormalTok{prob\_sesgada}\OtherTok{\textless{}{-}}\FloatTok{0.4}
+\CommentTok{\#es posible calcular la función de que salga cara}
+\FunctionTok{verosimilitud}\NormalTok{(prob\_sesgada)}
+\CommentTok{\#\textgreater{} [1] 0.02919091}
+\CommentTok{\#ahora es posible generar una función de verimilitud negativa }
+\CommentTok{\#para maximizar el valor de la verosimilitud}
+\NormalTok{neg\_verosimilitud }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(p)\{}
+  \FunctionTok{dbinom}\NormalTok{(cara, }\DecValTok{100}\NormalTok{, p)}\SpecialCharTok{*{-}}\DecValTok{1}
+\NormalTok{\}}
+\FunctionTok{neg\_verosimilitud}\NormalTok{(prob\_sesgada)}
+\CommentTok{\#\textgreater{} [1] {-}0.02919091}
+\CommentTok{\# unamos la función nlm() para maximizar esta función no linear}
+\CommentTok{\#?nlm()}
+\FunctionTok{nlm}\NormalTok{(neg\_verosimilitud,}\FloatTok{0.5}\NormalTok{,}\AttributeTok{stepmax=}\FloatTok{0.5}\NormalTok{)}\CommentTok{\#se pone un parametro porque sabemos que hay un 0.5 de probabilidad de que caiga cara}
+\CommentTok{\#\textgreater{} $minimum}
+\CommentTok{\#\textgreater{} [1] {-}0.07973193}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} $estimate}
+\CommentTok{\#\textgreater{} [1] 0.47}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} $gradient}
+\CommentTok{\#\textgreater{} [1] 1.589701e{-}10}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} $code}
+\CommentTok{\#\textgreater{} [1] 1}
+\CommentTok{\#\textgreater{} }
+\CommentTok{\#\textgreater{} $iterations}
+\CommentTok{\#\textgreater{} [1] 4}
+\end{Highlighting}
+\end{Shaded}
+
+Si bien el ejercicio anterior es un tanto repetitivo debido a que sabemos que hay un 50\% de que caiga una moneda de un lado o otro. Esto ejemplifica la manera en la que se utiliza el metodo de maximización de máxima verosimilitud.
+
+\hypertarget{muxe9todo-generalizado-de-momentos-mgm}{%
+\chapter{Método Generalizado de Momentos (MGM)}\label{muxe9todo-generalizado-de-momentos-mgm}}
+
+\hypertarget{el-problema-2}{%
+\section{El problema}\label{el-problema-2}}
+
+Retomemos el modelo de regresión lineal tal que:
+
+\begin{equation}
+y_i=X_i\beta+u_i
+    \label{Eq_reglin}
+\end{equation}
+
+Tomando en cuenta los principios de ortogonalidad (\(E(Z_iu_i)=0\)) y (\(rankE(Z_i^{'}X_i)=0\)) sabemos que \(\beta\) es el único vector de \(N\times1\) que resuelve las condiciones de momento de determinada población. En otras palabras, \(E[z_i^{'}(y_i-x_i\beta)]=0\) es una solución y \(E[z_i^{'}(y_i-x_i\beta)]\neq0\) \emph{NO} es una solución. Debido a que la media muestral son estimadores consistentes de momentos de una población, se puede:
+
+\begin{equation}
+N^{-1}\sum_{i=1}^{N}z_i^{'}(y_i-x_i\beta)=0
+\label{eq:Eqreglin1asolu1}
+\end{equation}
+
+Asumiendo que la ecuación \eqref{eq:Eqreglin1asolu1} tiene L ecuaciones lineales y K coeficientes \(\beta\) desconocidos y \(K=L\), entonces la matriz \(\sum_{i=1}^{N}z_i^{'}x_i\) debe ser no singular para encontrar los coeficientes de la siguiente manera.
+
+\begin{equation}
+\hat{\beta}=N^{-1}\left[\sum_{i=1}^{N}z_i^{'}x_i\right]^{-1}\left[\sum_{i=1}^{N}z_i^{'}y_i\right]
+\label{eq:Eqreglin1asolu2}
+\end{equation}
+
+Para simplificar \eqref{eq:Eqreglin1asolu2} se puede nombrar Z juntando \(z_i\) N veces para crear una matriz de tamaño \(NG\times L\). Lo mismo hacemos con X juntando \(x_i\) para obtener una de \(NG\times K\) y Y obteniendo una \(NG\times 1\). Obteniendo:
+
+\begin{equation}
+\hat{\beta}=[Z^{'}X]^{-1}[Z^{'}Y]
+\end{equation}
+
+Es importante tomar en cuenta cuando el caso en el que hay más ecuaciones lineales que coeficientes \(\beta\); es decir, \(L\geq K\). En estos casos es muy probrable que no haya solución, por lo que mejor que se puede estimar es pones la ecuación \eqref{eq:Eqreglin1asolu1}, tan pequeña como sea posible. Por lo mismo el paso que nos lleva a la ecuación \eqref{eq:Eqreglin1asolu2}, debe eliminarse \(N^{-1}\). El objetivo:
+
+\begin{equation}
+\min_{\beta} \left[\sum_{i=1}^{N}z_i^{'}x_i\beta\right]^{-1}\left[\sum_{i=1}^{N}z_i^{'}y_i\beta\right]
+\label{eq:Eqreglin1asolu77}
+\end{equation}
+
+Así pues nombramos a W como una matriz simétrica de \(W\times W\) donde se genera la variable \(b\) que debemos minimizar que sustituye a \(\beta\) creando una función cuadrática en la ecuación \eqref{eq:Eqreglin1asolu2}.
+\begin{equation}
+\min_{b}\left[\sum_{i=1}^{N}z_i^{'}x_ib\right]^{-1}\left[\sum_{i=1}^{N}z_i^{'}y_ib\right]
+\label{eq:Eqreglin1asolu78}
+\end{equation}
+
+\begin{equation}
+\therefore\hat{\beta}=[X^{'}Z\hat{W}Z^{'}X]^{-1}[X^{'}Z\hat{W}Z^{'}Y]
+\end{equation}
+
+Sin embargo, \(X^{'}Z\hat{W}Z^{'}X\) debe ser no singular para que haya una solución. Para esto se asume que \(\hat{W}\) tiene un limite de probabilidad no singular. Esto se describe como \(\hat{W}\xrightarrow[]{p}W\) y \(N\xrightarrow[]{}W\infty\) donde \(W\) no es aleatorio, es una matriz positiva definida simétrica de \(L\times L\).
 
   \bibliography{book.bib,packages.bib}
 

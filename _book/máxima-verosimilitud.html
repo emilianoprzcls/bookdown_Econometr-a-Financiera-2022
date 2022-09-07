@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 2 Máxima Verosimilitud | Diplomado de Econometría Financiera</title>
+<meta name="author" content="Benjamin Oliva y Emiliano Pérez Caullieres">
+<meta name="description" content="2.1 El problema Recordemos que dado \(f(y_i | \mathbf{x}_i)\) la función de densidad condicional de \(y_i\) dado \(\mathbf{x}_i\). Sea \(\boldsymbol{\theta}\) un conjunto de parámetros de la...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 2 Máxima Verosimilitud | Diplomado de Econometría Financiera">
+<meta property="og:type" content="book">
+<meta property="og:description" content="2.1 El problema Recordemos que dado \(f(y_i | \mathbf{x}_i)\) la función de densidad condicional de \(y_i\) dado \(\mathbf{x}_i\). Sea \(\boldsymbol{\theta}\) un conjunto de parámetros de la...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 2 Máxima Verosimilitud | Diplomado de Econometría Financiera">
+<meta name="twitter:description" content="2.1 El problema Recordemos que dado \(f(y_i | \mathbf{x}_i)\) la función de densidad condicional de \(y_i\) dado \(\mathbf{x}_i\). Sea \(\boldsymbol{\theta}\) un conjunto de parámetros de la...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Diplomado de Econometría Financiera</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Mínimos Cuadrados Ordinarios</a></li>
+<li><a class="active" href="m%C3%A1xima-verosimilitud.html"><span class="header-section-number">2</span> Máxima Verosimilitud</a></li>
+<li><a class="" href="m%C3%A9todo-generalizado-de-momentos-mgm.html"><span class="header-section-number">3</span> Método Generalizado de Momentos (MGM)</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="máxima-verosimilitud" class="section level1" number="2">
+<h1>
+<span class="header-section-number">2</span> Máxima Verosimilitud<a class="anchor" aria-label="anchor" href="#m%C3%A1xima-verosimilitud"><i class="fas fa-link"></i></a>
+</h1>
+<div id="el-problema-1" class="section level2" number="2.1">
+<h2>
+<span class="header-section-number">2.1</span> El problema<a class="anchor" aria-label="anchor" href="#el-problema-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>Recordemos que dado <span class="math inline">\(f(y_i | \mathbf{x}_i)\)</span> la función de densidad condicional de <span class="math inline">\(y_i\)</span> dado <span class="math inline">\(\mathbf{x}_i\)</span>. Sea <span class="math inline">\(\boldsymbol{\theta}\)</span> un conjunto de parámetros de la función. Entonces la función de densidad conjunta de variables aleatorias independientes <span class="math inline">\(\{ y_i : y_i \in \mathbb{R} \}\)</span> dados los valores <span class="math inline">\(\{ \mathbf{x}_i : \mathbf{x}_i \in \mathbb{R}^K \}\)</span> estará dada por:</p>
+<p><span class="math display" id="eq:EqLikehood">\[\begin{equation}
+    \Pi_{i = 1}^{n} f(y_i | \mathbf{x}_i; \boldsymbol{\theta}) = f(y_1, y_2, \ldots, y_n | \mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_n; \boldsymbol{\theta}) = L(\boldsymbol{\theta})
+    \tag{2.1}
+\end{equation}\]</span></p>
+<p>A la ecuación <a href="m%C3%A1xima-verosimilitud.html#eq:EqLikehood">(2.1)</a> se le conoce como ecuación de verosimilitud. El problema de máxima verosimilitud entonces será:
+<span class="math display" id="eq:EqMaxLike">\[\begin{equation}
+    \max_{\boldsymbol{\theta} \in \boldsymbol{\Theta}} \Pi_{i = 1}^{n} f(y_i | \mathbf{x}_i; \boldsymbol{\theta}) = \max_{\boldsymbol{\theta} \in \boldsymbol{\Theta}} L(\boldsymbol{\theta})
+        \tag{2.2}
+\end{equation}\]</span></p>
+<p>Dado que el logaritmo natural es una transformación monotona, podemos decir que el problema de la ecuación <a href="m%C3%A1xima-verosimilitud.html#eq:EqMaxLike">(2.2)</a> es equivalente a:</p>
+<p><span class="math display" id="eq:EqLogML">\[\begin{equation}
+     \max_{\boldsymbol{\theta} \in \boldsymbol{\Theta}} ln L(\boldsymbol{\theta}) = \max_{\boldsymbol{\theta} \in \boldsymbol{\Theta}} ln \Pi_{i = 1}^{n} f(y_i | \mathbf{x}_i; \boldsymbol{\theta}) = \max_{\boldsymbol{\theta} \in \boldsymbol{\Theta}} \sum_{i = 1}^{n} ln f(y_i | \mathbf{x}_i; \boldsymbol{\theta})
+            \tag{2.3}
+\end{equation}\]</span></p>
+<p>Para solucionnar el problema se tiene que determinar las condicones de primer y segundo orden, las cuales serán:
+<span class="math display" id="eq:MLCPO">\[\begin{equation}
+    \frac{\partial}{\partial \boldsymbol{\theta}} ln L(\boldsymbol{\theta}) = \nabla ln L(\boldsymbol{\theta})
+          \tag{2.4}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:MLCSO">\[\begin{equation}
+    \frac{\partial^2}{\partial^2 \boldsymbol{\theta}} ln L(\boldsymbol{\theta}) = \frac{\partial}{\partial \boldsymbol{\theta}} ln L(\boldsymbol{\theta}) \cdot  \frac{\partial}{\partial \boldsymbol{\theta}} ln L(\boldsymbol{\theta}') = H(\boldsymbol{\theta})
+             \tag{2.5}
+\end{equation}\]</span></p>
+<p>La solución estará dada por aquel valor de <span class="math inline">\(\hat{\boldsymbol{\theta}}\)</span> que hace:
+<span class="math display">\[\begin{equation*}
+    \frac{\partial}{\partial \boldsymbol{\theta}} ln L(\hat{\boldsymbol{\theta}}) = 0
+\end{equation*}\]</span></p>
+<p>A su vez, la varianza será aquella que resulta de:
+<span class="math display">\[\begin{equation*}
+    Var[\hat{\boldsymbol{\theta}} | \mathbf{X}] = \left( - \mathbb{E}_{\hat{\boldsymbol{\theta}}}[H(\boldsymbol{\theta})] \right)^{-1}
+\end{equation*}\]</span></p>
+</div>
+<div id="estimación-y-simunlación" class="section level2" number="2.2">
+<h2>
+<span class="header-section-number">2.2</span> Estimación y simunlación<a class="anchor" aria-label="anchor" href="#estimaci%C3%B3n-y-simunlaci%C3%B3n"><i class="fas fa-link"></i></a>
+</h2>
+<div id="lanzar-una-moneda" class="section level3" number="2.2.1">
+<h3>
+<span class="header-section-number">2.2.1</span> Lanzar una moneda<a class="anchor" aria-label="anchor" href="#lanzar-una-moneda"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span><span class="co">#esto sirve para siempre generar los mismos numeros aleatorios</span></span>
+<span><span class="co">#rbinom(numero observaciones,numero de ensayos,probabilidad de exito en cada ensayo)</span></span>
+<span><span class="va">cara</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">100</span>,<span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="va">cara</span><span class="co">#esto nos dice de los 100 ensayos cuantos fueron cara</span></span>
+<span><span class="co">#&gt; [1] 47</span></span>
+<span><span class="va">sol</span><span class="op">&lt;-</span><span class="fl">100</span><span class="op">-</span><span class="va">cara</span></span>
+<span><span class="va">sol</span></span>
+<span><span class="co">#&gt; [1] 53</span></span>
+<span></span>
+<span></span>
+<span><span class="co">#Ahora definiremos la función que encontrará la función de verosimilutud para determinado valor p</span></span>
+<span><span class="co">#</span></span>
+<span><span class="va">verosimilitud</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">p</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="va">cara</span>, <span class="fl">100</span>, <span class="va">p</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co">#si suponemos que la probabilidad sesgada de que caiga cara es 40%</span></span>
+<span><span class="va">prob_sesgada</span><span class="op">&lt;-</span><span class="fl">0.4</span></span>
+<span><span class="co">#es posible calcular la función de que salga cara</span></span>
+<span><span class="fu">verosimilitud</span><span class="op">(</span><span class="va">prob_sesgada</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.02919091</span></span>
+<span><span class="co">#ahora es posible generar una función de verimilitud negativa </span></span>
+<span><span class="co">#para maximizar el valor de la verosimilitud</span></span>
+<span><span class="va">neg_verosimilitud</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">p</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="va">cara</span>, <span class="fl">100</span>, <span class="va">p</span><span class="op">)</span><span class="op">*</span><span class="op">-</span><span class="fl">1</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">neg_verosimilitud</span><span class="op">(</span><span class="va">prob_sesgada</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] -0.02919091</span></span>
+<span><span class="co"># unamos la función nlm() para maximizar esta función no linear</span></span>
+<span><span class="co">#?nlm()</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/nlm.html">nlm</a></span><span class="op">(</span><span class="va">neg_verosimilitud</span>,<span class="fl">0.5</span>,stepmax<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span><span class="co">#se pone un parametro porque sabemos que hay un 0.5 de probabilidad de que caiga cara</span></span>
+<span><span class="co">#&gt; $minimum</span></span>
+<span><span class="co">#&gt; [1] -0.07973193</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $estimate</span></span>
+<span><span class="co">#&gt; [1] 0.47</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $gradient</span></span>
+<span><span class="co">#&gt; [1] 1.589701e-10</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $code</span></span>
+<span><span class="co">#&gt; [1] 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $iterations</span></span>
+<span><span class="co">#&gt; [1] 4</span></span></code></pre></div>
+<p>Si bien el ejercicio anterior es un tanto repetitivo debido a que sabemos que hay un 50% de que caiga una moneda de un lado o otro. Esto ejemplifica la manera en la que se utiliza el metodo de maximización de máxima verosimilitud.</p>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="index.html"><span class="header-section-number">1</span> Mínimos Cuadrados Ordinarios</a></div>
+<div class="next"><a href="m%C3%A9todo-generalizado-de-momentos-mgm.html"><span class="header-section-number">3</span> Método Generalizado de Momentos (MGM)</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#m%C3%A1xima-verosimilitud"><span class="header-section-number">2</span> Máxima Verosimilitud</a></li>
+<li><a class="nav-link" href="#el-problema-1"><span class="header-section-number">2.1</span> El problema</a></li>
+<li>
+<a class="nav-link" href="#estimaci%C3%B3n-y-simunlaci%C3%B3n"><span class="header-section-number">2.2</span> Estimación y simunlación</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#lanzar-una-moneda"><span class="header-section-number">2.2.1</span> Lanzar una moneda</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rstudio/bookdown-demo/blob/master/01-Maxima-verosimilitud.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rstudio/bookdown-demo/edit/master/01-Maxima-verosimilitud.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-09-06.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
