@@ -7,6 +7,9 @@ eq:Eqreglin1asolu1
 eq:Eqreglin1asolu2
 eq:Eqreglin1asolu77
 eq:Eqreglin1asolu78
+eq:CAMP
+fig:TSTSLAAMAZN1
+fig:TSTSLAAMAZN2
 mínimos-cuadrados-ordinarios
 el-problema
 estimación-r
@@ -24,3 +27,10 @@ estimación-y-simunlación
 lanzar-una-moneda
 método-generalizado-de-momentos-mgm
 el-problema-2
+capital-asset-pricing-model-capm
+el-problema-3
+estimación-r-1
+estimación
+dependencias-1
+descarga-de-los-valores-1
+ejercicio-compara-con-tsla-con-el-apple

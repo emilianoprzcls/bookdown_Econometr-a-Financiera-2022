@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 5 ESTIMACION | Diplomado de Econometría Financiera</title>
+<meta name="author" content="Benjamin Oliva y Emiliano Pérez Caullieres">
+<meta name="description" content='5.0.1 Dependencias #install.packages("pacman") #pacman nos permite cargar varias librerias en una sola línea library(pacman) pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl) ...'>
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 5 ESTIMACION | Diplomado de Econometría Financiera">
+<meta property="og:type" content="book">
+<meta property="og:description" content='5.0.1 Dependencias #install.packages("pacman") #pacman nos permite cargar varias librerias en una sola línea library(pacman) pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl) ...'>
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 5 ESTIMACION | Diplomado de Econometría Financiera">
+<meta name="twitter:description" content='5.0.1 Dependencias #install.packages("pacman") #pacman nos permite cargar varias librerias en una sola línea library(pacman) pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl) ...'>
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Diplomado de Econometría Financiera</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Mínimos Cuadrados Ordinarios</a></li>
+<li><a class="" href="m%C3%A1xima-verosimilitud.html"><span class="header-section-number">2</span> Máxima Verosimilitud</a></li>
+<li><a class="" href="m%C3%A9todo-generalizado-de-momentos-mgm.html"><span class="header-section-number">3</span> Método Generalizado de Momentos (MGM)</a></li>
+<li><a class="" href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> CAPITAL ASSET PRICING MODEL (CAPM)</a></li>
+<li><a class="active" href="estimacion.html"><span class="header-section-number">5</span> ESTIMACION</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="estimacion" class="section level1" number="5">
+<h1>
+<span class="header-section-number">5</span> ESTIMACION<a class="anchor" aria-label="anchor" href="#estimacion"><i class="fas fa-link"></i></a>
+</h1>
+<div id="dependencias-1" class="section level3" number="5.0.1">
+<h3>
+<span class="header-section-number">5.0.1</span> Dependencias<a class="anchor" aria-label="anchor" href="#dependencias-1"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#install.packages("pacman")</span></span>
+<span><span class="co">#pacman nos permite cargar varias librerias en una sola línea</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,<span class="va">BatchGetSymbols</span>,<span class="va">ggplot2</span>,<span class="va">lubridate</span>,<span class="va">readxl</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="descarga-de-los-valores-1" class="section level3" number="5.0.2">
+<h3>
+<span class="header-section-number">5.0.2</span> Descarga de los valores<a class="anchor" aria-label="anchor" href="#descarga-de-los-valores-1"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
+<span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span><span class="op">(</span><span class="fl">365</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
+<span><span class="va">pd</span></span>
+<span><span class="co">#&gt; [1] "2021-09-17"</span></span>
+<span><span class="va">ld</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#última fecha</span></span>
+<span><span class="va">ld</span></span>
+<span><span class="co">#&gt; [1] "2022-09-17"</span></span>
+<span><span class="co">#Intervalos de tiempo</span></span>
+<span><span class="va">int</span><span class="op">&lt;-</span><span class="st">"monthly"</span></span>
+<span><span class="co">#Datos a elegir</span></span>
+<span><span class="va">dt</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AMZN"</span><span class="op">)</span></span>
+<span><span class="va">dt2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"TSLA"</span><span class="op">)</span></span>
+<span><span class="co">#Descargando los valores</span></span>
+<span><span class="op">?</span><span class="fu">BatchGetSymbols</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">data1</span><span class="op">&lt;-</span> <span class="fu">BatchGetSymbols</span><span class="op">(</span>tickers <span class="op">=</span> <span class="va">dt</span>,</span>
+<span>                       first.date <span class="op">=</span> <span class="va">pd</span>,</span>
+<span>                       last.date <span class="op">=</span> <span class="va">ld</span>,</span>
+<span>                       freq.data <span class="op">=</span> <span class="va">int</span>,</span>
+<span>                       do.cache <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                       thresh.bad.data <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">data2</span><span class="op">&lt;-</span> <span class="fu">BatchGetSymbols</span><span class="op">(</span>tickers <span class="op">=</span> <span class="va">dt2</span>,</span>
+<span>                       first.date <span class="op">=</span> <span class="va">pd</span>,</span>
+<span>                       last.date <span class="op">=</span> <span class="va">ld</span>,</span>
+<span>                       freq.data <span class="op">=</span> <span class="va">int</span>,</span>
+<span>                       do.cache <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                       thresh.bad.data <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Generando data frame con los valores</span></span>
+<span><span class="va">data_precio_amzn</span><span class="op">&lt;-</span><span class="va">data1</span><span class="op">$</span><span class="va">df.tickers</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "ticker"              "ref.date"           </span></span>
+<span><span class="co">#&gt;  [3] "volume"              "price.open"         </span></span>
+<span><span class="co">#&gt;  [5] "price.high"          "price.low"          </span></span>
+<span><span class="co">#&gt;  [7] "price.close"         "price.adjusted"     </span></span>
+<span><span class="co">#&gt;  [9] "ret.adjusted.prices" "ret.closing.prices"</span></span>
+<span><span class="va">data_precio_tls</span><span class="op">&lt;-</span><span class="va">data2</span><span class="op">$</span><span class="va">df.tickers</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data_precio_tls</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "ticker"              "ref.date"           </span></span>
+<span><span class="co">#&gt;  [3] "volume"              "price.open"         </span></span>
+<span><span class="co">#&gt;  [5] "price.high"          "price.low"          </span></span>
+<span><span class="co">#&gt;  [7] "price.close"         "price.adjusted"     </span></span>
+<span><span class="co">#&gt;  [9] "ret.adjusted.prices" "ret.closing.prices"</span></span>
+<span><span class="co">#necesitamos convertir la serie de tiempo de precios en retornos continuos compuestos de los precios de apertura</span></span>
+<span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span> ,<span class="fl">100</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="co">#agregamos un valor NA al principio</span></span>
+<span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="co">#estos son los retornos</span></span>
+<span><span class="co">#&gt;  [1]          NA  -5.8859449   2.1889913   5.3061639</span></span>
+<span><span class="co">#&gt;  [5]  -5.6279333 -11.0646538   1.8052718   7.2089622</span></span>
+<span><span class="co">#&gt;  [9] -29.3475086  -0.1185366 -13.9945965  23.8807273</span></span>
+<span><span class="co">#&gt; [13]  -6.8696583</span></span>
+<span></span>
+<span><span class="va">data_precio_tls</span><span class="op">$</span><span class="va">ccrTSLA</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span> ,<span class="fl">100</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_tls</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="co">#agregamos un valor NA al principio</span></span>
+<span><span class="va">data_precio_tls</span><span class="op">$</span><span class="va">ccrTSLA</span></span>
+<span><span class="co">#&gt;  [1]         NA   2.767919  38.591933   1.361865  -1.121972</span></span>
+<span><span class="co">#&gt;  [6] -20.478772  -7.264574  21.765521 -22.795320 -13.089771</span></span>
+<span><span class="co">#&gt; [11] -10.336735  28.307900 -10.009692</span></span>
+<span><span class="co">#Compararemos con los CETES</span></span>
+<span><span class="va">CETES_sep2021_2022</span><span class="op">&lt;-</span><span class="fu">read_excel</span><span class="op">(</span><span class="st">"BD/CETES-sep2021-2022.xlsx"</span>, skip<span class="op">=</span><span class="fl">17</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">CETES_sep2021_2022</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 2</span></span>
+<span><span class="co">#&gt;   Fecha               SF43936</span></span>
+<span><span class="co">#&gt;   &lt;dttm&gt;                &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 2021-09-15 00:00:00    4.6 </span></span>
+<span><span class="co">#&gt; 2 2021-09-23 00:00:00    4.58</span></span>
+<span><span class="co">#&gt; 3 2021-09-30 00:00:00    4.69</span></span>
+<span><span class="co">#&gt; 4 2021-10-07 00:00:00    4.81</span></span>
+<span><span class="co">#&gt; 5 2021-10-14 00:00:00    4.79</span></span>
+<span><span class="co">#&gt; 6 2021-10-21 00:00:00    4.83</span></span>
+<span>  <span class="co">#cetes</span></span>
+<span><span class="va">cete_1_año</span><span class="op">&lt;-</span><span class="fl">10.10</span><span class="co">#esto es el rendimiento a un año de un cete gubernamental seguro</span></span>
+<span></span>
+<span><span class="co">#Juntamos el df</span></span>
+<span><span class="va">CAPM_2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span><span class="va">data_precio_amzn</span>, <span class="va">data_precio_tls</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'ref.date'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">CAPM</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">CAPM_2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#exceso de retorno</span></span>
+<span><span class="va">CAPM</span><span class="op">$</span><span class="va">excess_ret_AMZN</span><span class="op">&lt;-</span><span class="va">CAPM</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="op">-</span><span class="va">cete_1_año</span></span>
+<span><span class="va">CAPM</span><span class="op">$</span><span class="va">excess_ret_TSLA</span><span class="op">&lt;-</span><span class="va">CAPM</span><span class="op">$</span><span class="va">ccrTSLA</span><span class="op">-</span><span class="va">cete_1_año</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#veamos la serie de tiempo</span></span>
+<span><span class="va">CAPM_AMZN_TSLA</span><span class="op">&lt;-</span><span class="fu">ggplot</span><span class="op">(</span><span class="va">CAPM</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">ref.date</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y<span class="op">=</span><span class="va">excess_ret_AMZN</span>, colour<span class="op">=</span><span class="st">"AMAZN"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y<span class="op">=</span><span class="va">excess_ret_TSLA</span>,colour<span class="op">=</span><span class="st">"TSLA"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu">scale_colour_manual</span><span class="op">(</span><span class="st">""</span>,breaks<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AMAZN"</span>,<span class="st">"TSLA"</span><span class="op">)</span>,values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#5B3F37"</span>, <span class="st">"#375B3F"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu">labs</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Exceso de retornos de TSLA y AMZN"</span>,y<span class="op">=</span><span class="st">"Exceso de demanda"</span>, x<span class="op">=</span><span class="st">"Fecha"</span><span class="op">)</span><span class="op">+</span><span class="fu">theme_light</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">CAPM_AMZN_TSLA</span></span>
+<span><span class="co">#&gt; Warning: Removed 1 row(s) containing missing values (geom_path).</span></span>
+<span><span class="co">#&gt; Removed 1 row(s) containing missing values (geom_path).</span></span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:TSTSLAAMAZN"></span>
+<img src="04-CAPM_files/figure-html/TSTSLAAMAZN-1.png" alt="Exceso de retornos de TSLA y AMZN" width="672"><p class="caption">
+Figure 5.1: Exceso de retornos de TSLA y AMZN
+</p>
+</div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#relacion entre los excesos de demanda</span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">CAPM</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">excess_ret_TSLA</span>, y<span class="op">=</span><span class="va">excess_ret_AMZN</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span><span class="op">+</span><span class="fu">labs</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Relación de excesos de retornos entre TSLA y AMZN"</span>,y<span class="op">=</span><span class="st">"Exceso de demanda de AMZN"</span>, x<span class="op">=</span><span class="st">"Exceso de demanda de TSLA"</span><span class="op">)</span><span class="op">+</span><span class="fu">theme_light</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 1 rows containing missing values</span></span>
+<span><span class="co">#&gt; (geom_point).</span></span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:TSTSLAAMAZN2"></span>
+<img src="04-CAPM_files/figure-html/TSTSLAAMAZN2-1.png" alt="Relación de excesos de retornos entre TSLA y AMZN" width="672"><p class="caption">
+Figure 5.2: Relación de excesos de retornos entre TSLA y AMZN
+</p>
+</div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#veamos la regresion lineal</span></span>
+<span><span class="va">CAPM_lr</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">excess_ret_TSLA</span><span class="op">~</span><span class="va">excess_ret_AMZN</span>,data <span class="op">=</span> <span class="va">CAPM</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">CAPM_lr</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = excess_ret_TSLA ~ excess_ret_AMZN, data = CAPM)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span><span class="co">#&gt; -16.558  -9.020  -0.005   5.600  32.606 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;                 Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
+<span><span class="co">#&gt; (Intercept)       4.5168     5.7403   0.787  0.44961   </span></span>
+<span><span class="co">#&gt; excess_ret_AMZN   1.0910     0.3212   3.397  0.00681 **</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  </span></span>
+<span><span class="co">#&gt; 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 13.87 on 10 degrees of freedom</span></span>
+<span><span class="co">#&gt;   (1 observation deleted due to missingness)</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.5357, Adjusted R-squared:  0.4892 </span></span>
+<span><span class="co">#&gt; F-statistic: 11.54 on 1 and 10 DF,  p-value: 0.006811</span></span>
+<span><span class="va">alpha1</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coefficients</a></span><span class="op">(</span><span class="va">CAPM_lr</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">alpha1</span><span class="op">&lt;</span><span class="fl">0</span></span>
+<span><span class="co">#&gt; (Intercept) </span></span>
+<span><span class="co">#&gt;       FALSE</span></span></code></pre></div>
+<p>De esta manera sabemos que el rendimiento de TSLA es mayor debido a que el coeficiente <span class="math inline">\(\alpha=4.5168\)</span>, lo cual indica mejores rendimientos.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> CAPITAL ASSET PRICING MODEL (CAPM)</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav"><li>
+<a class="nav-link" href="#estimacion"><span class="header-section-number">5</span> ESTIMACION</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#dependencias-1"><span class="header-section-number">5.0.1</span> Dependencias</a></li>
+<li><a class="nav-link" href="#descarga-de-los-valores-1"><span class="header-section-number">5.0.2</span> Descarga de los valores</a></li>
+</ul>
+</li></ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rstudio/bookdown-demo/blob/master/04-CAPM.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rstudio/bookdown-demo/edit/master/04-CAPM.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-09-17.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
