@@ -159,16 +159,16 @@ summary(reg_tiempo_volumen)
 #> 
 #> Residuals:
 #>        Min         1Q     Median         3Q        Max 
-#> -787378903  -97754889   58779600  232265861  842239339 
+#> -787370960  -97770329   58771653  232260466  842228839 
 #> 
 #> Coefficients:
 #>               Estimate Std. Error t value Pr(>|t|)
-#> (Intercept) -4.755e+09  2.186e+10  -0.217    0.832
-#> ref.date     3.228e+05  1.147e+06   0.281    0.784
+#> (Intercept) -4.756e+09  2.186e+10  -0.218    0.832
+#> ref.date     3.229e+05  1.147e+06   0.281    0.784
 #> 
 #> Residual standard error: 460200000 on 11 degrees of freedom
-#> Multiple R-squared:  0.007146,	Adjusted R-squared:  -0.08311 
-#> F-statistic: 0.07918 on 1 and 11 DF,  p-value: 0.7836
+#> Multiple R-squared:  0.00715,	Adjusted R-squared:  -0.08311 
+#> F-statistic: 0.07922 on 1 and 11 DF,  p-value: 0.7836
 ```
 
 ## Ejercicio
