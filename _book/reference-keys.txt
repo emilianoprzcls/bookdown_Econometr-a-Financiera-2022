@@ -10,6 +10,9 @@ eq:Eqreglin1asolu78
 eq:CAMP
 fig:TSTSLAAMAZN1
 fig:TSTSLAAMAZN2
+fig:amazn20
+fig:amazn20LAG
+fig:amazn20ACF
 mínimos-cuadrados-ordinarios
 el-problema
 estimación-r
@@ -34,3 +37,7 @@ estimación
 dependencias-1
 descarga-de-los-valores-1
 ejercicio-compara-con-tsla-con-el-apple
+estacionariedad
+dependencias-2
+serie-de-tiempo
+estacionariedad-1

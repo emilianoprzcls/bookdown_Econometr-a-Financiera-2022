@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 5 ESTACIONAREIDAD | 06-ESTACIONARIEDAD</title>
+<meta name="author" content="Emiliano Pérez Caullieres">
+<meta name="description" content='5.0.1 Dependencias #install.packages("pacman") #pacman nos permite cargar varias librerias en una sola línea library(pacman)...'>
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 5 ESTACIONAREIDAD | 06-ESTACIONARIEDAD">
+<meta property="og:type" content="book">
+<meta property="og:description" content='5.0.1 Dependencias #install.packages("pacman") #pacman nos permite cargar varias librerias en una sola línea library(pacman)...'>
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 5 ESTACIONAREIDAD | 06-ESTACIONARIEDAD">
+<meta name="twitter:description" content='5.0.1 Dependencias #install.packages("pacman") #pacman nos permite cargar varias librerias en una sola línea library(pacman)...'>
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">06-ESTACIONARIEDAD</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Mínimos Cuadrados Ordinarios</a></li>
+<li><a class="" href="m%C3%A1xima-verosimilitud.html"><span class="header-section-number">2</span> Máxima Verosimilitud</a></li>
+<li><a class="" href="m%C3%A9todo-generalizado-de-momentos-mgm.html"><span class="header-section-number">3</span> Método Generalizado de Momentos (MGM)</a></li>
+<li><a class="" href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> CAPITAL ASSET PRICING MODEL (CAPM)</a></li>
+<li><a class="active" href="estacionareidad.html"><span class="header-section-number">5</span> ESTACIONAREIDAD</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="estacionareidad" class="section level1" number="5">
+<h1>
+<span class="header-section-number">5</span> ESTACIONAREIDAD<a class="anchor" aria-label="anchor" href="#estacionareidad"><i class="fas fa-link"></i></a>
+</h1>
+<div id="dependencias-2" class="section level3" number="5.0.1">
+<h3>
+<span class="header-section-number">5.0.1</span> Dependencias<a class="anchor" aria-label="anchor" href="#dependencias-2"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#install.packages("pacman")</span></span>
+<span><span class="co">#pacman nos permite cargar varias librerias en una sola línea</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,<span class="va">BatchGetSymbols</span>,<span class="va">ggplot2</span>,<span class="va">lubridate</span>,<span class="va">readxl</span>,<span class="va">forecast</span>,<span class="va">stats</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
+<span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span><span class="op">(</span><span class="fl">365</span><span class="op">*</span><span class="fl">20</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
+<span><span class="va">pd</span></span>
+<span><span class="co">#&gt; [1] "2002-09-25"</span></span>
+<span><span class="va">ld</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#última fecha</span></span>
+<span><span class="va">ld</span></span>
+<span><span class="co">#&gt; [1] "2022-09-20"</span></span>
+<span><span class="co">#Intervalos de tiempo</span></span>
+<span><span class="va">int</span><span class="op">&lt;-</span><span class="st">"monthly"</span></span>
+<span><span class="co">#Datos a elegir</span></span>
+<span><span class="va">dt</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AMZN"</span><span class="op">)</span></span>
+<span><span class="va">dt2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"TSLA"</span><span class="op">)</span></span>
+<span><span class="co">#Descargando los valores</span></span>
+<span><span class="va">data1</span><span class="op">&lt;-</span> <span class="fu">BatchGetSymbols</span><span class="op">(</span>tickers <span class="op">=</span> <span class="va">dt</span>,</span>
+<span>                       first.date <span class="op">=</span> <span class="va">pd</span>,</span>
+<span>                       last.date <span class="op">=</span> <span class="va">ld</span>,</span>
+<span>                       freq.data <span class="op">=</span> <span class="va">int</span>,</span>
+<span>                       do.cache <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                       thresh.bad.data <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="co">#Generando data frame con los valores</span></span>
+<span><span class="va">data_precio_amzn</span><span class="op">&lt;-</span><span class="va">data1</span><span class="op">$</span><span class="va">df.tickers</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "ticker"              "ref.date"           </span></span>
+<span><span class="co">#&gt;  [3] "volume"              "price.open"         </span></span>
+<span><span class="co">#&gt;  [5] "price.high"          "price.low"          </span></span>
+<span><span class="co">#&gt;  [7] "price.close"         "price.adjusted"     </span></span>
+<span><span class="co">#&gt;  [9] "ret.adjusted.prices" "ret.closing.prices"</span></span>
+<span></span>
+<span><span class="co">#necesitamos convertir la serie de tiempo de precios en retornos continuos compuestos de los precios de apertura</span></span>
+<span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span> ,<span class="fl">100</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="co">#agregamos un valor NA al principio</span></span>
+<span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="co">#estos son los retornos</span></span>
+<span><span class="co">#&gt;   [1]           NA   0.37037079  16.90900220  22.83329766</span></span>
+<span><span class="co">#&gt;   [5] -22.98950701  13.39221448   0.95260416  14.27998202</span></span>
+<span><span class="co">#&gt;   [9]  11.55626991  24.11122449  -0.46684144  13.08785513</span></span>
+<span><span class="co">#&gt;  [13]  11.63599301   3.89974592  12.48104071  -0.73260401</span></span>
+<span><span class="co">#&gt;  [17]  -3.06108260  -4.08140972 -16.32741069   0.99457279</span></span>
+<span><span class="co">#&gt;  [21]   0.06902105   9.61879412  11.67844638 -33.59147712</span></span>
+<span><span class="co">#&gt;  [25]  -0.57381482   7.69997922 -18.78100714  15.60691856</span></span>
+<span><span class="co">#&gt;  [29]  11.66713068  -4.43506452 -20.41392362  -1.23405211</span></span>
+<span><span class="co">#&gt;  [33]  -6.96531282   9.64353557  -6.77486160  30.02382912</span></span>
+<span><span class="co">#&gt;  [37]  -5.40177077   6.39945115 -12.58398922  20.12391421</span></span>
+<span><span class="co">#&gt;  [41]  -2.92703823  -7.77281354 -15.93630872  -2.10477279</span></span>
+<span><span class="co">#&gt;  [45]  -4.11970307  -1.60415929  10.64572285 -37.21478392</span></span>
+<span><span class="co">#&gt;  [49]  15.01070027   3.59739571  17.58906665   5.43570463</span></span>
+<span><span class="co">#&gt;  [53]  -4.00357496  -1.90531667   3.54637914   1.33891100</span></span>
+<span><span class="co">#&gt;  [57]  42.77167396  11.98170332  -0.13070948  12.66409736</span></span>
+<span><span class="co">#&gt;  [61]   2.27857959  15.63296023  -6.26135927   2.56510858</span></span>
+<span><span class="co">#&gt;  [65]   5.74113839 -18.78533471 -21.72447597  13.78662202</span></span>
+<span><span class="co">#&gt;  [69]   7.15014819   3.44753666 -11.63053849   5.54650897</span></span>
+<span><span class="co">#&gt;  [73]   8.53074641 -14.71605773 -24.20236452 -29.39126222</span></span>
+<span><span class="co">#&gt;  [77]  20.09953181  13.15576837   8.77225235  13.27882326</span></span>
+<span><span class="co">#&gt;  [81]   9.60320128  -2.73678724   7.64068237   2.50334747</span></span>
+<span><span class="co">#&gt;  [85]  -6.96036997  13.59745291  24.90536163  14.32806129</span></span>
+<span><span class="co">#&gt;  [89]  -0.50514401 -10.08447333  -3.70473986  13.45839135</span></span>
+<span><span class="co">#&gt;  [93]   1.02565002  -9.33660068 -13.76436786   8.99531736</span></span>
+<span><span class="co">#&gt;  [97]   5.87517724  21.76202538   4.58513429   8.56726887</span></span>
+<span><span class="co">#&gt; [101]   1.22598823  -6.16865517   1.74979032   4.53458328</span></span>
+<span><span class="co">#&gt; [105]   7.93222740  -0.25978671   4.72685785   9.04110889</span></span>
+<span><span class="co">#&gt; [109]  -4.41608958   0.80039290  -4.18766494  -8.13529694</span></span>
+<span><span class="co">#&gt; [113]  -8.68550170  -1.18960511   3.43828044   9.60224827</span></span>
+<span><span class="co">#&gt; [117]  14.70991690  -9.58159747   9.53799598   2.08880372</span></span>
+<span><span class="co">#&gt; [121]   5.85976366   2.83140800  -8.65274050   7.52661134</span></span>
+<span><span class="co">#&gt; [125]   1.39202437   4.89612270  -2.12710012   1.39936277</span></span>
+<span><span class="co">#&gt; [129]  -5.02332605   5.76221809   3.66491122   8.27850152</span></span>
+<span><span class="co">#&gt; [133]  -6.24554343   9.85520147  15.15285156   8.73395739</span></span>
+<span><span class="co">#&gt; [137]  -0.05013788 -10.51934673  -0.06687288  -5.92858190</span></span>
+<span><span class="co">#&gt; [141] -10.58568315   2.74371861   4.15753522  -3.80625428</span></span>
+<span><span class="co">#&gt; [145]   8.04816141  -5.42111518  -5.03065911   9.90317538</span></span>
+<span><span class="co">#&gt; [149]  -7.85404256  11.32156221   8.43295383  -2.32429615</span></span>
+<span><span class="co">#&gt; [153]  13.01462014   1.54061721   2.05813986  20.15392877</span></span>
+<span><span class="co">#&gt; [157]  -7.39490376   2.34828935  20.47843365   7.17052347</span></span>
+<span><span class="co">#&gt; [161]  -2.62563883 -12.67694180  -3.85435390   5.96629237</span></span>
+<span><span class="co">#&gt; [165]  11.72089295   8.23387458  -0.49783030   5.76252931</span></span>
+<span><span class="co">#&gt; [169]   1.44112456   8.10699776  -4.52676184  -6.00796092</span></span>
+<span><span class="co">#&gt; [173]   0.72964776   8.98955770   2.83447462   4.01536256</span></span>
+<span><span class="co">#&gt; [177]   4.38443827   7.35281333  -2.61760725   2.36894617</span></span>
+<span><span class="co">#&gt; [181]  -1.20285851  -2.07377928  13.68712240   5.85471090</span></span>
+<span><span class="co">#&gt; [185]  -0.00427124  20.93976645   4.63815978  -6.55115525</span></span>
+<span><span class="co">#&gt; [189]   9.77684681   4.61358018   2.75160333   5.84583306</span></span>
+<span><span class="co">#&gt; [193]  12.74521370  -0.22279328 -21.94794383   8.60716489</span></span>
+<span><span class="co">#&gt; [197] -18.86826361  11.20213025   0.98664739   8.39682297</span></span>
+<span><span class="co">#&gt; [201]   7.12720047  -9.38002536   8.85565506  -2.70183034</span></span>
+<span><span class="co">#&gt; [205]  -5.58782369  -1.36520548   2.37757442   0.91249016</span></span>
+<span><span class="co">#&gt; [209]   3.83805218   6.98245156  -5.31693095   1.37938043</span></span>
+<span><span class="co">#&gt; [213]  18.97247680   4.64889431  11.92308161  14.25393454</span></span>
+<span><span class="co">#&gt; [217]   9.27398656  -8.41337555  -4.66642316   4.05671846</span></span>
+<span><span class="co">#&gt; [221]   2.52393793  -0.84885499  -3.59427728  -0.31861156</span></span>
+<span><span class="co">#&gt; [225]  11.12179968  -7.17375312   5.72503641  -2.40180912</span></span>
+<span><span class="co">#&gt; [229]   4.18486227  -6.11473001   2.18899134   5.30616390</span></span>
+<span><span class="co">#&gt; [233]  -5.62793333 -11.06465380   1.80527180   7.20896224</span></span>
+<span><span class="co">#&gt; [237] -29.34750864  -0.11853658 -13.99459654  23.88072732</span></span>
+<span><span class="co">#&gt; [241]  -6.86965832</span></span>
+<span><span class="co">#tenemos 20 retornos a lo largo de 20 años</span></span></code></pre></div>
+<p>Veamos la serie de tiempo</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ret_20_amazn</span><span class="op">&lt;-</span><span class="fu">ggplot</span><span class="op">(</span>data<span class="op">=</span><span class="va">data_precio_amzn</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">ref.date</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y<span class="op">=</span><span class="va">ccrAMZN</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu">labs</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Retornos de AMZN en los últimos 20 años"</span>,y<span class="op">=</span><span class="st">"Retornos"</span>, x<span class="op">=</span><span class="st">"Años"</span><span class="op">)</span><span class="op">+</span><span class="fu">theme_light</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">ret_20_amazn</span></span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:amazn20"></span>
+<img src="06-ESTACIONARIEDAD_files/figure-html/amazn20-1.png" alt="Serie de tiempo de los retornos de año en los últimos 20 años" width="672"><p class="caption">
+Figure 5.1: Serie de tiempo de los retornos de año en los últimos 20 años
+</p>
+</div>
+</div>
+<div id="serie-de-tiempo" class="section level3" number="5.0.2">
+<h3>
+<span class="header-section-number">5.0.2</span> Serie de tiempo<a class="anchor" aria-label="anchor" href="#serie-de-tiempo"><i class="fas fa-link"></i></a>
+</h3>
+<p>Primero que nada es importante cargar los datos a un objeto series de tiempo. Esto nos lo permite la función ts().
+Además debemos serciorarnos de que los datos esten en orden cronológico.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data_precio_amzn</span><span class="op">&lt;-</span><span class="va">data_precio_amzn</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ref.date</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">)</span><span class="co">#dado que ya estaba en orden cronológico nuestro df no cambia</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 11</span></span>
+<span><span class="co">#&gt;   ticker ref.date     volume price…¹ price…² price…³ price…⁴</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 AMZN   2002-09-25   7.45e8   0.808    0.87   0.764   0.796</span></span>
+<span><span class="co">#&gt; 2 AMZN   2002-10-01   4.07e9   0.812    1.01   0.800   0.968</span></span>
+<span><span class="co">#&gt; 3 AMZN   2002-11-01   4.13e9   0.961    1.23   0.91    1.17 </span></span>
+<span><span class="co">#&gt; 4 AMZN   2002-12-02   3.11e9   1.21     1.25   0.922   0.944</span></span>
+<span><span class="co">#&gt; 5 AMZN   2003-01-02   3.38e9   0.960    1.16   0.928   1.09 </span></span>
+<span><span class="co">#&gt; 6 AMZN   2003-02-03   2.32e9   1.10     1.12   0.980   1.10 </span></span>
+<span><span class="co">#&gt; # … with 4 more variables: price.adjusted &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   ret.adjusted.prices &lt;dbl&gt;, ret.closing.prices &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   ccrAMZN &lt;dbl&gt;, and abbreviated variable names</span></span>
+<span><span class="co">#&gt; #   ¹​price.open, ²​price.high, ³​price.low, ⁴​price.close</span></span>
+<span><span class="co">#hagamos el objeto ts</span></span>
+<span><span class="va">ret_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">ret_amazn_ts</span><span class="op">)</span><span class="co">#de esta manera podemos ver que se cargo bien debido a que es igual al ggplot</span></span></code></pre></div>
+<div class="inline-figure"><img src="06-ESTACIONARIEDAD_files/figure-html/unnamed-chunk-3-1.png" width="672"></div>
+</div>
+<div id="estacionariedad" class="section level3" number="5.0.3">
+<h3>
+<span class="header-section-number">5.0.3</span> Estacionariedad<a class="anchor" aria-label="anchor" href="#estacionariedad"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#MA_m5&lt;-forecast::ma(ret_amazn_ts,order=11,centre=TRUE)</span></span>
+<span><span class="co">#plot(ret_amazn_ts)+lines(MA_m5, col="red", lwd=2)</span></span>
+<span><span class="fu">gglagplot</span><span class="op">(</span><span class="va">ret_amazn_ts</span>,lags<span class="op">=</span><span class="fl">20</span>,do.lines<span class="op">=</span><span class="cn">FALSE</span>,colour<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">+</span><span class="fu">theme_light</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:amazn20LAG"></span>
+<img src="06-ESTACIONARIEDAD_files/figure-html/amazn20LAG-1.png" alt="Lag Plot que nos muestra la correlación entre 20 lags" width="672"><p class="caption">
+Figure 5.2: Lag Plot que nos muestra la correlación entre 20 lags
+</p>
+</div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ACF_ret_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/acf.html">acf</a></span><span class="op">(</span><span class="va">ret_amazn_ts</span>,na.action <span class="op">=</span> <span class="va">na.pass</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:amazn20ACF"></span>
+<img src="06-ESTACIONARIEDAD_files/figure-html/amazn20ACF-1.png" alt="Función de Autocorrelación de los retornos de AMZN en los ultimos 20 años" width="672"><p class="caption">
+Figure 5.3: Función de Autocorrelación de los retornos de AMZN en los ultimos 20 años
+</p>
+</div>
+<p>La Figura <a href="estacionareidad.html#fig:amazn20LAG">5.2</a> nos idica la manera en la que se correlacionan los lags, evidentemente no se puede ver ningún tipo de correlacioo1ón visible. Similarmente la Figura <a href="estacionareidad.html#fig:amazn20ACF">5.3</a> en donde se muestra la función de autocorrelación. Expecto al primer lag –que muestra correlacion debido a que se esta comparando consigo mismo– es evidente que no hay correlacioo1ón fuerte entre ninguno de los lags. Por lo mismo, sería difícil poder encontrar y estimar valores futuros debido a que la Figura <a href="estacionareidad.html#fig:amazn20LAG">5.2</a> y la Figura <a href="estacionareidad.html#fig:amazn20ACF">5.3</a> indican que la serie de tiempo de los retornos de AMZN de la Figura <a href="estacionareidad.html#fig:amazn20">5.1</a> es <strong>completamente aleatorio y no hay estacionariedad</strong>.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> CAPITAL ASSET PRICING MODEL (CAPM)</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav"><li>
+<a class="nav-link" href="#estacionareidad"><span class="header-section-number">5</span> ESTACIONAREIDAD</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#dependencias-2"><span class="header-section-number">5.0.1</span> Dependencias</a></li>
+<li><a class="nav-link" href="#serie-de-tiempo"><span class="header-section-number">5.0.2</span> Serie de tiempo</a></li>
+<li><a class="nav-link" href="#estacionariedad"><span class="header-section-number">5.0.3</span> Estacionariedad</a></li>
+</ul>
+</li></ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rstudio/bookdown-demo/blob/master/06-ESTACIONARIEDAD.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rstudio/bookdown-demo/edit/master/06-ESTACIONARIEDAD.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>06-ESTACIONARIEDAD</strong>" was written by Emiliano Pérez Caullieres. It was last built on 2022-09-20.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+---
+title: "06-ESTACIONARIEDAD"
+author: "Emiliano Pérez Caullieres"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+# ESTACIONARIEDAD
+### Dependencias
+```{r message=FALSE, warning=FALSE, warning=FALSE, message=FALSE}
+#install.packages("pacman")
+#pacman nos permite cargar varias librerias en una sola línea
+library(pacman)
+pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl,forecast,stats)
+```
+
+
+```{r, warning=FALSE, message=FALSE}
+#Primero determinamos el lapso de tiempo
+pd<-Sys.Date()-(365*20) #primer fecha
+pd
+ld<-Sys.Date() #última fecha
+ld
+#Intervalos de tiempo
+int<-"monthly"
+#Datos a elegir
+dt<-c("AMZN")
+dt2<-c("TSLA")
+#Descargando los valores
+data1<- BatchGetSymbols(tickers = dt,
+                       first.date = pd,
+                       last.date = ld,
+                       freq.data = int,
+                       do.cache = FALSE,
+                       thresh.bad.data = 0)
+#Generando data frame con los valores
+data_precio_amzn<-data1$df.tickers
+colnames(data_precio_amzn)
+
+#necesitamos convertir la serie de tiempo de precios en retornos continuos compuestos de los precios de apertura
+data_precio_amzn$ccrAMZN<-c(NA ,100*diff(log(data_precio_amzn$price.open)))#agregamos un valor NA al principio
+data_precio_amzn$ccrAMZN#estos son los retornos
+#tenemos 20 retornos a lo largo de 20 años
+```
+Veamos la serie de tiempo
+```{r amazn20, fig.cap="Serie de tiempo de los retornos de año en los últimos 20 años", warning=FALSE, message=FALSE}
+ret_20_amazn<-ggplot(data=data_precio_amzn, aes(x=ref.date))+geom_line(aes(y=ccrAMZN))+labs(title="Retornos de AMZN en los últimos 20 años",y="Retornos", x="Años")+theme_light()
+ret_20_amazn
+```
+
+### Serie de tiempo
+
+Primero que nada es importante cargar los datos a un objeto series de tiempo. Esto nos lo permite la función ts().
+Además debemos serciorarnos de que los datos esten en orden cronológico.
+```{r, warning=FALSE, message=FALSE}
+data_precio_amzn<-data_precio_amzn[order(data_precio_amzn$ref.date),]
+head(data_precio_amzn)#dado que ya estaba en orden cronológico nuestro df no cambia
+#hagamos el objeto ts
+ret_amazn_ts<-ts(data_precio_amzn$ccrAMZN)
+plot(ret_amazn_ts)#de esta manera podemos ver que se cargo bien debido a que es igual al ggplot
+```
+
+### Estacionariedad
+
+```{r amazn20LAG, fig.cap="Lag Plot que nos muestra la correlación entre 20 lags", warning=FALSE, message=FALSE}
+#MA_m5<-forecast::ma(ret_amazn_ts,order=11,centre=TRUE)
+#plot(ret_amazn_ts)+lines(MA_m5, col="red", lwd=2)
+gglagplot(ret_amazn_ts,lags=20,do.lines=FALSE,colour=FALSE)+theme_minimal()
+```
+
+```{r amazn20ACF, fig.cap="Función de Autocorrelación de los retornos de AMZN en los ultimos 20 años", warning=FALSE, message=FALSE}
+ACF_ret_amazn_ts<-acf(ret_amazn_ts,na.action = na.pass)
+```
+
+La Figura \@ref(fig:amazn20LAG) nos idica la manera en la que se correlacionan los lags, evidentemente no se puede ver ningún tipo de correlacioo1ón visible. Similarmente la Figura \@ref(fig:amazn20ACF) en donde se muestra la función de autocorrelación. Expecto al primer lag --que muestra correlacion debido a que se esta comparando consigo mismo-- es evidente que no hay correlacioo1ón fuerte entre ninguno de los lags. Por lo mismo, sería difícil poder encontrar y estimar valores futuros debido a que la Figura \@ref(fig:amazn20LAG) y la Figura \@ref(fig:amazn20ACF) indican que la serie de tiempo de los retornos de AMZN de la Figura \@ref(fig:amazn20) es __completamente aleatorio y no hay estacionariedad__.

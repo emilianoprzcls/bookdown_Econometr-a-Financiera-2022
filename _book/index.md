@@ -1,7 +1,7 @@
 --- 
 title: "Diplomado de Econometría Financiera"
 author: "Benjamin Oliva y Emiliano Pérez Caullieres"
-date: "2022-09-18"
+date: "2022-09-20"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -68,10 +68,10 @@ pacman::p_load(tidyverse,BatchGetSymbols,ggplot2, lubridate)
 #Primero determinamos el lapso de tiempo
 pd<-Sys.Date()-365 #primer fecha
 pd
-#> [1] "2021-09-18"
+#> [1] "2021-09-20"
 ld<-Sys.Date() #última fecha
 ld
-#> [1] "2022-09-18"
+#> [1] "2022-09-20"
 #Intervalos de tiempo
 int<-"monthly"
 #Datos a elegir
@@ -123,7 +123,7 @@ summary(data_precio[c("price.open","volume")])
 #>  Min.   :106.3   Min.   :5.565e+08  
 #>  1st Qu.:126.0   1st Qu.:1.273e+09  
 #>  Median :152.7   Median :1.465e+09  
-#>  Mean   :148.1   Mean   :1.393e+09  
+#>  Mean   :148.1   Mean   :1.397e+09  
 #>  3rd Qu.:167.6   3rd Qu.:1.628e+09  
 #>  Max.   :177.2   Max.   :2.258e+09
 #análisis de regresión lineal lm() y=precio,x=fecha
@@ -159,16 +159,16 @@ summary(reg_tiempo_volumen)
 #> 
 #> Residuals:
 #>        Min         1Q     Median         3Q        Max 
-#> -802839208  -87783792   63911983  235749891  849020075 
+#> -787378903  -97754889   58779600  232265861  842239339 
 #> 
 #> Coefficients:
 #>               Estimate Std. Error t value Pr(>|t|)
-#> (Intercept) -3.745e+09  2.221e+10  -0.169    0.869
-#> ref.date     2.697e+05  1.165e+06   0.231    0.821
+#> (Intercept) -4.755e+09  2.186e+10  -0.217    0.832
+#> ref.date     3.228e+05  1.147e+06   0.281    0.784
 #> 
-#> Residual standard error: 467500000 on 11 degrees of freedom
-#> Multiple R-squared:  0.004844,	Adjusted R-squared:  -0.08563 
-#> F-statistic: 0.05354 on 1 and 11 DF,  p-value: 0.8213
+#> Residual standard error: 460200000 on 11 degrees of freedom
+#> Multiple R-squared:  0.007146,	Adjusted R-squared:  -0.08311 
+#> F-statistic: 0.07918 on 1 and 11 DF,  p-value: 0.7836
 ```
 
 ## Ejercicio

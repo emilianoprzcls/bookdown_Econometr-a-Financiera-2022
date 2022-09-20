@@ -4,15 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 4 CAPITAL ASSET PRICING MODEL (CAPM) | Diplomado de Econometría Financiera</title>
-<meta name="author" content="Benjamin Oliva y Emiliano Pérez Caullieres">
+<title>Chapter 4 CAPITAL ASSET PRICING MODEL (CAPM) | 06-ESTACIONARIEDAD</title>
+<meta name="author" content="Emiliano Pérez Caullieres">
 <meta name="description" content="4.1 El problema Una vez que hemos establecido la manera en la que se pueden estimar algunos valores –como las regresiones lineales y el método de máxima verosimilitud–, además de la naturaleza de...">
 <meta name="generator" content="bookdown 0.27 with bs4_book()">
-<meta property="og:title" content="Chapter 4 CAPITAL ASSET PRICING MODEL (CAPM) | Diplomado de Econometría Financiera">
+<meta property="og:title" content="Chapter 4 CAPITAL ASSET PRICING MODEL (CAPM) | 06-ESTACIONARIEDAD">
 <meta property="og:type" content="book">
 <meta property="og:description" content="4.1 El problema Una vez que hemos establecido la manera en la que se pueden estimar algunos valores –como las regresiones lineales y el método de máxima verosimilitud–, además de la naturaleza de...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 4 CAPITAL ASSET PRICING MODEL (CAPM) | Diplomado de Econometría Financiera">
+<meta name="twitter:title" content="Chapter 4 CAPITAL ASSET PRICING MODEL (CAPM) | 06-ESTACIONARIEDAD">
 <meta name="twitter:description" content="4.1 El problema Una vez que hemos establecido la manera en la que se pueden estimar algunos valores –como las regresiones lineales y el método de máxima verosimilitud–, además de la naturaleza de...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">Diplomado de Econometría Financiera</a>
+        <a href="index.html" title="">06-ESTACIONARIEDAD</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -47,6 +47,7 @@
 <li><a class="" href="m%C3%A1xima-verosimilitud.html"><span class="header-section-number">2</span> Máxima Verosimilitud</a></li>
 <li><a class="" href="m%C3%A9todo-generalizado-de-momentos-mgm.html"><span class="header-section-number">3</span> Método Generalizado de Momentos (MGM)</a></li>
 <li><a class="active" href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> CAPITAL ASSET PRICING MODEL (CAPM)</a></li>
+<li><a class="" href="estacionariedad.html"><span class="header-section-number">5</span> ESTACIONARIEDAD</a></li>
 </ul>
 
         <div class="book-extra">
@@ -265,7 +266,7 @@ Figure 4.2: Relación de excesos de retornos entre TSLA y SP500
 <span><span class="co">#&gt;    tickers =AAPL</span></span>
 <span><span class="co">#&gt;    Downloading data for benchmark ticker</span></span>
 <span><span class="co">#&gt; ^GSPC | yahoo (1|1)</span></span>
-<span><span class="co">#&gt; AAPL | yahoo (1|1) - Got 100% of valid prices | Nice!</span></span>
+<span><span class="co">#&gt; AAPL | yahoo (1|1) - Got 100% of valid prices | Youre doing good!</span></span>
 <span><span class="va">data_precio_AAPL</span><span class="op">&lt;-</span><span class="va">data3</span><span class="op">$</span><span class="va">df.tickers</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data_precio_AAPL</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "ticker"              "ref.date"           </span></span>
@@ -310,7 +311,7 @@ Figure 4.2: Relación de excesos de retornos entre TSLA y SP500
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="m%C3%A9todo-generalizado-de-momentos-mgm.html"><span class="header-section-number">3</span> Método Generalizado de Momentos (MGM)</a></div>
-<div class="empty"></div>
+<div class="next"><a href="estacionariedad.html"><span class="header-section-number">5</span> ESTACIONARIEDAD</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -341,7 +342,7 @@ Figure 4.2: Relación de excesos de retornos entre TSLA y SP500
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-09-18.</p>
+    <p>"<strong>06-ESTACIONARIEDAD</strong>" was written by Emiliano Pérez Caullieres. It was last built on 2022-09-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

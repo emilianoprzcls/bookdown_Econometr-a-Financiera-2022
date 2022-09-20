@@ -4,15 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 1 Mínimos Cuadrados Ordinarios | Diplomado de Econometría Financiera</title>
-<meta name="author" content="Benjamin Oliva y Emiliano Pérez Caullieres">
+<title>Chapter 1 Mínimos Cuadrados Ordinarios | 06-ESTACIONARIEDAD</title>
+<meta name="author" content="Emiliano Pérez Caullieres">
 <meta name="description" content="Este bookdown funciona como un recurso que muestra los códigos necesarios para el diplomado de Econometria Financiera.">
 <meta name="generator" content="bookdown 0.27 with bs4_book()">
-<meta property="og:title" content="Chapter 1 Mínimos Cuadrados Ordinarios | Diplomado de Econometría Financiera">
+<meta property="og:title" content="Chapter 1 Mínimos Cuadrados Ordinarios | 06-ESTACIONARIEDAD">
 <meta property="og:type" content="book">
 <meta property="og:description" content="Este bookdown funciona como un recurso que muestra los códigos necesarios para el diplomado de Econometria Financiera.">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 1 Mínimos Cuadrados Ordinarios | Diplomado de Econometría Financiera">
+<meta name="twitter:title" content="Chapter 1 Mínimos Cuadrados Ordinarios | 06-ESTACIONARIEDAD">
 <meta name="twitter:description" content="Este bookdown funciona como un recurso que muestra los códigos necesarios para el diplomado de Econometria Financiera.">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">Diplomado de Econometría Financiera</a>
+        <a href="index.html" title="">06-ESTACIONARIEDAD</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -47,6 +47,7 @@
 <li><a class="" href="m%C3%A1xima-verosimilitud.html"><span class="header-section-number">2</span> Máxima Verosimilitud</a></li>
 <li><a class="" href="m%C3%A9todo-generalizado-de-momentos-mgm.html"><span class="header-section-number">3</span> Método Generalizado de Momentos (MGM)</a></li>
 <li><a class="" href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> CAPITAL ASSET PRICING MODEL (CAPM)</a></li>
+<li><a class="" href="estacionariedad.html"><span class="header-section-number">5</span> ESTACIONARIEDAD</a></li>
 </ul>
 
         <div class="book-extra">
@@ -110,10 +111,10 @@ Y se pueden despejar las dadas por:</p>
 <code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
 <span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span><span class="fl">365</span> <span class="co">#primer fecha</span></span>
 <span><span class="va">pd</span></span>
-<span><span class="co">#&gt; [1] "2021-09-18"</span></span>
+<span><span class="co">#&gt; [1] "2021-09-20"</span></span>
 <span><span class="va">ld</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#última fecha</span></span>
 <span><span class="va">ld</span></span>
-<span><span class="co">#&gt; [1] "2022-09-18"</span></span>
+<span><span class="co">#&gt; [1] "2022-09-20"</span></span>
 <span><span class="co">#Intervalos de tiempo</span></span>
 <span><span class="va">int</span><span class="op">&lt;-</span><span class="st">"monthly"</span></span>
 <span><span class="co">#Datos a elegir</span></span>
@@ -162,7 +163,7 @@ Y se pueden despejar las dadas por:</p>
 <span><span class="co">#&gt;  Min.   :106.3   Min.   :5.565e+08  </span></span>
 <span><span class="co">#&gt;  1st Qu.:126.0   1st Qu.:1.273e+09  </span></span>
 <span><span class="co">#&gt;  Median :152.7   Median :1.465e+09  </span></span>
-<span><span class="co">#&gt;  Mean   :148.1   Mean   :1.393e+09  </span></span>
+<span><span class="co">#&gt;  Mean   :148.1   Mean   :1.397e+09  </span></span>
 <span><span class="co">#&gt;  3rd Qu.:167.6   3rd Qu.:1.628e+09  </span></span>
 <span><span class="co">#&gt;  Max.   :177.2   Max.   :2.258e+09</span></span>
 <span><span class="co">#análisis de regresión lineal lm() y=precio,x=fecha</span></span>
@@ -198,16 +199,16 @@ Y se pueden despejar las dadas por:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;        Min         1Q     Median         3Q        Max </span></span>
-<span><span class="co">#&gt; -802839208  -87783792   63911983  235749891  849020075 </span></span>
+<span><span class="co">#&gt; -787378903  -97754889   58779600  232265861  842239339 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;               Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span><span class="co">#&gt; (Intercept) -3.745e+09  2.221e+10  -0.169    0.869</span></span>
-<span><span class="co">#&gt; ref.date     2.697e+05  1.165e+06   0.231    0.821</span></span>
+<span><span class="co">#&gt; (Intercept) -4.755e+09  2.186e+10  -0.217    0.832</span></span>
+<span><span class="co">#&gt; ref.date     3.228e+05  1.147e+06   0.281    0.784</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 467500000 on 11 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.004844,   Adjusted R-squared:  -0.08563 </span></span>
-<span><span class="co">#&gt; F-statistic: 0.05354 on 1 and 11 DF,  p-value: 0.8213</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 460200000 on 11 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.007146,   Adjusted R-squared:  -0.08311 </span></span>
+<span><span class="co">#&gt; F-statistic: 0.07918 on 1 and 11 DF,  p-value: 0.7836</span></span></code></pre></div>
 </div>
 </div>
 <div id="ejercicio" class="section level2" number="1.3">
@@ -297,7 +298,7 @@ Y se pueden despejar las dadas por:</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-09-18.</p>
+    <p>"<strong>06-ESTACIONARIEDAD</strong>" was written by Emiliano Pérez Caullieres. It was last built on 2022-09-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

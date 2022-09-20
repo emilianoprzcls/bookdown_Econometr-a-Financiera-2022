@@ -36,8 +36,8 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={Diplomado de Econometría Financiera},
-  pdfauthor={Benjamin Oliva y Emiliano Pérez Caullieres},
+  pdftitle={06-ESTACIONARIEDAD},
+  pdfauthor={Emiliano Pérez Caullieres},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
@@ -115,9 +115,9 @@
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
 
-\title{Diplomado de Econometría Financiera}
-\author{Benjamin Oliva y Emiliano Pérez Caullieres}
-\date{2022-09-18}
+\title{06-ESTACIONARIEDAD}
+\author{Emiliano Pérez Caullieres}
+\date{2022-09-20}
 
 \begin{document}
 \maketitle
@@ -190,10 +190,10 @@ Para la estimación utilizaremos el paquete ``BatchGetSymbols''. Este paquete no
 \CommentTok{\#Primero determinamos el lapso de tiempo}
 \NormalTok{pd}\OtherTok{\textless{}{-}}\FunctionTok{Sys.Date}\NormalTok{()}\SpecialCharTok{{-}}\DecValTok{365} \CommentTok{\#primer fecha}
 \NormalTok{pd}
-\CommentTok{\#\textgreater{} [1] "2021{-}09{-}18"}
+\CommentTok{\#\textgreater{} [1] "2021{-}09{-}20"}
 \NormalTok{ld}\OtherTok{\textless{}{-}}\FunctionTok{Sys.Date}\NormalTok{() }\CommentTok{\#última fecha}
 \NormalTok{ld}
-\CommentTok{\#\textgreater{} [1] "2022{-}09{-}18"}
+\CommentTok{\#\textgreater{} [1] "2022{-}09{-}20"}
 \CommentTok{\#Intervalos de tiempo}
 \NormalTok{int}\OtherTok{\textless{}{-}}\StringTok{"monthly"}
 \CommentTok{\#Datos a elegir}
@@ -252,7 +252,7 @@ Para la estimación utilizaremos el paquete ``BatchGetSymbols''. Este paquete no
 \CommentTok{\#\textgreater{}  Min.   :106.3   Min.   :5.565e+08  }
 \CommentTok{\#\textgreater{}  1st Qu.:126.0   1st Qu.:1.273e+09  }
 \CommentTok{\#\textgreater{}  Median :152.7   Median :1.465e+09  }
-\CommentTok{\#\textgreater{}  Mean   :148.1   Mean   :1.393e+09  }
+\CommentTok{\#\textgreater{}  Mean   :148.1   Mean   :1.397e+09  }
 \CommentTok{\#\textgreater{}  3rd Qu.:167.6   3rd Qu.:1.628e+09  }
 \CommentTok{\#\textgreater{}  Max.   :177.2   Max.   :2.258e+09}
 \CommentTok{\#análisis de regresión lineal lm() y=precio,x=fecha}
@@ -288,16 +288,16 @@ Para la estimación utilizaremos el paquete ``BatchGetSymbols''. Este paquete no
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} Residuals:}
 \CommentTok{\#\textgreater{}        Min         1Q     Median         3Q        Max }
-\CommentTok{\#\textgreater{} {-}802839208  {-}87783792   63911983  235749891  849020075 }
+\CommentTok{\#\textgreater{} {-}787378903  {-}97754889   58779600  232265861  842239339 }
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} Coefficients:}
 \CommentTok{\#\textgreater{}               Estimate Std. Error t value Pr(\textgreater{}|t|)}
-\CommentTok{\#\textgreater{} (Intercept) {-}3.745e+09  2.221e+10  {-}0.169    0.869}
-\CommentTok{\#\textgreater{} ref.date     2.697e+05  1.165e+06   0.231    0.821}
+\CommentTok{\#\textgreater{} (Intercept) {-}4.755e+09  2.186e+10  {-}0.217    0.832}
+\CommentTok{\#\textgreater{} ref.date     3.228e+05  1.147e+06   0.281    0.784}
 \CommentTok{\#\textgreater{} }
-\CommentTok{\#\textgreater{} Residual standard error: 467500000 on 11 degrees of freedom}
-\CommentTok{\#\textgreater{} Multiple R{-}squared:  0.004844,   Adjusted R{-}squared:  {-}0.08563 }
-\CommentTok{\#\textgreater{} F{-}statistic: 0.05354 on 1 and 11 DF,  p{-}value: 0.8213}
+\CommentTok{\#\textgreater{} Residual standard error: 460200000 on 11 degrees of freedom}
+\CommentTok{\#\textgreater{} Multiple R{-}squared:  0.007146,   Adjusted R{-}squared:  {-}0.08311 }
+\CommentTok{\#\textgreater{} F{-}statistic: 0.07918 on 1 and 11 DF,  p{-}value: 0.7836}
 \end{Highlighting}
 \end{Shaded}
 
@@ -744,7 +744,7 @@ De esta manera sabemos que el rendimiento de TSLA NO es mayor debido a que el co
 \CommentTok{\#\textgreater{}    tickers =AAPL}
 \CommentTok{\#\textgreater{}    Downloading data for benchmark ticker}
 \CommentTok{\#\textgreater{} \^{}GSPC | yahoo (1|1)}
-\CommentTok{\#\textgreater{} AAPL | yahoo (1|1) {-} Got 100\% of valid prices | Feels good!}
+\CommentTok{\#\textgreater{} AAPL | yahoo (1|1) {-} Got 100\% of valid prices | Good job!}
 \NormalTok{data\_precio\_AAPL}\OtherTok{\textless{}{-}}\NormalTok{data3}\SpecialCharTok{$}\NormalTok{df.tickers}
 \FunctionTok{colnames}\NormalTok{(data\_precio\_AAPL)}
 \CommentTok{\#\textgreater{}  [1] "ticker"              "ref.date"           }
@@ -787,6 +787,196 @@ De esta manera sabemos que el rendimiento de TSLA NO es mayor debido a que el co
 \end{Highlighting}
 \end{Shaded}
 
+\hypertarget{estacionariedad}{%
+\chapter{ESTACIONARIEDAD}\label{estacionariedad}}
+
+\hypertarget{dependencias-2}{%
+\subsection{Dependencias}\label{dependencias-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install.packages("pacman")}
+\CommentTok{\#pacman nos permite cargar varias librerias en una sola línea}
+\FunctionTok{library}\NormalTok{(pacman)}
+\NormalTok{pacman}\SpecialCharTok{::}\FunctionTok{p\_load}\NormalTok{(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl,forecast,stats)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Primero determinamos el lapso de tiempo}
+\NormalTok{pd}\OtherTok{\textless{}{-}}\FunctionTok{Sys.Date}\NormalTok{()}\SpecialCharTok{{-}}\NormalTok{(}\DecValTok{365}\SpecialCharTok{*}\DecValTok{20}\NormalTok{) }\CommentTok{\#primer fecha}
+\NormalTok{pd}
+\CommentTok{\#\textgreater{} [1] "2002{-}09{-}25"}
+\NormalTok{ld}\OtherTok{\textless{}{-}}\FunctionTok{Sys.Date}\NormalTok{() }\CommentTok{\#última fecha}
+\NormalTok{ld}
+\CommentTok{\#\textgreater{} [1] "2022{-}09{-}20"}
+\CommentTok{\#Intervalos de tiempo}
+\NormalTok{int}\OtherTok{\textless{}{-}}\StringTok{"monthly"}
+\CommentTok{\#Datos a elegir}
+\NormalTok{dt}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"AMZN"}\NormalTok{)}
+\NormalTok{dt2}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"TSLA"}\NormalTok{)}
+\CommentTok{\#Descargando los valores}
+\NormalTok{data1}\OtherTok{\textless{}{-}} \FunctionTok{BatchGetSymbols}\NormalTok{(}\AttributeTok{tickers =}\NormalTok{ dt,}
+                       \AttributeTok{first.date =}\NormalTok{ pd,}
+                       \AttributeTok{last.date =}\NormalTok{ ld,}
+                       \AttributeTok{freq.data =}\NormalTok{ int,}
+                       \AttributeTok{do.cache =} \ConstantTok{FALSE}\NormalTok{,}
+                       \AttributeTok{thresh.bad.data =} \DecValTok{0}\NormalTok{)}
+\CommentTok{\#Generando data frame con los valores}
+\NormalTok{data\_precio\_amzn}\OtherTok{\textless{}{-}}\NormalTok{data1}\SpecialCharTok{$}\NormalTok{df.tickers}
+\FunctionTok{colnames}\NormalTok{(data\_precio\_amzn)}
+\CommentTok{\#\textgreater{}  [1] "ticker"              "ref.date"           }
+\CommentTok{\#\textgreater{}  [3] "volume"              "price.open"         }
+\CommentTok{\#\textgreater{}  [5] "price.high"          "price.low"          }
+\CommentTok{\#\textgreater{}  [7] "price.close"         "price.adjusted"     }
+\CommentTok{\#\textgreater{}  [9] "ret.adjusted.prices" "ret.closing.prices"}
+
+\CommentTok{\#necesitamos convertir la serie de tiempo de precios en retornos continuos compuestos de los precios de apertura}
+\NormalTok{data\_precio\_amzn}\SpecialCharTok{$}\NormalTok{ccrAMZN}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\ConstantTok{NA}\NormalTok{ ,}\DecValTok{100}\SpecialCharTok{*}\FunctionTok{diff}\NormalTok{(}\FunctionTok{log}\NormalTok{(data\_precio\_amzn}\SpecialCharTok{$}\NormalTok{price.open)))}\CommentTok{\#agregamos un valor NA al principio}
+\NormalTok{data\_precio\_amzn}\SpecialCharTok{$}\NormalTok{ccrAMZN}\CommentTok{\#estos son los retornos}
+\CommentTok{\#\textgreater{}   [1]           NA   0.37037079  16.90900220  22.83329766}
+\CommentTok{\#\textgreater{}   [5] {-}22.98950701  13.39221448   0.95260416  14.27998202}
+\CommentTok{\#\textgreater{}   [9]  11.55626991  24.11122449  {-}0.46684144  13.08785513}
+\CommentTok{\#\textgreater{}  [13]  11.63599301   3.89974592  12.48104071  {-}0.73260401}
+\CommentTok{\#\textgreater{}  [17]  {-}3.06108260  {-}4.08140972 {-}16.32741069   0.99457279}
+\CommentTok{\#\textgreater{}  [21]   0.06902105   9.61879412  11.67844638 {-}33.59147712}
+\CommentTok{\#\textgreater{}  [25]  {-}0.57381482   7.69997922 {-}18.78100714  15.60691856}
+\CommentTok{\#\textgreater{}  [29]  11.66713068  {-}4.43506452 {-}20.41392362  {-}1.23405211}
+\CommentTok{\#\textgreater{}  [33]  {-}6.96531282   9.64353557  {-}6.77486160  30.02382912}
+\CommentTok{\#\textgreater{}  [37]  {-}5.40177077   6.39945115 {-}12.58398922  20.12391421}
+\CommentTok{\#\textgreater{}  [41]  {-}2.92703823  {-}7.77281354 {-}15.93630872  {-}2.10477279}
+\CommentTok{\#\textgreater{}  [45]  {-}4.11970307  {-}1.60415929  10.64572285 {-}37.21478392}
+\CommentTok{\#\textgreater{}  [49]  15.01070027   3.59739571  17.58906665   5.43570463}
+\CommentTok{\#\textgreater{}  [53]  {-}4.00357496  {-}1.90531667   3.54637914   1.33891100}
+\CommentTok{\#\textgreater{}  [57]  42.77167396  11.98170332  {-}0.13070948  12.66409736}
+\CommentTok{\#\textgreater{}  [61]   2.27857959  15.63296023  {-}6.26135927   2.56510858}
+\CommentTok{\#\textgreater{}  [65]   5.74113839 {-}18.78533471 {-}21.72447597  13.78662202}
+\CommentTok{\#\textgreater{}  [69]   7.15014819   3.44753666 {-}11.63053849   5.54650897}
+\CommentTok{\#\textgreater{}  [73]   8.53074641 {-}14.71605773 {-}24.20236452 {-}29.39126222}
+\CommentTok{\#\textgreater{}  [77]  20.09953181  13.15576837   8.77225235  13.27882326}
+\CommentTok{\#\textgreater{}  [81]   9.60320128  {-}2.73678724   7.64068237   2.50334747}
+\CommentTok{\#\textgreater{}  [85]  {-}6.96036997  13.59745291  24.90536163  14.32806129}
+\CommentTok{\#\textgreater{}  [89]  {-}0.50514401 {-}10.08447333  {-}3.70473986  13.45839135}
+\CommentTok{\#\textgreater{}  [93]   1.02565002  {-}9.33660068 {-}13.76436786   8.99531736}
+\CommentTok{\#\textgreater{}  [97]   5.87517724  21.76202538   4.58513429   8.56726887}
+\CommentTok{\#\textgreater{} [101]   1.22598823  {-}6.16865517   1.74979032   4.53458328}
+\CommentTok{\#\textgreater{} [105]   7.93222740  {-}0.25978671   4.72685785   9.04110889}
+\CommentTok{\#\textgreater{} [109]  {-}4.41608958   0.80039290  {-}4.18766494  {-}8.13529694}
+\CommentTok{\#\textgreater{} [113]  {-}8.68550170  {-}1.18960511   3.43828044   9.60224827}
+\CommentTok{\#\textgreater{} [117]  14.70991690  {-}9.58159747   9.53799598   2.08880372}
+\CommentTok{\#\textgreater{} [121]   5.85976366   2.83140800  {-}8.65274050   7.52661134}
+\CommentTok{\#\textgreater{} [125]   1.39202437   4.89612270  {-}2.12710012   1.39936277}
+\CommentTok{\#\textgreater{} [129]  {-}5.02332605   5.76221809   3.66491122   8.27850152}
+\CommentTok{\#\textgreater{} [133]  {-}6.24554343   9.85520147  15.15285156   8.73395739}
+\CommentTok{\#\textgreater{} [137]  {-}0.05013788 {-}10.51934673  {-}0.06687288  {-}5.92858190}
+\CommentTok{\#\textgreater{} [141] {-}10.58568315   2.74371861   4.15753522  {-}3.80625428}
+\CommentTok{\#\textgreater{} [145]   8.04816141  {-}5.42111518  {-}5.03065911   9.90317538}
+\CommentTok{\#\textgreater{} [149]  {-}7.85404256  11.32156221   8.43295383  {-}2.32429615}
+\CommentTok{\#\textgreater{} [153]  13.01462014   1.54061721   2.05813986  20.15392877}
+\CommentTok{\#\textgreater{} [157]  {-}7.39490376   2.34828935  20.47843365   7.17052347}
+\CommentTok{\#\textgreater{} [161]  {-}2.62563883 {-}12.67694180  {-}3.85435390   5.96629237}
+\CommentTok{\#\textgreater{} [165]  11.72089295   8.23387458  {-}0.49783030   5.76252931}
+\CommentTok{\#\textgreater{} [169]   1.44112456   8.10699776  {-}4.52676184  {-}6.00796092}
+\CommentTok{\#\textgreater{} [173]   0.72964776   8.98955770   2.83447462   4.01536256}
+\CommentTok{\#\textgreater{} [177]   4.38443827   7.35281333  {-}2.61760725   2.36894617}
+\CommentTok{\#\textgreater{} [181]  {-}1.20285851  {-}2.07377928  13.68712240   5.85471090}
+\CommentTok{\#\textgreater{} [185]  {-}0.00427124  20.93976645   4.63815978  {-}6.55115525}
+\CommentTok{\#\textgreater{} [189]   9.77684681   4.61358018   2.75160333   5.84583306}
+\CommentTok{\#\textgreater{} [193]  12.74521370  {-}0.22279328 {-}21.94794383   8.60716489}
+\CommentTok{\#\textgreater{} [197] {-}18.86826361  11.20213025   0.98664739   8.39682297}
+\CommentTok{\#\textgreater{} [201]   7.12720047  {-}9.38002536   8.85565506  {-}2.70183034}
+\CommentTok{\#\textgreater{} [205]  {-}5.58782369  {-}1.36520548   2.37757442   0.91249016}
+\CommentTok{\#\textgreater{} [209]   3.83805218   6.98245156  {-}5.31693095   1.37938043}
+\CommentTok{\#\textgreater{} [213]  18.97247680   4.64889431  11.92308161  14.25393454}
+\CommentTok{\#\textgreater{} [217]   9.27398656  {-}8.41337555  {-}4.66642316   4.05671846}
+\CommentTok{\#\textgreater{} [221]   2.52393793  {-}0.84885499  {-}3.59427728  {-}0.31861156}
+\CommentTok{\#\textgreater{} [225]  11.12179968  {-}7.17375312   5.72503641  {-}2.40180912}
+\CommentTok{\#\textgreater{} [229]   4.18486227  {-}6.11473001   2.18899134   5.30616390}
+\CommentTok{\#\textgreater{} [233]  {-}5.62793333 {-}11.06465380   1.80527180   7.20896224}
+\CommentTok{\#\textgreater{} [237] {-}29.34750864  {-}0.11853658 {-}13.99459654  23.88072732}
+\CommentTok{\#\textgreater{} [241]  {-}6.86965832}
+\CommentTok{\#tenemos 20 retornos a lo largo de 20 años}
+\end{Highlighting}
+\end{Shaded}
+
+Veamos la serie de tiempo
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ret\_20\_amazn}\OtherTok{\textless{}{-}}\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{data\_precio\_amzn, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{ref.date))}\SpecialCharTok{+}\FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{ccrAMZN))}\SpecialCharTok{+}\FunctionTok{labs}\NormalTok{(}\AttributeTok{title=}\StringTok{"Retornos de AMZN en los últimos 20 años"}\NormalTok{,}\AttributeTok{y=}\StringTok{"Retornos"}\NormalTok{, }\AttributeTok{x=}\StringTok{"Años"}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{theme\_light}\NormalTok{()}
+\NormalTok{ret\_20\_amazn}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{06-ESTACIONARIEDAD_files/figure-latex/amazn20-1.pdf}
+\caption{\label{fig:amazn20}Serie de tiempo de los retornos de año en los últimos 20 años}
+\end{figure}
+
+\hypertarget{serie-de-tiempo}{%
+\subsection{Serie de tiempo}\label{serie-de-tiempo}}
+
+Primero que nada es importante cargar los datos a un objeto series de tiempo. Esto nos lo permite la función ts().
+Además debemos serciorarnos de que los datos esten en orden cronológico.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_precio\_amzn}\OtherTok{\textless{}{-}}\NormalTok{data\_precio\_amzn[}\FunctionTok{order}\NormalTok{(data\_precio\_amzn}\SpecialCharTok{$}\NormalTok{ref.date),]}
+\FunctionTok{head}\NormalTok{(data\_precio\_amzn)}\CommentTok{\#dado que ya estaba en orden cronológico nuestro df no cambia}
+\CommentTok{\#\textgreater{} \# A tibble: 6 x 11}
+\CommentTok{\#\textgreater{}   ticker ref.date     volume price\textasciitilde{}1 price\textasciitilde{}2 price\textasciitilde{}3 price\textasciitilde{}4}
+\CommentTok{\#\textgreater{}   \textless{}chr\textgreater{}  \textless{}date\textgreater{}        \textless{}dbl\textgreater{}   \textless{}dbl\textgreater{}   \textless{}dbl\textgreater{}   \textless{}dbl\textgreater{}   \textless{}dbl\textgreater{}}
+\CommentTok{\#\textgreater{} 1 AMZN   2002{-}09{-}25   7.45e8   0.808    0.87   0.764   0.796}
+\CommentTok{\#\textgreater{} 2 AMZN   2002{-}10{-}01   4.07e9   0.812    1.01   0.800   0.968}
+\CommentTok{\#\textgreater{} 3 AMZN   2002{-}11{-}01   4.13e9   0.961    1.23   0.91    1.17 }
+\CommentTok{\#\textgreater{} 4 AMZN   2002{-}12{-}02   3.11e9   1.21     1.25   0.922   0.944}
+\CommentTok{\#\textgreater{} 5 AMZN   2003{-}01{-}02   3.38e9   0.960    1.16   0.928   1.09 }
+\CommentTok{\#\textgreater{} 6 AMZN   2003{-}02{-}03   2.32e9   1.10     1.12   0.980   1.10 }
+\CommentTok{\#\textgreater{} \# ... with 4 more variables: price.adjusted \textless{}dbl\textgreater{},}
+\CommentTok{\#\textgreater{} \#   ret.adjusted.prices \textless{}dbl\textgreater{}, ret.closing.prices \textless{}dbl\textgreater{},}
+\CommentTok{\#\textgreater{} \#   ccrAMZN \textless{}dbl\textgreater{}, and abbreviated variable names}
+\CommentTok{\#\textgreater{} \#   1: price.open, 2: price.high, 3: price.low,}
+\CommentTok{\#\textgreater{} \#   4: price.close}
+\CommentTok{\#hagamos el objeto ts}
+\NormalTok{ret\_amazn\_ts}\OtherTok{\textless{}{-}}\FunctionTok{ts}\NormalTok{(data\_precio\_amzn}\SpecialCharTok{$}\NormalTok{ccrAMZN)}
+\FunctionTok{plot}\NormalTok{(ret\_amazn\_ts)}\CommentTok{\#de esta manera podemos ver que se cargo bien debido a que es igual al ggplot}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{06-ESTACIONARIEDAD_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\hypertarget{estacionariedad-1}{%
+\subsection{Estacionariedad}\label{estacionariedad-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#MA\_m5\textless{}{-}forecast::ma(ret\_amazn\_ts,order=11,centre=TRUE)}
+\CommentTok{\#plot(ret\_amazn\_ts)+lines(MA\_m5, col="red", lwd=2)}
+\FunctionTok{gglagplot}\NormalTok{(ret\_amazn\_ts,}\AttributeTok{lags=}\DecValTok{20}\NormalTok{,}\AttributeTok{do.lines=}\ConstantTok{FALSE}\NormalTok{,}\AttributeTok{colour=}\ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{06-ESTACIONARIEDAD_files/figure-latex/amazn20LAG-1.pdf}
+\caption{\label{fig:amazn20LAG}Lag Plot que nos muestra la correlación entre 20 lags}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ACF\_ret\_amazn\_ts}\OtherTok{\textless{}{-}}\FunctionTok{acf}\NormalTok{(ret\_amazn\_ts,}\AttributeTok{na.action =}\NormalTok{ na.pass)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{06-ESTACIONARIEDAD_files/figure-latex/amazn20ACF-1.pdf}
+\caption{\label{fig:amazn20ACF}Función de Autocorrelación de los retornos de AMZN en los ultimos 20 años}
+\end{figure}
+
+La Figura \ref{fig:amazn20LAG} nos idica la manera en la que se correlacionan los lags, evidentemente no se puede ver ningún tipo de correlacioo1ón visible. Similarmente la Figura \ref{fig:amazn20ACF} en donde se muestra la función de autocorrelación. Expecto al primer lag --que muestra correlacion debido a que se esta comparando consigo mismo-- es evidente que no hay correlacioo1ón fuerte entre ninguno de los lags. Por lo mismo, sería difícil poder encontrar y estimar valores futuros debido a que la Figura \ref{fig:amazn20LAG} y la Figura \ref{fig:amazn20ACF} indican que la serie de tiempo de los retornos de AMZN de la Figura \ref{fig:amazn20} es \textbf{completamente aleatorio y no hay estacionariedad}.
 
   \bibliography{book.bib,packages.bib}
 
