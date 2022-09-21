@@ -221,7 +221,7 @@ par(new = FALSE)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-ESTACIONARIEDAD_files/figure-html/Caminata10-1.png" alt="Ejemplo de 10 trayectorias de la caminata aleatoria, cuando sólo es posible cambios de +1 y -1" width="672" />
+<img src="06-ESTACIONARIEDAD_files/figure-epub3/Caminata10-1.png" alt="Ejemplo de 10 trayectorias de la caminata aleatoria, cuando sólo es posible cambios de +1 y -1"  />
 <p class="caption">(\#fig:Caminata10)Ejemplo de 10 trayectorias de la caminata aleatoria, cuando sólo es posible cambios de +1 y -1</p>
 </div>
 
@@ -258,7 +258,7 @@ un solo camino.
 ```
 
 <div class="figure">
-<img src="06-ESTACIONARIEDAD_files/figure-html/Caminata1-1.png" alt="Una Caminata aleatoria cuando sólo es posible cambios de +1 y -1" width="672" />
+<img src="06-ESTACIONARIEDAD_files/figure-epub3/Caminata1-1.png" alt="Una Caminata aleatoria cuando sólo es posible cambios de +1 y -1"  />
 <p class="caption">(\#fig:Caminata1)Una Caminata aleatoria cuando sólo es posible cambios de +1 y -1</p>
 </div>
 
@@ -278,7 +278,7 @@ ACF_caminata_ts<-acf(caminata_ts,na.action = na.pass, main = "Función de Autoco
 ```
 
 <div class="figure">
-<img src="06-ESTACIONARIEDAD_files/figure-html/ACFCAMINATA1-1.png" alt="Función de Autocorrelación de una Caminata" width="672" />
+<img src="06-ESTACIONARIEDAD_files/figure-epub3/ACFCAMINATA1-1.png" alt="Función de Autocorrelación de una Caminata"  />
 <p class="caption">(\#fig:ACFCAMINATA1)Función de Autocorrelación de una Caminata</p>
 </div>
 
@@ -293,7 +293,7 @@ gglagplot(caminata_ts,lags=10,do.lines=FALSE,colour=FALSE)+theme_light()
 ```
 
 <div class="figure">
-<img src="06-ESTACIONARIEDAD_files/figure-html/LAGSCAMINATA1-1.png" alt="Lags de una sola caminata" width="672" />
+<img src="06-ESTACIONARIEDAD_files/figure-epub3/LAGSCAMINATA1-1.png" alt="Lags de una sola caminata"  />
 <p class="caption">(\#fig:LAGSCAMINATA1)Lags de una sola caminata</p>
 </div>
 
@@ -409,7 +409,7 @@ ret_20_amazn
 ```
 
 <div class="figure">
-<img src="06-ESTACIONARIEDAD_files/figure-html/amazn20-1.png" alt="Serie de tiempo de los retornos de año en los últimos 20 años" width="672" />
+<img src="06-ESTACIONARIEDAD_files/figure-epub3/amazn20-1.png" alt="Serie de tiempo de los retornos de año en los últimos 20 años"  />
 <p class="caption">(\#fig:amazn20)Serie de tiempo de los retornos de año en los últimos 20 años</p>
 </div>
 
@@ -441,7 +441,7 @@ ret_amazn_ts<-ts(data_precio_amzn$ccrAMZN)
 plot(ret_amazn_ts)#de esta manera podemos ver que se cargo bien debido a que es igual al ggplot
 ```
 
-<img src="06-ESTACIONARIEDAD_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+![](06-ESTACIONARIEDAD_files/figure-epub3/unnamed-chunk-4-1.png)<!-- -->
 
 ### Estacionariedad
 
@@ -453,7 +453,7 @@ gglagplot(ret_amazn_ts,lags=20,do.lines=FALSE,colour=FALSE)+theme_light()
 ```
 
 <div class="figure">
-<img src="06-ESTACIONARIEDAD_files/figure-html/amazn20LAG-1.png" alt="Lag Plot que nos muestra la correlación entre 20 lags" width="672" />
+<img src="06-ESTACIONARIEDAD_files/figure-epub3/amazn20LAG-1.png" alt="Lag Plot que nos muestra la correlación entre 20 lags"  />
 <p class="caption">(\#fig:amazn20LAG)Lag Plot que nos muestra la correlación entre 20 lags</p>
 </div>
 
@@ -463,7 +463,7 @@ ACF_ret_amazn_ts<-acf(ret_amazn_ts,na.action = na.pass)
 ```
 
 <div class="figure">
-<img src="06-ESTACIONARIEDAD_files/figure-html/amazn20ACF-1.png" alt="Función de Autocorrelación de los retornos de AMZN en los ultimos 20 años" width="672" />
+<img src="06-ESTACIONARIEDAD_files/figure-epub3/amazn20ACF-1.png" alt="Función de Autocorrelación de los retornos de AMZN en los ultimos 20 años"  />
 <p class="caption">(\#fig:amazn20ACF)Función de Autocorrelación de los retornos de AMZN en los ultimos 20 años</p>
 </div>
 
