@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Chapter 6 Un camino | 06-ESTACIONARIEDAD</title>
+
+    <meta name="author" content="Emiliano Pérez Caullieres" />
+  
+   <meta name="description" content="Este bookdown funciona como un recurso que muestra los códigos necesarios para el diplomado de Econometria Financiera." />
+   <meta name="generator" content="placeholder" />
+  <meta property="og:title" content="Chapter 6 Un camino | 06-ESTACIONARIEDAD" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Este bookdown funciona como un recurso que muestra los códigos necesarios para el diplomado de Econometria Financiera." />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Un camino | 06-ESTACIONARIEDAD" />
+  
+  <meta name="twitter:description" content="Este bookdown funciona como un recurso que muestra los códigos necesarios para el diplomado de Econometria Financiera." />
+  
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script>
+    <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet" />
+    <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script>
+    <script src="libs/bs3compat-0.4.0/transition.js"></script>
+    <script src="libs/bs3compat-0.4.0/tabs.js"></script>
+    <script src="libs/bs3compat-0.4.0/bs3compat.js"></script>
+    <link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet" />
+    <script src="libs/bs4_book-1.0.0/bs4_book.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script>
+
+  <!-- CSS -->
+  <style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+      <link rel="stylesheet" href="style.css" />
+  
+</head>
+
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book">
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">06-ESTACIONARIEDAD</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+      </form>
+
+      <nav aria-label="Table of contents">
+        <h2>Table of contents</h2>
+        <div id="book-toc"></div>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="#">View book source <i class="fab fa-github"></i></a></li></p>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="col-sm-12 col-md-9 col-lg-7" id="content">
+<div id="un-camino" class="section level1" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Un camino</h1>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="un-camino.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Generamos datos</span></span>
+<span id="cb3-2"><a href="un-camino.html#cb3-2" aria-hidden="true" tabindex="-1"></a>  TT1 <span class="ot">&lt;-</span> <span class="fu">data.matrix</span>(<span class="fu">data.frame</span>(<span class="fu">Caminata</span>(Opciones, Soporte)[<span class="dv">1</span>]))</span>
+<span id="cb3-3"><a href="un-camino.html#cb3-3" aria-hidden="true" tabindex="-1"></a>  G_t1 <span class="ot">&lt;-</span> <span class="fu">data.matrix</span>(<span class="fu">data.frame</span>(<span class="fu">Caminata</span>(Opciones, Soporte)[<span class="dv">2</span>]))</span>
+<span id="cb3-4"><a href="un-camino.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Creemos un data frame</span></span>
+<span id="cb3-5"><a href="un-camino.html#cb3-5" aria-hidden="true" tabindex="-1"></a>  dt_caminata<span class="ot">&lt;-</span><span class="fu">data.frame</span>(TT1,G_t1)</span>
+<span id="cb3-6"><a href="un-camino.html#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(dt_caminata)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;t&quot;</span>,<span class="st">&quot;ganancias&quot;</span>)</span>
+<span id="cb3-7"><a href="un-camino.html#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(dt_caminata)</span>
+<span id="cb3-8"><a href="un-camino.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   t ganancias</span></span>
+<span id="cb3-9"><a href="un-camino.html#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 1        -1</span></span>
+<span id="cb3-10"><a href="un-camino.html#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 2        -2</span></span>
+<span id="cb3-11"><a href="un-camino.html#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 3        -1</span></span>
+<span id="cb3-12"><a href="un-camino.html#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 4        -2</span></span>
+<span id="cb3-13"><a href="un-camino.html#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 5        -3</span></span>
+<span id="cb3-14"><a href="un-camino.html#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 6        -4</span></span>
+<span id="cb3-15"><a href="un-camino.html#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#plot</span></span>
+<span id="cb3-16"><a href="un-camino.html#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(TT1, G_t1, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Ganancias&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Tiempo&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span>Rango,Rango))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:Caminata1"></span>
+<img src="06-ESTACIONARIEDAD_files/figure-html/Caminata1-1.png" alt="Una Caminata aleatoria cuando sólo es posible cambios de +1 y -1" width="672" />
+<p class="caption">
+Figure 6.1: Una Caminata aleatoria cuando sólo es posible cambios de +1 y -1
+</p>
+</div>
+<p>Hay que convertirlo a serie de tiempo</p>
+<div id="estacionariedad-caminata" class="section level3" number="6.0.1">
+<h3><span class="header-section-number">6.0.1</span> Estacionariedad Caminata</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="un-camino.html#cb4-1" aria-hidden="true" tabindex="-1"></a>ACF_caminata_ts<span class="ot">&lt;-</span><span class="fu">acf</span>(caminata_ts,<span class="at">na.action =</span> na.pass)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:ACFCAMINATA1"></span>
+<img src="06-ESTACIONARIEDAD_files/figure-html/ACFCAMINATA1-1.png" alt="Función de Autocorrelación de una Caminata" width="672" />
+<p class="caption">
+Figure 6.2: Función de Autocorrelación de una Caminata
+</p>
+</div>
+<p>Como se comentó con anterioridad en la Figura <a href="un-camino.html#fig:ACFCAMINATA1">6.2</a> es evidente que la Caminata si tiene autocorrelacion, por lo que nuestro plot de autocorrelacion tiene valores muy altos en todos los lags. Veamos los lags.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="un-camino.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gglagplot</span>(caminata_ts,<span class="at">lags=</span><span class="dv">10</span>,<span class="at">do.lines=</span><span class="cn">FALSE</span>,<span class="at">colour=</span><span class="cn">FALSE</span>)<span class="sc">+</span><span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:LAGSCAMINATA1"></span>
+<img src="06-ESTACIONARIEDAD_files/figure-html/LAGSCAMINATA1-1.png" alt="Función de Autocorrelación de una Caminata" width="672" />
+<p class="caption">
+Figure 6.3: Función de Autocorrelación de una Caminata
+</p>
+</div>
+<p>De nuevo, esto al ser creado de manera estandarizada estamos seguros de que va a ser estacionario en la medio, por lo mismo los lags de la Figura <a href="un-camino.html#fig:LAGSCAMINATA1">6.3</a> se ven tan correlacionados.</p>
+</div>
+<div id="rendimientos-de-un-activo" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Rendimientos de un activo</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="un-camino.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Primero determinamos el lapso de tiempo</span></span>
+<span id="cb6-2"><a href="un-camino.html#cb6-2" aria-hidden="true" tabindex="-1"></a>pd<span class="ot">&lt;-</span><span class="fu">Sys.Date</span>()<span class="sc">-</span>(<span class="dv">365</span><span class="sc">*</span><span class="dv">20</span>) <span class="co">#primer fecha</span></span>
+<span id="cb6-3"><a href="un-camino.html#cb6-3" aria-hidden="true" tabindex="-1"></a>pd</span>
+<span id="cb6-4"><a href="un-camino.html#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;2002-09-26&quot;</span></span>
+<span id="cb6-5"><a href="un-camino.html#cb6-5" aria-hidden="true" tabindex="-1"></a>ld<span class="ot">&lt;-</span><span class="fu">Sys.Date</span>() <span class="co">#última fecha</span></span>
+<span id="cb6-6"><a href="un-camino.html#cb6-6" aria-hidden="true" tabindex="-1"></a>ld</span>
+<span id="cb6-7"><a href="un-camino.html#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;2022-09-21&quot;</span></span>
+<span id="cb6-8"><a href="un-camino.html#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Intervalos de tiempo</span></span>
+<span id="cb6-9"><a href="un-camino.html#cb6-9" aria-hidden="true" tabindex="-1"></a>int<span class="ot">&lt;-</span><span class="st">&quot;monthly&quot;</span></span>
+<span id="cb6-10"><a href="un-camino.html#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Datos a elegir</span></span>
+<span id="cb6-11"><a href="un-camino.html#cb6-11" aria-hidden="true" tabindex="-1"></a>dt<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;AMZN&quot;</span>)</span>
+<span id="cb6-12"><a href="un-camino.html#cb6-12" aria-hidden="true" tabindex="-1"></a>dt2<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;TSLA&quot;</span>)</span>
+<span id="cb6-13"><a href="un-camino.html#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Descargando los valores</span></span>
+<span id="cb6-14"><a href="un-camino.html#cb6-14" aria-hidden="true" tabindex="-1"></a>data1<span class="ot">&lt;-</span> <span class="fu">BatchGetSymbols</span>(<span class="at">tickers =</span> dt,</span>
+<span id="cb6-15"><a href="un-camino.html#cb6-15" aria-hidden="true" tabindex="-1"></a>                       <span class="at">first.date =</span> pd,</span>
+<span id="cb6-16"><a href="un-camino.html#cb6-16" aria-hidden="true" tabindex="-1"></a>                       <span class="at">last.date =</span> ld,</span>
+<span id="cb6-17"><a href="un-camino.html#cb6-17" aria-hidden="true" tabindex="-1"></a>                       <span class="at">freq.data =</span> int,</span>
+<span id="cb6-18"><a href="un-camino.html#cb6-18" aria-hidden="true" tabindex="-1"></a>                       <span class="at">do.cache =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb6-19"><a href="un-camino.html#cb6-19" aria-hidden="true" tabindex="-1"></a>                       <span class="at">thresh.bad.data =</span> <span class="dv">0</span>)</span>
+<span id="cb6-20"><a href="un-camino.html#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co">#Generando data frame con los valores</span></span>
+<span id="cb6-21"><a href="un-camino.html#cb6-21" aria-hidden="true" tabindex="-1"></a>data_precio_amzn<span class="ot">&lt;-</span>data1<span class="sc">$</span>df.tickers</span>
+<span id="cb6-22"><a href="un-camino.html#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data_precio_amzn)</span>
+<span id="cb6-23"><a href="un-camino.html#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;ticker&quot;              &quot;ref.date&quot;           </span></span>
+<span id="cb6-24"><a href="un-camino.html#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [3] &quot;volume&quot;              &quot;price.open&quot;         </span></span>
+<span id="cb6-25"><a href="un-camino.html#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;price.high&quot;          &quot;price.low&quot;          </span></span>
+<span id="cb6-26"><a href="un-camino.html#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [7] &quot;price.close&quot;         &quot;price.adjusted&quot;     </span></span>
+<span id="cb6-27"><a href="un-camino.html#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;ret.adjusted.prices&quot; &quot;ret.closing.prices&quot;</span></span>
+<span id="cb6-28"><a href="un-camino.html#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="un-camino.html#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co">#necesitamos convertir la serie de tiempo de precios en retornos continuos compuestos de los precios de apertura</span></span>
+<span id="cb6-30"><a href="un-camino.html#cb6-30" aria-hidden="true" tabindex="-1"></a>data_precio_amzn<span class="sc">$</span>ccrAMZN<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="cn">NA</span> ,<span class="dv">100</span><span class="sc">*</span><span class="fu">diff</span>(<span class="fu">log</span>(data_precio_amzn<span class="sc">$</span>price.open)))<span class="co">#agregamos un valor NA al principio</span></span>
+<span id="cb6-31"><a href="un-camino.html#cb6-31" aria-hidden="true" tabindex="-1"></a>data_precio_amzn<span class="sc">$</span>ccrAMZN<span class="co">#estos son los retornos</span></span>
+<span id="cb6-32"><a href="un-camino.html#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   [1]           NA   1.86572576  16.90900220  22.83329766</span></span>
+<span id="cb6-33"><a href="un-camino.html#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   [5] -22.98950701  13.39221448   0.95260416  14.27998202</span></span>
+<span id="cb6-34"><a href="un-camino.html#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   [9]  11.55626991  24.11122449  -0.46684144  13.08785513</span></span>
+<span id="cb6-35"><a href="un-camino.html#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [13]  11.63599301   3.89974592  12.48104071  -0.73260401</span></span>
+<span id="cb6-36"><a href="un-camino.html#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [17]  -3.06108260  -4.08140972 -16.32741069   0.99457279</span></span>
+<span id="cb6-37"><a href="un-camino.html#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [21]   0.06902105   9.61879412  11.67844638 -33.59147712</span></span>
+<span id="cb6-38"><a href="un-camino.html#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [25]  -0.57381482   7.69997922 -18.78100714  15.60691856</span></span>
+<span id="cb6-39"><a href="un-camino.html#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [29]  11.66713068  -4.43506452 -20.41392362  -1.23405211</span></span>
+<span id="cb6-40"><a href="un-camino.html#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [33]  -6.96531282   9.64353557  -6.77486160  30.02382912</span></span>
+<span id="cb6-41"><a href="un-camino.html#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [37]  -5.40177077   6.39945115 -12.58398922  20.12391421</span></span>
+<span id="cb6-42"><a href="un-camino.html#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [41]  -2.92703823  -7.77281354 -15.93630872  -2.10477279</span></span>
+<span id="cb6-43"><a href="un-camino.html#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [45]  -4.11970307  -1.60415929  10.64572285 -37.21478392</span></span>
+<span id="cb6-44"><a href="un-camino.html#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [49]  15.01070027   3.59739571  17.58906665   5.43570463</span></span>
+<span id="cb6-45"><a href="un-camino.html#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [53]  -4.00357496  -1.90531667   3.54637914   1.33891100</span></span>
+<span id="cb6-46"><a href="un-camino.html#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [57]  42.77167396  11.98170332  -0.13070948  12.66409736</span></span>
+<span id="cb6-47"><a href="un-camino.html#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [61]   2.27857959  15.63296023  -6.26135927   2.56510858</span></span>
+<span id="cb6-48"><a href="un-camino.html#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [65]   5.74113839 -18.78533471 -21.72447597  13.78662202</span></span>
+<span id="cb6-49"><a href="un-camino.html#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [69]   7.15014819   3.44753666 -11.63053849   5.54650897</span></span>
+<span id="cb6-50"><a href="un-camino.html#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [73]   8.53074641 -14.71605773 -24.20236452 -29.39126222</span></span>
+<span id="cb6-51"><a href="un-camino.html#cb6-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [77]  20.09953181  13.15576837   8.77225235  13.27882326</span></span>
+<span id="cb6-52"><a href="un-camino.html#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [81]   9.60320128  -2.73678724   7.64068237   2.50334747</span></span>
+<span id="cb6-53"><a href="un-camino.html#cb6-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [85]  -6.96036997  13.59745291  24.90536163  14.32806129</span></span>
+<span id="cb6-54"><a href="un-camino.html#cb6-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [89]  -0.50514401 -10.08447333  -3.70473986  13.45839135</span></span>
+<span id="cb6-55"><a href="un-camino.html#cb6-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [93]   1.02565002  -9.33660068 -13.76436786   8.99531736</span></span>
+<span id="cb6-56"><a href="un-camino.html#cb6-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [97]   5.87517724  21.76202538   4.58513429   8.56726887</span></span>
+<span id="cb6-57"><a href="un-camino.html#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [101]   1.22598823  -6.16865517   1.74979032   4.53458328</span></span>
+<span id="cb6-58"><a href="un-camino.html#cb6-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [105]   7.93222740  -0.25978671   4.72685785   9.04110889</span></span>
+<span id="cb6-59"><a href="un-camino.html#cb6-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [109]  -4.41608958   0.80039290  -4.18766494  -8.13529694</span></span>
+<span id="cb6-60"><a href="un-camino.html#cb6-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [113]  -8.68550170  -1.18960511   3.43828044   9.60224827</span></span>
+<span id="cb6-61"><a href="un-camino.html#cb6-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [117]  14.70991690  -9.58159747   9.53799598   2.08880372</span></span>
+<span id="cb6-62"><a href="un-camino.html#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [121]   5.85976366   2.83140800  -8.65274050   7.52661134</span></span>
+<span id="cb6-63"><a href="un-camino.html#cb6-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [125]   1.39202437   4.89612270  -2.12710012   1.39936277</span></span>
+<span id="cb6-64"><a href="un-camino.html#cb6-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [129]  -5.02332605   5.76221809   3.66491122   8.27850152</span></span>
+<span id="cb6-65"><a href="un-camino.html#cb6-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [133]  -6.24554343   9.85520147  15.15285156   8.73395739</span></span>
+<span id="cb6-66"><a href="un-camino.html#cb6-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [137]  -0.05013788 -10.51934673  -0.06687288  -5.92858190</span></span>
+<span id="cb6-67"><a href="un-camino.html#cb6-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [141] -10.58568315   2.74371861   4.15753522  -3.80625428</span></span>
+<span id="cb6-68"><a href="un-camino.html#cb6-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [145]   8.04816141  -5.42111518  -5.03065911   9.90317538</span></span>
+<span id="cb6-69"><a href="un-camino.html#cb6-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [149]  -7.85404256  11.32156221   8.43295383  -2.32429615</span></span>
+<span id="cb6-70"><a href="un-camino.html#cb6-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [153]  13.01462014   1.54061721   2.05813986  20.15392877</span></span>
+<span id="cb6-71"><a href="un-camino.html#cb6-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [157]  -7.39490376   2.34828935  20.47843365   7.17052347</span></span>
+<span id="cb6-72"><a href="un-camino.html#cb6-72" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [161]  -2.62563883 -12.67694180  -3.85435390   5.96629237</span></span>
+<span id="cb6-73"><a href="un-camino.html#cb6-73" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [165]  11.72089295   8.23387458  -0.49783030   5.76252931</span></span>
+<span id="cb6-74"><a href="un-camino.html#cb6-74" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [169]   1.44112456   8.10699776  -4.52676184  -6.00796092</span></span>
+<span id="cb6-75"><a href="un-camino.html#cb6-75" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [173]   0.72964776   8.98955770   2.83447462   4.01536256</span></span>
+<span id="cb6-76"><a href="un-camino.html#cb6-76" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [177]   4.38443827   7.35281333  -2.61760725   2.36894617</span></span>
+<span id="cb6-77"><a href="un-camino.html#cb6-77" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [181]  -1.20285851  -2.07377928  13.68712240   5.85471090</span></span>
+<span id="cb6-78"><a href="un-camino.html#cb6-78" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [185]  -0.00427124  20.93976645   4.63815978  -6.55115525</span></span>
+<span id="cb6-79"><a href="un-camino.html#cb6-79" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [189]   9.77684681   4.61358018   2.75160333   5.84583306</span></span>
+<span id="cb6-80"><a href="un-camino.html#cb6-80" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [193]  12.74521370  -0.22279328 -21.94794383   8.60716489</span></span>
+<span id="cb6-81"><a href="un-camino.html#cb6-81" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [197] -18.86826361  11.20213025   0.98664739   8.39682297</span></span>
+<span id="cb6-82"><a href="un-camino.html#cb6-82" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [201]   7.12720047  -9.38002536   8.85565506  -2.70183034</span></span>
+<span id="cb6-83"><a href="un-camino.html#cb6-83" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [205]  -5.58782369  -1.36520548   2.37757442   0.91249016</span></span>
+<span id="cb6-84"><a href="un-camino.html#cb6-84" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [209]   3.83805218   6.98245156  -5.31693095   1.37938043</span></span>
+<span id="cb6-85"><a href="un-camino.html#cb6-85" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [213]  18.97247680   4.64889431  11.92308161  14.25393454</span></span>
+<span id="cb6-86"><a href="un-camino.html#cb6-86" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [217]   9.27398656  -8.41337555  -4.66642316   4.05671846</span></span>
+<span id="cb6-87"><a href="un-camino.html#cb6-87" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [221]   2.52393793  -0.84885499  -3.59427728  -0.31861156</span></span>
+<span id="cb6-88"><a href="un-camino.html#cb6-88" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [225]  11.12179968  -7.17375312   5.72503641  -2.40180912</span></span>
+<span id="cb6-89"><a href="un-camino.html#cb6-89" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [229]   4.18486227  -6.11473001   2.18899134   5.30616390</span></span>
+<span id="cb6-90"><a href="un-camino.html#cb6-90" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [233]  -5.62793333 -11.06465380   1.80527180   7.20896224</span></span>
+<span id="cb6-91"><a href="un-camino.html#cb6-91" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [237] -29.34750864  -0.11853658 -13.99459654  23.88072732</span></span>
+<span id="cb6-92"><a href="un-camino.html#cb6-92" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [241]  -6.86965832</span></span>
+<span id="cb6-93"><a href="un-camino.html#cb6-93" aria-hidden="true" tabindex="-1"></a><span class="co">#tenemos 20 retornos a lo largo de 20 años</span></span></code></pre></div>
+<p>Veamos la serie de tiempo</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="un-camino.html#cb7-1" aria-hidden="true" tabindex="-1"></a>ret_20_amazn<span class="ot">&lt;-</span><span class="fu">ggplot</span>(<span class="at">data=</span>data_precio_amzn, <span class="fu">aes</span>(<span class="at">x=</span>ref.date))<span class="sc">+</span><span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>ccrAMZN))<span class="sc">+</span><span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Retornos de AMZN en los últimos 20 años&quot;</span>,<span class="at">y=</span><span class="st">&quot;Retornos&quot;</span>, <span class="at">x=</span><span class="st">&quot;Años&quot;</span>)<span class="sc">+</span><span class="fu">theme_light</span>()</span>
+<span id="cb7-2"><a href="un-camino.html#cb7-2" aria-hidden="true" tabindex="-1"></a>ret_20_amazn</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:amazn20"></span>
+<img src="06-ESTACIONARIEDAD_files/figure-html/amazn20-1.png" alt="Serie de tiempo de los retornos de año en los últimos 20 años" width="672" />
+<p class="caption">
+Figure 6.4: Serie de tiempo de los retornos de año en los últimos 20 años
+</p>
+</div>
+<div id="serie-de-tiempo" class="section level3" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> Serie de tiempo</h3>
+<p>Primero que nada es importante cargar los datos a un objeto series de tiempo. Esto nos lo permite la función ts().
+Además debemos serciorarnos de que los datos esten en orden cronológico.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="un-camino.html#cb8-1" aria-hidden="true" tabindex="-1"></a>data_precio_amzn<span class="ot">&lt;-</span>data_precio_amzn[<span class="fu">order</span>(data_precio_amzn<span class="sc">$</span>ref.date),]</span>
+<span id="cb8-2"><a href="un-camino.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data_precio_amzn)<span class="co">#dado que ya estaba en orden cronológico nuestro df no cambia</span></span>
+<span id="cb8-3"><a href="un-camino.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 11</span></span>
+<span id="cb8-4"><a href="un-camino.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ticker ref.date     volume price…¹ price…² price…³ price…⁴</span></span>
+<span id="cb8-5"><a href="un-camino.html#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb8-6"><a href="un-camino.html#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 AMZN   2002-09-26   5.58e8   0.796    0.87   0.786   0.796</span></span>
+<span id="cb8-7"><a href="un-camino.html#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 AMZN   2002-10-01   4.07e9   0.812    1.01   0.800   0.968</span></span>
+<span id="cb8-8"><a href="un-camino.html#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 AMZN   2002-11-01   4.13e9   0.961    1.23   0.91    1.17 </span></span>
+<span id="cb8-9"><a href="un-camino.html#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 AMZN   2002-12-02   3.11e9   1.21     1.25   0.922   0.944</span></span>
+<span id="cb8-10"><a href="un-camino.html#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 AMZN   2003-01-02   3.38e9   0.960    1.16   0.928   1.09 </span></span>
+<span id="cb8-11"><a href="un-camino.html#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 AMZN   2003-02-03   2.32e9   1.10     1.12   0.980   1.10 </span></span>
+<span id="cb8-12"><a href="un-camino.html#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 4 more variables: price.adjusted &lt;dbl&gt;,</span></span>
+<span id="cb8-13"><a href="un-camino.html#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ret.adjusted.prices &lt;dbl&gt;, ret.closing.prices &lt;dbl&gt;,</span></span>
+<span id="cb8-14"><a href="un-camino.html#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ccrAMZN &lt;dbl&gt;, and abbreviated variable names</span></span>
+<span id="cb8-15"><a href="un-camino.html#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ¹​price.open, ²​price.high, ³​price.low, ⁴​price.close</span></span>
+<span id="cb8-16"><a href="un-camino.html#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#hagamos el objeto ts</span></span>
+<span id="cb8-17"><a href="un-camino.html#cb8-17" aria-hidden="true" tabindex="-1"></a>ret_amazn_ts<span class="ot">&lt;-</span><span class="fu">ts</span>(data_precio_amzn<span class="sc">$</span>ccrAMZN)</span>
+<span id="cb8-18"><a href="un-camino.html#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ret_amazn_ts)<span class="co">#de esta manera podemos ver que se cargo bien debido a que es igual al ggplot</span></span></code></pre></div>
+<p><img src="06-ESTACIONARIEDAD_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="estacionariedad-1" class="section level3" number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span> Estacionariedad</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="un-camino.html#cb9-1" aria-hidden="true" tabindex="-1"></a>MA_m5<span class="ot">&lt;-</span>forecast<span class="sc">::</span><span class="fu">ma</span>(ret_amazn_ts,<span class="at">order=</span><span class="dv">11</span>,<span class="at">centre=</span><span class="cn">TRUE</span>)</span>
+<span id="cb9-2"><a href="un-camino.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ret_amazn_ts)<span class="sc">+</span><span class="fu">lines</span>(MA_m5, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:amazn20LAG-1"></span>
+<img src="06-ESTACIONARIEDAD_files/figure-html/amazn20LAG-1.png" alt="Lag Plot que nos muestra la correlación entre 20 lags" width="672" />
+<p class="caption">
+Figure 6.5: Lag Plot que nos muestra la correlación entre 20 lags
+</p>
+</div>
+<pre><code>#&gt; integer(0)
+gglagplot(ret_amazn_ts,lags=20,do.lines=FALSE,colour=FALSE)+theme_minimal()</code></pre>
+<div class="figure"><span style="display:block;" id="fig:amazn20LAG-2"></span>
+<img src="06-ESTACIONARIEDAD_files/figure-html/amazn20LAG-2.png" alt="Lag Plot que nos muestra la correlación entre 20 lags" width="672" />
+<p class="caption">
+Figure 6.6: Lag Plot que nos muestra la correlación entre 20 lags
+</p>
+</div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="un-camino.html#cb11-1" aria-hidden="true" tabindex="-1"></a>ACF_ret_amazn_ts<span class="ot">&lt;-</span><span class="fu">acf</span>(ret_amazn_ts,<span class="at">na.action =</span> na.pass)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:amazn20ACF"></span>
+<img src="06-ESTACIONARIEDAD_files/figure-html/amazn20ACF-1.png" alt="Función de Autocorrelación de los retornos de AMZN en los ultimos 20 años" width="672" />
+<p class="caption">
+Figure 6.7: Función de Autocorrelación de los retornos de AMZN en los ultimos 20 años
+</p>
+</div>
+<p>La Figura <a href="#fig:amazn20LAG"><strong>??</strong></a> nos idica la manera en la que se correlacionan los lags, evidentemente no se puede ver ningún tipo de correlacioo1ón visible. Similarmente la Figura <a href="un-camino.html#fig:amazn20ACF">6.7</a> en donde se muestra la función de autocorrelación. Expecto al primer lag –que muestra correlacion debido a que se esta comparando consigo mismo– es evidente que no hay correlacioo1ón fuerte entre ninguno de los lags. Por lo mismo, sería difícil poder encontrar y estimar valores futuros debido a que la Figura <a href="#fig:amazn20LAG"><strong>??</strong></a> y la Figura <a href="un-camino.html#fig:amazn20ACF">6.7</a> indican que la serie de tiempo de los retornos de AMZN de la Figura <a href="un-camino.html#fig:amazn20">6.4</a> es <strong>completamente aleatorio y no hay estacionariedad</strong>.</p>
+
+</div>
+</div>
+</div>
+  </main>
+
+  <div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page">
+      <h2>On this page</h2>
+      <div id="book-on-this-page"></div>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          <li><a id="book-source" href="#">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="#">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5">
+  <div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>06-ESTACIONARIEDAD</strong>" was written by Emiliano Pérez Caullieres. It was last built on 2022-09-21.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+<script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+
+</html>

@@ -4,16 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 5 ESTACIONARIEDAD | 06-ESTACIONARIEDAD</title>
+<title>Chapter 5 Estacionariedad | 06-ESTACIONARIEDAD</title>
 <meta name="author" content="Emiliano Pérez Caullieres">
-<meta name="description" content='5.0.1 Dependencias #install.packages("pacman") #pacman nos permite cargar varias librerias en una sola línea library(pacman)...'>
+<meta name="description" content="5.1 El problema Los fundamentos de las series de tiempo están basados en la estacionalidad. Una serie de tiempo \({r_t}\) que estudia los retornos de un activo a lo largo de tiempo es...">
 <meta name="generator" content="bookdown 0.27 with bs4_book()">
-<meta property="og:title" content="Chapter 5 ESTACIONARIEDAD | 06-ESTACIONARIEDAD">
+<meta property="og:title" content="Chapter 5 Estacionariedad | 06-ESTACIONARIEDAD">
 <meta property="og:type" content="book">
-<meta property="og:description" content='5.0.1 Dependencias #install.packages("pacman") #pacman nos permite cargar varias librerias en una sola línea library(pacman)...'>
+<meta property="og:description" content="5.1 El problema Los fundamentos de las series de tiempo están basados en la estacionalidad. Una serie de tiempo \({r_t}\) que estudia los retornos de un activo a lo largo de tiempo es...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 5 ESTACIONARIEDAD | 06-ESTACIONARIEDAD">
-<meta name="twitter:description" content='5.0.1 Dependencias #install.packages("pacman") #pacman nos permite cargar varias librerias en una sola línea library(pacman)...'>
+<meta name="twitter:title" content="Chapter 5 Estacionariedad | 06-ESTACIONARIEDAD">
+<meta name="twitter:description" content="5.1 El problema Los fundamentos de las series de tiempo están basados en la estacionalidad. Una serie de tiempo \({r_t}\) que estudia los retornos de un activo a lo largo de tiempo es...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -42,13 +42,7 @@
 </form>
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html"><span class="header-section-number">1</span> Mínimos Cuadrados Ordinarios</a></li>
-<li><a class="" href="m%C3%A1xima-verosimilitud.html"><span class="header-section-number">2</span> Máxima Verosimilitud</a></li>
-<li><a class="" href="m%C3%A9todo-generalizado-de-momentos-mgm.html"><span class="header-section-number">3</span> Método Generalizado de Momentos (MGM)</a></li>
-<li><a class="" href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> CAPITAL ASSET PRICING MODEL (CAPM)</a></li>
-<li><a class="active" href="estacionariedad.html"><span class="header-section-number">5</span> ESTACIONARIEDAD</a></li>
-</ul>
+        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 5</span> Estacionariedad</a></li></ul>
 
         <div class="book-extra">
           <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
@@ -57,25 +51,292 @@
 </div>
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="estacionariedad" class="section level1" number="5">
 <h1>
-<span class="header-section-number">5</span> ESTACIONARIEDAD<a class="anchor" aria-label="anchor" href="#estacionariedad"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5</span> Estacionariedad<a class="anchor" aria-label="anchor" href="#estacionariedad"><i class="fas fa-link"></i></a>
 </h1>
-<div id="dependencias-2" class="section level3" number="5.0.1">
+<div id="el-problema-4" class="section level2" number="5.1">
+<h2>
+<span class="header-section-number">5.1</span> El problema<a class="anchor" aria-label="anchor" href="#el-problema-4"><i class="fas fa-link"></i></a>
+</h2>
+<p>Los fundamentos de las series de tiempo están basados en la
+estacionalidad. Una serie de tiempo <span class="math inline">\({r_t}\)</span> que estudia los retornos de
+un activo a lo largo de tiempo es <em>estrictamente estacionaria</em> si la
+distribución conjunta de los retornos <span class="math inline">\((r_{t1},\dots,r_{t1})\)</span> es
+<em>exactamente idéntica</em> en <span class="math inline">\((r_{t1+T},\dots,r_{t1+T})\)</span>, es decir cuando
+pasa <span class="math inline">\(T\)</span> años, por ejemplo. En otras palabras, definiremos a una serie
+de tiempo como un vector de variables <span class="math inline">\({X_t}\)</span> aleatorias de dimensión
+<span class="math inline">\(T\)</span>, dado como:</p>
+<p><span class="math display">\[\begin{equation}
+    X_1, X_2, X_3, \ldots ,X_T
+\end{equation}\]</span></p>
+<p>Es decir, definiremos a una serie de tiempo como una
+realización de un proceso estocástico –o un Proceso Generador de Datos
+(PGD). Consideremos una muestra de los múltiples posibles resultados de
+muestras de tamaño <span class="math inline">\(T\)</span>, la colección dada por:</p>
+<p><span class="math display" id="eq:variast">\[\begin{equation}
+    \{X^{(1)}_1, X^{(1)}_2, \ldots, X^{(1)}_T\}
+    \tag{5.1}
+\end{equation}\]</span></p>
+<p>Eventualmente podríamos estar dispuestos a observar este proceso
+indefinidamente, de forma tal que estemos interesados en observar a la
+secuencia dada por <span class="math inline">\(\{ X^{(1)}_t \}^{\infty}_{t = 1}\)</span>, lo cual no
+dejaría se ser sólo una de las tantas realizaciones o secuencias del
+proceso estocástico original de la ecuación <a href="estacionariedad.html#eq:variast">(5.1)</a>.</p>
+<span class="math display">\[\begin{eqnarray*}
+    &amp; \{X^{(2)}_1, X^{(2)}_2, \ldots, X^{(2)}_T\} &amp; \\
+    &amp; \{X^{(3)}_1, X^{(3)}_2, \ldots, X^{(3)}_T\} &amp; \\
+    &amp; \{X^{(4)}_1, X^{(4)}_2, \ldots, X^{(4)}_T\} &amp; \\
+    &amp; \vdots &amp; \\
+    &amp; \{X^{(j)}_1, X^{(j)}_2, \ldots, X^{(j)}_T\} &amp;
+\end{eqnarray*}\]</span>
+<p>Por lo mismo, cada cambio que se hace al vector <span class="math inline">\(\{ X^{(1)}_t \}\)</span> es
+parte del mismo proceso estocástico, por lo que la serie de tiempo es:</p>
+<span class="math display">\[\begin{equation}
+    \{ X_1, X_2, \ldots, X_T \}
+        \label{variast}
+\end{equation}\]</span>
+<p>El proceso estocástico de dimensión <span class="math inline">\(T\)</span> puede ser completamente descrito
+por su función de distribución multivariada de dimensión <span class="math inline">\(T\)</span>. No
+obstante, sólo nos enfocaremos en sus primer y segundo momentos, es
+decir, en sus medias o valores esperados <span class="math inline">\(\mathbb{E} (X_t)\)</span></p>
+<p>Para <span class="math inline">\(t = 1, 2, \ldots, T\)</span>:</p>
+<span class="math display">\[\begin{equation*}
+\left[
+    \begin{array}{c}
+    \mathbb{E}[X_1], \mathbb{E}[X_2], \ldots, \mathbb{E}[X_T]
+    \end{array}
+\right]
+\end{equation*}\]</span>
+<p>De sus variazas:</p>
+<p><span class="math display">\[\begin{equation*}
+    Var[X_t] = \mathbb{E}[(X_t - \mathbb{E}[X_t])^2]
+\end{equation*}\]</span> Para <span class="math inline">\(t = 1, 2, \ldots, T\)</span>, y de sus <span class="math inline">\(T(T-1)/2\)</span>
+covarianzas: <span class="math display">\[\begin{equation*}
+    Cov[X_t,X_s] = \mathbb{E}[(X_t - \mathbb{E}[X_t])(X_s - \mathbb{E}[X_s])]
+\end{equation*}\]</span></p>
+<p>Para <span class="math inline">\(t &lt; s\)</span>. Por lo tanto, en la forma matricial podemos escribir lo siguiente:
+<span class="math display">\[\begin{equation*}
+\left[
+    \begin{array}{c c c c}
+    Var[X_1] &amp; Cov[X_1,X_2] &amp; \cdots &amp; Cov[X_1,X_T] \\
+    Cov[X_2,X_1] &amp; Var[X_2] &amp; \cdots &amp; Cov[X_2,X_T] \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    Cov[X_T,X_1] &amp; Cov[X_T,X_2] &amp; \cdots &amp; Var[X_T] \\
+    \end{array}
+\right]
+\end{equation*}\]</span></p>
+<p><span class="math display" id="eq:MATCOV">\[\begin{equation}
+= \left[
+    \begin{array}{c c c c}
+    \sigma_1^2 &amp; \rho_{12} &amp; \cdots &amp; \rho_{1T} \\
+    \rho_{21} &amp; \sigma_2^2 &amp; \cdots &amp; \rho_{2T} \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    \rho_{T1} &amp; \rho_{T2} &amp; \cdots &amp; \sigma_T^2 \\
+    \end{array}
+\right]
+\tag{5.2}
+\end{equation}\]</span></p>
+<p>Donde es claro que en la matriz de la ecuación <a href="estacionariedad.html#eq:MATCOV">(5.2)</a> existen <span class="math inline">\(T(T-1)/2\)</span> covarianzas distintas, ya que se cumple que <span class="math inline">\(Cov[X_t,X_s] = Cov[X_s,X_t]\)</span>, para <span class="math inline">\(t \neq s\)</span>. A menudo, esas covarianzas son denominadas como <em>autocovarianzas</em> puesto que ellas son covarianzas entre variables aleatorias pertenecientes al mismo proceso estocástico pero en un momento <span class="math inline">\(t\)</span> diferente. Si el proceso estocástico tiene una distribución normal multivariada, su función de distribución estará totalmente descrita por sus momentos de primer y segundo orden.</p>
+<div id="ergocidad" class="section level3" number="5.1.1">
 <h3>
-<span class="header-section-number">5.0.1</span> Dependencias<a class="anchor" aria-label="anchor" href="#dependencias-2"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.1.1</span> Ergocidad<a class="anchor" aria-label="anchor" href="#ergocidad"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<p>Esto implica que los momentos muestrales, los cuales son calculados en la base de una serie de tiempo con un número finito de observaciones, conforme el tiempo <span class="math inline">\(T \rightarrow \infty\)</span> sus correspondientes momentos muestrales, tienden a los verdaderos valores poblacionales, los cuales definiremos como <span class="math inline">\(\mu\)</span>, para la media, y <span class="math inline">\(\sigma^2_X\)</span> para la varianza. <em>En pocas palabras, conforme los momentos muestrales aumenten tanto que tiendan al infinito, entonces nos acercamos a valores poblacionales de la media y la varianza</em>.
+Este concepto sólo es cierto si asumimos que</p>
+<p><span class="math display">\[\begin{eqnarray*}
+    \mathbb{E}[X_t] = \mu_t = \mu \\
+    Var[X_t] = \sigma^2_X
+\end{eqnarray*}\]</span>
+Más formalmente, se dice que el PGD o el proceso estocástico es ergódico en la media si:
+<span class="math display">\[\begin{equation}
+    \displaystyle\lim_{T \to \infty}{\mathbb{E} \left[ \left( \frac{1}{T} \sum^{T}_{t = 1} (X_t - \mu) \right) ^2 \right]} = 0
+\end{equation}\]</span></p>
+<p>y ergódico en la varianza si:
+<span class="math display">\[\begin{equation}
+    \displaystyle\lim_{T \to \infty}{\mathbb{E} \left[ \left( \frac{1}{T} \sum^{T}_{t = 1} (X_t - \mu) ^2 - \sigma^2_X \right) ^2 \right]} = 0
+\end{equation}\]</span>
++
+Estas condiciones se les conoce como <em>propiedades de consistencia</em> para las variables aleatorias. Sin embargo, éstas no pueden ser probadas. Por ello se les denomina como un supuesto que pueden cumplir algunas de las series. Más importante aún: <strong>un proceso estocástico que tiende a estar en equilibrio estadístico en un orden ergódico, es estacionario</strong>.</p>
+</div>
+<div id="tipos-de-estacionariedad" class="section level3" number="5.1.2">
+<h3>
+<span class="header-section-number">5.1.2</span> Tipos de Estacionariedad<a class="anchor" aria-label="anchor" href="#tipos-de-estacionariedad"><i class="fas fa-link"></i></a>
+</h3>
+<p>Definiremos a la estacionariedad por sus momentos del correspondiente proceso estocástico dado por <span class="math inline">\(\{X_t\}\)</span>:</p>
+<ul>
+<li><p><em>Estacionariedad en media</em>: Un proceso estocástico es estacionario en media si <span class="math inline">\(E[X_t] = \mu_t = \mu\)</span> es constante para todo <span class="math inline">\(t\)</span>.</p></li>
+<li><p><em>Estacionariedad en varianza</em>: Un proceso estocástico es estacionario en varianza si <span class="math inline">\(Var[X_t] = \mathbb{E}[(X_t - \mu_t)^2] = \sigma^2_X = \gamma(0)\)</span> es constante y finita para todo <span class="math inline">\(t\)</span>.</p></li>
+<li><p><em>Estacionariedad en covarianza</em>: Un proceso estocástico es estacionario en covarianza si <span class="math inline">\(Cov[X_t,X_s] = \mathbb{E}[(X_t - \mu_t)(X_s - \mu_s)] = \gamma(|s-t|)\)</span> es sólo una función del tiempo y de la distancia entre las dos variables aleatorias. Por lo que no depende del tiempo denotado por <span class="math inline">\(t\)</span> (no depende de la información contemporánea).</p></li>
+<li><p><em>Estacionariedad débil</em>: Como la estacionariedad en varianza resulta de forma inmediata de la estacionariedad en covarianza cuando se asume que <span class="math inline">\(s = t\)</span>, un proceso estocástico es débilmente estacionario cuando es estacionario en media y covarianza. <strong>ESTE ES EL MÁS COMÚN Y POSIBLE</strong>, por lo que es el que estudiaremos.</p></li>
+</ul>
+</div>
+<div id="función-de-autocorrelación-acf" class="section level3" number="5.1.3">
+<h3>
+<span class="header-section-number">5.1.3</span> Función de Autocorrelación (ACF)<a class="anchor" aria-label="anchor" href="#funci%C3%B3n-de-autocorrelaci%C3%B3n-acf"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para ampliar la discusión, es posible calcular la fuerza o intensidad de la dependencia de las variables aleatorias dentro de un proceso estocástico, ello mediante el uso de las autocovarianzas. Cuando las covarianzas son normalizadas respecto de la varianza, el resultado es un término que es independiente de las unidad de medida aplicada, y se conoce como la <em>función de autocorrelación</em>.</p>
+<p>Por su parte, un estimador consistente de la función de autocorrelación estará dado por:
+<span class="math display" id="eq:EqAutoCorr">\[\begin{equation}
+    \hat{\rho}(\tau) = \frac{\sum^{T - \tau}_{t=1} (X_t - \hat{\mu})(X_{t+\tau} - \hat{\mu})}{\sum^T_{t=1} (X_t - \hat{\mu})^2} = \frac{\hat{\gamma}(\tau)}{\hat{\gamma}(0)} \mbox{, para } \tau = 1, 2, \ldots, T-1
+    \tag{5.3}
+\end{equation}\]</span></p>
+<p>El estimador de la ecuación <a href="estacionariedad.html#eq:EqAutoCorr">(5.3)</a> es asintóticamente insesgado y <strong>es relevante puesto que nos dice si una serie de tiempo con estacionariedad débil esta serialmente correlacionada si y solo si <span class="math inline">\(\hat{\rho}(\tau)\neq0\)</span></strong>.</p>
+</div>
+<div id="ruido-blanco" class="section level3" number="5.1.4">
+<h3>
+<span class="header-section-number">5.1.4</span> Ruido Blanco<a class="anchor" aria-label="anchor" href="#ruido-blanco"><i class="fas fa-link"></i></a>
+</h3>
+<p>Supongamos una serie de tiempo denotada por: <span class="math inline">\(\{U_t\}^T_{t = 0}\)</span>. Decimos que el proceso estocástico <span class="math inline">\(\{U_t\}\)</span> es un <em>proceso estocástico puramente aleatorio</em> o es un <em>proceso estocástico de ruido blanco o caminata aleatoria</em>, si éste tiene las siguientes propiedades:</p>
+<ul>
+<li><p><span class="math inline">\(\mathbb{E}[U_t] = 0\)</span>, <span class="math inline">\(\forall t\)</span></p></li>
+<li><p><span class="math inline">\(Var[U_t] = \mathbb{E}[(U_t - \mu_t)^2] = \mathbb{E}[(U_t - \mu)^2] = \mathbb{E}[(U_t)^2] = \sigma^2\)</span>, <span class="math inline">\(\forall t\)</span></p></li>
+<li><p><span class="math inline">\(Cov[U_t,U_s] = \mathbb{E}[(U_t - \mu_t)(U_s - \mu_s)] = \mathbb{E}[(U_t - \mu)(U_s - \mu)] = \mathbb{E}[U_t U_s] = 0\)</span>, <span class="math inline">\(\forall t \neq s\)</span>.</p></li>
+<li><p><span class="math inline">\(\hat{\rho}(\tau)=0\)</span></p></li>
+</ul>
+<p>En palabras. Un proceso <span class="math inline">\(U_t\)</span> es un ruido blanco si su valor promedio es cero (0), tiene una varianza finita y constante, y además no le importa la historia pasada, así su valor presente no se ve influenciado por sus valores pasados no importando respecto de que periodo se tome referencia.</p>
+<p>Para procesos estacionarios, dicha función de autocorrelación esta dada por:
+<span class="math display">\[\begin{equation}
+    \rho(\tau) = \frac{\mathbb{E}[(X_t - \mu)(X_{t+\tau} - \mu)]}{\mathbb{E}[(X_t - \mu)^2]} = \frac{\gamma(\tau)}{\gamma(0)}
+\end{equation}\]</span></p>
+</div>
+</div>
+<div id="estimación-1" class="section level2" number="5.2">
+<h2>
+<span class="header-section-number">5.2</span> Estimación<a class="anchor" aria-label="anchor" href="#estimaci%C3%B3n-1"><i class="fas fa-link"></i></a>
+</h2>
+<div id="dependencias-2" class="section level3" number="5.2.1">
+<h3>
+<span class="header-section-number">5.2.1</span> Dependencias<a class="anchor" aria-label="anchor" href="#dependencias-2"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#install.packages("pacman")</span></span>
 <span><span class="co">#pacman nos permite cargar varias librerias en una sola línea</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span></span>
 <span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,<span class="va">BatchGetSymbols</span>,<span class="va">ggplot2</span>,<span class="va">lubridate</span>,<span class="va">readxl</span>,<span class="va">forecast</span>,<span class="va">stats</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+</div>
+</div>
+<div id="caminata" class="section level2" number="5.3">
+<h2>
+<span class="header-section-number">5.3</span> Caminata<a class="anchor" aria-label="anchor" href="#caminata"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
+<span><span class="co"># Utilizaremos una función guardada en un archivo a parte</span></span>
+<span><span class="co"># Llamamos a la función:</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="st">"funciones/Caminata.R"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Definimos argumentos de la función</span></span>
+<span><span class="va">Opciones</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#</span></span>
+<span><span class="va">Soporte</span> <span class="op">&lt;-</span> <span class="fl">10000</span></span>
+<span></span>
+<span><span class="co"># Vamos a réplicar el proceso con estos parámetros</span></span>
+<span><span class="va">Rango</span> <span class="op">&lt;-</span> <span class="fl">200</span></span>
+<span><span class="co">#</span></span>
+<span><span class="va">Caminos</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
+<span></span>
+<span><span class="co">#</span></span>
+<span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">Caminos</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">TT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.matrix.html">data.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu">Caminata</span><span class="op">(</span><span class="va">Opciones</span>, <span class="va">Soporte</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="co">#</span></span>
+<span>  <span class="va">G_t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.matrix.html">data.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu">Caminata</span><span class="op">(</span><span class="va">Opciones</span>, <span class="va">Soporte</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="co">#</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">TT</span>, <span class="va">G_t</span>, col <span class="op">=</span> <span class="st">"blue"</span>, type <span class="op">=</span> <span class="st">"l"</span>, ylab <span class="op">=</span> <span class="st">"Ganancias"</span>, xlab <span class="op">=</span> <span class="st">"Tiempo"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">Rango</span>,<span class="va">Rango</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="co">#</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="co">#</span></span>
+<span>  <span class="va">i</span> <span class="op">&lt;-</span> <span class="va">i</span> <span class="op">+</span><span class="fl">1</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">#</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>new <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:Caminata10"></span>
+<img src="06-ESTACIONARIEDAD_files/figure-html/Caminata10-1.png" alt="Ejemplo de 10 trayectorias de la caminata aleatoria, cuando sólo es posible cambios de +1 y -1" width="672"><p class="caption">
+Figure 5.1: Ejemplo de 10 trayectorias de la caminata aleatoria, cuando sólo es posible cambios de +1 y -1
+</p>
+</div>
+<p>Así, el proceso estocástico dado por la caminata alaeatoria sin un
+término de ajuste es estacionario en media, pero no en varianza o en
+covarianza, y consecuentemente, en general no estacionario, condición
+que contraria al caso del proceso simple descrito en <span class="math inline">\(U_t\)</span>.</p>
+<p>Es facil ver que muchas de las posibilidades de realización de este
+proceso estocástico (series de tiempo) pueden tomar cualquiera de las
+rutas consideradas en el Figura <a href="estacionariedad.html#fig:Caminata10">5.1</a>. Ahora analicemos
+un solo camino.</p>
+</div>
+<div id="un-camino" class="section level2" number="5.4">
+<h2>
+<span class="header-section-number">5.4</span> Un camino<a class="anchor" aria-label="anchor" href="#un-camino"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Generamos datos</span></span>
+<span>  <span class="va">TT1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.matrix.html">data.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu">Caminata</span><span class="op">(</span><span class="va">Opciones</span>, <span class="va">Soporte</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">G_t1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.matrix.html">data.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu">Caminata</span><span class="op">(</span><span class="va">Opciones</span>, <span class="va">Soporte</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#Creemos un data frame</span></span>
+<span>  <span class="va">dt_caminata</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">TT1</span>,<span class="va">G_t1</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">dt_caminata</span><span class="op">)</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"t"</span>,<span class="st">"ganancias"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">dt_caminata</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   t ganancias</span></span>
+<span><span class="co">#&gt; 1 1        -1</span></span>
+<span><span class="co">#&gt; 2 2        -2</span></span>
+<span><span class="co">#&gt; 3 3        -1</span></span>
+<span><span class="co">#&gt; 4 4        -2</span></span>
+<span><span class="co">#&gt; 5 5        -3</span></span>
+<span><span class="co">#&gt; 6 6        -4</span></span>
+<span><span class="co">#plot</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">TT1</span>, <span class="va">G_t1</span>, col <span class="op">=</span> <span class="st">"blue"</span>, type <span class="op">=</span> <span class="st">"l"</span>, ylab <span class="op">=</span> <span class="st">"Ganancias"</span>, xlab <span class="op">=</span> <span class="st">"Tiempo"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">Rango</span>,<span class="va">Rango</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:Caminata1"></span>
+<img src="06-ESTACIONARIEDAD_files/figure-html/Caminata1-1.png" alt="Una Caminata aleatoria cuando sólo es posible cambios de +1 y -1" width="672"><p class="caption">
+Figure 5.2: Una Caminata aleatoria cuando sólo es posible cambios de +1 y -1
+</p>
+</div>
+<p>Hay que convertirlo a serie de tiempo</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#serie de tiempo</span></span>
+<span><span class="va">caminata_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">G_t1</span>,start<span class="op">=</span><span class="fl">1</span>,end<span class="op">=</span><span class="va">Soporte</span><span class="op">)</span></span></code></pre></div>
+<div id="estacionariedad-caminata" class="section level3" number="5.4.1">
+<h3>
+<span class="header-section-number">5.4.1</span> Estacionariedad Caminata<a class="anchor" aria-label="anchor" href="#estacionariedad-caminata"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ACF_caminata_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/acf.html">acf</a></span><span class="op">(</span><span class="va">caminata_ts</span>,na.action <span class="op">=</span> <span class="va">na.pass</span>, main <span class="op">=</span> <span class="st">"Función de Autocorrelación de una Caminata"</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:ACFCAMINATA1"></span>
+<img src="06-ESTACIONARIEDAD_files/figure-html/ACFCAMINATA1-1.png" alt="Función de Autocorrelación de una Caminata" width="672"><p class="caption">
+Figure 5.3: Función de Autocorrelación de una Caminata
+</p>
+</div>
+<p>Como se comentó con anterioridad en la Figura <a href="estacionariedad.html#fig:ACFCAMINATA1">5.3</a> es
+evidente que la Caminata si tiene autocorrelacion, por lo que nuestro
+plot de autocorrelacion tiene valores muy altos en todos los lags.
+Veamos los lags.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">gglagplot</span><span class="op">(</span><span class="va">caminata_ts</span>,lags<span class="op">=</span><span class="fl">10</span>,do.lines<span class="op">=</span><span class="cn">FALSE</span>,colour<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">+</span><span class="fu">theme_light</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:LAGSCAMINATA1"></span>
+<img src="06-ESTACIONARIEDAD_files/figure-html/LAGSCAMINATA1-1.png" alt="Lags de una sola caminata" width="672"><p class="caption">
+Figure 5.4: Lags de una sola caminata
+</p>
+</div>
+<p>De nuevo, esto al ser creado de manera estandarizada estamos seguros de
+que va a ser estacionario en la medio, por lo mismo los lags de la
+Figura <a href="estacionariedad.html#fig:LAGSCAMINATA1">5.4</a> se ven tan correlacionados.</p>
+</div>
+</div>
+<div id="rendimientos-de-un-activo" class="section level2" number="5.5">
+<h2>
+<span class="header-section-number">5.5</span> Rendimientos de un activo<a class="anchor" aria-label="anchor" href="#rendimientos-de-un-activo"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
 <span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span><span class="op">(</span><span class="fl">365</span><span class="op">*</span><span class="fl">20</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
 <span><span class="va">pd</span></span>
-<span><span class="co">#&gt; [1] "2002-09-25"</span></span>
+<span><span class="co">#&gt; [1] "2002-09-26"</span></span>
 <span><span class="va">ld</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#última fecha</span></span>
 <span><span class="va">ld</span></span>
-<span><span class="co">#&gt; [1] "2022-09-20"</span></span>
+<span><span class="co">#&gt; [1] "2022-09-21"</span></span>
 <span><span class="co">#Intervalos de tiempo</span></span>
 <span><span class="va">int</span><span class="op">&lt;-</span><span class="st">"monthly"</span></span>
 <span><span class="co">#Datos a elegir</span></span>
@@ -100,7 +361,7 @@
 <span><span class="co">#necesitamos convertir la serie de tiempo de precios en retornos continuos compuestos de los precios de apertura</span></span>
 <span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span> ,<span class="fl">100</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="co">#agregamos un valor NA al principio</span></span>
 <span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="co">#estos son los retornos</span></span>
-<span><span class="co">#&gt;   [1]           NA   0.37037079  16.90900220  22.83329766</span></span>
+<span><span class="co">#&gt;   [1]           NA   1.86572576  16.90900220  22.83329766</span></span>
 <span><span class="co">#&gt;   [5] -22.98950701  13.39221448   0.95260416  14.27998202</span></span>
 <span><span class="co">#&gt;   [9]  11.55626991  24.11122449  -0.46684144  13.08785513</span></span>
 <span><span class="co">#&gt;  [13]  11.63599301   3.89974592  12.48104071  -0.73260401</span></span>
@@ -163,29 +424,29 @@
 <span><span class="co">#&gt; [241]  -6.86965832</span></span>
 <span><span class="co">#tenemos 20 retornos a lo largo de 20 años</span></span></code></pre></div>
 <p>Veamos la serie de tiempo</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ret_20_amazn</span><span class="op">&lt;-</span><span class="fu">ggplot</span><span class="op">(</span>data<span class="op">=</span><span class="va">data_precio_amzn</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">ref.date</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y<span class="op">=</span><span class="va">ccrAMZN</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu">labs</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Retornos de AMZN en los últimos 20 años"</span>,y<span class="op">=</span><span class="st">"Retornos"</span>, x<span class="op">=</span><span class="st">"Años"</span><span class="op">)</span><span class="op">+</span><span class="fu">theme_light</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">ret_20_amazn</span></span></code></pre></div>
 <div class="figure">
 <span style="display:block;" id="fig:amazn20"></span>
 <img src="06-ESTACIONARIEDAD_files/figure-html/amazn20-1.png" alt="Serie de tiempo de los retornos de año en los últimos 20 años" width="672"><p class="caption">
-Figure 5.1: Serie de tiempo de los retornos de año en los últimos 20 años
+Figure 5.5: Serie de tiempo de los retornos de año en los últimos 20 años
 </p>
 </div>
-</div>
-<div id="serie-de-tiempo" class="section level3" number="5.0.2">
+<div id="serie-de-tiempo" class="section level3" number="5.5.1">
 <h3>
-<span class="header-section-number">5.0.2</span> Serie de tiempo<a class="anchor" aria-label="anchor" href="#serie-de-tiempo"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.5.1</span> Serie de tiempo<a class="anchor" aria-label="anchor" href="#serie-de-tiempo"><i class="fas fa-link"></i></a>
 </h3>
-<p>Primero que nada es importante cargar los datos a un objeto series de tiempo. Esto nos lo permite la función ts().
-Además debemos serciorarnos de que los datos esten en orden cronológico.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<p>Primero que nada es importante cargar los datos a un objeto series de
+tiempo. Esto nos lo permite la función ts(). Además debemos serciorarnos
+de que los datos esten en orden cronológico.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_precio_amzn</span><span class="op">&lt;-</span><span class="va">data_precio_amzn</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ref.date</span><span class="op">)</span>,<span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">)</span><span class="co">#dado que ya estaba en orden cronológico nuestro df no cambia</span></span>
 <span><span class="co">#&gt; # A tibble: 6 × 11</span></span>
 <span><span class="co">#&gt;   ticker ref.date     volume price…¹ price…² price…³ price…⁴</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 AMZN   2002-09-25   7.45e8   0.808    0.87   0.764   0.796</span></span>
+<span><span class="co">#&gt; 1 AMZN   2002-09-26   5.58e8   0.796    0.87   0.786   0.796</span></span>
 <span><span class="co">#&gt; 2 AMZN   2002-10-01   4.07e9   0.812    1.01   0.800   0.968</span></span>
 <span><span class="co">#&gt; 3 AMZN   2002-11-01   4.13e9   0.961    1.23   0.91    1.17 </span></span>
 <span><span class="co">#&gt; 4 AMZN   2002-12-02   3.11e9   1.21     1.25   0.922   0.944</span></span>
@@ -198,51 +459,55 @@ Además debemos serciorarnos de que los datos esten en orden cronológico.</p>
 <span><span class="co">#hagamos el objeto ts</span></span>
 <span><span class="va">ret_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">ret_amazn_ts</span><span class="op">)</span><span class="co">#de esta manera podemos ver que se cargo bien debido a que es igual al ggplot</span></span></code></pre></div>
-<div class="inline-figure"><img src="06-ESTACIONARIEDAD_files/figure-html/unnamed-chunk-3-1.png" width="672"></div>
+<div class="inline-figure"><img src="06-ESTACIONARIEDAD_files/figure-html/unnamed-chunk-4-1.png" width="672"></div>
 </div>
-<div id="estacionariedad-1" class="section level3" number="5.0.3">
+<div id="estacionariedad-1" class="section level3" number="5.5.2">
 <h3>
-<span class="header-section-number">5.0.3</span> Estacionariedad<a class="anchor" aria-label="anchor" href="#estacionariedad-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.5.2</span> Estacionariedad<a class="anchor" aria-label="anchor" href="#estacionariedad-1"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#MA_m5&lt;-forecast::ma(ret_amazn_ts,order=11,centre=TRUE)</span></span>
 <span><span class="co">#plot(ret_amazn_ts)+lines(MA_m5, col="red", lwd=2)</span></span>
-<span><span class="fu">gglagplot</span><span class="op">(</span><span class="va">ret_amazn_ts</span>,lags<span class="op">=</span><span class="fl">20</span>,do.lines<span class="op">=</span><span class="cn">FALSE</span>,colour<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">+</span><span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">gglagplot</span><span class="op">(</span><span class="va">ret_amazn_ts</span>,lags<span class="op">=</span><span class="fl">20</span>,do.lines<span class="op">=</span><span class="cn">FALSE</span>,colour<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">+</span><span class="fu">theme_light</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <span style="display:block;" id="fig:amazn20LAG"></span>
 <img src="06-ESTACIONARIEDAD_files/figure-html/amazn20LAG-1.png" alt="Lag Plot que nos muestra la correlación entre 20 lags" width="672"><p class="caption">
-Figure 5.2: Lag Plot que nos muestra la correlación entre 20 lags
+Figure 5.6: Lag Plot que nos muestra la correlación entre 20 lags
 </p>
 </div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ACF_ret_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/acf.html">acf</a></span><span class="op">(</span><span class="va">ret_amazn_ts</span>,na.action <span class="op">=</span> <span class="va">na.pass</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <span style="display:block;" id="fig:amazn20ACF"></span>
 <img src="06-ESTACIONARIEDAD_files/figure-html/amazn20ACF-1.png" alt="Función de Autocorrelación de los retornos de AMZN en los ultimos 20 años" width="672"><p class="caption">
-Figure 5.3: Función de Autocorrelación de los retornos de AMZN en los ultimos 20 años
+Figure 5.7: Función de Autocorrelación de los retornos de AMZN en los ultimos 20 años
 </p>
 </div>
-<p>La Figura <a href="estacionariedad.html#fig:amazn20LAG">5.2</a> nos idica la manera en la que se correlacionan los lags, evidentemente no se puede ver ningún tipo de correlacioo1ón visible. Similarmente la Figura <a href="estacionariedad.html#fig:amazn20ACF">5.3</a> en donde se muestra la función de autocorrelación. Expecto al primer lag –que muestra correlacion debido a que se esta comparando consigo mismo– es evidente que no hay correlacioo1ón fuerte entre ninguno de los lags. Por lo mismo, sería difícil poder encontrar y estimar valores futuros debido a que la Figura <a href="estacionariedad.html#fig:amazn20LAG">5.2</a> y la Figura <a href="estacionariedad.html#fig:amazn20ACF">5.3</a> indican que la serie de tiempo de los retornos de AMZN de la Figura <a href="estacionariedad.html#fig:amazn20">5.1</a> es <strong>completamente aleatorio y no hay estacionariedad</strong>.</p>
+<p>La Figura <a href="estacionariedad.html#fig:amazn20LAG">5.6</a> nos idica la manera en la que se
+correlacionan los lags, evidentemente no se puede ver ningún tipo de
+correlacioo1ón visible. Similarmente la Figura <a href="estacionariedad.html#fig:amazn20ACF">5.7</a> en
+donde se muestra la función de autocorrelación. Expecto al primer lag
+–que muestra correlacion debido a que se esta comparando consigo
+mismo– es evidente que no hay correlacioo1ón fuerte entre ninguno de
+los lags. Por lo mismo, sería difícil poder encontrar y estimar valores
+futuros debido a que la Figura <a href="estacionariedad.html#fig:amazn20LAG">5.6</a> y la Figura
+<a href="estacionariedad.html#fig:amazn20ACF">5.7</a> indican que la serie de tiempo de los retornos de
+AMZN de la Figura <a href="estacionariedad.html#fig:amazn20">5.5</a> es <strong>completamente aleatorio y no
+hay estacionariedad</strong>.</p>
 
+</div>
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> CAPITAL ASSET PRICING MODEL (CAPM)</a></div>
+<div class="empty"></div>
 <div class="empty"></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li>
-<a class="nav-link" href="#estacionariedad"><span class="header-section-number">5</span> ESTACIONARIEDAD</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#dependencias-2"><span class="header-section-number">5.0.1</span> Dependencias</a></li>
-<li><a class="nav-link" href="#serie-de-tiempo"><span class="header-section-number">5.0.2</span> Serie de tiempo</a></li>
-<li><a class="nav-link" href="#estacionariedad-1"><span class="header-section-number">5.0.3</span> Estacionariedad</a></li>
-</ul>
-</li></ul>
+      <div id="book-on-this-page"></div>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/rstudio/bookdown-demo/blob/master/06-ESTACIONARIEDAD.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/rstudio/bookdown-demo/edit/master/06-ESTACIONARIEDAD.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+          
         </ul>
 </div>
     </nav>
@@ -254,7 +519,7 @@ Figure 5.3: Función de Autocorrelación de los retornos de AMZN en los ultimos 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>06-ESTACIONARIEDAD</strong>" was written by Emiliano Pérez Caullieres. It was last built on 2022-09-20.</p>
+    <p>"<strong>06-ESTACIONARIEDAD</strong>" was written by Emiliano Pérez Caullieres. It was last built on 2022-09-21.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
