@@ -269,7 +269,7 @@ De nuevo, esto al ser creado de manera estandarizada estamos seguros de
 que va a ser estacionario en la medio, por lo mismo los lags de la
 Figura \@ref(fig:LAGSCAMINATA1) se ven tan correlacionados.
 
-## Rendimientos de un activo
+## Precios de un activo
 
 ```{r, warning=FALSE, message=FALSE}
 #Primero determinamos el lapso de tiempo

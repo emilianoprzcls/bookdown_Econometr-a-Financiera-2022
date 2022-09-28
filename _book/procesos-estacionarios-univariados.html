@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 6 Procesos estacionarios univariados | 06-ESTACIONARIEDAD</title>
+<meta name="author" content="Emiliano Pérez Caullieres">
+<meta name="description" content="En este capítulo analizaremos el método o metodología de análisis de series de tiempo propuesto por Box y Jenkins (1970). Los modelos propuestos dentro de está metodología o conjunto de métodos se...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 6 Procesos estacionarios univariados | 06-ESTACIONARIEDAD">
+<meta property="og:type" content="book">
+<meta property="og:description" content="En este capítulo analizaremos el método o metodología de análisis de series de tiempo propuesto por Box y Jenkins (1970). Los modelos propuestos dentro de está metodología o conjunto de métodos se...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 6 Procesos estacionarios univariados | 06-ESTACIONARIEDAD">
+<meta name="twitter:description" content="En este capítulo analizaremos el método o metodología de análisis de series de tiempo propuesto por Box y Jenkins (1970). Los modelos propuestos dentro de está metodología o conjunto de métodos se...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">06-ESTACIONARIEDAD</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Mínimos Cuadrados Ordinarios</a></li>
+<li><a class="" href="m%C3%A1xima-verosimilitud.html"><span class="header-section-number">2</span> Máxima Verosimilitud</a></li>
+<li><a class="" href="m%C3%A9todo-generalizado-de-momentos-mgm.html"><span class="header-section-number">3</span> Método Generalizado de Momentos (MGM)</a></li>
+<li><a class="" href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> CAPITAL ASSET PRICING MODEL (CAPM)</a></li>
+<li><a class="" href="estacionariedad.html"><span class="header-section-number">5</span> Estacionariedad</a></li>
+<li><a class="active" href="procesos-estacionarios-univariados.html"><span class="header-section-number">6</span> Procesos estacionarios univariados</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="procesos-estacionarios-univariados" class="section level1" number="6">
+<h1>
+<span class="header-section-number">6</span> Procesos estacionarios univariados<a class="anchor" aria-label="anchor" href="#procesos-estacionarios-univariados"><i class="fas fa-link"></i></a>
+</h1>
+<p>En este capítulo analizaremos el método o metodología de análisis de
+series de tiempo propuesto por Box y Jenkins (1970). Los modelos
+propuestos dentro de está metodología o conjunto de métodos se han
+vuelto indispensables para efectos de realizar pronósticos de corto
+plazo.</p>
+<p>En este sentido, se analizarán los métodos más importantes en series de
+tiempo: Autoregresivos (AR) y de Medias Móviles (MA). Asimismo, se
+realizará un análisis de los procesos que resultan de la combinación de
+ambos, conocida como ARMA, los cuales son más comúnmente usados para
+realizar pronósticos.</p>
+<div id="procesos-autoregresivos-ar" class="section level2" number="6.1">
+<h2>
+<span class="header-section-number">6.1</span> Procesos Autoregresivos (AR)<a class="anchor" aria-label="anchor" href="#procesos-autoregresivos-ar"><i class="fas fa-link"></i></a>
+</h2>
+<p>Los procesos autoregresivos tienen su origen en el trabajo de Cochrane y
+Orcutt de 1949, mediante el cual analizaron los residuales de una
+regresión clásica como un proceso autoregresivo. Puede consultarse el
+apéndice para la discusión del modelo de regresión clásica.</p>
+<div id="ar1" class="section level3" number="6.1.1">
+<h3>
+<span class="header-section-number">6.1.1</span> AR(1)<a class="anchor" aria-label="anchor" href="#ar1"><i class="fas fa-link"></i></a>
+</h3>
+<p>Como primer caso analizaremos al proceso autoregresivo de primer orden,
+<span class="math inline">\(AR(1)\)</span>, el cual podemos definir como una Ecuación Lineal en Diferencia
+Estocástica de Primer Orden. Diremos que una Ecuación Lineal en
+Diferencia de Primer Orden es estocástica si en su representación
+analítica considera un componente estocástico como en la ecuación
+<a href="procesos-estacionarios-univariados.html#eq:EDOEst1">(6.1)</a> descrita a continuación:</p>
+<p><span class="math display" id="eq:EDOEst1">\[\begin{equation}
+    X_t = a_0 + a_1 X_{t-1} + U_t
+\tag{6.1}
+\end{equation}\]</span></p>
+<p>Donde <span class="math inline">\(a_0\)</span> es un término constante, <span class="math inline">\(U_t\)</span> es un proceso estacionario,
+con media cero (0), una varianza finita y constante (<span class="math inline">\(\sigma^2\)</span>) y una
+covarianza que depende de la distancia entre <span class="math inline">\(t\)</span> y cualquier <span class="math inline">\(t-s\)</span>
+(<span class="math inline">\(\gamma_s\)</span>)–que no depende de los valores pasados o futuros de la
+variable–, <span class="math inline">\(X_0\)</span> es el valor inicial de <span class="math inline">\(X_t\)</span>. No obstante, en general
+vamos a asumir que la covarianza será cero (0), por lo que tendremos un
+proceso puramente aleatorio. Considerando la ecuación <a href="procesos-estacionarios-univariados.html#eq:EDOEst1">(6.1)</a> y
+un proceso de sustitución sucesivo podemos establecer lo siguiente,
+empezando con <span class="math inline">\(X_1\)</span>: <span class="math display">\[\begin{eqnarray*}
+    X_{1} &amp; = &amp; a_0 + a_1 X_{0} + U_{1}
+\end{eqnarray*}\]</span></p>
+<p>Para <span class="math inline">\(X_2\)</span>: <span class="math display">\[\begin{eqnarray*}
+X_{2} &amp; = &amp; a_0 + a_1 X_{1} + U_{2} \\
+    &amp; = &amp; a_0 + a_1 (a_0 + a_1 X_{0} + U_{1}) + U_{2} \\
+    &amp; = &amp; a_0 + a_1 a_0 + a_1^2 X_{0} + a_1 U_{1} + U_{2}
+\end{eqnarray*}\]</span></p>
+<p>Para <span class="math inline">\(X_3\)</span>: <span class="math display">\[\begin{eqnarray*}
+X_{3} &amp; = &amp; a_0 + \alpha X_{2} + U_{3} \\
+    &amp; = &amp; a_0 + a_1 (a_0 + a_1 a_0 + a_1^2 X_{0} + a_1 U_{1} + U_{2}) + U_{3} \\
+    &amp; = &amp; a_0 + a_1 a_0 + a_1^2 a_0 + a_1^3 X_{0} + a_1^2 U_{1} + a_1 U_{2} + U_{3}
+\end{eqnarray*}\]</span></p>
+<p>Así, para cualquier <span class="math inline">\(X_t\)</span>, <span class="math inline">\(t = 1, 2, 3, \ldots\)</span>, obtendríamos:
+<span class="math display" id="eq:EDOSSol">\[\begin{eqnarray}
+X_{t} &amp; = &amp; a_0 + a_1 X_{t - 1} + U_{t} \nonumber \\
+    &amp; = &amp; a_0 + a_1 (a_0 + a_1 a_0 + a_1^2 a_0 + \ldots + a_1^{t-2} a_0 + a_1^{t-1} X_{0} \nonumber \\
+    &amp;   &amp; + a_1^{t-2} U_{1} + \ldots + a_1 U_{t - 2} + U_{t - 1}) + U_{t} \nonumber \\
+    &amp; = &amp; a_0 + a_1 a_0 + a_1^2 a_0 + a_1^3 a_0 + \ldots + a_1^{t-1} a_0 + a_1^{t} X_{0} \nonumber \\
+    &amp;   &amp; + a_1^{t-1} U_{1} + \ldots a_1^2 U_{t - 2} + a_1 U_{t - 1} + U_{t} \nonumber \\
+    &amp; = &amp; (1 + a_1 + a_1^2 + a_1^3 + \ldots + a_1^{t-1}) a_0 + a_1^{t} X_{0} \nonumber \\
+    &amp;   &amp; + a_1^{t-1} U_{1} + \ldots + a_1^2 U_{t - 2} + a_1 U_{t - 1} + U_{t}  \nonumber\\
+    &amp; = &amp; \frac{1 - a_1^t}{1 - a_1} a_0 + a_1^{t} X_{0} + \sum^{t-1}_{j = 0} a_1^{j} U_{t - j}
+    \tag{6.2}
+\end{eqnarray}\]</span></p>
+<p>De esta forma en la ecuación <a href="procesos-estacionarios-univariados.html#eq:EDOSSol">(6.2)</a> observamos un proceso que
+es explicado por dos partes: una que depende del tiempo y otra que
+depende de un proceso estocástico. Asimismo, debe notarse que la
+condición de convergencia es idéntica que en el caso de ecuaciones en
+diferencia estudiadas al inicio del curso: <span class="math inline">\(\lvert a_1 \lvert &lt; 1\)</span>, por
+lo que cuando <span class="math inline">\(t \to \infty\)</span>, la expresión <a href="procesos-estacionarios-univariados.html#eq:EDOSSol">(6.2)</a> será la
+siguiente:</p>
+<p><span class="math display" id="eq:EDOSLP">\[\begin{equation}
+    X_t = \frac{1}{1 - a_1} a_0 + \sum^{\infty}_{j = 0} a_1^{j} U_{t - j}
+    \tag{6.3}
+\end{equation}\]</span></p>
+<p>Así, desaparece la parte dependiente del tiempo y únicamente prevalece
+la parte que es dependiente del proceso estocástico. Esta es la solución
+de largo plazo del proceso <span class="math inline">\(AR(1)\)</span>, la cual depende del proceso
+estocástico. Notemos, además, que esta solución implica que la variable
+o la serie de tiempo <span class="math inline">\(X_t\)</span> es tambien un proceso estocástico que hereda
+las propiedades de <span class="math inline">\(U_t\)</span>. Así, <span class="math inline">\(X_t\)</span> es también un proceso estocástico
+estacionario, como demostraremos más adelante.</p>
+<p>Observemos que la ecuación <a href="procesos-estacionarios-univariados.html#eq:EDOSLP">(6.3)</a> se puede reescribir si
+consideramos la formulación que en la literatura se denomina como la
+descomposición de Wold, en la cual se define que es posible asumir que
+<span class="math inline">\(\psi_j = a_1^j\)</span> y se considera el caso en el cual
+<span class="math inline">\(\lvert a_1 \lvert&lt; 1\)</span>, de esta forma tendremos que por ejemplo cuando:
+<span class="math display">\[\begin{equation*}
+    \sum^{\infty}_{j = 0} \psi^2_j = \sum^{\infty}_{j = 0} a_1^{2j} = \frac{1}{1 - a_1^2}
+\end{equation*}\]</span></p>
+<p>Alternativamente y de forma similar a las ecuaciones en diferencia
+estudiadas previamente podemos escribir el proceso <span class="math inline">\(AR(1)\)</span> mediante el
+uso del operador rezago como:</p>
+<p><span class="math display" id="eq:AR1">\[\begin{eqnarray}
+    X_t &amp; = &amp; a_0 + a_1 L X_t + U_t \nonumber \\
+    X_t - a_1 L X_t &amp; = &amp; a_0 + U_t \nonumber \\
+    (1 - a_1 L) X_t &amp; = &amp; a_0 + U_t \nonumber \\
+    X_t &amp; = &amp; \frac{a_0}{1 - a_1 L} + \frac{1}{1 - a_1 L} U_t
+    \tag{6.4}
+\end{eqnarray}\]</span></p>
+<p>En esta última ecuación retomamos el siguiente término para reescribirlo
+como:</p>
+<p><span class="math display" id="eq:AR2">\[\begin{equation}
+    \frac{1}{1 - a_1 L} = 1 + a_1 L + a_1^2 L^2 + a_1^3 L^3 + \ldots
+    \tag{6.5}
+\end{equation}\]</span></p>
+<p>Tomando este resultado para sustituirlo en ecuación <a href="procesos-estacionarios-univariados.html#eq:AR1">(6.4)</a>,
+obtenemos la siguiente expresión:</p>
+<p><span class="math display" id="eq:AR1Sol">\[\begin{eqnarray}
+X_t &amp; = &amp; (1 + a_1 L + a_1^2 L^2 + a_1^3 L^3 + \ldots) a_0 + (1 + a_1 L + a_1^2 L^2 + a_1^3 L^3 + \ldots) U_t \nonumber \\
+    &amp; = &amp; (1 + a_1 + a_1^2 + a_1^3 + \ldots) a_0 + U_t + a_1 U_{t-1} + a_1^2 U_{t-2} + a_1^3 U_{t-3} + \ldots \nonumber \\
+    &amp; = &amp; \frac{a_0}{1 - a_1} + \sum^{\infty}_{j = 0} a_1^j U_{t-j}
+    \tag{6.6}
+\end{eqnarray}\]</span></p>
+<p>Donde la condición de convergencia y estabilidad del proceso descrito en
+esta ecuación es que <span class="math inline">\(\lvert a_1 \lvert &lt; 1\)</span>. Por lo que hemos
+demostrado que mediante el uso del operador de rezago es posible llegar
+al mismo resultado que obtuvimos mediante el procedimiento de
+sustituciones iterativas.</p>
+<p>La ecuación <a href="procesos-estacionarios-univariados.html#eq:AR1Sol">(6.6)</a> se puede interpretar como sigue. La
+solución o trayectoria de equilibrio de un AR(1) se divide en dos
+partes. La primera es una constante que depende de los valores de <span class="math inline">\(a_0\)</span>
+y <span class="math inline">\(a_1\)</span>. La segunda parte es la suma ponderada de las desviaciones o
+errores observados y acumulados en el tiempo hasta el momento <span class="math inline">\(t\)</span>.</p>
+<p>Ahora obtendremos los momentos que describen a la serie de tiempo cuando
+se trata de un porceso <span class="math inline">\(AR(1)\)</span>. Para ello debemos obtener la media, la
+varianza y las covarianzas de <span class="math inline">\(X_t\)</span>. Para los siguientes resultados
+debemos recordar y tener en mente que si <span class="math inline">\(U_t\)</span> es un proceso puramente
+aleatorio, entonces:</p>
+<ol style="list-style-type: decimal">
+<li>
+<span class="math inline">\(\mathbb{E}[U_t] = 0\)</span> para todo <span class="math inline">\(t\)</span>
+</li>
+<li>
+<span class="math inline">\(Var[U_t] = \sigma^2\)</span> para todo <span class="math inline">\(t\)</span>
+</li>
+<li>
+<span class="math inline">\(Cov[U_t, U_s] = 0\)</span> para todo <span class="math inline">\(t \neq s\)</span>
+</li>
+</ol>
+<p>Dicho lo anterior y partiendo de la ecuación <a href="procesos-estacionarios-univariados.html#eq:AR1Sol">(6.6)</a>, el primer
+momento o valor esperado de la serie de tiempo será el siguiente:
+<span class="math display" id="eq:AR1m1">\[\begin{eqnarray}
+\mathbb{E}[X_t] &amp; = &amp; \mathbb{E} \left[ \frac{a_0}{1 - a_1} + \sum^{\infty}_{j = 0} a_1^j U_{t-j} \right] \nonumber \\
+    &amp; = &amp; \frac{a_0}{1 - a_1} + \sum^{\infty}_{j = 0} a_1^j \mathbb{E}[U_{t-j}] \nonumber \\
+    &amp; = &amp; \frac{a_0}{1 - a_1} = \mu
+    \tag{6.7}
+\end{eqnarray}\]</span></p>
+<p>Respecto de la varianza podemos escribir la siguiente expresión a partir
+de la ecuación <a href="procesos-estacionarios-univariados.html#eq:AR1Sol">(6.6)</a>:</p>
+<p><span class="math display" id="eq:AR1Var">\[\begin{eqnarray}
+Var[X_t] &amp; = &amp; \mathbb{E}[(X_t - \mu)^2] \nonumber \\
+    &amp; = &amp; \mathbb{E} \left[ \left( \frac{a_0}{1 - a_1} + \sum^{\infty}_{j = 0} a_1^j U_{t-j} - \frac{a_0}{1 - a_1} \right)^2 \right] \nonumber \\
+    &amp; = &amp; \mathbb{E}[(U_{t} + a_1 U_{t-1} + a_1^2 U_{t-2} + a_1^3 U_{t-3} + \ldots)^2] \nonumber \\
+    &amp; = &amp; \mathbb{E}[U^2_{t} + a_1^2 U^2_{t-1} + a_1^4 U^2_{t-2} + a_1^6 U^2_{t-3} + \ldots \nonumber \\
+    &amp;   &amp; + 2 a_1 U_t U_{t-1} + 2 a_1^2 U_t U_{t-2} + \ldots] \nonumber \\
+    &amp; = &amp; \mathbb{E}[U^2_{t}] + a_1^2 \mathbb{E}[U^2_{t-1}] + a_1^4 \mathbb{E}[U^2_{t-2}] + a_1^6 \mathbb{E}[U^2_{t-3}] + \ldots \nonumber \\
+    &amp; = &amp; \sigma^2 + a_1^2 \sigma^2 + a_1^4 \sigma^2 + a_1^6 \sigma^2 + \ldots \nonumber \\
+    &amp; = &amp; \sigma^2 (1 + a_1^2 + a_1^4 + a_1^6 + \ldots) \nonumber \\
+    &amp; = &amp; \sigma^2 \frac{1}{1 - a_1^2} = \gamma(0)
+    \tag{6.8}
+\end{eqnarray}\]</span></p>
+<p>Previo a analizar la covarianza de la serie recordemos que para el
+proceso puramente aleatorio <span class="math inline">\(U_t\)</span> su varianza y covarianza puede verse
+como <span class="math inline">\(\mathbb{E}[U_t, U_s] = \sigma^2\)</span>, para <span class="math inline">\(t = s\)</span>, y
+<span class="math inline">\(\mathbb{E}[U_t, U_s] = 0\)</span>, para cualquier otro caso, respectivamente.</p>
+<p>Dicho lo anterior, partiendo de la ecuación <a href="procesos-estacionarios-univariados.html#eq:AR1Sol">(6.6)</a> la
+covarianza de la serie estará dada por:</p>
+<p><span class="math display" id="eq:AR1Cov">\[\begin{eqnarray}
+Cov(X_t, X_{t-\tau}) &amp; = &amp; \mathbb{E}[(X_t - \mu)(X_{t-\tau} - \mu)] \nonumber \\
+    &amp; = &amp; \mathbb{E} \left[ \left( \frac{a_0}{1 - a_1} + \sum^{\infty}_{j = 0} a_1^j U_{t-j} - \frac{a_0}{1 - a_1} \right) \right. \nonumber \\
+    &amp;   &amp; \left. \times \left( \frac{a_0}{1 - a_1} + \sum^{\infty}_{j = 0} a_1^j U_{t-\tau-j} - \frac{a_0}{1 - a_1} \right) \right] \nonumber \\
+    &amp; = &amp; a_1^{\tau} \mathbb{E}[U^2_{t-\tau} + a_1 U^2_{t-\tau-1} + a_1^2 U^2_{t-\tau-2} + a_1^3 U^2_{t-\tau-3} + \ldots] \nonumber \\
+    &amp; = &amp; a_1^{\tau} \sigma^2 \frac{1}{1 - a_1^2} = \gamma(\tau)
+    \tag{6.9}
+\end{eqnarray}\]</span></p>
+<p>Notése que con estos resultados en las ecuaciones <a href="procesos-estacionarios-univariados.html#eq:AR1Var">(6.8)</a> y
+<a href="procesos-estacionarios-univariados.html#eq:AR1Cov">(6.9)</a> podemos construir la función de autocorrelación teórica
+como sigue:</p>
+<p><span class="math display" id="eq:emi1">\[\begin{eqnarray}
+\rho(\tau) &amp; = &amp; \frac{\gamma(\tau)}{\gamma(0)} \nonumber \\
+    &amp; = &amp; a_1^\tau
+    \tag{6.10}
+\end{eqnarray}\]</span></p>
+<p>Donde <span class="math inline">\(\tau = 1, 2, 3, \ldots\)</span> y <span class="math inline">\(\lvert a_1 \lvert &lt; 1\)</span>. Este último
+resultado significa que cuando el proceso autoregresivo es de orden 1
+(es decir, AR(1)) la función de autocorrelación teóricamente es igual al
+parámetro <span class="math inline">\(a_1\)</span> elevado al número de rezagos considerados. No obstante,
+note que esto no significa que la autocorrelación observada sea como lo
+expresa en planteamiento anterior. Por el contrario, una observación
+sencilla mostraría que la autocorrelación observada sería ligeramente
+distinta a la autocorrelación teórica.</p>
+<p>Ahora veámos algunos ejemplos. En el primer ejemplo simularemos una
+serie y mostraremos el analísis de un proceso construído considerando un
+proceso puramente aleatorio como componente <span class="math inline">\(U_t\)</span>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;El procedimiento e implementación del ejercicio
+está en el archivo R denominado Clase 4 del repositorio de GitHub.&lt;/p&gt;"><sup>1</sup></a>
+Por su parte, en un segundo ejemplo aplicaremos el análisis a una serie
+de tiempo de una variable económica observada.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;El procedimiento e implementación del ejercicio
+está en el archivo R denominado Clase 5 del repositorio de GitHub.&lt;/p&gt;"><sup>2</sup></a></p>
+<p>Para el primer ejemplo consideremos un proceso dado por la forma de un
+<span class="math inline">\(AR(1)\)</span> como en la ecuación <a href="procesos-estacionarios-univariados.html#eq:AR1">(6.4)</a> cuya solución esta dada por la
+ecuación <a href="procesos-estacionarios-univariados.html#eq:AR1Sol">(6.6)</a>. En especifico, supongamos que el término o
+componente estocástico <span class="math inline">\(U_t\)</span> es una serie generada a partir de numeros
+aleatorios de una función normal con media <span class="math inline">\(0\)</span> y desviación estándar
+<span class="math inline">\(4\)</span>. Los detalles del proceso simulado se muestra en las siguientes
+gráficas.</p>
+<div id="ejemplo-ar1" class="section level4" number="6.1.1.1">
+<h4>
+<span class="header-section-number">6.1.1.1</span> EJEMPLO AR(1)<a class="anchor" aria-label="anchor" href="#ejemplo-ar1"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.stefanom.io/latex2exp/">latex2exp</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Parametros:</span></span>
+<span><span class="va">a0</span> <span class="op">&lt;-</span> <span class="fl">5</span>; <span class="va">a1</span> <span class="op">&lt;-</span> <span class="fl">0.9</span>; <span class="va">X_0</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">a0</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">a1</span><span class="op">)</span><span class="op">)</span>; <span class="cn">T</span> <span class="op">&lt;-</span> <span class="fl">1000</span></span></code></pre></div>
+<p>Por lo tanto tenemos la serie de tiempo <span class="math inline">\(AR(1)\)</span>:
+<span class="math display">\[ X_t= 5+0.9X_{t-1}+U_t\]</span></p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Definimos un data frame para almacenar el proceso, agregamos una columna para el tiempo</span></span>
+<span><span class="va">X_t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>Tiempo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#  Parte estocastica de la serie de tiempo:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Agregamos un término estocástico al data frame</span></span>
+<span><span class="va">X_t</span><span class="op">$</span><span class="va">U_t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="cn">T</span><span class="op">+</span><span class="fl">1</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+<p>En este caso el termino estocastico tiene una media de <span class="math inline">\(0\)</span> y una
+desviación estándar constante <span class="math inline">\(\sigma^2=4\)</span></p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Agregamos columnas con NA's para un proceso teorico y uno real</span></span>
+<span><span class="va">X_t</span><span class="op">$</span><span class="va">X_t</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span><span class="va">X_t</span><span class="op">$</span><span class="va">XR_t</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span></span>
+<span><span class="co"># La serie teórica inicia en un valor inicial X_0</span></span>
+<span><span class="va">X_t</span><span class="op">$</span><span class="va">X_t</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">X_0</span></span>
+<span></span>
+<span><span class="co"># La serie real inicia en un valor inicial X_0</span></span>
+<span><span class="va">X_t</span><span class="op">$</span><span class="va">XR_t</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">X_0</span></span>
+<span></span>
+<span><span class="co"># Agregamos una columna para la función de Autocorrelación teórica:</span></span>
+<span><span class="va">X_t</span><span class="op">$</span><span class="va">rho</span> <span class="op">&lt;-</span><span class="cn">NA</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">2</span><span class="op">:</span><span class="op">(</span><span class="cn">T</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># Real:</span></span>
+<span>  <span class="va">X_t</span><span class="op">$</span><span class="va">XR_t</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">=</span> <span class="va">a0</span> <span class="op">+</span> <span class="va">a1</span><span class="op">*</span><span class="va">X_t</span><span class="op">$</span><span class="va">XR_t</span><span class="op">[</span><span class="va">i</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">X_t</span><span class="op">$</span><span class="va">U_t</span><span class="op">[</span><span class="va">i</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
+<span>  </span>
+<span>  <span class="co"># Teórico:</span></span>
+<span>  <span class="va">X_t</span><span class="op">$</span><span class="va">X_t</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">=</span> <span class="va">X_t</span><span class="op">$</span><span class="va">X_t</span><span class="op">[</span><span class="va">i</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="op">(</span><span class="va">a1</span><span class="op">^</span><span class="op">(</span><span class="va">i</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="va">X_t</span><span class="op">$</span><span class="va">U_t</span><span class="op">[</span><span class="va">i</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
+<span>  </span>
+<span>  <span class="co"># Autocorrelación:</span></span>
+<span>  <span class="va">X_t</span><span class="op">$</span><span class="va">rho</span><span class="op">[</span><span class="va">i</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="op">=</span> <span class="va">a1</span><span class="op">^</span><span class="op">(</span><span class="va">i</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">X_t</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   Tiempo        U_t      X_t     XR_t      rho</span></span>
+<span><span class="co">#&gt; 1      0  2.3421153 50.00000 50.00000 0.900000</span></span>
+<span><span class="co">#&gt; 2      1  2.8378641 52.10790 52.34212 0.810000</span></span>
+<span><span class="co">#&gt; 3      2 -0.4372133 54.40657 54.94577 0.729000</span></span>
+<span><span class="co">#&gt; 4      3 -1.8139887 54.08785 54.01398 0.656100</span></span>
+<span><span class="co">#&gt; 5      4  2.4235498 52.89769 51.79859 0.590490</span></span>
+<span><span class="co">#&gt; 6      5 -7.2718239 54.32877 54.04228 0.531441</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:GAR1Real"></span>
+<img src="07-PE_Univariados_files/figure-html/GAR1Real-1.png" alt="AR(1) considerando $X_t=5+0.9X_{t-1}+U_t$ ; $X_0=50$ y que $U_t$~$N(0, 4)$ y que $U_t \sim \mathcal{N}(0, 4)$" width="100%"><p class="caption">
+Figure 6.1: AR(1) considerando <span class="math inline">\(X_t=5+0.9X_{t-1}+U_t\)</span> ; <span class="math inline">\(X_0=50\)</span> y que <span class="math inline">\(U_t\)</span>~<span class="math inline">\(N(0, 4)\)</span> y que <span class="math inline">\(U_t \sim \mathcal{N}(0, 4)\)</span>
+</p>
+</div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">X_t</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Tiempo</span>, y <span class="op">=</span> <span class="va">X_t</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.5</span>, color <span class="op">=</span> <span class="st">"#0F531C"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Tiempo"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="fu"><a href="https://www.stefanom.io/latex2exp/reference/TeX.html">TeX</a></span><span class="op">(</span><span class="st">"$X_t$"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span>, face <span class="op">=</span> <span class="st">"bold"</span>, hjust <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span>, hjust <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.caption <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span>, hjust <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.margin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Comportamiento del Proceso Teórico"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Con un error con Distribución Normal (media = 0, desviación estándar = 4)"</span>,</span>
+<span>    caption <span class="op">=</span> <span class="st">"Fuente: Elaboración propia."</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:GAR1Teo"></span>
+<img src="07-PE_Univariados_files/figure-html/GAR1Teo-1.png" alt="$X_t = \frac{5}{1 - 0.9} + \sum_{j = 0}^{t-1} 0.9^j U_{t-j}$, y que $U_t \sim \mathcal{N}(0, 4)$}" width="100%"><p class="caption">
+Figure 6.2: <span class="math inline">\(X_t = \frac{5}{1 - 0.9} + \sum_{j = 0}^{t-1} 0.9^j U_{t-j}\)</span>, y que <span class="math inline">\(U_t \sim \mathcal{N}(0, 4)\)</span>}
+</p>
+</div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/acf.html">acf</a></span><span class="op">(</span><span class="va">X_t</span><span class="op">$</span><span class="va">XR_t</span>, lag.max <span class="op">=</span> <span class="fl">30</span>, col <span class="op">=</span> <span class="st">"blue"</span>, </span>
+<span>    ylab <span class="op">=</span> <span class="st">"Autocorrelacion"</span>,</span>
+<span>    xlab<span class="op">=</span><span class="st">"Rezagos"</span>, </span>
+<span>    main<span class="op">=</span><span class="st">"Funcion de Autocorrelacion Real"</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:GAR1FACr"></span>
+<img src="07-PE_Univariados_files/figure-html/GAR1FACr-1.png" alt="Función de autocorrelación de un AR(1): $\rho(\tau)=\frac{\gamma(    au)}{\gamma(0)}$" width="100%"><p class="caption">
+Figure 6.3: Función de autocorrelación de un AR(1): <span class="math inline">\(\rho(\tau)=\frac{\gamma( au)}{\gamma(0)}\)</span>
+</p>
+</div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html">barplot</a></span><span class="op">(</span><span class="va">X_t</span><span class="op">$</span><span class="va">rho</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">30</span><span class="op">]</span>, names.arg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span>, border<span class="op">=</span><span class="st">"blue"</span>, density <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">20</span><span class="op">)</span>, </span>
+<span>        ylab <span class="op">=</span> <span class="st">"Autocorrelacion"</span>, </span>
+<span>        xlab<span class="op">=</span><span class="st">"Rezagos"</span>, </span>
+<span>        main<span class="op">=</span><span class="st">"Funcion de Autocorrelacion Teórica"</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:GAR1FACt-1"></span>
+<img src="07-PE_Univariados_files/figure-html/GAR1FACt-1.png" alt="Función de autocorrelación de un AR(1): $\rho(\tau)= a_1^\tau$" width="100%"><p class="caption">
+Figure 6.4: Función de autocorrelación de un AR(1): <span class="math inline">\(\rho(\tau)= a_1^\tau\)</span>
+</p>
+</div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/acf.html">acf</a></span><span class="op">(</span><span class="va">X_t</span><span class="op">$</span><span class="va">XR_t</span>, lag.max <span class="op">=</span> <span class="fl">30</span>, col <span class="op">=</span> <span class="st">"blue"</span>, </span>
+<span>    ylab <span class="op">=</span> <span class="st">"Autocorrelacion"</span>,</span>
+<span>    xlab<span class="op">=</span><span class="st">"Rezagos"</span>, </span>
+<span>    main<span class="op">=</span><span class="st">"Funcion de Autocorrelacion Real"</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:GAR1FACt-2"></span>
+<img src="07-PE_Univariados_files/figure-html/GAR1FACt-2.png" alt="Función de autocorrelación de un AR(1): $\rho(\tau)= a_1^\tau$" width="100%"><p class="caption">
+Figure 6.5: Función de autocorrelación de un AR(1): <span class="math inline">\(\rho(\tau)= a_1^\tau\)</span>
+</p>
+</div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">X_t</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Tiempo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">XR_t</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">0.5</span>, color <span class="op">=</span> <span class="st">"darkred"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">X_t</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"#0F531C"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Tiempo"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="fu"><a href="https://www.stefanom.io/latex2exp/reference/TeX.html">TeX</a></span><span class="op">(</span><span class="st">"$X_t$"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">11</span>, face <span class="op">=</span> <span class="st">"bold"</span>, hjust <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span>, hjust <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.caption <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span>, hjust <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.margin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Comportamiento de los Procesos Real y Teórico"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Con un error con Distribución Normal (media = 0, desviación estándar = 4)"</span>,</span>
+<span>    caption <span class="op">=</span> <span class="st">"Fuente: Elaboración propia."</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:GAR1Com"></span>
+<img src="07-PE_Univariados_files/figure-html/GAR1Com-1.png" alt="AR(1) considerando en conjunto $X_t = 5 + 0.9 X_{t-1} + U_t$; $X_0 = 50$ y $X_t = \frac{5}{1 - 0.9} + \sum_{j = 0}^{t-1} 0.9^j U_{t-j}$, y que $U_t \sim \mathcal{N}(0, 4)$" width="100%"><p class="caption">
+Figure 6.6: AR(1) considerando en conjunto <span class="math inline">\(X_t = 5 + 0.9 X_{t-1} + U_t\)</span>; <span class="math inline">\(X_0 = 50\)</span> y <span class="math inline">\(X_t = \frac{5}{1 - 0.9} + \sum_{j = 0}^{t-1} 0.9^j U_{t-j}\)</span>, y que <span class="math inline">\(U_t \sim \mathcal{N}(0, 4)\)</span>
+</p>
+</div>
+<p>La Figura <a href="procesos-estacionarios-univariados.html#fig:GAR1Real">6.1</a> ilustra el comportamiento que se debería
+observar en una serie considerando el procedimiento iterativo de
+construcción. Por su parte, la Figura <a href="procesos-estacionarios-univariados.html#fig:GAR1Teo">6.2</a> ilustra el
+proceso o trayectoria de la solución de la serie de tiempo. Finalmente,
+las Figuras <a href="procesos-estacionarios-univariados.html#fig:GAR1FACr">6.3</a> y <a href="procesos-estacionarios-univariados.html#fig:GAR1FACr">6.3</a> muestran el
+correlograma calculado considerando una función de autocorrelación
+aplicada al porceso real y una función de autocorrelación aplicada al
+proceso teórico, respectivamente.</p>
+<p>Recordemos que una trayectoria de equilibrio o solución de un <span class="math inline">\(AR(1)\)</span> es
+como se muestra en la ecuación <a href="procesos-estacionarios-univariados.html#eq:AR1Sol">(6.6)</a>. Así, nuestra serie
+simulada cumple con la característica de que los errores son más
+relevantes cuando la serie es corta. Por el contrario, los errores son
+menos relevantes, cuando la serie es muy larga. La Figura
+<a href="procesos-estacionarios-univariados.html#fig:GAR1Com">6.6</a> ilustra esta observación de la trayectoria de
+equilibrio.</p>
+</div>
+</div>
+<div id="ar2" class="section level3" number="6.1.2">
+<h3>
+<span class="header-section-number">6.1.2</span> AR(2)<a class="anchor" aria-label="anchor" href="#ar2"><i class="fas fa-link"></i></a>
+</h3>
+<p>Una vez analizado el caso de <span class="math inline">\(AR(1)\)</span> analizaremos el caso del <span class="math inline">\(AR(2)\)</span>.
+La ecuación generalizada del proceso autoregresivo de orden 2 (denotado
+como <span class="math inline">\(AR(2)\)</span>) puede ser escrito como:</p>
+<p><span class="math display" id="eq:AR2Eq">\[\begin{equation}
+    X_t = a_0 + a_1 X_{t-1} + a_2 X_{t-2} + U_t
+    \tag{6.11}
+\end{equation}\]</span></p>
+<p>Para el segundo ejemplo consideremos una aplicación a una serie de
+tiempo en especifico:</p>
+<div id="ejemplo-ar2" class="section level4" number="6.1.2.1">
+<h4>
+<span class="header-section-number">6.1.2.1</span> EJEMPLO AR(2)<a class="anchor" aria-label="anchor" href="#ejemplo-ar2"><i class="fas fa-link"></i></a>
+</h4>
+<p>Recordando el tema pasado y la serie en la que evaluamos los cambios de
+precio del ACTIVO AMZN como si fueran retornos:</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#install.packages("pacman")</span></span>
+<span><span class="co">#pacman nos permite cargar varias librerias en una sola línea</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,<span class="va">BatchGetSymbols</span>,<span class="va">ggplot2</span>,<span class="va">lubridate</span>,<span class="va">readxl</span>,<span class="va">forecast</span>,<span class="va">stats</span>,<span class="va">stargazer</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
+<span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span><span class="op">(</span><span class="fl">365</span><span class="op">*</span><span class="fl">20</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
+<span><span class="va">pd</span></span>
+<span><span class="co">#&gt; [1] "2002-10-02"</span></span>
+<span><span class="va">ld</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#última fecha</span></span>
+<span><span class="va">ld</span></span>
+<span><span class="co">#&gt; [1] "2022-09-27"</span></span>
+<span><span class="co">#Intervalos de tiempo</span></span>
+<span><span class="va">int</span><span class="op">&lt;-</span><span class="st">"monthly"</span></span>
+<span><span class="co">#Datos a elegir</span></span>
+<span><span class="va">dt</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AMZN"</span><span class="op">)</span></span>
+<span><span class="co">#Descargando los valores</span></span>
+<span><span class="va">data1</span><span class="op">&lt;-</span> <span class="fu">BatchGetSymbols</span><span class="op">(</span>tickers <span class="op">=</span> <span class="va">dt</span>,</span>
+<span>                       first.date <span class="op">=</span> <span class="va">pd</span>,</span>
+<span>                       last.date <span class="op">=</span> <span class="va">ld</span>,</span>
+<span>                       freq.data <span class="op">=</span> <span class="va">int</span>,</span>
+<span>                       do.cache <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                       thresh.bad.data <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `BatchGetSymbols()` was deprecated in BatchGetSymbols 2.6.4.</span></span>
+<span><span class="co">#&gt; Please use `yfR::yf_get()` instead.</span></span>
+<span><span class="co">#&gt; 2022-05-01: Package BatchGetSymbols will soon be replaced by yfR. </span></span>
+<span><span class="co">#&gt; More details about the change is available at github &lt;&lt;www.github.com/msperlin/yfR&gt;</span></span>
+<span><span class="co">#&gt; You can install yfR by executing:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; remotes::install_github('msperlin/yfR')</span></span>
+<span><span class="co">#Generando data frame con los valores</span></span>
+<span><span class="va">data_precio_amzn</span><span class="op">&lt;-</span><span class="va">data1</span><span class="op">$</span><span class="va">df.tickers</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "ticker"              "ref.date"           </span></span>
+<span><span class="co">#&gt;  [3] "volume"              "price.open"         </span></span>
+<span><span class="co">#&gt;  [5] "price.high"          "price.low"          </span></span>
+<span><span class="co">#&gt;  [7] "price.close"         "price.adjusted"     </span></span>
+<span><span class="co">#&gt;  [9] "ret.adjusted.prices" "ret.closing.prices"</span></span>
+<span></span>
+<span><span class="co">#necesitamos convertir la serie de tiempo de precios en retornos continuos compuestos de los precios de apertura</span></span>
+<span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span> ,<span class="fl">100</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="co">#agregamos un valor NA al principio</span></span>
+<span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="co">#estos son los retornos</span></span>
+<span><span class="co">#&gt;   [1]           NA  13.39774561  22.83329766 -22.98950701</span></span>
+<span><span class="co">#&gt;   [5]  13.39221448   0.95260416  14.27998202  11.55626991</span></span>
+<span><span class="co">#&gt;   [9]  24.11122449  -0.46684144  13.08785513  11.63599301</span></span>
+<span><span class="co">#&gt;  [13]   3.89974592  12.48104071  -0.73260401  -3.06108260</span></span>
+<span><span class="co">#&gt;  [17]  -4.08140972 -16.32741069   0.99457279   0.06902105</span></span>
+<span><span class="co">#&gt;  [21]   9.61879412  11.67844638 -33.59147712  -0.57381482</span></span>
+<span><span class="co">#&gt;  [25]   7.69997922 -18.78100714  15.60691856  11.66713068</span></span>
+<span><span class="co">#&gt;  [29]  -4.43506452 -20.41392362  -1.23405211  -6.96531282</span></span>
+<span><span class="co">#&gt;  [33]   9.64353557  -6.77486160  30.02382912  -5.40177077</span></span>
+<span><span class="co">#&gt;  [37]   6.39945115 -12.58398922  20.12391421  -2.92703823</span></span>
+<span><span class="co">#&gt;  [41]  -7.77281354 -15.93630872  -2.10477279  -4.11970307</span></span>
+<span><span class="co">#&gt;  [45]  -1.60415929  10.64572285 -37.21478392  15.01070027</span></span>
+<span><span class="co">#&gt;  [49]   3.59739571  17.58906665   5.43570463  -4.00357496</span></span>
+<span><span class="co">#&gt;  [53]  -1.90531667   3.54637914   1.33891100  42.77167396</span></span>
+<span><span class="co">#&gt;  [57]  11.98170332  -0.13070948  12.66409736   2.27857959</span></span>
+<span><span class="co">#&gt;  [61]  15.63296023  -6.26135927   2.56510858   5.74113839</span></span>
+<span><span class="co">#&gt;  [65] -18.78533471 -21.72447597  13.78662202   7.15014819</span></span>
+<span><span class="co">#&gt;  [69]   3.44753666 -11.63053849   5.54650897   8.53074641</span></span>
+<span><span class="co">#&gt;  [73] -14.71605773 -24.20236452 -29.39126222  20.09953181</span></span>
+<span><span class="co">#&gt;  [77]  13.15576837   8.77225235  13.27882326   9.60320128</span></span>
+<span><span class="co">#&gt;  [81]  -2.73678724   7.64068237   2.50334747  -6.96036997</span></span>
+<span><span class="co">#&gt;  [85]  13.59745291  24.90536163  14.32806129  -0.50514401</span></span>
+<span><span class="co">#&gt;  [89] -10.08447333  -3.70473986  13.45839135   1.02565002</span></span>
+<span><span class="co">#&gt;  [93]  -9.33660068 -13.76436786   8.99531736   5.87517724</span></span>
+<span><span class="co">#&gt;  [97]  21.76202538   4.58513429   8.56726887   1.22598823</span></span>
+<span><span class="co">#&gt; [101]  -6.16865517   1.74979032   4.53458328   7.93222740</span></span>
+<span><span class="co">#&gt; [105]  -0.25978671   4.72685785   9.04110889  -4.41608958</span></span>
+<span><span class="co">#&gt; [109]   0.80039290  -4.18766494  -8.13529694  -8.68550170</span></span>
+<span><span class="co">#&gt; [113]  -1.18960511   3.43828044   9.60224827  14.70991690</span></span>
+<span><span class="co">#&gt; [117]  -9.58159747   9.53799598   2.08880372   5.85976366</span></span>
+<span><span class="co">#&gt; [121]   2.83140800  -8.65274050   7.52661134   1.39202437</span></span>
+<span><span class="co">#&gt; [125]   4.89612270  -2.12710012   1.39936277  -5.02332605</span></span>
+<span><span class="co">#&gt; [129]   5.76221809   3.66491122   8.27850152  -6.24554343</span></span>
+<span><span class="co">#&gt; [133]   9.85520147  15.15285156   8.73395739  -0.05013788</span></span>
+<span><span class="co">#&gt; [137] -10.51934673  -0.06687288  -5.92858190 -10.58568315</span></span>
+<span><span class="co">#&gt; [141]   2.74371861   4.15753522  -3.80625428   8.04816141</span></span>
+<span><span class="co">#&gt; [145]  -5.42111518  -5.03065911   9.90317538  -7.85404256</span></span>
+<span><span class="co">#&gt; [149]  11.32156221   8.43295383  -2.32429615  13.01462014</span></span>
+<span><span class="co">#&gt; [153]   1.54061721   2.05813986  20.15392877  -7.39490376</span></span>
+<span><span class="co">#&gt; [157]   2.34828935  20.47843365   7.17052347  -2.62563883</span></span>
+<span><span class="co">#&gt; [161] -12.67694180  -3.85435390   5.96629237  11.72089295</span></span>
+<span><span class="co">#&gt; [165]   8.23387458  -0.49783030   5.76252931   1.44112456</span></span>
+<span><span class="co">#&gt; [169]   8.10699776  -4.52676184  -6.00796092   0.72964776</span></span>
+<span><span class="co">#&gt; [173]   8.98955770   2.83447462   4.01536256   4.38443827</span></span>
+<span><span class="co">#&gt; [177]   7.35281333  -2.61760725   2.36894617  -1.20285851</span></span>
+<span><span class="co">#&gt; [181]  -2.07377928  13.68712240   5.85471090  -0.00427124</span></span>
+<span><span class="co">#&gt; [185]  20.93976645   4.63815978  -6.55115525   9.77684681</span></span>
+<span><span class="co">#&gt; [189]   4.61358018   2.75160333   5.84583306  12.74521370</span></span>
+<span><span class="co">#&gt; [193]  -0.22279328 -21.94794383   8.60716489 -18.86826361</span></span>
+<span><span class="co">#&gt; [197]  11.20213025   0.98664739   8.39682297   7.12720047</span></span>
+<span><span class="co">#&gt; [201]  -9.38002536   8.85565506  -2.70183034  -5.58782369</span></span>
+<span><span class="co">#&gt; [205]  -1.36520548   2.37757442   0.91249016   3.83805218</span></span>
+<span><span class="co">#&gt; [209]   6.98245156  -5.31693095   1.37938043  18.97247680</span></span>
+<span><span class="co">#&gt; [213]   4.64889431  11.92308161  14.25393454   9.27398656</span></span>
+<span><span class="co">#&gt; [217]  -8.41337555  -4.66642316   4.05671846   2.52393793</span></span>
+<span><span class="co">#&gt; [221]  -0.84885499  -3.59427728  -0.31861156  11.12179968</span></span>
+<span><span class="co">#&gt; [225]  -7.17375312   5.72503641  -2.40180912   4.18486227</span></span>
+<span><span class="co">#&gt; [229]  -6.11473001   2.18899134   5.30616390  -5.62793333</span></span>
+<span><span class="co">#&gt; [233] -11.06465380   1.80527180   7.20896224 -29.34750864</span></span>
+<span><span class="co">#&gt; [237]  -0.11853658 -13.99459654  23.88072732  -6.86965832</span></span>
+<span><span class="co">#tenemos 20 retornos a lo largo de 20 años</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ret_20_amazn</span><span class="op">&lt;-</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">data_precio_amzn</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">ref.date</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">ccrAMZN</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title<span class="op">=</span><span class="st">"Retornos de AMZN en los últimos 20 años"</span>,y<span class="op">=</span><span class="st">"Retornos"</span>, x<span class="op">=</span><span class="st">"Año"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">ret_20_amazn</span></span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:amazn20"></span>
+<img src="07-PE_Univariados_files/figure-html/amazn20-1.png" alt="Serie de tiempo de los retornos de año en los últimos 20 años" width="672"><p class="caption">
+Figure 5.5: Serie de tiempo de los retornos de año en los últimos 20 años
+</p>
+</div>
+<p>Primero que nada es importante cargar los datos a un objeto series de
+tiempo. Esto nos lo permite la función ts(). Además debemos serciorarnos
+de que los datos esten en orden cronológico.</p>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data_precio_amzn</span><span class="op">&lt;-</span><span class="va">data_precio_amzn</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ref.date</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">)</span><span class="co">#dado que ya estaba en orden cronológico nuestro df no cambia</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 11</span></span>
+<span><span class="co">#&gt;   ticker ref.date     volume price…¹ price…² price…³ price…⁴</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 AMZN   2002-10-02   3.89e9   0.840    1.01   0.818   0.968</span></span>
+<span><span class="co">#&gt; 2 AMZN   2002-11-01   4.13e9   0.961    1.23   0.91    1.17 </span></span>
+<span><span class="co">#&gt; 3 AMZN   2002-12-02   3.11e9   1.21     1.25   0.922   0.944</span></span>
+<span><span class="co">#&gt; 4 AMZN   2003-01-02   3.38e9   0.960    1.16   0.928   1.09 </span></span>
+<span><span class="co">#&gt; 5 AMZN   2003-02-03   2.32e9   1.10     1.12   0.980   1.10 </span></span>
+<span><span class="co">#&gt; 6 AMZN   2003-03-03   3.28e9   1.11     1.40   1.07    1.30 </span></span>
+<span><span class="co">#&gt; # … with 4 more variables: price.adjusted &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   ret.adjusted.prices &lt;dbl&gt;, ret.closing.prices &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   ccrAMZN &lt;dbl&gt;, and abbreviated variable names</span></span>
+<span><span class="co">#&gt; #   ¹​price.open, ²​price.high, ³​price.low, ⁴​price.close</span></span>
+<span><span class="co">#hagamos el objeto ts</span></span>
+<span><span class="va">ret_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">ret_amazn_ts</span><span class="op">)</span><span class="co">#de esta manera podemos ver que se cargo bien debido a que es igual al ggplot</span></span></code></pre></div>
+<div class="inline-figure"><img src="07-PE_Univariados_files/figure-html/unnamed-chunk-6-1.png" width="672"></div>
+<p>Dado que queremos saber si existe un proceso AR(2) en estos cambio
+debemos calcularlo. Para ello utilizamos la función lm() que realizará una regresión lineal y veremos la relación de los valores con sus valores pasados en <span class="math inline">\(t-2\)</span>:</p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">priceopen</span><span class="op">&lt;-</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span></span>
+<span><span class="va">priceopen_amazn</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">priceopen</span><span class="op">)</span></span>
+<span><span class="va">priceopen_amazn</span><span class="op">$</span><span class="va">priceopen_lag1</span><span class="op">&lt;-</span><span class="fu">lag</span><span class="op">(</span><span class="va">priceopen_amazn</span><span class="op">$</span><span class="va">priceopen</span>,<span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">priceopen_amazn</span><span class="op">$</span><span class="va">priceopen_lag2</span><span class="op">&lt;-</span><span class="fu">lag</span><span class="op">(</span><span class="va">priceopen_amazn</span><span class="op">$</span><span class="va">priceopen</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">ar2_amazn</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">priceopen</span><span class="op">~</span><span class="va">priceopen_lag1</span><span class="op">+</span><span class="va">priceopen_lag2</span>, data<span class="op">=</span><span class="va">priceopen_amazn</span><span class="op">)</span></span></code></pre></div>
+<p>Veamos la tabla de la regresión lineal:</p>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">stargazer</span><span class="op">(</span></span>
+<span>  <span class="va">ar2_amazn</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"html"</span>,</span>
+<span>  notes.align <span class="op">=</span> <span class="st">"l"</span>, style<span class="op">=</span><span class="st">"all"</span>, notes.append <span class="op">=</span> <span class="cn">FALSE</span>,star.char<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"*"</span><span class="op">)</span>, notes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"(p&lt;0.1)=[*], (p&lt;0.05)=[**], (p&lt;0.01)=[***]"</span><span class="op">)</span>, title <span class="op">=</span><span class="st">"AR(2) de los precios de apertura de AMZN"</span>, label <span class="op">=</span> <span class="st">"tab:Ar2precios"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table style="text-align:center" class="table table-sm">
+<caption>
+<strong>AR(2) de los precios de apertura de AMZN</strong>
+</caption>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="1" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+priceopen
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+priceopen_lag1
+</td>
+<td>
+0.840<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.065)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+t = 12.968
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+p = 0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+priceopen_lag2
+</td>
+<td>
+0.161<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.065)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+t = 2.468
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+p = 0.015
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+0.580
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.460)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+t = 1.261
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+p = 0.209
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+238
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.988
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.987
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+5.696 (df = 235)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+9,358.762<sup>***</sup> (df = 2; 235) (p = 0.000)
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td style="text-align:left">
+(p&lt;0.1)=[*], (p&lt;0.05)=[**], (p&lt;0.01)=[***]
+</td>
+</tr>
+</table></div>
+<p>La Tabla anterior claramente indica que <strong>hay una
+relación entre el valor del precio y sus valores anteriores en un
+proceso AR(2)</strong>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="chapter-nav">
+<div class="prev"><a href="estacionariedad.html"><span class="header-section-number">5</span> Estacionariedad</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#procesos-estacionarios-univariados"><span class="header-section-number">6</span> Procesos estacionarios univariados</a></li>
+<li>
+<a class="nav-link" href="#procesos-autoregresivos-ar"><span class="header-section-number">6.1</span> Procesos Autoregresivos (AR)</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#ar1"><span class="header-section-number">6.1.1</span> AR(1)</a></li>
+<li><a class="nav-link" href="#ar2"><span class="header-section-number">6.1.2</span> AR(2)</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rstudio/bookdown-demo/blob/master/07-PE_Univariados.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rstudio/bookdown-demo/edit/master/07-PE_Univariados.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>06-ESTACIONARIEDAD</strong>" was written by Emiliano Pérez Caullieres. It was last built on 2022-09-27.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

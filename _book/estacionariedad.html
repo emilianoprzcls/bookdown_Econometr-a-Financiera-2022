@@ -48,6 +48,7 @@
 <li><a class="" href="m%C3%A9todo-generalizado-de-momentos-mgm.html"><span class="header-section-number">3</span> Método Generalizado de Momentos (MGM)</a></li>
 <li><a class="" href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> CAPITAL ASSET PRICING MODEL (CAPM)</a></li>
 <li><a class="active" href="estacionariedad.html"><span class="header-section-number">5</span> Estacionariedad</a></li>
+<li><a class="" href="procesos-estacionarios-univariados.html"><span class="header-section-number">6</span> Procesos estacionarios univariados</a></li>
 </ul>
 
         <div class="book-extra">
@@ -331,18 +332,18 @@ que va a ser estacionario en la medio, por lo mismo los lags de la
 Figura <a href="estacionariedad.html#fig:LAGSCAMINATA1">5.4</a> se ven tan correlacionados.</p>
 </div>
 </div>
-<div id="rendimientos-de-un-activo" class="section level2" number="5.5">
+<div id="precios-de-un-activo" class="section level2" number="5.5">
 <h2>
-<span class="header-section-number">5.5</span> Rendimientos de un activo<a class="anchor" aria-label="anchor" href="#rendimientos-de-un-activo"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.5</span> Precios de un activo<a class="anchor" aria-label="anchor" href="#precios-de-un-activo"><i class="fas fa-link"></i></a>
 </h2>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
 <span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span><span class="op">(</span><span class="fl">365</span><span class="op">*</span><span class="fl">20</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
 <span><span class="va">pd</span></span>
-<span><span class="co">#&gt; [1] "2002-09-26"</span></span>
+<span><span class="co">#&gt; [1] "2002-10-02"</span></span>
 <span><span class="va">ld</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#última fecha</span></span>
 <span><span class="va">ld</span></span>
-<span><span class="co">#&gt; [1] "2022-09-21"</span></span>
+<span><span class="co">#&gt; [1] "2022-09-27"</span></span>
 <span><span class="co">#Intervalos de tiempo</span></span>
 <span><span class="va">int</span><span class="op">&lt;-</span><span class="st">"monthly"</span></span>
 <span><span class="co">#Datos a elegir</span></span>
@@ -367,67 +368,66 @@ Figura <a href="estacionariedad.html#fig:LAGSCAMINATA1">5.4</a> se ven tan corre
 <span><span class="co">#necesitamos convertir la serie de tiempo de precios en retornos continuos compuestos de los precios de apertura</span></span>
 <span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span> ,<span class="fl">100</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="co">#agregamos un valor NA al principio</span></span>
 <span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="co">#estos son los retornos</span></span>
-<span><span class="co">#&gt;   [1]           NA   1.86572576  16.90900220  22.83329766</span></span>
-<span><span class="co">#&gt;   [5] -22.98950701  13.39221448   0.95260416  14.27998202</span></span>
-<span><span class="co">#&gt;   [9]  11.55626991  24.11122449  -0.46684144  13.08785513</span></span>
-<span><span class="co">#&gt;  [13]  11.63599301   3.89974592  12.48104071  -0.73260401</span></span>
-<span><span class="co">#&gt;  [17]  -3.06108260  -4.08140972 -16.32741069   0.99457279</span></span>
-<span><span class="co">#&gt;  [21]   0.06902105   9.61879412  11.67844638 -33.59147712</span></span>
-<span><span class="co">#&gt;  [25]  -0.57381482   7.69997922 -18.78100714  15.60691856</span></span>
-<span><span class="co">#&gt;  [29]  11.66713068  -4.43506452 -20.41392362  -1.23405211</span></span>
-<span><span class="co">#&gt;  [33]  -6.96531282   9.64353557  -6.77486160  30.02382912</span></span>
-<span><span class="co">#&gt;  [37]  -5.40177077   6.39945115 -12.58398922  20.12391421</span></span>
-<span><span class="co">#&gt;  [41]  -2.92703823  -7.77281354 -15.93630872  -2.10477279</span></span>
-<span><span class="co">#&gt;  [45]  -4.11970307  -1.60415929  10.64572285 -37.21478392</span></span>
-<span><span class="co">#&gt;  [49]  15.01070027   3.59739571  17.58906665   5.43570463</span></span>
-<span><span class="co">#&gt;  [53]  -4.00357496  -1.90531667   3.54637914   1.33891100</span></span>
-<span><span class="co">#&gt;  [57]  42.77167396  11.98170332  -0.13070948  12.66409736</span></span>
-<span><span class="co">#&gt;  [61]   2.27857959  15.63296023  -6.26135927   2.56510858</span></span>
-<span><span class="co">#&gt;  [65]   5.74113839 -18.78533471 -21.72447597  13.78662202</span></span>
-<span><span class="co">#&gt;  [69]   7.15014819   3.44753666 -11.63053849   5.54650897</span></span>
-<span><span class="co">#&gt;  [73]   8.53074641 -14.71605773 -24.20236452 -29.39126222</span></span>
-<span><span class="co">#&gt;  [77]  20.09953181  13.15576837   8.77225235  13.27882326</span></span>
-<span><span class="co">#&gt;  [81]   9.60320128  -2.73678724   7.64068237   2.50334747</span></span>
-<span><span class="co">#&gt;  [85]  -6.96036997  13.59745291  24.90536163  14.32806129</span></span>
-<span><span class="co">#&gt;  [89]  -0.50514401 -10.08447333  -3.70473986  13.45839135</span></span>
-<span><span class="co">#&gt;  [93]   1.02565002  -9.33660068 -13.76436786   8.99531736</span></span>
-<span><span class="co">#&gt;  [97]   5.87517724  21.76202538   4.58513429   8.56726887</span></span>
-<span><span class="co">#&gt; [101]   1.22598823  -6.16865517   1.74979032   4.53458328</span></span>
-<span><span class="co">#&gt; [105]   7.93222740  -0.25978671   4.72685785   9.04110889</span></span>
-<span><span class="co">#&gt; [109]  -4.41608958   0.80039290  -4.18766494  -8.13529694</span></span>
-<span><span class="co">#&gt; [113]  -8.68550170  -1.18960511   3.43828044   9.60224827</span></span>
-<span><span class="co">#&gt; [117]  14.70991690  -9.58159747   9.53799598   2.08880372</span></span>
-<span><span class="co">#&gt; [121]   5.85976366   2.83140800  -8.65274050   7.52661134</span></span>
-<span><span class="co">#&gt; [125]   1.39202437   4.89612270  -2.12710012   1.39936277</span></span>
-<span><span class="co">#&gt; [129]  -5.02332605   5.76221809   3.66491122   8.27850152</span></span>
-<span><span class="co">#&gt; [133]  -6.24554343   9.85520147  15.15285156   8.73395739</span></span>
-<span><span class="co">#&gt; [137]  -0.05013788 -10.51934673  -0.06687288  -5.92858190</span></span>
-<span><span class="co">#&gt; [141] -10.58568315   2.74371861   4.15753522  -3.80625428</span></span>
-<span><span class="co">#&gt; [145]   8.04816141  -5.42111518  -5.03065911   9.90317538</span></span>
-<span><span class="co">#&gt; [149]  -7.85404256  11.32156221   8.43295383  -2.32429615</span></span>
-<span><span class="co">#&gt; [153]  13.01462014   1.54061721   2.05813986  20.15392877</span></span>
-<span><span class="co">#&gt; [157]  -7.39490376   2.34828935  20.47843365   7.17052347</span></span>
-<span><span class="co">#&gt; [161]  -2.62563883 -12.67694180  -3.85435390   5.96629237</span></span>
-<span><span class="co">#&gt; [165]  11.72089295   8.23387458  -0.49783030   5.76252931</span></span>
-<span><span class="co">#&gt; [169]   1.44112456   8.10699776  -4.52676184  -6.00796092</span></span>
-<span><span class="co">#&gt; [173]   0.72964776   8.98955770   2.83447462   4.01536256</span></span>
-<span><span class="co">#&gt; [177]   4.38443827   7.35281333  -2.61760725   2.36894617</span></span>
-<span><span class="co">#&gt; [181]  -1.20285851  -2.07377928  13.68712240   5.85471090</span></span>
-<span><span class="co">#&gt; [185]  -0.00427124  20.93976645   4.63815978  -6.55115525</span></span>
-<span><span class="co">#&gt; [189]   9.77684681   4.61358018   2.75160333   5.84583306</span></span>
-<span><span class="co">#&gt; [193]  12.74521370  -0.22279328 -21.94794383   8.60716489</span></span>
-<span><span class="co">#&gt; [197] -18.86826361  11.20213025   0.98664739   8.39682297</span></span>
-<span><span class="co">#&gt; [201]   7.12720047  -9.38002536   8.85565506  -2.70183034</span></span>
-<span><span class="co">#&gt; [205]  -5.58782369  -1.36520548   2.37757442   0.91249016</span></span>
-<span><span class="co">#&gt; [209]   3.83805218   6.98245156  -5.31693095   1.37938043</span></span>
-<span><span class="co">#&gt; [213]  18.97247680   4.64889431  11.92308161  14.25393454</span></span>
-<span><span class="co">#&gt; [217]   9.27398656  -8.41337555  -4.66642316   4.05671846</span></span>
-<span><span class="co">#&gt; [221]   2.52393793  -0.84885499  -3.59427728  -0.31861156</span></span>
-<span><span class="co">#&gt; [225]  11.12179968  -7.17375312   5.72503641  -2.40180912</span></span>
-<span><span class="co">#&gt; [229]   4.18486227  -6.11473001   2.18899134   5.30616390</span></span>
-<span><span class="co">#&gt; [233]  -5.62793333 -11.06465380   1.80527180   7.20896224</span></span>
-<span><span class="co">#&gt; [237] -29.34750864  -0.11853658 -13.99459654  23.88072732</span></span>
-<span><span class="co">#&gt; [241]  -6.86965832</span></span>
+<span><span class="co">#&gt;   [1]           NA  13.39774561  22.83329766 -22.98950701</span></span>
+<span><span class="co">#&gt;   [5]  13.39221448   0.95260416  14.27998202  11.55626991</span></span>
+<span><span class="co">#&gt;   [9]  24.11122449  -0.46684144  13.08785513  11.63599301</span></span>
+<span><span class="co">#&gt;  [13]   3.89974592  12.48104071  -0.73260401  -3.06108260</span></span>
+<span><span class="co">#&gt;  [17]  -4.08140972 -16.32741069   0.99457279   0.06902105</span></span>
+<span><span class="co">#&gt;  [21]   9.61879412  11.67844638 -33.59147712  -0.57381482</span></span>
+<span><span class="co">#&gt;  [25]   7.69997922 -18.78100714  15.60691856  11.66713068</span></span>
+<span><span class="co">#&gt;  [29]  -4.43506452 -20.41392362  -1.23405211  -6.96531282</span></span>
+<span><span class="co">#&gt;  [33]   9.64353557  -6.77486160  30.02382912  -5.40177077</span></span>
+<span><span class="co">#&gt;  [37]   6.39945115 -12.58398922  20.12391421  -2.92703823</span></span>
+<span><span class="co">#&gt;  [41]  -7.77281354 -15.93630872  -2.10477279  -4.11970307</span></span>
+<span><span class="co">#&gt;  [45]  -1.60415929  10.64572285 -37.21478392  15.01070027</span></span>
+<span><span class="co">#&gt;  [49]   3.59739571  17.58906665   5.43570463  -4.00357496</span></span>
+<span><span class="co">#&gt;  [53]  -1.90531667   3.54637914   1.33891100  42.77167396</span></span>
+<span><span class="co">#&gt;  [57]  11.98170332  -0.13070948  12.66409736   2.27857959</span></span>
+<span><span class="co">#&gt;  [61]  15.63296023  -6.26135927   2.56510858   5.74113839</span></span>
+<span><span class="co">#&gt;  [65] -18.78533471 -21.72447597  13.78662202   7.15014819</span></span>
+<span><span class="co">#&gt;  [69]   3.44753666 -11.63053849   5.54650897   8.53074641</span></span>
+<span><span class="co">#&gt;  [73] -14.71605773 -24.20236452 -29.39126222  20.09953181</span></span>
+<span><span class="co">#&gt;  [77]  13.15576837   8.77225235  13.27882326   9.60320128</span></span>
+<span><span class="co">#&gt;  [81]  -2.73678724   7.64068237   2.50334747  -6.96036997</span></span>
+<span><span class="co">#&gt;  [85]  13.59745291  24.90536163  14.32806129  -0.50514401</span></span>
+<span><span class="co">#&gt;  [89] -10.08447333  -3.70473986  13.45839135   1.02565002</span></span>
+<span><span class="co">#&gt;  [93]  -9.33660068 -13.76436786   8.99531736   5.87517724</span></span>
+<span><span class="co">#&gt;  [97]  21.76202538   4.58513429   8.56726887   1.22598823</span></span>
+<span><span class="co">#&gt; [101]  -6.16865517   1.74979032   4.53458328   7.93222740</span></span>
+<span><span class="co">#&gt; [105]  -0.25978671   4.72685785   9.04110889  -4.41608958</span></span>
+<span><span class="co">#&gt; [109]   0.80039290  -4.18766494  -8.13529694  -8.68550170</span></span>
+<span><span class="co">#&gt; [113]  -1.18960511   3.43828044   9.60224827  14.70991690</span></span>
+<span><span class="co">#&gt; [117]  -9.58159747   9.53799598   2.08880372   5.85976366</span></span>
+<span><span class="co">#&gt; [121]   2.83140800  -8.65274050   7.52661134   1.39202437</span></span>
+<span><span class="co">#&gt; [125]   4.89612270  -2.12710012   1.39936277  -5.02332605</span></span>
+<span><span class="co">#&gt; [129]   5.76221809   3.66491122   8.27850152  -6.24554343</span></span>
+<span><span class="co">#&gt; [133]   9.85520147  15.15285156   8.73395739  -0.05013788</span></span>
+<span><span class="co">#&gt; [137] -10.51934673  -0.06687288  -5.92858190 -10.58568315</span></span>
+<span><span class="co">#&gt; [141]   2.74371861   4.15753522  -3.80625428   8.04816141</span></span>
+<span><span class="co">#&gt; [145]  -5.42111518  -5.03065911   9.90317538  -7.85404256</span></span>
+<span><span class="co">#&gt; [149]  11.32156221   8.43295383  -2.32429615  13.01462014</span></span>
+<span><span class="co">#&gt; [153]   1.54061721   2.05813986  20.15392877  -7.39490376</span></span>
+<span><span class="co">#&gt; [157]   2.34828935  20.47843365   7.17052347  -2.62563883</span></span>
+<span><span class="co">#&gt; [161] -12.67694180  -3.85435390   5.96629237  11.72089295</span></span>
+<span><span class="co">#&gt; [165]   8.23387458  -0.49783030   5.76252931   1.44112456</span></span>
+<span><span class="co">#&gt; [169]   8.10699776  -4.52676184  -6.00796092   0.72964776</span></span>
+<span><span class="co">#&gt; [173]   8.98955770   2.83447462   4.01536256   4.38443827</span></span>
+<span><span class="co">#&gt; [177]   7.35281333  -2.61760725   2.36894617  -1.20285851</span></span>
+<span><span class="co">#&gt; [181]  -2.07377928  13.68712240   5.85471090  -0.00427124</span></span>
+<span><span class="co">#&gt; [185]  20.93976645   4.63815978  -6.55115525   9.77684681</span></span>
+<span><span class="co">#&gt; [189]   4.61358018   2.75160333   5.84583306  12.74521370</span></span>
+<span><span class="co">#&gt; [193]  -0.22279328 -21.94794383   8.60716489 -18.86826361</span></span>
+<span><span class="co">#&gt; [197]  11.20213025   0.98664739   8.39682297   7.12720047</span></span>
+<span><span class="co">#&gt; [201]  -9.38002536   8.85565506  -2.70183034  -5.58782369</span></span>
+<span><span class="co">#&gt; [205]  -1.36520548   2.37757442   0.91249016   3.83805218</span></span>
+<span><span class="co">#&gt; [209]   6.98245156  -5.31693095   1.37938043  18.97247680</span></span>
+<span><span class="co">#&gt; [213]   4.64889431  11.92308161  14.25393454   9.27398656</span></span>
+<span><span class="co">#&gt; [217]  -8.41337555  -4.66642316   4.05671846   2.52393793</span></span>
+<span><span class="co">#&gt; [221]  -0.84885499  -3.59427728  -0.31861156  11.12179968</span></span>
+<span><span class="co">#&gt; [225]  -7.17375312   5.72503641  -2.40180912   4.18486227</span></span>
+<span><span class="co">#&gt; [229]  -6.11473001   2.18899134   5.30616390  -5.62793333</span></span>
+<span><span class="co">#&gt; [233] -11.06465380   1.80527180   7.20896224 -29.34750864</span></span>
+<span><span class="co">#&gt; [237]  -0.11853658 -13.99459654  23.88072732  -6.86965832</span></span>
 <span><span class="co">#tenemos 20 retornos a lo largo de 20 años</span></span></code></pre></div>
 <p>Veamos la serie de tiempo</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
@@ -452,12 +452,12 @@ de que los datos esten en orden cronológico.</p>
 <span><span class="co">#&gt; # A tibble: 6 × 11</span></span>
 <span><span class="co">#&gt;   ticker ref.date     volume price…¹ price…² price…³ price…⁴</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 AMZN   2002-09-26   5.58e8   0.796    0.87   0.786   0.796</span></span>
-<span><span class="co">#&gt; 2 AMZN   2002-10-01   4.07e9   0.812    1.01   0.800   0.968</span></span>
-<span><span class="co">#&gt; 3 AMZN   2002-11-01   4.13e9   0.961    1.23   0.91    1.17 </span></span>
-<span><span class="co">#&gt; 4 AMZN   2002-12-02   3.11e9   1.21     1.25   0.922   0.944</span></span>
-<span><span class="co">#&gt; 5 AMZN   2003-01-02   3.38e9   0.960    1.16   0.928   1.09 </span></span>
-<span><span class="co">#&gt; 6 AMZN   2003-02-03   2.32e9   1.10     1.12   0.980   1.10 </span></span>
+<span><span class="co">#&gt; 1 AMZN   2002-10-02   3.89e9   0.840    1.01   0.818   0.968</span></span>
+<span><span class="co">#&gt; 2 AMZN   2002-11-01   4.13e9   0.961    1.23   0.91    1.17 </span></span>
+<span><span class="co">#&gt; 3 AMZN   2002-12-02   3.11e9   1.21     1.25   0.922   0.944</span></span>
+<span><span class="co">#&gt; 4 AMZN   2003-01-02   3.38e9   0.960    1.16   0.928   1.09 </span></span>
+<span><span class="co">#&gt; 5 AMZN   2003-02-03   2.32e9   1.10     1.12   0.980   1.10 </span></span>
+<span><span class="co">#&gt; 6 AMZN   2003-03-03   3.28e9   1.11     1.40   1.07    1.30 </span></span>
 <span><span class="co">#&gt; # … with 4 more variables: price.adjusted &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   ret.adjusted.prices &lt;dbl&gt;, ret.closing.prices &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   ccrAMZN &lt;dbl&gt;, and abbreviated variable names</span></span>
@@ -506,7 +506,7 @@ hay estacionariedad</strong>.</p>
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> CAPITAL ASSET PRICING MODEL (CAPM)</a></div>
-<div class="empty"></div>
+<div class="next"><a href="procesos-estacionarios-univariados.html"><span class="header-section-number">6</span> Procesos estacionarios univariados</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -527,7 +527,7 @@ hay estacionariedad</strong>.</p>
 <a class="nav-link" href="#un-camino"><span class="header-section-number">5.4</span> Un camino</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#estacionariedad-caminata"><span class="header-section-number">5.4.1</span> Estacionariedad Caminata</a></li></ul>
 </li>
 <li>
-<a class="nav-link" href="#rendimientos-de-un-activo"><span class="header-section-number">5.5</span> Rendimientos de un activo</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#precios-de-un-activo"><span class="header-section-number">5.5</span> Precios de un activo</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#serie-de-tiempo"><span class="header-section-number">5.5.1</span> Serie de tiempo</a></li>
 <li><a class="nav-link" href="#estacionariedad-1"><span class="header-section-number">5.5.2</span> Estacionariedad</a></li>
 </ul>
@@ -549,7 +549,7 @@ hay estacionariedad</strong>.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>06-ESTACIONARIEDAD</strong>" was written by Emiliano Pérez Caullieres. It was last built on 2022-09-21.</p>
+    <p>"<strong>06-ESTACIONARIEDAD</strong>" was written by Emiliano Pérez Caullieres. It was last built on 2022-09-27.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
