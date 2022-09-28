@@ -1,13 +1,3 @@
----
-title: "06-ESTACIONARIEDAD"
-author: "Emiliano Pérez Caullieres"
-date: "2022-09-27"
-output: pdf_document
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
 # Estacionariedad
 
 ## El problema
@@ -220,14 +210,10 @@ for(i in 1:Caminos){
 par(new = FALSE)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-ESTACIONARIEDAD_files/figure-latex/Caminata10-1} 
-
-}
-
-\caption{Ejemplo de 10 trayectorias de la caminata aleatoria, cuando sólo es posible cambios de +1 y -1}(\#fig:Caminata10)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-ESTACIONARIEDAD_files/figure-html/Caminata10-1.png" alt="Ejemplo de 10 trayectorias de la caminata aleatoria, cuando sólo es posible cambios de +1 y -1" width="672" />
+<p class="caption">(\#fig:Caminata10)Ejemplo de 10 trayectorias de la caminata aleatoria, cuando sólo es posible cambios de +1 y -1</p>
+</div>
 
 Así, el proceso estocástico dado por la caminata alaeatoria sin un
 término de ajuste es estacionario en media, pero no en varianza o en
@@ -261,7 +247,10 @@ un solo camino.
   plot(TT1, G_t1, col = "blue", type = "l", ylab = "Ganancias", xlab = "Tiempo", ylim = c(-Rango,Rango))
 ```
 
-![(\#fig:Caminata1)Una Caminata aleatoria cuando sólo es posible cambios de +1 y -1](06-ESTACIONARIEDAD_files/figure-latex/Caminata1-1.pdf) 
+<div class="figure">
+<img src="06-ESTACIONARIEDAD_files/figure-html/Caminata1-1.png" alt="Una Caminata aleatoria cuando sólo es posible cambios de +1 y -1" width="672" />
+<p class="caption">(\#fig:Caminata1)Una Caminata aleatoria cuando sólo es posible cambios de +1 y -1</p>
+</div>
 
 Hay que convertirlo a serie de tiempo
 
@@ -278,7 +267,10 @@ caminata_ts<-ts(G_t1,start=1,end=Soporte)
 ACF_caminata_ts<-acf(caminata_ts,na.action = na.pass, main = "Función de Autocorrelación de una Caminata")
 ```
 
-![(\#fig:ACFCAMINATA1)Función de Autocorrelación de una Caminata](06-ESTACIONARIEDAD_files/figure-latex/ACFCAMINATA1-1.pdf) 
+<div class="figure">
+<img src="06-ESTACIONARIEDAD_files/figure-html/ACFCAMINATA1-1.png" alt="Función de Autocorrelación de una Caminata" width="672" />
+<p class="caption">(\#fig:ACFCAMINATA1)Función de Autocorrelación de una Caminata</p>
+</div>
 
 Como se comentó con anterioridad en la Figura \@ref(fig:ACFCAMINATA1) es
 evidente que la Caminata si tiene autocorrelacion, por lo que nuestro
@@ -290,7 +282,10 @@ Veamos los lags.
 gglagplot(caminata_ts,lags=10,do.lines=FALSE,colour=FALSE)+theme_light()
 ```
 
-![(\#fig:LAGSCAMINATA1)Lags de una sola caminata](06-ESTACIONARIEDAD_files/figure-latex/LAGSCAMINATA1-1.pdf) 
+<div class="figure">
+<img src="06-ESTACIONARIEDAD_files/figure-html/LAGSCAMINATA1-1.png" alt="Lags de una sola caminata" width="672" />
+<p class="caption">(\#fig:LAGSCAMINATA1)Lags de una sola caminata</p>
+</div>
 
 De nuevo, esto al ser creado de manera estandarizada estamos seguros de
 que va a ser estacionario en la medio, por lo mismo los lags de la
@@ -303,10 +298,10 @@ Figura \@ref(fig:LAGSCAMINATA1) se ven tan correlacionados.
 #Primero determinamos el lapso de tiempo
 pd<-Sys.Date()-(365*20) #primer fecha
 pd
-#> [1] "2002-10-02"
+#> [1] "2002-10-03"
 ld<-Sys.Date() #última fecha
 ld
-#> [1] "2022-09-27"
+#> [1] "2022-09-28"
 #Intervalos de tiempo
 int<-"monthly"
 #Datos a elegir
@@ -331,7 +326,7 @@ colnames(data_precio_amzn)
 #necesitamos convertir la serie de tiempo de precios en retornos continuos compuestos de los precios de apertura
 data_precio_amzn$ccrAMZN<-c(NA ,100*diff(log(data_precio_amzn$price.open)))#agregamos un valor NA al principio
 data_precio_amzn$ccrAMZN#estos son los retornos
-#>   [1]           NA  13.39774561  22.83329766 -22.98950701
+#>   [1]           NA  13.51679325  22.83329766 -22.98950701
 #>   [5]  13.39221448   0.95260416  14.27998202  11.55626991
 #>   [9]  24.11122449  -0.46684144  13.08785513  11.63599301
 #>  [13]   3.89974592  12.48104071  -0.73260401  -3.06108260
@@ -402,7 +397,10 @@ ret_20_amazn<-ggplot(data=data_precio_amzn, aes(x=ref.date))+geom_line(aes(y=ccr
 ret_20_amazn
 ```
 
-![(\#fig:amazn20)Serie de tiempo de los retornos de año en los últimos 20 años](06-ESTACIONARIEDAD_files/figure-latex/amazn20-1.pdf) 
+<div class="figure">
+<img src="06-ESTACIONARIEDAD_files/figure-html/amazn20-1.png" alt="Serie de tiempo de los retornos de año en los últimos 20 años" width="672" />
+<p class="caption">(\#fig:amazn20)Serie de tiempo de los retornos de año en los últimos 20 años</p>
+</div>
 
 ### Serie de tiempo
 
@@ -414,26 +412,25 @@ de que los datos esten en orden cronológico.
 ```r
 data_precio_amzn<-data_precio_amzn[order(data_precio_amzn$ref.date),]
 head(data_precio_amzn)#dado que ya estaba en orden cronológico nuestro df no cambia
-#> # A tibble: 6 x 11
-#>   ticker ref.date     volume price~1 price~2 price~3 price~4
+#> # A tibble: 6 × 11
+#>   ticker ref.date     volume price…¹ price…² price…³ price…⁴
 #>   <chr>  <date>        <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
-#> 1 AMZN   2002-10-02   3.89e9   0.840    1.01   0.818   0.968
+#> 1 AMZN   2002-10-03   3.72e9   0.840    1.01   0.818   0.968
 #> 2 AMZN   2002-11-01   4.13e9   0.961    1.23   0.91    1.17 
 #> 3 AMZN   2002-12-02   3.11e9   1.21     1.25   0.922   0.944
 #> 4 AMZN   2003-01-02   3.38e9   0.960    1.16   0.928   1.09 
 #> 5 AMZN   2003-02-03   2.32e9   1.10     1.12   0.980   1.10 
 #> 6 AMZN   2003-03-03   3.28e9   1.11     1.40   1.07    1.30 
-#> # ... with 4 more variables: price.adjusted <dbl>,
+#> # … with 4 more variables: price.adjusted <dbl>,
 #> #   ret.adjusted.prices <dbl>, ret.closing.prices <dbl>,
 #> #   ccrAMZN <dbl>, and abbreviated variable names
-#> #   1: price.open, 2: price.high, 3: price.low,
-#> #   4: price.close
+#> #   ¹​price.open, ²​price.high, ³​price.low, ⁴​price.close
 #hagamos el objeto ts
 ret_amazn_ts<-ts(data_precio_amzn$ccrAMZN)
 plot(ret_amazn_ts)#de esta manera podemos ver que se cargo bien debido a que es igual al ggplot
 ```
 
-![](06-ESTACIONARIEDAD_files/figure-latex/unnamed-chunk-4-1.pdf)<!-- --> 
+<img src="06-ESTACIONARIEDAD_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 ### Estacionariedad
 
@@ -444,14 +441,20 @@ plot(ret_amazn_ts)#de esta manera podemos ver que se cargo bien debido a que es 
 gglagplot(ret_amazn_ts,lags=20,do.lines=FALSE,colour=FALSE)+theme_light()
 ```
 
-![(\#fig:amazn20LAG)Lag Plot que nos muestra la correlación entre 20 lags](06-ESTACIONARIEDAD_files/figure-latex/amazn20LAG-1.pdf) 
+<div class="figure">
+<img src="06-ESTACIONARIEDAD_files/figure-html/amazn20LAG-1.png" alt="Lag Plot que nos muestra la correlación entre 20 lags" width="672" />
+<p class="caption">(\#fig:amazn20LAG)Lag Plot que nos muestra la correlación entre 20 lags</p>
+</div>
 
 
 ```r
 ACF_ret_amazn_ts<-acf(ret_amazn_ts,na.action = na.pass)
 ```
 
-![(\#fig:amazn20ACF)Función de Autocorrelación de los retornos de AMZN en los ultimos 20 años](06-ESTACIONARIEDAD_files/figure-latex/amazn20ACF-1.pdf) 
+<div class="figure">
+<img src="06-ESTACIONARIEDAD_files/figure-html/amazn20ACF-1.png" alt="Función de Autocorrelación de los retornos de AMZN en los ultimos 20 años" width="672" />
+<p class="caption">(\#fig:amazn20ACF)Función de Autocorrelación de los retornos de AMZN en los ultimos 20 años</p>
+</div>
 
 La Figura \@ref(fig:amazn20LAG) nos idica la manera en la que se
 correlacionan los lags, evidentemente no se puede ver ningún tipo de

@@ -107,7 +107,7 @@ data_precio_amzn$ref.date=format(as.Date(data_precio_amzn$ref.date), "%m/%Y")
 #Compararemos con los CETES
 CETES_sep2021_2022<-read_excel("BD/CETES-sep2021-2022.xlsx", skip=17)
 head(CETES_sep2021_2022)
-#> # A tibble: 6 x 2
+#> # A tibble: 6 × 2
 #>   Fecha               SF43936
 #>   <dttm>                <dbl>
 #> 1 2021-09-15 00:00:00    4.6 
@@ -144,7 +144,10 @@ ggplot(CAPM, aes(x=excess_ret_AMZN, y=excess_ret_SP500))+geom_point()+labs(title
 #> (geom_point).
 ```
 
-![(\#fig:TSTSLAAMAZN1)Relación de excesos de retornos entre AMZN y SP500](04-CAPM_files/figure-latex/TSTSLAAMAZN1-1.pdf) 
+<div class="figure">
+<img src="04-CAPM_files/figure-html/TSTSLAAMAZN1-1.png" alt="Relación de excesos de retornos entre AMZN y SP500" width="672" />
+<p class="caption">(\#fig:TSTSLAAMAZN1)Relación de excesos de retornos entre AMZN y SP500</p>
+</div>
 
 
 ```r
@@ -154,7 +157,10 @@ ggplot(CAPM, aes(x=excess_ret_TSLA, y=excess_ret_SP500))+geom_point()+labs(title
 #> (geom_point).
 ```
 
-![(\#fig:TSTSLAAMAZN2)Relación de excesos de retornos entre TSLA y SP500](04-CAPM_files/figure-latex/TSTSLAAMAZN2-1.pdf) 
+<div class="figure">
+<img src="04-CAPM_files/figure-html/TSTSLAAMAZN2-1.png" alt="Relación de excesos de retornos entre TSLA y SP500" width="672" />
+<p class="caption">(\#fig:TSTSLAAMAZN2)Relación de excesos de retornos entre TSLA y SP500</p>
+</div>
 
 
 ```r
@@ -209,7 +215,7 @@ data3<-BatchGetSymbols(tickers = dt3,
 #>    tickers =AAPL
 #>    Downloading data for benchmark ticker
 #> ^GSPC | yahoo (1|1)
-#> AAPL | yahoo (1|1) - Got 100% of valid prices | Looking good!
+#> AAPL | yahoo (1|1) - Got 100% of valid prices | Well done!
 data_precio_AAPL<-data3$df.tickers
 colnames(data_precio_AAPL)
 #>  [1] "ticker"              "ref.date"           

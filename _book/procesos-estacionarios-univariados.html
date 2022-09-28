@@ -4,15 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 6 Procesos estacionarios univariados | 06-ESTACIONARIEDAD</title>
-<meta name="author" content="Emiliano Pérez Caullieres">
+<title>Chapter 6 Procesos estacionarios univariados | Diplomado de Econometría Financiera</title>
+<meta name="author" content="Benjamin Oliva y Emiliano Pérez Caullieres">
 <meta name="description" content="En este capítulo analizaremos el método o metodología de análisis de series de tiempo propuesto por Box y Jenkins (1970). Los modelos propuestos dentro de está metodología o conjunto de métodos se...">
 <meta name="generator" content="bookdown 0.27 with bs4_book()">
-<meta property="og:title" content="Chapter 6 Procesos estacionarios univariados | 06-ESTACIONARIEDAD">
+<meta property="og:title" content="Chapter 6 Procesos estacionarios univariados | Diplomado de Econometría Financiera">
 <meta property="og:type" content="book">
 <meta property="og:description" content="En este capítulo analizaremos el método o metodología de análisis de series de tiempo propuesto por Box y Jenkins (1970). Los modelos propuestos dentro de está metodología o conjunto de métodos se...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 6 Procesos estacionarios univariados | 06-ESTACIONARIEDAD">
+<meta name="twitter:title" content="Chapter 6 Procesos estacionarios univariados | Diplomado de Econometría Financiera">
 <meta name="twitter:description" content="En este capítulo analizaremos el método o metodología de análisis de series de tiempo propuesto por Box y Jenkins (1970). Los modelos propuestos dentro de está metodología o conjunto de métodos se...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">06-ESTACIONARIEDAD</a>
+        <a href="index.html" title="">Diplomado de Econometría Financiera</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -457,14 +457,16 @@ precio del ACTIVO AMZN como si fueran retornos:</p>
 <code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
 <span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span><span class="op">(</span><span class="fl">365</span><span class="op">*</span><span class="fl">20</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
 <span><span class="va">pd</span></span>
-<span><span class="co">#&gt; [1] "2002-10-02"</span></span>
+<span><span class="co">#&gt; [1] "2002-10-03"</span></span>
 <span><span class="va">ld</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#última fecha</span></span>
 <span><span class="va">ld</span></span>
-<span><span class="co">#&gt; [1] "2022-09-27"</span></span>
+<span><span class="co">#&gt; [1] "2022-09-28"</span></span>
 <span><span class="co">#Intervalos de tiempo</span></span>
 <span><span class="va">int</span><span class="op">&lt;-</span><span class="st">"monthly"</span></span>
+<span></span>
 <span><span class="co">#Datos a elegir</span></span>
 <span><span class="va">dt</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AMZN"</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co">#Descargando los valores</span></span>
 <span><span class="va">data1</span><span class="op">&lt;-</span> <span class="fu">BatchGetSymbols</span><span class="op">(</span>tickers <span class="op">=</span> <span class="va">dt</span>,</span>
 <span>                       first.date <span class="op">=</span> <span class="va">pd</span>,</span>
@@ -479,6 +481,7 @@ precio del ACTIVO AMZN como si fueran retornos:</p>
 <span><span class="co">#&gt; You can install yfR by executing:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; remotes::install_github('msperlin/yfR')</span></span>
+<span></span>
 <span><span class="co">#Generando data frame con los valores</span></span>
 <span><span class="va">data_precio_amzn</span><span class="op">&lt;-</span><span class="va">data1</span><span class="op">$</span><span class="va">df.tickers</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">)</span></span>
@@ -486,79 +489,17 @@ precio del ACTIVO AMZN como si fueran retornos:</p>
 <span><span class="co">#&gt;  [3] "volume"              "price.open"         </span></span>
 <span><span class="co">#&gt;  [5] "price.high"          "price.low"          </span></span>
 <span><span class="co">#&gt;  [7] "price.close"         "price.adjusted"     </span></span>
-<span><span class="co">#&gt;  [9] "ret.adjusted.prices" "ret.closing.prices"</span></span>
-<span></span>
-<span><span class="co">#necesitamos convertir la serie de tiempo de precios en retornos continuos compuestos de los precios de apertura</span></span>
-<span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span> ,<span class="fl">100</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="co">#agregamos un valor NA al principio</span></span>
-<span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="co">#estos son los retornos</span></span>
-<span><span class="co">#&gt;   [1]           NA  13.39774561  22.83329766 -22.98950701</span></span>
-<span><span class="co">#&gt;   [5]  13.39221448   0.95260416  14.27998202  11.55626991</span></span>
-<span><span class="co">#&gt;   [9]  24.11122449  -0.46684144  13.08785513  11.63599301</span></span>
-<span><span class="co">#&gt;  [13]   3.89974592  12.48104071  -0.73260401  -3.06108260</span></span>
-<span><span class="co">#&gt;  [17]  -4.08140972 -16.32741069   0.99457279   0.06902105</span></span>
-<span><span class="co">#&gt;  [21]   9.61879412  11.67844638 -33.59147712  -0.57381482</span></span>
-<span><span class="co">#&gt;  [25]   7.69997922 -18.78100714  15.60691856  11.66713068</span></span>
-<span><span class="co">#&gt;  [29]  -4.43506452 -20.41392362  -1.23405211  -6.96531282</span></span>
-<span><span class="co">#&gt;  [33]   9.64353557  -6.77486160  30.02382912  -5.40177077</span></span>
-<span><span class="co">#&gt;  [37]   6.39945115 -12.58398922  20.12391421  -2.92703823</span></span>
-<span><span class="co">#&gt;  [41]  -7.77281354 -15.93630872  -2.10477279  -4.11970307</span></span>
-<span><span class="co">#&gt;  [45]  -1.60415929  10.64572285 -37.21478392  15.01070027</span></span>
-<span><span class="co">#&gt;  [49]   3.59739571  17.58906665   5.43570463  -4.00357496</span></span>
-<span><span class="co">#&gt;  [53]  -1.90531667   3.54637914   1.33891100  42.77167396</span></span>
-<span><span class="co">#&gt;  [57]  11.98170332  -0.13070948  12.66409736   2.27857959</span></span>
-<span><span class="co">#&gt;  [61]  15.63296023  -6.26135927   2.56510858   5.74113839</span></span>
-<span><span class="co">#&gt;  [65] -18.78533471 -21.72447597  13.78662202   7.15014819</span></span>
-<span><span class="co">#&gt;  [69]   3.44753666 -11.63053849   5.54650897   8.53074641</span></span>
-<span><span class="co">#&gt;  [73] -14.71605773 -24.20236452 -29.39126222  20.09953181</span></span>
-<span><span class="co">#&gt;  [77]  13.15576837   8.77225235  13.27882326   9.60320128</span></span>
-<span><span class="co">#&gt;  [81]  -2.73678724   7.64068237   2.50334747  -6.96036997</span></span>
-<span><span class="co">#&gt;  [85]  13.59745291  24.90536163  14.32806129  -0.50514401</span></span>
-<span><span class="co">#&gt;  [89] -10.08447333  -3.70473986  13.45839135   1.02565002</span></span>
-<span><span class="co">#&gt;  [93]  -9.33660068 -13.76436786   8.99531736   5.87517724</span></span>
-<span><span class="co">#&gt;  [97]  21.76202538   4.58513429   8.56726887   1.22598823</span></span>
-<span><span class="co">#&gt; [101]  -6.16865517   1.74979032   4.53458328   7.93222740</span></span>
-<span><span class="co">#&gt; [105]  -0.25978671   4.72685785   9.04110889  -4.41608958</span></span>
-<span><span class="co">#&gt; [109]   0.80039290  -4.18766494  -8.13529694  -8.68550170</span></span>
-<span><span class="co">#&gt; [113]  -1.18960511   3.43828044   9.60224827  14.70991690</span></span>
-<span><span class="co">#&gt; [117]  -9.58159747   9.53799598   2.08880372   5.85976366</span></span>
-<span><span class="co">#&gt; [121]   2.83140800  -8.65274050   7.52661134   1.39202437</span></span>
-<span><span class="co">#&gt; [125]   4.89612270  -2.12710012   1.39936277  -5.02332605</span></span>
-<span><span class="co">#&gt; [129]   5.76221809   3.66491122   8.27850152  -6.24554343</span></span>
-<span><span class="co">#&gt; [133]   9.85520147  15.15285156   8.73395739  -0.05013788</span></span>
-<span><span class="co">#&gt; [137] -10.51934673  -0.06687288  -5.92858190 -10.58568315</span></span>
-<span><span class="co">#&gt; [141]   2.74371861   4.15753522  -3.80625428   8.04816141</span></span>
-<span><span class="co">#&gt; [145]  -5.42111518  -5.03065911   9.90317538  -7.85404256</span></span>
-<span><span class="co">#&gt; [149]  11.32156221   8.43295383  -2.32429615  13.01462014</span></span>
-<span><span class="co">#&gt; [153]   1.54061721   2.05813986  20.15392877  -7.39490376</span></span>
-<span><span class="co">#&gt; [157]   2.34828935  20.47843365   7.17052347  -2.62563883</span></span>
-<span><span class="co">#&gt; [161] -12.67694180  -3.85435390   5.96629237  11.72089295</span></span>
-<span><span class="co">#&gt; [165]   8.23387458  -0.49783030   5.76252931   1.44112456</span></span>
-<span><span class="co">#&gt; [169]   8.10699776  -4.52676184  -6.00796092   0.72964776</span></span>
-<span><span class="co">#&gt; [173]   8.98955770   2.83447462   4.01536256   4.38443827</span></span>
-<span><span class="co">#&gt; [177]   7.35281333  -2.61760725   2.36894617  -1.20285851</span></span>
-<span><span class="co">#&gt; [181]  -2.07377928  13.68712240   5.85471090  -0.00427124</span></span>
-<span><span class="co">#&gt; [185]  20.93976645   4.63815978  -6.55115525   9.77684681</span></span>
-<span><span class="co">#&gt; [189]   4.61358018   2.75160333   5.84583306  12.74521370</span></span>
-<span><span class="co">#&gt; [193]  -0.22279328 -21.94794383   8.60716489 -18.86826361</span></span>
-<span><span class="co">#&gt; [197]  11.20213025   0.98664739   8.39682297   7.12720047</span></span>
-<span><span class="co">#&gt; [201]  -9.38002536   8.85565506  -2.70183034  -5.58782369</span></span>
-<span><span class="co">#&gt; [205]  -1.36520548   2.37757442   0.91249016   3.83805218</span></span>
-<span><span class="co">#&gt; [209]   6.98245156  -5.31693095   1.37938043  18.97247680</span></span>
-<span><span class="co">#&gt; [213]   4.64889431  11.92308161  14.25393454   9.27398656</span></span>
-<span><span class="co">#&gt; [217]  -8.41337555  -4.66642316   4.05671846   2.52393793</span></span>
-<span><span class="co">#&gt; [221]  -0.84885499  -3.59427728  -0.31861156  11.12179968</span></span>
-<span><span class="co">#&gt; [225]  -7.17375312   5.72503641  -2.40180912   4.18486227</span></span>
-<span><span class="co">#&gt; [229]  -6.11473001   2.18899134   5.30616390  -5.62793333</span></span>
-<span><span class="co">#&gt; [233] -11.06465380   1.80527180   7.20896224 -29.34750864</span></span>
-<span><span class="co">#&gt; [237]  -0.11853658 -13.99459654  23.88072732  -6.86965832</span></span>
-<span><span class="co">#tenemos 20 retornos a lo largo de 20 años</span></span></code></pre></div>
+<span><span class="co">#&gt;  [9] "ret.adjusted.prices" "ret.closing.prices"</span></span></code></pre></div>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ret_20_amazn</span><span class="op">&lt;-</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">data_precio_amzn</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">ref.date</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">ccrAMZN</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title<span class="op">=</span><span class="st">"Retornos de AMZN en los últimos 20 años"</span>,y<span class="op">=</span><span class="st">"Retornos"</span>, x<span class="op">=</span><span class="st">"Año"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">ret_20_amazn</span><span class="op">&lt;-</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">data_precio_amzn</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">ref.date</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">price.open</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title<span class="op">=</span><span class="st">"Precios de apertura de AMZN en los últimos 20 años"</span>,y<span class="op">=</span><span class="st">"Retornos"</span>, x<span class="op">=</span><span class="st">"Año"</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">ret_20_amazn</span></span></code></pre></div>
 <div class="figure">
 <span style="display:block;" id="fig:amazn20"></span>
-<img src="07-PE_Univariados_files/figure-html/amazn20-1.png" alt="Serie de tiempo de los retornos de año en los últimos 20 años" width="672"><p class="caption">
-Figure 5.5: Serie de tiempo de los retornos de año en los últimos 20 años
+<img src="07-PE_Univariados_files/figure-html/amazn20-1.png" alt="Serie de tiempo de los precios de apertura de año en los últimos 20 años" width="672"><p class="caption">
+Figure 5.5: Serie de tiempo de los precios de apertura de año en los últimos 20 años
 </p>
 </div>
 <p>Primero que nada es importante cargar los datos a un objeto series de
@@ -567,25 +508,25 @@ de que los datos esten en orden cronológico.</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_precio_amzn</span><span class="op">&lt;-</span><span class="va">data_precio_amzn</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ref.date</span><span class="op">)</span>,<span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">)</span><span class="co">#dado que ya estaba en orden cronológico nuestro df no cambia</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 11</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 10</span></span>
 <span><span class="co">#&gt;   ticker ref.date     volume price…¹ price…² price…³ price…⁴</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 AMZN   2002-10-02   3.89e9   0.840    1.01   0.818   0.968</span></span>
+<span><span class="co">#&gt; 1 AMZN   2002-10-03   3.72e9   0.840    1.01   0.818   0.968</span></span>
 <span><span class="co">#&gt; 2 AMZN   2002-11-01   4.13e9   0.961    1.23   0.91    1.17 </span></span>
 <span><span class="co">#&gt; 3 AMZN   2002-12-02   3.11e9   1.21     1.25   0.922   0.944</span></span>
 <span><span class="co">#&gt; 4 AMZN   2003-01-02   3.38e9   0.960    1.16   0.928   1.09 </span></span>
 <span><span class="co">#&gt; 5 AMZN   2003-02-03   2.32e9   1.10     1.12   0.980   1.10 </span></span>
 <span><span class="co">#&gt; 6 AMZN   2003-03-03   3.28e9   1.11     1.40   1.07    1.30 </span></span>
-<span><span class="co">#&gt; # … with 4 more variables: price.adjusted &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; # … with 3 more variables: price.adjusted &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   ret.adjusted.prices &lt;dbl&gt;, ret.closing.prices &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   ccrAMZN &lt;dbl&gt;, and abbreviated variable names</span></span>
-<span><span class="co">#&gt; #   ¹​price.open, ²​price.high, ³​price.low, ⁴​price.close</span></span>
+<span><span class="co">#&gt; #   and abbreviated variable names ¹​price.open,</span></span>
+<span><span class="co">#&gt; #   ²​price.high, ³​price.low, ⁴​price.close</span></span>
 <span><span class="co">#hagamos el objeto ts</span></span>
-<span><span class="va">ret_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">ret_amazn_ts</span><span class="op">)</span><span class="co">#de esta manera podemos ver que se cargo bien debido a que es igual al ggplot</span></span></code></pre></div>
+<span><span class="va">price_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">price_amazn_ts</span><span class="op">)</span><span class="co">#de esta manera podemos ver que se cargo bien debido a que es igual al ggplot</span></span></code></pre></div>
 <div class="inline-figure"><img src="07-PE_Univariados_files/figure-html/unnamed-chunk-6-1.png" width="672"></div>
-<p>Dado que queremos saber si existe un proceso AR(2) en estos cambio
-debemos calcularlo. Para ello utilizamos la función lm() que realizará una regresión lineal y veremos la relación de los valores con sus valores pasados en <span class="math inline">\(t-2\)</span>:</p>
+<p>Dado que queremos saber si existe un proceso <span class="math inline">\(AR(2)\)</span> en estos cambio
+debemos calcularlo. Para ello utilizamos la función <span class="math inline">\(lm()\)</span> que realizará una regresión lineal y veremos la relación de los valores con sus valores pasados en <span class="math inline">\(t-2\)</span>:</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">priceopen</span><span class="op">&lt;-</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span></span>
 <span><span class="va">priceopen_amazn</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">priceopen</span><span class="op">)</span></span>
@@ -593,11 +534,6 @@ debemos calcularlo. Para ello utilizamos la función lm() que realizará una reg
 <span><span class="va">priceopen_amazn</span><span class="op">$</span><span class="va">priceopen_lag2</span><span class="op">&lt;-</span><span class="fu">lag</span><span class="op">(</span><span class="va">priceopen_amazn</span><span class="op">$</span><span class="va">priceopen</span>,<span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">ar2_amazn</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">priceopen</span><span class="op">~</span><span class="va">priceopen_lag1</span><span class="op">+</span><span class="va">priceopen_lag2</span>, data<span class="op">=</span><span class="va">priceopen_amazn</span><span class="op">)</span></span></code></pre></div>
 <p>Veamos la tabla de la regresión lineal:</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">stargazer</span><span class="op">(</span></span>
-<span>  <span class="va">ar2_amazn</span>,</span>
-<span>  type <span class="op">=</span> <span class="st">"html"</span>,</span>
-<span>  notes.align <span class="op">=</span> <span class="st">"l"</span>, style<span class="op">=</span><span class="st">"all"</span>, notes.append <span class="op">=</span> <span class="cn">FALSE</span>,star.char<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"*"</span><span class="op">)</span>, notes<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"(p&lt;0.1)=[*], (p&lt;0.05)=[**], (p&lt;0.01)=[***]"</span><span class="op">)</span>, title <span class="op">=</span><span class="st">"AR(2) de los precios de apertura de AMZN"</span>, label <span class="op">=</span> <span class="st">"tab:Ar2precios"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-table"><table style="text-align:center" class="table table-sm">
 <caption>
 <strong>AR(2) de los precios de apertura de AMZN</strong>
@@ -758,7 +694,7 @@ Residual Std. Error
 F Statistic
 </td>
 <td>
-9,358.762<sup>***</sup> (df = 2; 235) (p = 0.000)
+9,358.763<sup>***</sup> (df = 2; 235) (p = 0.000)
 </td>
 </tr>
 <tr>
@@ -774,9 +710,31 @@ F Statistic
 </td>
 </tr>
 </table></div>
-<p>La Tabla anterior claramente indica que <strong>hay una
-relación entre el valor del precio y sus valores anteriores en un
-proceso AR(2)</strong>.</p>
+<p>La tabla anterior claramente indica que <strong>hay una relación entre el valor del precio y sus valores anteriores en un proceso AR(2)</strong>.</p>
+<p>Así pues es importante modificar la serie de tiempo para ilustrar como se puede controlar los efectos de los autoregresores <span class="math inline">\(AR(2)\)</span>. Para ello, utilizaremos la función <span class="math inline">\(arima()\)</span>. En “order” tenemos un vector <span class="math inline">\(c(p,d,q)\)</span> que corresponde <span class="math inline">\(p\)</span> a el grado de AR, <span class="math inline">\(d\)</span> el grado de diferención y <span class="math inline">\(q\)</span> el grado de MA que utilizaremos. El valor <span class="math inline">\(q\)</span> quedaráá en <span class="math inline">\(0\)</span> por ahora pero será analizado más adelante.</p>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">AR_price_amazn_ts</span><span class="op">&lt;-</span><span class="fu">Arima</span><span class="op">(</span><span class="va">price_amazn_ts</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>,method <span class="op">=</span> <span class="st">"ML"</span><span class="op">)</span></span></code></pre></div>
+<p>Veamos si las raices inversas mantienen la estabilidad al ser menores a 1.</p>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">comp_20_amazn</span><span class="op">&lt;-</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">AR_price_amazn_ts</span>, main <span class="op">=</span> <span class="st">"Raices AR(2)"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">comp_20_amazn</span></span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:amazn20root"></span>
+<img src="07-PE_Univariados_files/figure-html/amazn20root-1.png" alt="Raices AR(2) Inversas de la serie de tiempo" width="672"><p class="caption">
+Figure 6.7: Raices AR(2) Inversas de la serie de tiempo
+</p>
+</div>
+<p>Claramente se puede en la Figura <a href="procesos-estacionarios-univariados.html#fig:amazn20root">6.7</a> ver que los valores de las raices inversas están dentro del circulo unitario y, por consiguiente son menores a 1. Ahora veamos como se ve la estimación ajustada AR(2) con el plot original.</p>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">AR_price_amazn_ts</span><span class="op">$</span><span class="va">x</span>,col<span class="op">=</span><span class="st">"black"</span>, main <span class="op">=</span> <span class="st">"Diferencia entre la serie de tiempo original y AR(2)"</span>,xlab<span class="op">=</span><span class="st">"Tiempo"</span>,ylab<span class="op">=</span><span class="st">"Precio"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html">fitted</a></span><span class="op">(</span><span class="va">AR_price_amazn_ts</span><span class="op">)</span>,col<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:amazn20AR2"></span>
+<img src="07-PE_Univariados_files/figure-html/amazn20AR2-1.png" alt="Diferencia entre la serie de tiempo original de precios de AMZN y su AR(2)" width="672"><p class="caption">
+Figure 6.8: Diferencia entre la serie de tiempo original de precios de AMZN y su AR(2)
+</p>
+</div>
+<pre><code>#&gt; integer(0)</code></pre>
+<p>Consecuentemente en la Figura <a href="procesos-estacionarios-univariados.html#fig:amazn20AR2">6.8</a> es pocible ver la manera en la que se suaviza un poco la línea lo cual debe ayudarnos a hacer una mejor estimación.</p>
 
 </div>
 </div>
@@ -822,7 +780,7 @@ proceso AR(2)</strong>.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>06-ESTACIONARIEDAD</strong>" was written by Emiliano Pérez Caullieres. It was last built on 2022-09-27.</p>
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-09-28.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

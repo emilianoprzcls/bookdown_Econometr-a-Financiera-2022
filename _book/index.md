@@ -1,7 +1,7 @@
 --- 
 title: "Diplomado de Econometría Financiera"
 author: "Benjamin Oliva y Emiliano Pérez Caullieres"
-date: "2022-09-27"
+date: "2022-09-28"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -68,10 +68,10 @@ pacman::p_load(tidyverse,BatchGetSymbols,ggplot2, lubridate)
 #Primero determinamos el lapso de tiempo
 pd<-Sys.Date()-365 #primer fecha
 pd
-#> [1] "2021-09-27"
+#> [1] "2021-09-28"
 ld<-Sys.Date() #última fecha
 ld
-#> [1] "2022-09-27"
+#> [1] "2022-09-28"
 #Intervalos de tiempo
 int<-"monthly"
 #Datos a elegir
@@ -104,7 +104,7 @@ sp_precio<-ggplot(data_precio, aes(x=ref.date, y=price.open))+geom_point(size =2
 sp_precio
 ```
 
-![](index_files/figure-latex/unnamed-chunk-3-1.pdf)<!-- --> 
+<img src="index_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 ```r
 
@@ -112,7 +112,7 @@ sp_volumen<-ggplot(data_precio, aes(x=ref.date, y=volume))+geom_point(size =2, c
 sp_volumen
 ```
 
-![](index_files/figure-latex/unnamed-chunk-3-2.pdf)<!-- --> 
+<img src="index_files/figure-html/unnamed-chunk-3-2.png" width="672" />
 
 ### Regresión lineal que optiene los coeficientes $\hat{\boldsymbol \beta}$
 
@@ -120,10 +120,10 @@ sp_volumen
 #datos estadísticos
 summary(data_precio[c("price.open","volume")])
 #>    price.open        volume         
-#>  Min.   :106.3   Min.   :2.694e+08  
+#>  Min.   :106.3   Min.   :1.967e+08  
 #>  1st Qu.:126.0   1st Qu.:1.273e+09  
 #>  Median :152.7   Median :1.465e+09  
-#>  Mean   :148.1   Mean   :1.397e+09  
+#>  Mean   :148.0   Mean   :1.396e+09  
 #>  3rd Qu.:167.6   3rd Qu.:1.628e+09  
 #>  Max.   :177.2   Max.   :2.258e+09
 #análisis de regresión lineal lm() y=precio,x=fecha
@@ -135,20 +135,20 @@ summary(reg_tiempo_precio)
 #> lm(formula = price.open ~ ref.date, data = data_precio)
 #> 
 #> Residuals:
-#>     Min      1Q  Median      3Q     Max 
-#> -21.955  -9.357  -0.544   9.431  20.717 
+#>      Min       1Q   Median       3Q      Max 
+#> -21.9717  -9.2427  -0.4443   9.4999  20.7440 
 #> 
 #> Coefficients:
 #>               Estimate Std. Error t value Pr(>|t|)    
-#> (Intercept) 3328.34629  631.35702   5.272 0.000264 ***
-#> ref.date      -0.16690    0.03313  -5.037 0.000380 ***
+#> (Intercept) 3319.11669  633.04069   5.243 0.000275 ***
+#> ref.date      -0.16642    0.03322  -5.009 0.000397 ***
 #> ---
 #> Signif. codes:  
 #> 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
-#> Residual standard error: 13.2 on 11 degrees of freedom
-#> Multiple R-squared:  0.6976,	Adjusted R-squared:  0.6701 
-#> F-statistic: 25.37 on 1 and 11 DF,  p-value: 0.0003796
+#> Residual standard error: 13.22 on 11 degrees of freedom
+#> Multiple R-squared:  0.6952,	Adjusted R-squared:  0.6675 
+#> F-statistic: 25.09 on 1 and 11 DF,  p-value: 0.0003966
 
 #análisis de regresión lineal lm() y=volumen,x=fecha
 reg_tiempo_volumen<-lm(volume~ref.date, data=data_precio)
@@ -159,16 +159,16 @@ summary(reg_tiempo_volumen)
 #> 
 #> Residuals:
 #>        Min         1Q     Median         3Q        Max 
-#> -984384732 -167015119   42626028  234203568  807994488 
+#> -1.036e+09 -1.820e+08  3.993e+07  2.482e+08  8.011e+08 
 #> 
 #> Coefficients:
 #>               Estimate Std. Error t value Pr(>|t|)
-#> (Intercept) -1.588e+10  2.260e+10  -0.702    0.497
-#> ref.date     9.064e+05  1.186e+06   0.764    0.461
+#> (Intercept) -1.846e+10  2.299e+10  -0.803    0.439
+#> ref.date     1.042e+06  1.206e+06   0.864    0.406
 #> 
-#> Residual standard error: 472300000 on 11 degrees of freedom
-#> Multiple R-squared:  0.05043,	Adjusted R-squared:  -0.03589 
-#> F-statistic: 0.5842 on 1 and 11 DF,  p-value: 0.4608
+#> Residual standard error: 480100000 on 11 degrees of freedom
+#> Multiple R-squared:  0.06349,	Adjusted R-squared:  -0.02165 
+#> F-statistic: 0.7457 on 1 and 11 DF,  p-value: 0.4063
 ```
 
 ## Ejercicio

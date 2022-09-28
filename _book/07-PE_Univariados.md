@@ -1,9 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
 # Procesos estacionarios univariados
 
 En este capítulo analizaremos el método o metodología de análisis de
@@ -307,14 +301,10 @@ head(X_t)
 ```
 
 
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{07-PE_Univariados_files/figure-latex/GAR1Real-1} 
-
-}
-
-\caption{AR(1) considerando $X_t=5+0.9X_{t-1}+U_t$ ; $X_0=50$ y que $U_t$~$N(0, 4)$ y que $U_t \sim \mathcal{N}(0, 4)$}(\#fig:GAR1Real)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-PE_Univariados_files/figure-html/GAR1Real-1.png" alt="AR(1) considerando $X_t=5+0.9X_{t-1}+U_t$ ; $X_0=50$ y que $U_t$~$N(0, 4)$ y que $U_t \sim \mathcal{N}(0, 4)$" width="100%" />
+<p class="caption">(\#fig:GAR1Real)AR(1) considerando $X_t=5+0.9X_{t-1}+U_t$ ; $X_0=50$ y que $U_t$~$N(0, 4)$ y que $U_t \sim \mathcal{N}(0, 4)$</p>
+</div>
 
 
 
@@ -336,14 +326,10 @@ ggplot(data = X_t, aes(x = Tiempo, y = X_t)) +
   )
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{07-PE_Univariados_files/figure-latex/GAR1Teo-1} 
-
-}
-
-\caption{$X_t = \frac{5}{1 - 0.9} + \sum_{j = 0}^{t-1} 0.9^j U_{t-j}$, y que $U_t \sim \mathcal{N}(0, 4)$}}(\#fig:GAR1Teo)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-PE_Univariados_files/figure-html/GAR1Teo-1.png" alt="$X_t = \frac{5}{1 - 0.9} + \sum_{j = 0}^{t-1} 0.9^j U_{t-j}$, y que $U_t \sim \mathcal{N}(0, 4)$}" width="100%" />
+<p class="caption">(\#fig:GAR1Teo)$X_t = \frac{5}{1 - 0.9} + \sum_{j = 0}^{t-1} 0.9^j U_{t-j}$, y que $U_t \sim \mathcal{N}(0, 4)$}</p>
+</div>
 
 
 
@@ -355,14 +341,10 @@ acf(X_t$XR_t, lag.max = 30, col = "blue",
     main="Funcion de Autocorrelacion Real")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{07-PE_Univariados_files/figure-latex/GAR1FACr-1} 
-
-}
-
-\caption{Función de autocorrelación de un AR(1): $\rho(\tau)=\frac{\gamma(	au)}{\gamma(0)}$}(\#fig:GAR1FACr)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-PE_Univariados_files/figure-html/GAR1FACr-1.png" alt="Función de autocorrelación de un AR(1): $\rho(\tau)=\frac{\gamma(	au)}{\gamma(0)}$" width="100%" />
+<p class="caption">(\#fig:GAR1FACr)Función de autocorrelación de un AR(1): $\rho(\tau)=\frac{\gamma(	au)}{\gamma(0)}$</p>
+</div>
 
 
 ```r
@@ -373,14 +355,10 @@ barplot(X_t$rho[1:30], names.arg = c(1:30), col = "blue", border="blue", density
         main="Funcion de Autocorrelacion Teórica")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{07-PE_Univariados_files/figure-latex/GAR1FACt-1} 
-
-}
-
-\caption{Función de autocorrelación de un AR(1): $\rho(\tau)= a_1^\tau$}(\#fig:GAR1FACt-1)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-PE_Univariados_files/figure-html/GAR1FACt-1.png" alt="Función de autocorrelación de un AR(1): $\rho(\tau)= a_1^\tau$" width="100%" />
+<p class="caption">(\#fig:GAR1FACt-1)Función de autocorrelación de un AR(1): $\rho(\tau)= a_1^\tau$</p>
+</div>
 
 ```r
 
@@ -390,14 +368,10 @@ acf(X_t$XR_t, lag.max = 30, col = "blue",
     main="Funcion de Autocorrelacion Real")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{07-PE_Univariados_files/figure-latex/GAR1FACt-2} 
-
-}
-
-\caption{Función de autocorrelación de un AR(1): $\rho(\tau)= a_1^\tau$}(\#fig:GAR1FACt-2)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-PE_Univariados_files/figure-html/GAR1FACt-2.png" alt="Función de autocorrelación de un AR(1): $\rho(\tau)= a_1^\tau$" width="100%" />
+<p class="caption">(\#fig:GAR1FACt-2)Función de autocorrelación de un AR(1): $\rho(\tau)= a_1^\tau$</p>
+</div>
 
 
 ```r
@@ -419,14 +393,10 @@ ggplot(data = X_t, aes(x = Tiempo)) +
   )
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{07-PE_Univariados_files/figure-latex/GAR1Com-1} 
-
-}
-
-\caption{AR(1) considerando en conjunto $X_t = 5 + 0.9 X_{t-1} + U_t$; $X_0 = 50$ y $X_t = \frac{5}{1 - 0.9} + \sum_{j = 0}^{t-1} 0.9^j U_{t-j}$, y que $U_t \sim \mathcal{N}(0, 4)$}(\#fig:GAR1Com)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-PE_Univariados_files/figure-html/GAR1Com-1.png" alt="AR(1) considerando en conjunto $X_t = 5 + 0.9 X_{t-1} + U_t$; $X_0 = 50$ y $X_t = \frac{5}{1 - 0.9} + \sum_{j = 0}^{t-1} 0.9^j U_{t-j}$, y que $U_t \sim \mathcal{N}(0, 4)$" width="100%" />
+<p class="caption">(\#fig:GAR1Com)AR(1) considerando en conjunto $X_t = 5 + 0.9 X_{t-1} + U_t$; $X_0 = 50$ y $X_t = \frac{5}{1 - 0.9} + \sum_{j = 0}^{t-1} 0.9^j U_{t-j}$, y que $U_t \sim \mathcal{N}(0, 4)$</p>
+</div>
 
 La Figura \@ref(fig:GAR1Real) ilustra el comportamiento que se debería
 observar en una serie considerando el procedimiento iterativo de
@@ -479,14 +449,16 @@ pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl,forecast,stats
 #Primero determinamos el lapso de tiempo
 pd<-Sys.Date()-(365*20) #primer fecha
 pd
-#> [1] "2002-10-02"
+#> [1] "2002-10-03"
 ld<-Sys.Date() #última fecha
 ld
-#> [1] "2022-09-27"
+#> [1] "2022-09-28"
 #Intervalos de tiempo
 int<-"monthly"
+
 #Datos a elegir
 dt<-c("AMZN")
+
 #Descargando los valores
 data1<- BatchGetSymbols(tickers = dt,
                        first.date = pd,
@@ -501,6 +473,7 @@ data1<- BatchGetSymbols(tickers = dt,
 #> You can install yfR by executing:
 #> 
 #> remotes::install_github('msperlin/yfR')
+
 #Generando data frame con los valores
 data_precio_amzn<-data1$df.tickers
 colnames(data_precio_amzn)
@@ -509,80 +482,21 @@ colnames(data_precio_amzn)
 #>  [5] "price.high"          "price.low"          
 #>  [7] "price.close"         "price.adjusted"     
 #>  [9] "ret.adjusted.prices" "ret.closing.prices"
-
-#necesitamos convertir la serie de tiempo de precios en retornos continuos compuestos de los precios de apertura
-data_precio_amzn$ccrAMZN<-c(NA ,100*diff(log(data_precio_amzn$price.open)))#agregamos un valor NA al principio
-data_precio_amzn$ccrAMZN#estos son los retornos
-#>   [1]           NA  13.39774561  22.83329766 -22.98950701
-#>   [5]  13.39221448   0.95260416  14.27998202  11.55626991
-#>   [9]  24.11122449  -0.46684144  13.08785513  11.63599301
-#>  [13]   3.89974592  12.48104071  -0.73260401  -3.06108260
-#>  [17]  -4.08140972 -16.32741069   0.99457279   0.06902105
-#>  [21]   9.61879412  11.67844638 -33.59147712  -0.57381482
-#>  [25]   7.69997922 -18.78100714  15.60691856  11.66713068
-#>  [29]  -4.43506452 -20.41392362  -1.23405211  -6.96531282
-#>  [33]   9.64353557  -6.77486160  30.02382912  -5.40177077
-#>  [37]   6.39945115 -12.58398922  20.12391421  -2.92703823
-#>  [41]  -7.77281354 -15.93630872  -2.10477279  -4.11970307
-#>  [45]  -1.60415929  10.64572285 -37.21478392  15.01070027
-#>  [49]   3.59739571  17.58906665   5.43570463  -4.00357496
-#>  [53]  -1.90531667   3.54637914   1.33891100  42.77167396
-#>  [57]  11.98170332  -0.13070948  12.66409736   2.27857959
-#>  [61]  15.63296023  -6.26135927   2.56510858   5.74113839
-#>  [65] -18.78533471 -21.72447597  13.78662202   7.15014819
-#>  [69]   3.44753666 -11.63053849   5.54650897   8.53074641
-#>  [73] -14.71605773 -24.20236452 -29.39126222  20.09953181
-#>  [77]  13.15576837   8.77225235  13.27882326   9.60320128
-#>  [81]  -2.73678724   7.64068237   2.50334747  -6.96036997
-#>  [85]  13.59745291  24.90536163  14.32806129  -0.50514401
-#>  [89] -10.08447333  -3.70473986  13.45839135   1.02565002
-#>  [93]  -9.33660068 -13.76436786   8.99531736   5.87517724
-#>  [97]  21.76202538   4.58513429   8.56726887   1.22598823
-#> [101]  -6.16865517   1.74979032   4.53458328   7.93222740
-#> [105]  -0.25978671   4.72685785   9.04110889  -4.41608958
-#> [109]   0.80039290  -4.18766494  -8.13529694  -8.68550170
-#> [113]  -1.18960511   3.43828044   9.60224827  14.70991690
-#> [117]  -9.58159747   9.53799598   2.08880372   5.85976366
-#> [121]   2.83140800  -8.65274050   7.52661134   1.39202437
-#> [125]   4.89612270  -2.12710012   1.39936277  -5.02332605
-#> [129]   5.76221809   3.66491122   8.27850152  -6.24554343
-#> [133]   9.85520147  15.15285156   8.73395739  -0.05013788
-#> [137] -10.51934673  -0.06687288  -5.92858190 -10.58568315
-#> [141]   2.74371861   4.15753522  -3.80625428   8.04816141
-#> [145]  -5.42111518  -5.03065911   9.90317538  -7.85404256
-#> [149]  11.32156221   8.43295383  -2.32429615  13.01462014
-#> [153]   1.54061721   2.05813986  20.15392877  -7.39490376
-#> [157]   2.34828935  20.47843365   7.17052347  -2.62563883
-#> [161] -12.67694180  -3.85435390   5.96629237  11.72089295
-#> [165]   8.23387458  -0.49783030   5.76252931   1.44112456
-#> [169]   8.10699776  -4.52676184  -6.00796092   0.72964776
-#> [173]   8.98955770   2.83447462   4.01536256   4.38443827
-#> [177]   7.35281333  -2.61760725   2.36894617  -1.20285851
-#> [181]  -2.07377928  13.68712240   5.85471090  -0.00427124
-#> [185]  20.93976645   4.63815978  -6.55115525   9.77684681
-#> [189]   4.61358018   2.75160333   5.84583306  12.74521370
-#> [193]  -0.22279328 -21.94794383   8.60716489 -18.86826361
-#> [197]  11.20213025   0.98664739   8.39682297   7.12720047
-#> [201]  -9.38002536   8.85565506  -2.70183034  -5.58782369
-#> [205]  -1.36520548   2.37757442   0.91249016   3.83805218
-#> [209]   6.98245156  -5.31693095   1.37938043  18.97247680
-#> [213]   4.64889431  11.92308161  14.25393454   9.27398656
-#> [217]  -8.41337555  -4.66642316   4.05671846   2.52393793
-#> [221]  -0.84885499  -3.59427728  -0.31861156  11.12179968
-#> [225]  -7.17375312   5.72503641  -2.40180912   4.18486227
-#> [229]  -6.11473001   2.18899134   5.30616390  -5.62793333
-#> [233] -11.06465380   1.80527180   7.20896224 -29.34750864
-#> [237]  -0.11853658 -13.99459654  23.88072732  -6.86965832
-#tenemos 20 retornos a lo largo de 20 años
 ```
 
 
 ```r
-ret_20_amazn<-ggplot(data=data_precio_amzn, aes(x=ref.date))+geom_line(aes(y=ccrAMZN))+labs(title="Retornos de AMZN en los últimos 20 años",y="Retornos", x="Año")+theme_light()
+ret_20_amazn<-ggplot(data=data_precio_amzn, aes(x=ref.date))+
+  geom_line(aes(y=price.open))+
+  labs(title="Precios de apertura de AMZN en los últimos 20 años",y="Retornos", x="Año")+
+  theme_light()
 ret_20_amazn
 ```
 
-![(\#fig:amazn20)Serie de tiempo de los retornos de año en los últimos 20 años](07-PE_Univariados_files/figure-latex/amazn20-1.pdf) 
+<div class="figure">
+<img src="07-PE_Univariados_files/figure-html/amazn20-1.png" alt="Serie de tiempo de los precios de apertura de año en los últimos 20 años" width="672" />
+<p class="caption">(\#fig:amazn20)Serie de tiempo de los precios de apertura de año en los últimos 20 años</p>
+</div>
 
 
 Primero que nada es importante cargar los datos a un objeto series de
@@ -593,29 +507,28 @@ de que los datos esten en orden cronológico.
 ```r
 data_precio_amzn<-data_precio_amzn[order(data_precio_amzn$ref.date),]
 head(data_precio_amzn)#dado que ya estaba en orden cronológico nuestro df no cambia
-#> # A tibble: 6 x 11
-#>   ticker ref.date     volume price~1 price~2 price~3 price~4
+#> # A tibble: 6 × 10
+#>   ticker ref.date     volume price…¹ price…² price…³ price…⁴
 #>   <chr>  <date>        <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
-#> 1 AMZN   2002-10-02   3.89e9   0.840    1.01   0.818   0.968
+#> 1 AMZN   2002-10-03   3.72e9   0.840    1.01   0.818   0.968
 #> 2 AMZN   2002-11-01   4.13e9   0.961    1.23   0.91    1.17 
 #> 3 AMZN   2002-12-02   3.11e9   1.21     1.25   0.922   0.944
 #> 4 AMZN   2003-01-02   3.38e9   0.960    1.16   0.928   1.09 
 #> 5 AMZN   2003-02-03   2.32e9   1.10     1.12   0.980   1.10 
 #> 6 AMZN   2003-03-03   3.28e9   1.11     1.40   1.07    1.30 
-#> # ... with 4 more variables: price.adjusted <dbl>,
+#> # … with 3 more variables: price.adjusted <dbl>,
 #> #   ret.adjusted.prices <dbl>, ret.closing.prices <dbl>,
-#> #   ccrAMZN <dbl>, and abbreviated variable names
-#> #   1: price.open, 2: price.high, 3: price.low,
-#> #   4: price.close
+#> #   and abbreviated variable names ¹​price.open,
+#> #   ²​price.high, ³​price.low, ⁴​price.close
 #hagamos el objeto ts
-ret_amazn_ts<-ts(data_precio_amzn$ccrAMZN)
-plot(ret_amazn_ts)#de esta manera podemos ver que se cargo bien debido a que es igual al ggplot
+price_amazn_ts<-ts(data_precio_amzn$price.open)
+plot(price_amazn_ts)#de esta manera podemos ver que se cargo bien debido a que es igual al ggplot
 ```
 
-![](07-PE_Univariados_files/figure-latex/unnamed-chunk-6-1.pdf)<!-- --> 
+<img src="07-PE_Univariados_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
-Dado que queremos saber si existe un proceso AR(2) en estos cambio
-debemos calcularlo. Para ello utilizamos la función lm() que realizará una regresión lineal y veremos la relación de los valores con sus valores pasados en $t-2$:
+Dado que queremos saber si existe un proceso $AR(2)$ en estos cambio
+debemos calcularlo. Para ello utilizamos la función $lm()$ que realizará una regresión lineal y veremos la relación de los valores con sus valores pasados en $t-2$:
 
 
 ```r
@@ -627,14 +540,6 @@ ar2_amazn<-lm(priceopen~priceopen_lag1+priceopen_lag2, data=priceopen_amazn)
 ```
 
 Veamos la tabla de la regresión lineal:
-
-
-```r
-stargazer(
-  ar2_amazn,
-  type = "html",
-  notes.align = "l", style="all", notes.append = FALSE,star.char=c("*"), notes=c("(p<0.1)=[*], (p<0.05)=[**], (p<0.01)=[***]"), title ="AR(2) de los precios de apertura de AMZN", label = "tab:Ar2precios")
-```
 
 
 <table style="text-align:center"><caption><strong>AR(2) de los precios de apertura de AMZN</strong></caption>
@@ -657,10 +562,46 @@ stargazer(
 <tr><td style="text-align:left">R<sup>2</sup></td><td>0.988</td></tr>
 <tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.987</td></tr>
 <tr><td style="text-align:left">Residual Std. Error</td><td>5.696 (df = 235)</td></tr>
-<tr><td style="text-align:left">F Statistic</td><td>9,358.762<sup>***</sup> (df = 2; 235) (p = 0.000)</td></tr>
+<tr><td style="text-align:left">F Statistic</td><td>9,358.763<sup>***</sup> (df = 2; 235) (p = 0.000)</td></tr>
 <tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td style="text-align:left">(p<0.1)=[*], (p<0.05)=[**], (p<0.01)=[***]</td></tr>
 </table>
 
-La Tabla anterior claramente indica que __hay una
-relación entre el valor del precio y sus valores anteriores en un
-proceso AR(2)__.
+La tabla anterior claramente indica que **hay una relación entre el valor del precio y sus valores anteriores en un proceso AR(2)**.
+
+Así pues es importante modificar la serie de tiempo para ilustrar como se puede controlar los efectos de los autoregresores $AR(2)$. Para ello, utilizaremos la función $arima()$. En "order" tenemos un vector $c(p,d,q)$ que corresponde $p$ a el grado de AR, $d$ el grado de diferención y $q$ el grado de MA que utilizaremos. El valor $q$ quedaráá en $0$ por ahora pero será analizado más adelante.
+
+
+```r
+AR_price_amazn_ts<-Arima(price_amazn_ts,order=c(2,0,0),method = "ML")
+```
+Veamos si las raices inversas mantienen la estabilidad al ser menores a 1.
+
+```r
+comp_20_amazn<-autoplot(AR_price_amazn_ts, main = "Raices AR(2)")+theme_light()
+comp_20_amazn
+```
+
+<div class="figure">
+<img src="07-PE_Univariados_files/figure-html/amazn20root-1.png" alt="Raices AR(2) Inversas de la serie de tiempo" width="672" />
+<p class="caption">(\#fig:amazn20root)Raices AR(2) Inversas de la serie de tiempo</p>
+</div>
+Claramente se puede en la Figura \@ref(fig:amazn20root) ver que los valores de las raices inversas están dentro del circulo unitario y, por consiguiente son menores a 1. Ahora veamos como se ve la estimación ajustada AR(2) con el plot original.
+
+
+```r
+plot(AR_price_amazn_ts$x,col="black", main = "Diferencia entre la serie de tiempo original y AR(2)",xlab="Tiempo",ylab="Precio")+lines(fitted(AR_price_amazn_ts),col="blue")
+```
+
+<div class="figure">
+<img src="07-PE_Univariados_files/figure-html/amazn20AR2-1.png" alt="Diferencia entre la serie de tiempo original de precios de AMZN y su AR(2)" width="672" />
+<p class="caption">(\#fig:amazn20AR2)Diferencia entre la serie de tiempo original de precios de AMZN y su AR(2)</p>
+</div>
+
+```
+#> integer(0)
+```
+Consecuentemente en la Figura \@ref(fig:amazn20AR2) es pocible ver la manera en la que se suaviza un poco la línea lo cual debe ayudarnos a hacer una mejor estimación. 
+
+
+
+
