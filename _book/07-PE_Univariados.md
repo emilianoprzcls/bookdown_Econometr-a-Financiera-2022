@@ -241,6 +241,9 @@ library(ggplot2)
 library(dplyr)
 library(readxl)
 library(latex2exp)
+source("funciones/arroots.R")
+source("funciones/plot.armaroots.R")
+source("funciones/maroots.R")
 
 # Parametros:
 a0 <- 5; a1 <- 0.9; X_0 <- (a0/(1 - a1)); T <- 1000
@@ -427,6 +430,125 @@ como $AR(2)$) puede ser escrito como:
     (\#eq:AR2Eq)
 \end{equation}
 
+Donde $U_t$ denota un proceso puramente aleatorio con media cero ($0$), varianza constante ($\sigma^2$) y autocovarianza cero ($Cov(U_t, U_s) = 0$, con $t \neq s$), y un parametro $a_2 \neq 0$. Así, utilizando el operador rezago podemos reescribir la ecuación \@ref(eq:AR2Eq) como:
+\begin{eqnarray*}
+    X_t - a_1 X_{t-1} - a_2 X_{t-2} & = & a_0 + U_t \\
+    (1 - a_1 L^1 - a_2 L^2) X_t & = & a_0 + U_t
+\end{eqnarray*}
+
+Donde, vamos a denotar a $\alpha (L) = (1 - a_1 L^1 - a_2 L^2)$, y lo llamaremos como un polinomio que depende del operador rezago y que es distinto de cero. De esta forma podemos reescribir a la ecuación \@ref(eq:AR2Eq)  como:
+\begin{equation}
+    \alpha(L) X_t = a_0 + U_t
+    (\#eq:AR2Eq1)
+\end{equation}
+
+Ahora, supongamos que existe el inverso multiplicativo del polinomio $\alpha(L)$, el cual será denotado como: $\alpha^{-1}(L)$ y cumple con que:
+\begin{equation}
+    \alpha^{-1}(L) \alpha(L) = 1   
+      (\#eq:AR2Eq2)
+\end{equation}
+
+Así, podemos escribir la solución a la ecuación \@ref(eq:AR2Eq) como:
+\begin{equation}
+    X_t = \alpha^{-1}(L) \delta + \alpha^{-1}(L) U_t
+\end{equation}
+
+Si utilizamos el hecho que $\alpha^{-1}(L)$ se puede descomponer a través del procedimiento de Wold en un polinomio de forma similar el caso de $AR(1)$, tenemos que:
+\begin{equation}
+    \alpha^{-1}(L) = \psi_0 + \psi_1 L + \psi_2 L^2 + \ldots
+      (\#eq:AR2Eq3)
+\end{equation}
+
+Por lo tanto, el inverso multiplicativo $\alpha^{-1}(L)$ se puede ver como:
+\begin{equation}
+    1 = (1 - a_1 L^1 - a_2 L^2) (\psi_0 + \psi_1 L + \psi_2 L^2 + \ldots)
+      (\#eq:InvAlpha)
+\end{equation}
+
+Desarrollando la ecuación \@ref(eq:InvAlpha) tenemos la sigueinte expresión:
+
+\begin{eqnarray}
+    1 & = & \psi_0 & + & \psi_1 L & + & \psi_2 L^2 & + & \psi_3 L^3 & + & \ldots \\
+     &  &  & - & a_1 \psi_0 L & - & a_1 \psi_1 L^2 & - & a_1 \psi_2 L^3 & - & \ldots \\
+    & &  &  &  & - & a_2 \psi_0 L^2  & - & a_2 \psi_1 L^3 & - & \ldots
+\end{eqnarray}
+
+Ahora, podemos agrupar todos los términos en función del exponente asociado al operador rezago $L$. La siguiente es una solución partícular y es una de las múltiples que podrían existir que cumpla con la ecuación \@ref(eq:InvAlpha). Sin embargo, para efectos del análisis sólo necesitamos una de esas soluciones. Utilizaremos las siguientes condiciones que deben cumplirse en una de las posibles soluciones:
+
+\begin{eqnarray}
+    L^0 : &   & \Rightarrow & \psi_0 = 1 \\
+    L : & \psi_1 - a_1 \psi_0 = 0 & \Rightarrow & \psi_1 = a_1$ \\
+    L^2 : & \psi_2 - a_1 \psi_1 - a_2 \psi_0 = 0 & \Rightarrow & \psi_2 = a^2_1 + a_2 \\
+    L^3 : & \psi_3 - a_1 \psi_2 - a_2 \psi_1 = 0 & \Rightarrow & \psi_3 = a^3_1 + 2 a_1 a_2$ \\
+    \vdots & \vdots & \vdots & \vdots
+\end{eqnarray}
+
+De esta forma podemos observar que en el límite siempre obtendremos una ecuación del tipo $\psi_j - a_1 \psi_{j-1} - a_2 \psi_{j-2} = 0$ asociada a cada uno de los casos en que exista un $L^j$, donde $j \neq 0, 1$, y la cual siempre podremos resolver conociendo que las condiciones iniciales son: $\psi_0 = 1$ y $\psi_1 = a_1$.
+
+Así, de las relaciones antes mencionadas y considerando que $\alpha^{-1} (L)$ aplicada a una constante como $a_0$, tendrá como resultado otra constante. De esta forma podemos escribir que la solución del proceso AR(2) en la ecuación \@ref(eq:AR2Eq) será dada por una expresión como sigue:
+\begin{equation}
+    X_t = \frac{\delta}{1 - a_1 - a_2} + \sum^{\infty}_{j = 0} \psi_{t - j} U_{t - j}
+    (\#eq:AR2EqSol)
+\end{equation}
+
+Donde todos los parametros $\psi_i$ está determinado por los parámtros $a_0$, $a_1$ y $a_2$. En particular, $\psi_0 = 1$ y $\psi_1 = a_1$ como describimos anteriormente. Al igual que en el caso del $AR(1)$, en la ecuación \@ref(eq:AR2EqSol) las condiciones de estabilidad estarán dadas por las soluciones del siguiente polinomio característico:^[Note que raíces son equivalentes al inversio de las del polinomio dado por $\lambda^2 a_2 - \lambda a_1 - 1 = 0$.]
+\begin{equation}
+    \lambda^2 - \lambda a_1 - a_2 = 0
+    (\#eq:AR2EqSol1)
+\end{equation}
+
+Así, la condición de estabilidad de la trayectoria es que $\lvert\lambda_i\lvert < 1$, para $i = 1, 2$. Es decir, es necesario que cada una de las raíces sea, en valor absoluto, siempre menor que la unidad. Estas son las condiciones de estabilidad para el proceso $AR(2)$. 
+
+Finalmente, al igual que en un $AR(1)$, a continuación determinamos los momentos de una serie que sigue un proceso $AR(2)$. Iniciamos con la determinación de la media de la serie:
+\begin{equation}
+    \mathbb{E}[X_t] = \mu = \frac{a_0}{1 - a_1 - a_2}
+    (\#eq:AR2EqSol2)
+\end{equation}
+
+Lo anterior es cierto puesto que $\mathbb{E}[U_{t - i}] = 0$, para todo $i = 0, 1, 2, \ldots$. Para determinar la varianza utilizaremos las siguientes relaciones basadas en el uso del valor esperado, varianza y covarianza de la serie. Adicionalmente, para simplificar el trabajo asumamos que $a_0 = 0$, lo cual implica que $\mu = 0$. Dicho lo anterior, partamos de:
+\begin{eqnarray}
+    \mathbb{E}[X_t X_{t - \tau}] & = & \mathbb{E}[(a_1 X_{t-1} + a_2 X_{t-2} + U_t) X_{t - \tau}]\\
+    & = & a_1 \mathbb{E}[X_{t - 1} X_{t - \tau}] + a_2 \mathbb{E}[X_{t - 2} X_{t - \tau}] + \mathbb{E}[U_{t} X_{t - \tau}]
+    (\#eq:AR2EqSol3)
+\end{eqnarray}
+
+Donde $\tau = 0, 1, 2, 3, \ldots$ y que $\mathbb{E}[U_{t} X_{t - \tau}] = 0$ para todo $\tau \neq 0$.^[Es fácil demostrar está afirmación, sólo requiere de desarrollar la expresión y utilizar el hecho de que $U_t$ es un proceso pueramente aleatorio, por lo que la covarianza es cero (0).] Dicho esto, podemos derivar el valor del valor esperado para diferentes valores de $\tau$:
+
+
+\begin{eqnarray}
+    \tau = 0: & \gamma(0) & = & \alpha_1 \gamma(1) + \alpha_2 \gamma(2) + \sigma^2 \\
+    \tau = 1: & \gamma(1) & = & \alpha_1 \gamma(0) + \alpha_2 \gamma(1) \\
+    \tau = 2: & \gamma(2) & = & \alpha_1 \gamma(1) + \alpha_2 \gamma(0) \\
+    \vdots & \vdots & \vdots & \vdots
+\end{eqnarray}
+
+Donde debe ser claro que $\mathbb{E}[(X_{t} - \mu)(X_{t - \tau} - \mu)] = \mathbb{E}[X_{t} X_{t - \tau}] = \gamma(\tau)$. Así, en general cuando $\tau \neq 0$:
+\begin{equation}
+    \gamma(\tau) = a_1 \gamma(\tau - 1) + a_2 \gamma(\tau - 2)
+\end{equation}
+
+Realizando la sustitución recursiva y solucionando el sistema respectivo obtenemos que las varianza y covarianzas estaran determinadas por:
+\begin{equation}
+    Var[X_t] = \gamma(0) = \frac{1 - a_2}{(1 + a_2)[(1 - a_2)^2 - a^2_1]} \sigma^2
+    (\#eq:AR2EqSol5)
+\end{equation}
+
+\begin{equation}
+    \gamma(1) = \frac{a_1}{(1 + a_2)[(1 - a_2)^2 - a^2_1]} \sigma^2
+    (\#eq:AR2EqSol6)
+\end{equation}
+
+\begin{equation}
+    \gamma(2) = \frac{a^2_1 + a_2 - a^2_2}{(1 + a_2)[(1 - a_2)^2 - a^2_1]} \sigma^2
+    (\#eq:AR2EqSol7)
+\end{equation}
+
+Recordemos que las funciones de autocorrelación se obtienen de la división de cada unas de las funciones de covarianza ($\gamma(\tau)$) por la varianza ($\gamma(0)$). Así, podemos construir la siguiente expresión:
+\begin{equation}
+    \rho(\tau) - a_1 \rho(\tau - 1) - a_2 \rho(\tau - 2) = 0
+    (\#eq:AR2EqSol8)
+\end{equation}
+
 
 Para el segundo ejemplo consideremos una aplicación a una serie de
 tiempo en especifico:
@@ -521,7 +643,7 @@ head(data_precio_amzn)#dado que ya estaba en orden cronológico nuestro df no ca
 #> #   and abbreviated variable names ¹​price.open,
 #> #   ²​price.high, ³​price.low, ⁴​price.close
 #hagamos el objeto ts
-price_amazn_ts<-ts(data_precio_amzn$price.open)
+price_amazn_ts<-ts(data_precio_amzn$price.open, frequency = 12)
 plot(price_amazn_ts)#de esta manera podemos ver que se cargo bien debido a que es igual al ggplot
 ```
 
@@ -533,10 +655,38 @@ debemos calcularlo. Para ello utilizamos la función $lm()$ que realizará una r
 
 ```r
 priceopen<-data_precio_amzn$price.open
-priceopen_amazn<-as.data.frame(priceopen)
-priceopen_amazn$priceopen_lag1<-lag(priceopen_amazn$priceopen,1)
-priceopen_amazn$priceopen_lag2<-lag(priceopen_amazn$priceopen,2)
-ar2_amazn<-lm(priceopen~priceopen_lag1+priceopen_lag2, data=priceopen_amazn)
+priceopen_amazn<-data.matrix(priceopen)
+lags<-function(mat,p){
+  for(i in 1:p){
+    uno<-mat[,1]
+    mat<-cbind(mat,lag(uno,i))}
+  as.data.frame(mat)
+}
+
+df.lags<-lags(priceopen_amazn,2)
+ar2_amazn<-lm(V1~., data=df.lags)
+summary(ar2_amazn)
+#> 
+#> Call:
+#> lm(formula = V1 ~ ., data = df.lags)
+#> 
+#> Residuals:
+#>     Min      1Q  Median      3Q     Max 
+#> -40.648  -0.933  -0.385   0.490  25.418 
+#> 
+#> Coefficients:
+#>             Estimate Std. Error t value Pr(>|t|)    
+#> (Intercept)  0.58019    0.45992   1.261   0.2084    
+#> V2           0.84000    0.06477  12.968   <2e-16 ***
+#> V3           0.16096    0.06522   2.468   0.0143 *  
+#> ---
+#> Signif. codes:  
+#> 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> 
+#> Residual standard error: 5.696 on 235 degrees of freedom
+#>   (2 observations deleted due to missingness)
+#> Multiple R-squared:  0.9876,	Adjusted R-squared:  0.9875 
+#> F-statistic:  9359 on 2 and 235 DF,  p-value: < 2.2e-16
 ```
 
 Veamos la tabla de la regresión lineal:
@@ -545,19 +695,13 @@ Veamos la tabla de la regresión lineal:
 <table style="text-align:center"><caption><strong>AR(2) de los precios de apertura de AMZN</strong></caption>
 <tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td><em>Dependent variable:</em></td></tr>
 <tr><td></td><td colspan="1" style="border-bottom: 1px solid black"></td></tr>
-<tr><td style="text-align:left"></td><td>priceopen</td></tr>
-<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">priceopen_lag1</td><td>0.840<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>V1</td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">V2</td><td>0.840<sup>***</sup></td></tr>
 <tr><td style="text-align:left"></td><td>(0.065)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 12.968</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.000</td></tr>
-<tr><td style="text-align:left">priceopen_lag2</td><td>0.161<sup>**</sup></td></tr>
+<tr><td style="text-align:left">V3</td><td>0.161<sup>**</sup></td></tr>
 <tr><td style="text-align:left"></td><td>(0.065)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 2.468</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.015</td></tr>
 <tr><td style="text-align:left">Constant</td><td>0.580</td></tr>
 <tr><td style="text-align:left"></td><td>(0.460)</td></tr>
-<tr><td style="text-align:left"></td><td>t = 1.261</td></tr>
-<tr><td style="text-align:left"></td><td>p = 0.209</td></tr>
 <tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>238</td></tr>
 <tr><td style="text-align:left">R<sup>2</sup></td><td>0.988</td></tr>
 <tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.987</td></tr>
@@ -572,13 +716,14 @@ Así pues es importante modificar la serie de tiempo para ilustrar como se puede
 
 
 ```r
-AR_price_amazn_ts<-Arima(price_amazn_ts,order=c(2,0,0),method = "ML")
+AR_price_amazn_ts<-arima(price_amazn_ts,order=c(2,0,0),method = "ML")
+AR_price_amazn_pl<-Arima(price_amazn_ts,order=c(2,0,0),method = "ML")
 ```
+
 Veamos si las raices inversas mantienen la estabilidad al ser menores a 1.
 
 ```r
-comp_20_amazn<-autoplot(AR_price_amazn_ts, main = "Raices AR(2)")+theme_light()
-comp_20_amazn
+plot.armaroots(arroots(AR_price_amazn_ts), main="Raices inversas de AR(2)")
 ```
 
 <div class="figure">
@@ -589,7 +734,7 @@ Claramente se puede en la Figura \@ref(fig:amazn20root) ver que los valores de l
 
 
 ```r
-plot(AR_price_amazn_ts$x,col="black", main = "Diferencia entre la serie de tiempo original y AR(2)",xlab="Tiempo",ylab="Precio")+lines(fitted(AR_price_amazn_ts),col="blue")
+plot(AR_price_amazn_pl$x,col="black", main = "Diferencia entre la serie de tiempo original y AR(2)",xlab="Tiempo",ylab="Precio")+lines(fitted(AR_price_amazn_pl),col="blue")
 ```
 
 <div class="figure">
@@ -600,8 +745,580 @@ plot(AR_price_amazn_ts$x,col="black", main = "Diferencia entre la serie de tiemp
 ```
 #> integer(0)
 ```
-Consecuentemente en la Figura \@ref(fig:amazn20AR2) es pocible ver la manera en la que se suaviza un poco la línea lo cual debe ayudarnos a hacer una mejor estimación. 
+Consecuentemente en la Figura \@ref(fig:amazn20AR2) es posible ver la manera en la que se suaviza un poco la línea lo cual debe ayudarnos a hacer una mejor estimación. Ahora veamos $AR(p)$.
+
+### AR(p)
+
+### AR(p)
+
+Veremos ahora una generalización de los procesos autoregresivos (AR). Esta generalización es conocida como un proceso $AR(p)$ y que puede ser descrito por la siguiente ecuación en diferencia estocástica:
+\begin{equation}
+    X_t = a_0 + a_1 X_{t-1} + a_2 X_{t-2} + a_3 X_{t-3} + \ldots + a_p X_{t-p} + U_t
+    (\#eq:ARpEq)
+\end{equation}
+
+Donde $a_p \neq 0$, y $U_t$ es un proceso puramente aleatorio con media cero (0), varianza constante ($\sigma^2$) y covarianza cero (0). Usando el operador rezago, $L^k$, para $k = 0, 1, 2, \ldots, p$, obtenemos la siguiente expresión de la ecuación \@ref(eq:ARpEq):
+\begin{equation}
+    (1 - a_1 L - a_2 L^2 - a_3 L^3 - \ldots - a_p L^p) X_t = a_0 + U_t
+    (\#eq:ARpEq1)
+\end{equation}
+
+Definamos el polinomio $\alpha(L)$ como:
+\begin{equation}
+    \alpha(L) = 1 - a_1 L - a_2 L^2 - a_3 L^3 - \ldots - a_p L^p
+    (\#eq:PolA)
+\end{equation}
+
+De forma similar que en los procesos $AR(1)$ y $AR(2)$, las condiciones de estabilidad del proceso $AR(p)$ estarán dadas por la solución de la ecuación característica:
+\begin{equation}
+    \lambda^p - a_1 \lambda^{p-1} - a_2 \lambda^{p-2} - a_3 \lambda^{p-3} - \ldots - a_p = 0
+        (\#eq:PolA1)
+\end{equation}
+
+Así, solo si el polinomio anterior tiene raíces cuyo valor absoluto sea menor a uno ($\lvert\lambda_i\lvert < 1$) y si $1 - a_1 L  - a_2 L^2 - a_3 L^3  - \ldots - a_p L^p < 1$ podremos decir que el proceso es convergente y estable. Lo anterior significa que la ecuación \@ref(eq:PolA) puede expresarse en términos de la descomposición de Wold o como la suma infinita de términos como:
+\begin{equation}
+    \frac{1}{1 - a_1 L  - a_2 L^2 - a_3 L^3  - \ldots - a_p L^p} = \psi_0 + \psi_1 L + \psi_2 L^2 + \psi_3 L^3 + \ldots
+(\#eq:PolA2)
+\end{equation}
+
+Donde, por construcción de $\alpha(L) \alpha^{-1}(L) = 1$ implica que $\psi_0 = 1$. De forma similar a los proceso AR(1) y AR(2), es posible determinar el valor de los coefieentes $\psi_j$ en términos de los coefientes $a_i$. Así, la solución del proceso $AR(p)$ estará dada por:
+\begin{equation}
+    X_t = \frac{a_0}{1 - a_1  - a_2 - a_3  - \ldots - a_p} + \sum^{\infty}_{j = 0} \psi_j U_{t-j}
+    (\#eq:ARpEqSol)
+\end{equation}
+
+Considerando la solución de la ecuación \@ref(eq:ARpEq) expresada en la ecuación \@ref(eq:ARpEqSol) podemos determinar los momentos del proceso y que estarán dados por una media como:
+\begin{equation}
+    \mathbb{E}[X_t] = \mu = \frac{a_o}{1 - a_1  - a_2 - a_3  - \ldots - a_p}
+        (\#eq:ARpEqSol1)
+\end{equation}
+
+Lo anterior, considerado que $\mathbb{E}[U_t] = 0$, para todo $t$. Para determinar la varianza del proceso, sin pérdida de generalidad, podemos definir una ecuación: $\gamma(\tau) = \mathbb{E}[X_{t - \tau} X_t]$, la cual (omitiendo la constante, ya que la correlación de una constante con cuaquier variable aleatoria que depende del tiempo es cero (0)) puede ser escrita como:
+\begin{equation}
+    \gamma(\tau) = \mathbb{E}[(X_{t - \tau}) \cdot (a_1 X_{t-1} + a_2 X_{t-2} + a_3 X_{t-3} + \ldots + + a_p X_{t-p} + U_t)]
+        (\#eq:ARpEqSol2)
+\end{equation}
+
+Donde $\tau = 0, 1, 2, \ldots, p$ y $a_0 = 0$, lo que implica que $\mu = 0$. De lo anterior obtenemos el siguiente conjunto de ecuaciones mediante sustituciones de los valores de $\tau$:
+\begin{eqnarray}
+    \gamma(0) & = & a_1 \gamma(1) + a_2 \gamma(2) + \ldots + a_p \gamma(p) + \sigma^2 \nonumber \\
+    \gamma(1) & = & a_1 \gamma(0) + a_2 \gamma(1) + \ldots + a_p \gamma(p-1) \nonumber \\
+    \vdots \nonumber \\
+    \gamma(p) & = & a_1 \gamma(p-1) + a_2 \gamma(p-2) + \ldots + a_p \gamma(0) \nonumber
+\end{eqnarray}
+
+De esta forma, es fácil observar que la ecuación general para $p > 0$ estará dada por:
+\begin{equation}
+    \gamma(p) - a_1 \gamma(\tau - 1) - a_2 \gamma(\tau - 2) - \ldots - a_p \gamma(\tau - p) = 0
+    (\#eq:Gammap)
+\end{equation}
+
+Dividiendo la ecuación \@ref(eq:Gammap) por $\gamma(0)$, se obtiene la siguiente ecuación: 
+\begin{equation}
+    \rho(p) - a_1 \rho(\tau - 1) + a_2 \rho(\tau - 2) + \ldots + a_p \rho(\tau - p) = 0
+        (\#eq:Gammap1)
+\end{equation}
+
+Así, podemos escribir el siguiente sistema de ecuaciones:
+\begin{eqnarray}
+    \rho(1) & = & a_1 + a_2 \rho(1) + a_3 \rho(2) + \ldots + a_p \rho(p-1) \nonumber \\
+    \rho(2) & = & a_1 \rho(1) + a_2 + a_3 \rho(1) + \ldots + a_p \rho(p-2) \nonumber \\
+    & \vdots & \nonumber \\
+    \rho(p) & = & a_1 \rho(p-1) + a_2 \rho(p-2) + \ldots + a_p \nonumber
+\end{eqnarray}
+
+Lo anterior se puede expresar como un conjunto de vectores y matrices de la siguiente forma:
+\begin{equation}
+    \left[ 
+    \begin{array}{c}
+        \rho(1) \\
+        \rho(2) \\
+        \vdots \\
+        \rho(p)
+    \end{array} 
+    \right]
+    = 
+    \left[ 
+    \begin{array}{c c c c}
+        1 & \rho(1) & \ldots & \rho(p - 1) \\
+        \rho(1) & 1 & \ldots & \rho(p - 2) \\
+        \rho(2) & \rho(1) & \ldots & \rho(p - 3) \\
+        \vdots & \vdots & \ldots & \vdots \\
+        \rho(p - 1) & \rho(p - 2) & \ldots & 1 \\
+    \end{array} 
+    \right]
+    \left[ 
+    \begin{array}{c}
+        a_1 \\
+        a_2 \\
+        a_3 \\
+        \vdots \\
+        a_p \\
+    \end{array} 
+    \right]
+(\#eq:Gammap2)
+\end{equation}
+
+De lo anterior podemos escribir la siguiente ecuación que es una forma alternativa para expresar los valores de los coefientes $a_i$ de la la solución del proceso $AR(p)$:
+\begin{equation}
+    \mathbf{\rho} = \mathbf{R} \mathbf{a}
+  (\#eq:Gammap3)
+\end{equation}
+
+Es decir, podemos obtener la siguiente expresión:
+\begin{equation}
+    \mathbf{a} = \mathbf{R}^{-1} \mathbf{\rho}
+    (\#eq:Gammap4)
+\end{equation}
+
+#### Ejemplo AR(p)
+
+Veamos primero la función de autocorrelacion y el plot de los lags.
+
+
+```r
+pacf(price_amazn_ts, main="", lag.max = 60)
+```
+
+<div class="figure">
+<img src="07-PE_Univariados_files/figure-html/pacfamzn-1.png" alt="Función de Autocorrelación parcial de la serie de tiempo de AMZN" width="672" />
+<p class="caption">(\#fig:pacfamzn)Función de Autocorrelación parcial de la serie de tiempo de AMZN</p>
+</div>
+
+```r
+acf(price_amazn_ts, main="", lag.max = 60)
+```
+
+<div class="figure">
+<img src="07-PE_Univariados_files/figure-html/acfamzn-1.png" alt="Función de Autocorrelación de la serie de tiempo de AMZN" width="672" />
+<p class="caption">(\#fig:acfamzn)Función de Autocorrelación de la serie de tiempo de AMZN</p>
+</div>
+
+
+```r
+lag.plot(price_amazn_ts, main="", lags=5)
+```
+
+<div class="figure">
+<img src="07-PE_Univariados_files/figure-html/LAGamazn20-1.png" alt="5 plots de correlacion de los lags de la serie de tiempo de AMZN" width="672" />
+<p class="caption">(\#fig:LAGamazn20)5 plots de correlacion de los lags de la serie de tiempo de AMZN</p>
+</div>
+Dado que se puede ver en las Figuras \@ref(fig:acfamzn), \@ref(fig:pacfamzn) y \@ref(fig:LAGamazn20) que los valores de lag=1 tienen correlación resulta relevante hacer un AR(1), que corresponde a 1 años. Así pues:
+
+AR:
+
+```r
+AR_price_amazn_ts_1<-arima(price_amazn_ts,order=c(1,0,0),method = "ML")
+AR_price_amazn_pl_1<-Arima(price_amazn_ts,order=c(1,0,0),method = "ML")
+```
+Regresión lineal:
+
+```r
+df.lags.1<-lags(priceopen_amazn,1)
+ar20_amazn<-lm(V1~., data=df.lags.1)
+```
+
+
+<table style="text-align:center"><caption><strong>AR(1) de los precios de apertura de AMZN</strong></caption>
+<tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Statistic</td><td>N</td><td>Mean</td><td>St. Dev.</td><td>Min</td><td>Max</td></tr>
+<tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">V1</td><td>240</td><td>37.765</td><td>50.837</td><td>0.840</td><td>177.250</td></tr>
+<tr><td style="text-align:left">V2</td><td>239</td><td>37.395</td><td>50.620</td><td>0.840</td><td>177.250</td></tr>
+<tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td colspan="6" style="text-align:left">(p<0.1)=[*], (p<0.05)=[**], (p<0.01)=[***]</td></tr>
+</table>
+
+
+Raices:
+
+```r
+plot.armaroots(arroots(AR_price_amazn_ts_1), main="Raices inversas de AR(1)")
+```
+
+<div class="figure">
+<img src="07-PE_Univariados_files/figure-html/amazn20root20-1.png" alt="Raices AR(1) Inversas de la serie de tiempo" width="672" />
+<p class="caption">(\#fig:amazn20root20)Raices AR(1) Inversas de la serie de tiempo</p>
+</div>
+
+Plot:
+
+```r
+plot(AR_price_amazn_pl_1$x,col="black", main = "Diferencia entre la serie de tiempo original y AR(1)",xlab="Tiempo",ylab="Precio")+lines(fitted(AR_price_amazn_pl_1),col="red")
+```
+
+<div class="figure">
+<img src="07-PE_Univariados_files/figure-html/amazn20AR20-1.png" alt="Diferencia entre la serie de tiempo original de precios de AMZN y su AR(1)" width="672" />
+<p class="caption">(\#fig:amazn20AR20)Diferencia entre la serie de tiempo original de precios de AMZN y su AR(1)</p>
+</div>
+
+```
+#> integer(0)
+```
+
+## Procesos de Medias Móviles (MA)
+
+### MA(1)
+
+Una vez planteado el proceso generalizado de $AR(p)$, iniciamos el planteamiento de los proceso de medias móviles, denotados como $MA(q)$. Iniciemos con el planteamiento del proceso $MA(1)$, que se puede escribir como una ecuación como la siguiente:
+\begin{equation}
+    X_t = \mu + U_t - b_1 U_{t-1}
+    (\#eq:MA1Eq)
+\end{equation}
+
+O como:
+\begin{equation}
+    X_t - \mu = (1 - b_1 L) U_{t}
+    (\#eq:MA1Eq1)
+\end{equation}
+
+Donde $U_t$ es un proceso puramente aleatorio, es decir, con $\mathbb{E}[U_t] = 0$, $Var[U_t] = \sigma^2$, y $Cov[U_t, U_s] = 0$. Así, un proceso $MA(1)$ puede verse como un proceso AR con una descomposición de Wold en la que $\psi_0 = 1$, $\psi_1 = - b_1$ y $\psi_j = 0$ para todo $j > 1$.
+
+Al igual que los procesos autoregresivos, determinaremos los momentos de un proceso $MA(1)$. En el caso de la media observamos que será:
+\begin{eqnarray}
+    \mathbb{E}[X_t] & = & \mu + \mathbb{E}[U_t] - b_1 \mathbb{E}[U_{t - 1}] \nonumber \\
+    & = & \mu
+    (\#eq:MA1Eq2)
+\end{eqnarray}
+
+Por su parte la varianza estará dada por:
+\begin{eqnarray}
+    Var[X_t] & = & \mathbb{E}[(X_t - \mu)^2] \nonumber \\
+    & = & \mathbb{E}[(U_t - b_1 U_{t-1})^2] \nonumber \\
+    & = & \mathbb{E}[U_t^2 - 2 b_1 U_t U_{t-1} + b_1^2 U_{t - 1}^2] \nonumber \\
+    & = &\mathbb{E}[U_t^2] - 2 b_1 \mathbb{E}[U_t U_{t-1}] + b_1^2 \mathbb{E}[U_{t - 1}^2]] \nonumber \\
+    & = & \sigma^2 + b_1^2 \sigma^2 \nonumber \\
+    & = & (1 + b_1^2) \sigma^2 = \gamma(0)
+    (\#eq:MA1Eq3)
+\end{eqnarray}
+
+De esta forma, la varianza del proceso es constante en cualquier periodo $t$. Para determinar la covarianza utilizaremos la siguiente ecuación:
+\begin{eqnarray}
+    \mathbb{E}[(x_t - \mu)(x_{t + \tau} - \mu)] & = & \mathbb{E}[(U_t - b_1 U_{t-1})(U_{t + \tau} - b_1 U_{t + \tau - 1})] \nonumber \\
+    & = & \mathbb{E}[U_t U_{t + \tau} - b_1 U_t U_{t + \tau - 1} - b_1 U_{t - 1} U_{t + \tau} \nonumber \\
+    &   & + b_1^2 U_{t - 1} U_{t + \tau - 1}] \nonumber \\
+    & = & \mathbb{E}[U_t U_{t + \tau}] - b_1 \mathbb{E}[U_t U_{t + \tau - 1}] \nonumber \\
+    &   & - b_1 \mathbb{E}[U_{t - 1} U_{t + \tau}] + b_1^2 \mathbb{E}[U_{t - 1} U_{t + \tau - 1}]
+    (\#eq:MA1Cov)
+\end{eqnarray}
+
+Si hacemos sustituciones de diferentes valores de $\tau$ en la ecuación \@ref(eq:MA1Cov) notaremos que la covarianza será distinta de cero únicamente para el caso de $\tau = 1, -1$. En ambos casos tendremos como resultado:
+\begin{eqnarray}
+    \mathbb{E}[(x_t - \mu)(x_{t + 1} - \mu)] & = & \mathbb{E}[(x_t - \mu)(x_{t - 1} - \mu)] \nonumber \\
+    & = & - b_1 \mathbb{E}[U_t U_{t}] \nonumber \\
+    & = & - b_1 \mathbb{E}[U_{t - 1} U_{t - 1}] \nonumber \\ 
+    & = & - b_1^2 \sigma^2 = \gamma(1)
+        (\#eq:MA1Cov1)
+\end{eqnarray}
+
+De esta forma tendremos que las funciones de autocorrelación estarán dadas por los siguientes casos:
+\begin{eqnarray}
+    \rho(0) & = & 1 \nonumber \\
+    \rho(1) & = & \frac{- b_1}{1 + b_1^2} \nonumber \\
+    \rho(\tau) & = & 0 \text{ para todo } \tau > 1 \nonumber 
+\end{eqnarray}
+
+Ahora regresando a la ecuación \@ref(eq:MA1Eq),e su solución la podemos expresar como:
+\begin{eqnarray}
+    U_ t & = & - \frac{\mu}{1 - b_1} + \frac{1}{1 - b_1 L} X_t \nonumber \\
+    & = & - \frac{\mu}{1 - b_1} + X_t + b_1 X_{t-1} + b_1^2 X_{t-2} + \ldots \nonumber
+\end{eqnarray}
+
+Donde la condición para que se cumpla esta ecuación es que $\lvert b_1 \lvert< 1$. La manera de interpretar esta condición es como una condición de estabilidad de la solución y cómo una condición de invertibilidad. Notemos que un $MA(1)$ (y en general un $MA(q)$) es equivalente a un $AR(\infty)$, es decir, cuando se invierte un MA se genera un AR con infinitos rezagos.
+
+En esta sección no desarrollaremos un ejemplo, primero explicaremos en qué consiste una modelación del tipo $MA(q)$ y después platearemos un ejemplo en concreto.
+
+### MA(q)
+
+En general, el proceso de medias móviles de orden $q$, $MA(q)$, puede ser escrito como:
+\begin{equation}
+    X_t = \mu + U_t - b_1 U_{t-1} - b_2 U_{t-2} - \ldots - b_q U_{t-q}
+    (\#eq:MAqEQ)
+\end{equation}
+
+Podemos reescribir la ecuación \@ref(eq:MAqEQ) utilizando el operador rezago, así tendrémos el proceso de $MA(q)$ como:
+\begin{eqnarray}
+    X_t - \mu & = & (1 - b_1 L - b_2 L^2 - \ldots - b_q L^q) U_{t} \nonumber \\
+    X_t - \mu & = & \beta(L) U_t
+    (\#eq:MAqRed)
+\end{eqnarray}
+
+Donde $U_t$ es un proceso puramente aleatorio con $\mathbb{E}[U_t] = 0$, $Var[U_t] = \mathbb{E}[U_t^2] = 0$ y $Cov[U_t, U_s] = \mathbb{E}[U_t, U_s] = 0$, y $\beta(L) = 1 - b_1 L - b_2 L^2 - \ldots - b_q L^q$ es un polinomio del operador rezago $L$. la ecuación \@ref(eq:MAqRed) puede ser interpretada como un proceso $AR(q)$ sobre la serie $U_t$.
+
+Ahora determinemos los momentos de un proceso $MA(q)$:
+\begin{eqnarray}
+    \mathbb{E}[X_t] & = & \mathbb{E}[\mu + U_t - b_1 U_{t-1} - b_2 U_{t-2} - \ldots - b_q U_{t-q}] \nonumber \\
+    & = & \mu + \mathbb{E}[U_t] - b_1 \mathbb{E}[U_{t-1}] - b_2 \mathbb{E}[U_{t-2}] - \ldots - b_q \mathbb{E}[U_{t-q}] \nonumber \\
+    & = & \mu
+    (\#eq:MAqRed1)
+\end{eqnarray}
+
+En el caso de la varianza tenemos que se puede expresar como:
+\begin{eqnarray}
+    Var[X_t] & = & \mathbb{E}[(X_t - \mu)^2] \nonumber \\
+    & = & \mathbb{E}[(U_t - b_1 U_{t-1} - b_2 U_{t-2} - \ldots - b_q U_{t-q})^2] \nonumber \\
+    & = & \mathbb{E}[U_t^2 + b_1^2 U_{t-1}^2 + b_2^2 U_{t-2}^2 + \ldots + b_q^2 U_{t-q}^2 \nonumber \\
+    &   & - 2 b_1 U_t U_{t - 1} - \ldots - 2 b_{q - 1} b_q U_{t - q + 1} U_{t - q}] \nonumber \\
+    & = & \mathbb{E}[U_t^2] + b_1^2 \mathbb{E}[U_{t-1}^2] + b_2^2 \mathbb{E}[U_{t-2}^2] + \ldots + b_q^2 \mathbb{E}[U_{t-q}^2] \nonumber \\
+    &   & - 2 b_1 \mathbb{E}[U_t U_{t - 1}] - \ldots - 2 b_{q - 1} b_q \mathbb{E}[U_{t - q + 1} U_{t - q}] \nonumber \\
+    & = & \sigma^2 + b^2_1 \sigma^2 + b^2_2 \sigma^2 + \ldots + b^2_q \sigma^2 \nonumber \\
+    & = & (1 + b^2_1 + b^2_2 + \ldots + b^2_q) \sigma^2
+    (\#eq:MAqRed2)
+\end{eqnarray}
+
+En el caso de las covarianzas podemos utilizar una idea similar al caso del $AR(p)$, construir una expresión general para cualquier rezago $\tau$:
+\begin{eqnarray}
+    Cov[X_t, X_{t + \tau}] & = & \mathbb{E}[(X_t - \mu)(X_{t + \tau} - \mu)] \nonumber \\
+    & = & \mathbb{E}[(U_t - b_1 U_{t-1} - b_2 U_{t-2} - \ldots - b_q U_{t-q}) \nonumber \\
+    &   & (U_{t + \tau} - b_1 U_{t + \tau -1} - b_2 U_{t + \tau -2} - \ldots - b_q U_{t + \tau - q})] \nonumber
+\end{eqnarray}
+
+La expresión anterior se puede desarrollar para múltiples casos de $\tau = 1, 2, \ldots, q$. De esta forma tenemos el siguiente sistema:
+\begin{eqnarray}
+    \tau = 1 & : & \gamma(1) = (- b_1 + b_1 b_2 + \ldots + b_{q-1} b_q) \sigma^2 \nonumber \\
+    \tau = 2 & : & \gamma(2) = (- b_2 + b_1 b_3 + \ldots + b_{q-2} b_q) \sigma^2 \nonumber \\
+    & \vdots & \nonumber \\
+    \tau = q & : & \gamma(q) = b_q \sigma^2 \nonumber
+\end{eqnarray}
+
+Donde $\gamma(\tau) = 0$ para todo $\tau > q$. Es decir, todas las autocovarianzas y autocorrelaciones con ordenes superiores a $q$ son cero (0). De esta forma, esta caracterítica teórica permite identificar el orden de $MA(q)$ visualizando la función de autocorrelación y verificando a partir de cual valor de rezago la autocorrelación es no significaiva.
+
+Regresando al problema original que es el de determinar una solución para la eucación \@ref(eq:MAq_EQ), tenemos que dicha solución estará dada por un $AR(\infty)$ en términos de $U_t$:
+\begin{eqnarray}
+    U_t & = & - \frac{\mu}{1 - b_1 - b_2 - \ldots - b_q} + \beta(L)^{-1} X_t \nonumber \\
+    &   & - \frac{\mu}{1 - b_1 - b_2 - \ldots - b_q} + \sum_{j = 0}^{\infty} c_j X_{t-j} 
+    (\#eq:MAqEqSol)
+\end{eqnarray}
+
+Donde se cumple que: $1 = (1 - b_1 L^1 - b_2 L^2 - \ldots - b_q L^q)(1 - c_1 L - c_2 L^2 - \ldots)$ y los coeficientes $c_j$ se pueden determinar por un método de coeficientes indeterminados y en términos de los valores $b_i$. De igual forma que en el caso de la ecuación \@ref(eq:ARpEq), en la ecuación \@ref(eq:MAqEqSol) se deben cumplir condiciones de estabilidad asociadas con las raíces del polinomio carácterististico dado por:
+\begin{equation}
+    1 - b_1 x - b_2 x^2 - \ldots b_q x^q = 0
+    (\#eq:MAqEqSol2)
+\end{equation}
+
+El cual debe cumplir que $\lvert x_i \lvert < 1$  y que $1 - b_1 - b_2 - \ldots b_q < 1$.
+
+Ahora veamos el ejemplo. 
+
+#### Ejemplo MA(q)
+Cuando nos fijamos en las figuras \@ref(fig:pacfamzn) y \@ref(fig:acfamzn) es claro que hay un proceso MA(1). Es decir que picos de un año estan causando efectos en valores futuros. Así pues, escogemos un valor de $q=1$.
+
+Arima:
+
+```r
+MA_price_amazn_ts_1<-arima(price_amazn_ts,order=c(0,0,1),method = "ML")
+MA_price_amazn_pl_1<-Arima(price_amazn_ts,order=c(0,0,1),method = "ML")
+```
+
+
+Raices MA(A):
+
+```r
+plot.armaroots(maroots(MA_price_amazn_ts_1), main="Raices inversas de MA(1)")
+```
+
+<div class="figure">
+<img src="07-PE_Univariados_files/figure-html/amazn20rootma1-1.png" alt="Raices MA(1) Inversas de la serie de tiempo" width="672" />
+<p class="caption">(\#fig:amazn20rootma1)Raices MA(1) Inversas de la serie de tiempo</p>
+</div>
+Dado que el valor de la raiz inversa de MA(1) en la Figura \@ref(fig:amazn20rootma1) sabemos que tenemos una serie convergente y estable.
+
+Plot:
+
+```r
+plot(MA_price_amazn_pl_1$x,col="black", main = "Diferencia entre la serie de tiempo original y MA(1)",xlab="Tiempo",ylab="Precio")+lines(fitted(MA_price_amazn_pl_1),col="red")
+```
+
+<div class="figure">
+<img src="07-PE_Univariados_files/figure-html/amazn20AR1-1.png" alt="Diferencia entre la serie de tiempo original de precios de AMZN y su AR(1)" width="672" />
+<p class="caption">(\#fig:amazn20AR1)Diferencia entre la serie de tiempo original de precios de AMZN y su AR(1)</p>
+</div>
+
+```
+#> integer(0)
+```
+En la Figura \@ref(fig:amazn20AR1), es muy fácil ver que los efectos de los picos son muy bajos ahora, lo cual nos permitirá hacer mejores estimaciones. __Evidentemente querremos hacer el proceso AR(p) y MA(q) simultaneamente para obtener los mejores resultados.__
+
+## Procesos ARMA(p, q) y ARIMA(p, d, q)
+
+Hemos establecido algunas relaciones las de los porcesos AR y los procesos MA, es decir, cómo un $MA(q)$ de la serie $X_t$ puede ser reexpresada como un $AR(\infty)$ de la serie $U_t$, y viceversa un $AR(p)$ de la serie $X_t$ puede ser reeexpresada como un $MA(\infty)$.
+
+En este sentido, para cerrar esta sección veámos el caso de la especificación que conjunta ambos modelos en un modelo general conocido como $ARMA(p, q)$ o $ARIMA(p, d, q)$. La diferencia entre el primero y el segundo es las veces que su tuvo que diferenciar la serie analizada, registro que se lleva en el índice $d$ de los paramétros dentro del concepto $ARIMA(p, d, q)$. No obstante, en general nos referiremos al modelo como $ARMA(p, q)$ y dependerá del analista si modela la serie en niveles (por ejemplo, en logaritmos) o en diferencias logarítmicas (o diferencias sin logaritmos).
 
 
 
+### ARMA(1, 1)
 
+Dicho lo anterior vamos a empezar con el análisis de un $ARMA(1, 1)$. Un proceso $ARMA(1, 1)$ puede verse como:
+\begin{equation}
+    X_t = \delta + a_1 X_{t - 1} + U_t - b_1 U_{t - 1}
+    (\#eq:ARMA11Eq)
+\end{equation}
+
+Aplicando el operado rezago podemos rescribir la ecuación \@ref(eq:ARMA11Eq) como:
+\begin{equation}
+    (1 - a_1 L) X_t = \delta + (1 - b_1 L) U_t
+     (\#eq:ARMA11Eq1)
+\end{equation}
+
+Donde $U_t$ es un proceso pueramente aleatorio como en los casos de $AR(p)$ y $MA(q)$, y $X_t$ puede ser una serie en niveles o en diferencias (ambas, en términos logarítmicos). 
+
+Así, el modelo $ARIMA (p, q)$ también tiene una representación de Wold que estará dada por las siguientes expresiones:
+\begin{equation}
+    X_t = \frac{\delta}{1 - a_1} + \frac{1 - b_1 L}{1 - a_1 L} U_t
+    (\#eq:ARMA11Prev)
+\end{equation}
+
+Donde $a_1 \neq b_1$, puesto que en caso contrario $X_t$ sería un proceso puramente aleatorio con una media $\mu = \frac{\delta}{1 - a_1}$. Así, podemos reescribir la descomposición de Wold a partir del componente de la ecuación \@ref(eq:ARMA11Prev)
+\begin{equation}
+    \frac{1 - b_1 L}{1 - a_1 L} = \psi_0 + \psi_1 L + \psi_2 L^2 + \psi_3 L^3 + \ldots 
+    (\#eq:ARMA11EQWold)
+\end{equation}
+
+Está ecuación es equivalente a la expresión:
+\begin{eqnarray}
+    (1 - b_1 L) & = & (1 - a_1 L)(\psi_0 + \psi_1 L + \psi_2 L^2 + \psi_3 L^3 + \ldots) \nonumber \\
+    & = & \psi_0 + \psi_1 L + \psi_2 L^2 + \psi_3 L^3 + \ldots \nonumber \\
+    &   & - a_1 \psi_0 L - a_1 \psi_1 L^2 - a_2 \psi_2 L^3 - a_1 \psi_3 L^4 - \ldots \nonumber
+\end{eqnarray}
+
+De esta forma podemos establecer el siguiente sistema de coeficientes indeterminados:
+\begin{eqnarray}
+    L^0 : &   & \Rightarrow  &  \psi_0 = 1  \\
+     L^1 :  &  \psi_1 - a_1 \psi_0 = - b_1  &  \Rightarrow  &  \psi_1 = a_1 - b_1  \\
+     L^2 :  &  \psi_2 - a_1 \psi_1 = 0  &  \Rightarrow  &  \psi_2 = a_1(a_1 - b_1)  \\
+     L^3 :  &  \psi_3 - a_1 \psi_2 = 0  &  \Rightarrow  &  \psi_3 = a^2_1(a_1 - b_1)  \\
+     \vdots  &  \vdots  &  \vdots  &  \vdots  \\
+     L^j :  &  \psi_j - a_1 \psi_{j - 1} = 0  &  \Rightarrow  &  \psi_j = a^{j - 1}_1(a_1 - b_1) 
+\end{eqnarray}
+
+
+Así, la solución a la ecuación \@ref(eq:ARMA11Eq) estará dada por la siguiente generalización:
+\begin{equation}
+    X_t = \frac{\delta}{1 - a_1} + U_t + (a_1 - b_1) U_{t - 1} + a_1(a_1 - b_1) U_{t - 2} + a_1^2(a_1 - b_1) U_{t - 3} + \ldots
+(\#eq:ARMA11Sol)
+\end{equation}
+
+En la ecuación \@ref(eq:ARMA11Sol) las condiciones de estabilidad y de invertibilidad del sistema (de un MA a un AR, y viceversa) estarán dadas por: $\lvert a_1 \lvert < 1$ y $\lvert b_1 \lvert< 1$. Adicionalmente, la ecuación \@ref(eq:ARMA11Sol) expresa cómo una serie que tiene un comportamiento $ARMA(1, 1)$ es equivalente a una serie modelada bajo un $MA(\infty)$.
+
+Al igual que en los demás modelos, ahora determinaremos los momentos del proceso $ARMA(1, 1)$. La media estará dada por:
+\begin{eqnarray}
+    \mathbb{E}[X_t] & = & \mathbb{E}[\delta + a_1 X_{t-1} + U_t - b_1 U_{t-1}] \nonumber \\
+    & = & \delta + a_1 \mathbb{E}[X_{t-1}] \nonumber \\
+    & = & \frac{\delta}{1 - a_1} \nonumber \\
+    & = & \mu
+    (\#eq:ARMA11Sol1)
+\end{eqnarray}
+
+Donde hemos utilizado que $\mathbb{E}[X_t] = \mathbb{E}[X_{t-1}] = \mu$. Es decir, la media de un $ARMA(1, 1)$ es idéntica a la de un $AR(1)$.
+
+Para determinar la varianza tomaremos una estrategía similar a los casos de $AR(p)$ y $MA(q)$. Por lo que para todo $\tau \geq 0$, y suponiendo por simplicidad que $\delta = 0$ (lo que implica que $\mu = 0$) tendremos:
+\begin{eqnarray}
+    \mathbb{E}[X_{t-\tau} X_t] & = & \mathbb{E}[(X_{t-\tau}) \cdot (a_1 X_{t-1} + U_t - b_1 U_{t-1})] \nonumber \\
+    & = & a_1 \mathbb{E}[X_{t-\tau} X_{t-1}] + \mathbb{E}[X_{t-\tau} U_t] - b_1 \mathbb{E}[X_{t-\tau} U_{t-1}]
+    (\#eq:ARMA11Cov)
+\end{eqnarray}
+
+De la ecuación \@ref(eq:ARMA11Cov) podemos determinar una expresión para el caso de $\tau = 0$:
+\begin{eqnarray}
+    \mathbb{E}[X_{t} X_t] & = & \gamma(0) \nonumber \\
+    & = & a_1 \gamma(1) + \mathbb{E}[U_t X_t] - b_1 \mathbb{E}[X_t U_{t-1}] \nonumber \\
+    & = & a_1 \gamma(1) + \sigma^2 + b_1 \mathbb{E}[U_{t-1} (a_1 X_{t-1} + U_t - b_1 U_{t-1})] \nonumber \\
+    & = & a_1 \gamma(1) + \sigma^2 - b_1 a_1 \sigma^2 + b_1 \sigma^2 \nonumber \\
+    & = & a_1 \gamma(1) + (1 - b_1 (a_1 - b_1)) \sigma^2
+        (\#eq:ARMA11Cov1)
+\end{eqnarray}
+
+Para el caso en que $\tau = 1$:
+\begin{eqnarray}
+    \mathbb{E}[X_{t-1} X_t] & = & \gamma(1) \nonumber \\
+    & = & a_1 \gamma(0) + \mathbb{E}[X_{t-1} U_t] - b_1 \mathbb{E}[X_{t-1} U_{t-1}] \nonumber \\
+    & = & a_1 \gamma(0) - b_1 \sigma^2
+        (\#eq:ARMA11Cov2)
+\end{eqnarray}
+
+Estas últimas expresiones podemos resolverlas como sistema para determinar los siguientes valores:
+\begin{eqnarray}
+    \gamma(0) & = & \frac{1 + b_1^2 - 2 a_1 b_1}{1 - a_1^2} \sigma^2 
+    (\#eq:ARMA11Cov3)
+\end{eqnarray}
+
+\begin{eqnarray}
+    \gamma(1) & = & \frac{(a_1 - b_1)(1 - a_1 b_1)}{1 - a_1^2} \sigma^2
+    (\#eq:ARMA11Cov4)
+\end{eqnarray}
+
+En general para cualquier valor $\tau \geq 2$ tenemos que la autocovarianza y la función de autocorrelación serán:
+\begin{eqnarray}
+    \gamma(\tau) = a_1 \gamma(\tau - 1) \\
+    (\#eq:ARMA11Cov5)
+    \end{eqnarray}
+    
+\begin{eqnarray}    
+    \rho(\tau) = a_1 \rho(\tau - 1)
+    (\#eq:ARMA11Cov6)
+\end{eqnarray}
+
+Por ejemplo, para el caso de $\tau = 1$ tendríamos:
+\begin{equation}
+    \rho(1) = \frac{(a_1 - b_1)(1 - a_1 b_1)}{1 + b_1^2 - 2 a_1 b_1}
+    (\#eq:ARMA11Cov7)
+\end{equation}
+
+De esta forma, la función de autocorrelación oscilará en razón de los valores que tome $a_1$ y $b_1$.
+
+### ARMA(p, q)
+
+La especificación general de un $ARMA(p, q)$ (donde $p, q \in \mathbb{N}$) puede ser descrita por la siguiente ecuación:
+\begin{eqnarray}
+    X_t & = & \delta + a_1 X_{t - 1} + a_2 X_{t - 2} + \ldots + a_p X_{t - p} \nonumber \\
+    &   & + U_t - b_1 U_{t - 1} - b_2  U_{t - 2} - \ldots - b_q  U_{t - q}
+    (\#eq:ARMApqEq)
+\end{eqnarray}
+
+Donde $U_t$ es un proceso puramente aleatorio, y $X_t$ puede ser modelada en niveles o en diferencias (ya sea en logaritmos o sin transformación logarítmica). 
+
+Mediante el uso del operador rezago se puede escribir la ecuación \@ref(eq:ARMApqEq) como:
+\begin{equation}
+    (1 - a_1 L - a_2 L^2 - \ldots - a_p L^p) X_t = \delta + (1 - b_1 L - b_2 L^2 - \ldots - b_q L^q) U_t 
+    (\#eq:ARMApqEQLag)
+\end{equation}
+
+En la ecuación \@ref(eq:ARMApqEQLag) definamos dos polinomios: $\alpha(L) = (1 - a_1 L - a_2 L^2 - \ldots - a_p L^p)$ y $\beta(L) = (1 - b_1 L - b_2 L^2 - \ldots - b_q L^q)$. Así, podemos reescribir la ecuación \@ref(eq:ARMApqEQLag) como:
+\begin{equation}
+    \alpha(L) X_t = \delta + \beta(L) U_t 
+    (\#eq:ARMApqEQLag1)
+\end{equation}
+
+Asumiendo que existe el polinomio inverso tal que: $\alpha(L)^{-1}\alpha(L) = 1$.La solución entonces puede ser escrita como:
+\begin{eqnarray}
+    X_t & = & \alpha(L)^{-1} \delta + \alpha(L)^{-1} \beta(L) U_t \nonumber \\
+    & = & \frac{\delta}{1 - a_1 - a_2 - \ldots - a_p} + \frac{\beta(L)}{\alpha(L)} U_t \nonumber \\
+    & = & \frac{\delta}{1 - a_1 - a_2 - \ldots - a_p} + U_t + \psi_1 L U_t + \psi_2 L^2 U_t + \ldots
+    (\#eq:ARMApqWold)
+\end{eqnarray}
+
+Donde la ecuación \@ref(eq:ARMApqWold) nos permite interpretar que un ARMA(p, q) se puede reexpresar e interpreetar como un $MA(\infty)$ y donde las condiciones para la estabilidad de la solución y la invertibilidad es que las ráices de los polinomios característicos $\alpha(L)$ y $\beta(L)$ son en valor absoluto menores a 1.
+
+Adicionalmente, la fracción en la ecuación \@ref(eq:ARMApqWold) se puede descomponer como en la forma de Wold:
+\begin{equation}
+    \frac{\beta(L)}{\alpha(L)} = 1 + \psi_1 L + \psi_2 L^2 + \ldots
+    (\#eq:ARMApqWold1)
+\end{equation}
+
+Bajo los supuestos de estacionariedad del componente $U_t$, los valores de la media y varianza de un proceso $ARMA(p, q)$ serán como describimos ahora. Para el caso de la media podemos partir de la ecuación \@ref(eq:ARMApqWold) para generar:
+\begin{eqnarray}
+    \mathbb{E}[X_t] & = & \mathbb{E}\left[ \frac{\delta}{1 - a_1 - a_2 - \ldots - a_p} + U_t + \psi_1 U_{t-1} + \psi_2 U_{t-2} + \ldots \right] \nonumber \\
+    & = & \frac{\delta}{1 - a_1 - a_2 - \ldots - a_p} \nonumber \\
+    & = & \mu
+    (\#eq:ARMApqWold2)
+\end{eqnarray}
+
+Esta expresión indica que en general un proceso $ARMA(p, q)$ converge a una media idéntica a la de un porceso $AR(p)$. Para determinar la varianza utilizaremos la misma estratégia que hemos utilizado para otros modelos $AR(p)$ y $MA(q)$.
+
+Sin pérdida de generalidad podemos asumir que $\delta = 0$, lo que implica que $\mu = 0$, de lo que podemos establecer una expresión de autocovarianzas para cualquier valor $\tau = 0, 1, 2, \ldots$:
+\begin{eqnarray}
+    \gamma(\tau) & = & \mathbb{E}[X_{t-\tau} X_t] \nonumber \\
+    & = & \mathbb{E}[X_{t-\tau} (\delta + a_1 X_{t - 1} + a_2 X_{t - 2} + \ldots + a_p X_{t - p} \nonumber \\
+    &   & + U_t - b_1 U_{t - 1} - b_2  U_{t - 2} - \ldots - b_q  U_{t - q})] \nonumber \\
+    & = & a_1 \gamma(\tau - 1) + a_2 \gamma(\tau - 2) + \ldots + a_p \gamma(\tau - p) \nonumber \\
+    &   & + \mathbb{E}[X_{t-\tau} U_{t}] - b_1  \mathbb{E}[X_{t-\tau} U_{t-1}] - \ldots  - b_q  \mathbb{E}[X_{t-\tau} U_{t-q}] 
+    (\#eq:ARMApqWold3)
+\end{eqnarray}
