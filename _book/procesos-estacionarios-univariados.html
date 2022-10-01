@@ -555,10 +555,10 @@ precio del ACTIVO AMZN como si fueran retornos:</p>
 <code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
 <span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span><span class="op">(</span><span class="fl">365</span><span class="op">*</span><span class="fl">20</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
 <span><span class="va">pd</span></span>
-<span><span class="co">#&gt; [1] "2002-10-03"</span></span>
+<span><span class="co">#&gt; [1] "2002-10-06"</span></span>
 <span><span class="va">ld</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#última fecha</span></span>
 <span><span class="va">ld</span></span>
-<span><span class="co">#&gt; [1] "2022-09-28"</span></span>
+<span><span class="co">#&gt; [1] "2022-10-01"</span></span>
 <span><span class="co">#Intervalos de tiempo</span></span>
 <span><span class="va">int</span><span class="op">&lt;-</span><span class="st">"monthly"</span></span>
 <span></span>
@@ -594,9 +594,9 @@ precio del ACTIVO AMZN como si fueran retornos:</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title<span class="op">=</span><span class="st">"Precios de apertura de AMZN en los últimos 20 años"</span>,y<span class="op">=</span><span class="st">"Retornos"</span>, x<span class="op">=</span><span class="st">"Año"</span><span class="op">)</span><span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">ret_20_amazn</span></span></code></pre></div>
-<div class="figure">
+<div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:amazn20"></span>
-<img src="07-PE_Univariados_files/figure-html/amazn20-1.png" alt="Serie de tiempo de los precios de apertura de año en los últimos 20 años" width="672"><p class="caption">
+<img src="07-PE_Univariados_files/figure-html/amazn20-1.png" alt="Serie de tiempo de los precios de apertura de año en los últimos 20 años" width="100%"><p class="caption">
 Figure 5.5: Serie de tiempo de los precios de apertura de año en los últimos 20 años
 </p>
 </div>
@@ -609,7 +609,7 @@ de que los datos esten en orden cronológico.</p>
 <span><span class="co">#&gt; # A tibble: 6 × 10</span></span>
 <span><span class="co">#&gt;   ticker ref.date     volume price…¹ price…² price…³ price…⁴</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 AMZN   2002-10-03   3.72e9   0.840    1.01   0.818   0.968</span></span>
+<span><span class="co">#&gt; 1 AMZN   2002-10-07   3.44e9   0.828    1.01   0.818   0.968</span></span>
 <span><span class="co">#&gt; 2 AMZN   2002-11-01   4.13e9   0.961    1.23   0.91    1.17 </span></span>
 <span><span class="co">#&gt; 3 AMZN   2002-12-02   3.11e9   1.21     1.25   0.922   0.944</span></span>
 <span><span class="co">#&gt; 4 AMZN   2003-01-02   3.38e9   0.960    1.16   0.928   1.09 </span></span>
@@ -622,7 +622,7 @@ de que los datos esten en orden cronológico.</p>
 <span><span class="co">#hagamos el objeto ts</span></span>
 <span><span class="va">price_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span>, frequency <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">price_amazn_ts</span><span class="op">)</span><span class="co">#de esta manera podemos ver que se cargo bien debido a que es igual al ggplot</span></span></code></pre></div>
-<div class="inline-figure"><img src="07-PE_Univariados_files/figure-html/unnamed-chunk-6-1.png" width="672"></div>
+<div class="inline-figure"><img src="07-PE_Univariados_files/figure-html/unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;"></div>
 <p>Dado que queremos saber si existe un proceso <span class="math inline">\(AR(2)\)</span> en estos cambio
 debemos calcularlo. Para ello utilizamos la función <span class="math inline">\(lm()\)</span> que realizará una regresión lineal y veremos la relación de los valores con sus valores pasados en <span class="math inline">\(t-2\)</span>:</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
@@ -636,29 +636,7 @@ debemos calcularlo. Para ello utilizamos la función <span class="math inline">\
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="va">df.lags</span><span class="op">&lt;-</span><span class="fu">lags</span><span class="op">(</span><span class="va">priceopen_amazn</span>,<span class="fl">2</span><span class="op">)</span></span>
-<span><span class="va">ar2_amazn</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">V1</span><span class="op">~</span><span class="va">.</span>, data<span class="op">=</span><span class="va">df.lags</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">ar2_amazn</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = V1 ~ ., data = df.lags)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span><span class="co">#&gt; -40.648  -0.933  -0.385   0.490  25.418 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)  0.58019    0.45992   1.261   0.2084    </span></span>
-<span><span class="co">#&gt; V2           0.84000    0.06477  12.968   &lt;2e-16 ***</span></span>
-<span><span class="co">#&gt; V3           0.16096    0.06522   2.468   0.0143 *  </span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; Signif. codes:  </span></span>
-<span><span class="co">#&gt; 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 5.696 on 235 degrees of freedom</span></span>
-<span><span class="co">#&gt;   (2 observations deleted due to missingness)</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.9876, Adjusted R-squared:  0.9875 </span></span>
-<span><span class="co">#&gt; F-statistic:  9359 on 2 and 235 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<span><span class="va">ar2_amazn</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">V1</span><span class="op">~</span><span class="va">.</span>, data<span class="op">=</span><span class="va">df.lags</span><span class="op">)</span></span></code></pre></div>
 <p>Veamos la tabla de la regresión lineal:</p>
 <div class="inline-table"><table style="text-align:center" class="table table-sm">
 <caption>
@@ -778,7 +756,7 @@ Residual Std. Error
 F Statistic
 </td>
 <td>
-9,358.763<sup>***</sup> (df = 2; 235) (p = 0.000)
+9,358.764<sup>***</sup> (df = 2; 235) (p = 0.000)
 </td>
 </tr>
 <tr>
@@ -801,19 +779,19 @@ F Statistic
 <span><span class="va">AR_price_amazn_pl</span><span class="op">&lt;-</span><span class="fu">Arima</span><span class="op">(</span><span class="va">price_amazn_ts</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>,method <span class="op">=</span> <span class="st">"ML"</span><span class="op">)</span></span></code></pre></div>
 <p>Veamos si las raices inversas mantienen la estabilidad al ser menores a 1.</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">plot.armaroots</span><span class="op">(</span><span class="fu">arroots</span><span class="op">(</span><span class="va">AR_price_amazn_ts</span><span class="op">)</span>, main<span class="op">=</span><span class="st">"Raices inversas de AR(2)"</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">AR_price_amazn_ts</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:amazn20root"></span>
-<img src="07-PE_Univariados_files/figure-html/amazn20root-1.png" alt="Raices AR(2) Inversas de la serie de tiempo" width="672"><p class="caption">
+<img src="07-PE_Univariados_files/figure-html/amazn20root-1.png" alt="Raices AR(2) Inversas de la serie de tiempo" width="100%"><p class="caption">
 Figure 6.7: Raices AR(2) Inversas de la serie de tiempo
 </p>
 </div>
 <p>Claramente se puede en la Figura <a href="procesos-estacionarios-univariados.html#fig:amazn20root">6.7</a> ver que los valores de las raices inversas están dentro del circulo unitario y, por consiguiente son menores a 1. Ahora veamos como se ve la estimación ajustada AR(2) con el plot original.</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">AR_price_amazn_pl</span><span class="op">$</span><span class="va">x</span>,col<span class="op">=</span><span class="st">"black"</span>, main <span class="op">=</span> <span class="st">"Diferencia entre la serie de tiempo original y AR(2)"</span>,xlab<span class="op">=</span><span class="st">"Tiempo"</span>,ylab<span class="op">=</span><span class="st">"Precio"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html">fitted</a></span><span class="op">(</span><span class="va">AR_price_amazn_pl</span><span class="op">)</span>,col<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
+<div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:amazn20AR2"></span>
-<img src="07-PE_Univariados_files/figure-html/amazn20AR2-1.png" alt="Diferencia entre la serie de tiempo original de precios de AMZN y su AR(2)" width="672"><p class="caption">
+<img src="07-PE_Univariados_files/figure-html/amazn20AR2-1.png" alt="Diferencia entre la serie de tiempo original de precios de AMZN y su AR(2)" width="100%"><p class="caption">
 Figure 6.8: Diferencia entre la serie de tiempo original de precios de AMZN y su AR(2)
 </p>
 </div>
@@ -824,11 +802,6 @@ Figure 6.8: Diferencia entre la serie de tiempo original de precios de AMZN y su
 <div id="arp" class="section level3" number="6.1.3">
 <h3>
 <span class="header-section-number">6.1.3</span> AR(p)<a class="anchor" aria-label="anchor" href="#arp"><i class="fas fa-link"></i></a>
-</h3>
-</div>
-<div id="arp-1" class="section level3" number="6.1.4">
-<h3>
-<span class="header-section-number">6.1.4</span> AR(p)<a class="anchor" aria-label="anchor" href="#arp-1"><i class="fas fa-link"></i></a>
 </h3>
 <p>Veremos ahora una generalización de los procesos autoregresivos (AR). Esta generalización es conocida como un proceso <span class="math inline">\(AR(p)\)</span> y que puede ser descrito por la siguiente ecuación en diferencia estocástica:
 <span class="math display" id="eq:ARpEq">\[\begin{equation}
@@ -935,32 +908,32 @@ Figure 6.8: Diferencia entre la serie de tiempo original de precios de AMZN y su
     \mathbf{a} = \mathbf{R}^{-1} \mathbf{\rho}
     \tag{6.36}
 \end{equation}\]</span></p>
-<div id="ejemplo-arp" class="section level4" number="6.1.4.1">
+<div id="ejemplo-arp" class="section level4" number="6.1.3.1">
 <h4>
-<span class="header-section-number">6.1.4.1</span> Ejemplo AR(p)<a class="anchor" aria-label="anchor" href="#ejemplo-arp"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.1.3.1</span> Ejemplo AR(p)<a class="anchor" aria-label="anchor" href="#ejemplo-arp"><i class="fas fa-link"></i></a>
 </h4>
 <p>Veamos primero la función de autocorrelacion y el plot de los lags.</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/acf.html">pacf</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>, main<span class="op">=</span><span class="st">""</span>, lag.max <span class="op">=</span> <span class="fl">60</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
+<div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:pacfamzn"></span>
-<img src="07-PE_Univariados_files/figure-html/pacfamzn-1.png" alt="Función de Autocorrelación parcial de la serie de tiempo de AMZN" width="672"><p class="caption">
+<img src="07-PE_Univariados_files/figure-html/pacfamzn-1.png" alt="Función de Autocorrelación parcial de la serie de tiempo de AMZN" width="100%"><p class="caption">
 Figure 6.9: Función de Autocorrelación parcial de la serie de tiempo de AMZN
 </p>
 </div>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/acf.html">acf</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>, main<span class="op">=</span><span class="st">""</span>, lag.max <span class="op">=</span> <span class="fl">60</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
+<div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:acfamzn"></span>
-<img src="07-PE_Univariados_files/figure-html/acfamzn-1.png" alt="Función de Autocorrelación de la serie de tiempo de AMZN" width="672"><p class="caption">
+<img src="07-PE_Univariados_files/figure-html/acfamzn-1.png" alt="Función de Autocorrelación de la serie de tiempo de AMZN" width="100%"><p class="caption">
 Figure 6.10: Función de Autocorrelación de la serie de tiempo de AMZN
 </p>
 </div>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lag.plot.html">lag.plot</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>, main<span class="op">=</span><span class="st">""</span>, lags<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
+<div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:LAGamazn20"></span>
-<img src="07-PE_Univariados_files/figure-html/LAGamazn20-1.png" alt="5 plots de correlacion de los lags de la serie de tiempo de AMZN" width="672"><p class="caption">
+<img src="07-PE_Univariados_files/figure-html/LAGamazn20-1.png" alt="5 plots de correlacion de los lags de la serie de tiempo de AMZN" width="100%"><p class="caption">
 Figure 6.11: 5 plots de correlacion de los lags de la serie de tiempo de AMZN
 </p>
 </div>
@@ -1019,7 +992,7 @@ V1
 50.837
 </td>
 <td>
-0.840
+0.828
 </td>
 <td>
 177.250
@@ -1039,7 +1012,7 @@ V2
 50.620
 </td>
 <td>
-0.840
+0.828
 </td>
 <td>
 177.250
@@ -1057,19 +1030,19 @@ V2
 </table></div>
 <p>Raices:</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">plot.armaroots</span><span class="op">(</span><span class="fu">arroots</span><span class="op">(</span><span class="va">AR_price_amazn_ts_1</span><span class="op">)</span>, main<span class="op">=</span><span class="st">"Raices inversas de AR(1)"</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">AR_price_amazn_ts_1</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:amazn20root20"></span>
-<img src="07-PE_Univariados_files/figure-html/amazn20root20-1.png" alt="Raices AR(1) Inversas de la serie de tiempo" width="672"><p class="caption">
+<img src="07-PE_Univariados_files/figure-html/amazn20root20-1.png" alt="Raices AR(1) Inversas de la serie de tiempo" width="100%"><p class="caption">
 Figure 6.12: Raices AR(1) Inversas de la serie de tiempo
 </p>
 </div>
 <p>Plot:</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">AR_price_amazn_pl_1</span><span class="op">$</span><span class="va">x</span>,col<span class="op">=</span><span class="st">"black"</span>, main <span class="op">=</span> <span class="st">"Diferencia entre la serie de tiempo original y AR(1)"</span>,xlab<span class="op">=</span><span class="st">"Tiempo"</span>,ylab<span class="op">=</span><span class="st">"Precio"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html">fitted</a></span><span class="op">(</span><span class="va">AR_price_amazn_pl_1</span><span class="op">)</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
+<div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:amazn20AR20"></span>
-<img src="07-PE_Univariados_files/figure-html/amazn20AR20-1.png" alt="Diferencia entre la serie de tiempo original de precios de AMZN y su AR(1)" width="672"><p class="caption">
+<img src="07-PE_Univariados_files/figure-html/amazn20AR20-1.png" alt="Diferencia entre la serie de tiempo original de precios de AMZN y su AR(1)" width="100%"><p class="caption">
 Figure 6.13: Diferencia entre la serie de tiempo original de precios de AMZN y su AR(1)
 </p>
 </div>
@@ -1077,30 +1050,102 @@ Figure 6.13: Diferencia entre la serie de tiempo original de precios de AMZN y s
 </div>
 </div>
 </div>
-<div id="procesos-de-medias-móviles-ma" class="section level2" number="6.2">
+<div id="función-de-autocorrelación-parcial" class="section level2" number="6.2">
 <h2>
-<span class="header-section-number">6.2</span> Procesos de Medias Móviles (MA)<a class="anchor" aria-label="anchor" href="#procesos-de-medias-m%C3%B3viles-ma"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.2</span> Función de Autocorrelación Parcial<a class="anchor" aria-label="anchor" href="#funci%C3%B3n-de-autocorrelaci%C3%B3n-parcial"><i class="fas fa-link"></i></a>
 </h2>
-<div id="ma1" class="section level3" number="6.2.1">
+<p>Ahora introduciremos el concepto de Función de Autocorrelación Parcial (PACF, por sus siglas en inglés). Primero, dadas las condiciones de estabilidad y de convergencia, si suponemos que un proceso AR, MA, ARMA o ARIMA tienen toda la información de los rezagos de la serie en conjunto y toda la información de los promedio móviles del término de error, resulta importante construir una métrica para distinguir el efecto de <span class="math inline">\(X_{t - \tau}\)</span> o el efecto de <span class="math inline">\(U_{t - \tau}\)</span> (para cualquier <span class="math inline">\(\tau\)</span>) sobre <span class="math inline">\(X_t\)</span> de forma individual.</p>
+<p>La idea es construir una métrica de la correlación que existe entre las diferentes varibles aleatorias, si para tal efecto se ha controlado el efecto del resto de la información. Así, podemos definir la ecuación que puede responder a este planteamiento como:
+<span class="math display" id="eq:PACFEq">\[\begin{equation}
+    X_t = \phi_{k1} X_{t-1} + \phi_{k2} X_{t-2} + \ldots + \phi_{kk} X_{t-k} + U_t
+    \tag{6.37}
+\end{equation}\]</span></p>
+<p>Donde <span class="math inline">\(\phi_{ki}\)</span> es el coeficiente de la variable dada con el rezago <span class="math inline">\(i\)</span> si el proceso tiene un órden <span class="math inline">\(k\)</span>. Así, los coeficientes <span class="math inline">\(\phi_{kk}\)</span> son los coeficientes de la autocorrelación parcial (considerando un proceso AR(k)). Observemos que la autocorrelaicón parcial mide la correlación entre <span class="math inline">\(X_t\)</span> y <span class="math inline">\(X_{t-k}\)</span> que se mantiene cuando el efecto de las variables <span class="math inline">\(X_{t-1}\)</span>, <span class="math inline">\(X_{t-2}\)</span>, <span class="math inline">\(\ldots\)</span> y <span class="math inline">\(X_{t-k-1}\)</span> en <span class="math inline">\(X_{t}\)</span> y <span class="math inline">\(X_{t-k}\)</span> ha sido eliminado.</p>
+<p>Dada la expresión considerada en la ecuación <a href="procesos-estacionarios-univariados.html#eq:PACFEq">(6.37)</a>, podemos resolver el problema de establecer el valor de cada <span class="math inline">\(\phi_{ki}\)</span> mediante la solución del sistema que se representa en lo siguiente:</p>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:foo1">Table 6.1: </span> Relación entre la Función de autocorrelación y la Función de autocorrelación parcial de una serie <span class="math inline">\(X_t\)</span>.</caption>
+<colgroup>
+<col width="33%">
+<col width="33%">
+<col width="33%">
+</colgroup>
+<thead><tr class="header">
+<th align="center">Modelo si:</th>
+<th align="center">Función de autocorrelación</th>
+<th align="center">Función de autocorrelación parcial</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="center"><span class="math inline">\(MA(q)\)</span></td>
+<td align="center">Rompimientos en la función</td>
+<td align="center">No hay rompimientos</td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(AR(q)\)</span></td>
+<td align="center">No hay rompimientos</td>
+<td align="center">Rompimientos en la función</td>
+</tr>
+</tbody>
+</table></div>
+<p><span class="math display" id="eq:PACFEq1">\[\begin{equation}
+    \left[
+    \begin{array}{c}
+        \rho(1) \\
+        \rho(2) \\
+        \vdots \\
+        \rho(k)
+    \end{array}
+    \right]
+    =
+    \left[
+    \begin{array}{c c c c}
+        1 &amp; \rho(1) &amp; \ldots &amp; \rho(k - 1)\\
+        \rho(1) &amp; 1 &amp; \ldots &amp; \rho(k - 2)\\
+        \rho(2) &amp; \rho(1) &amp; \ldots &amp; \rho(k - 3)\\
+        \vdots &amp; \vdots &amp; \ldots &amp; \vdots\\
+        \rho(k - 1) &amp; \rho(k - 2) &amp; \ldots &amp; 1\\
+    \end{array}
+    \right]
+    \left[
+    \begin{array}{c}
+        \phi_{k1} \\
+        \phi_{k2} \\
+        \phi_{k3} \\
+        \vdots \\
+        \phi_{kk} \\
+    \end{array}
+    \right]
+    \tag{6.38}    
+\end{equation}\]</span></p>
+<p>Del cual se puede derivar una solución, resoviendo por el método de cramer, o cualquier otro método que consideremos y que permita calcular la solución de sistemas de ecuaciones.</p>
+<p>Posterior al análisis analítico platearemos un enfoque para interpretar las funciones de autocorrelación y autocorrelación parcial. Este enfoque pretende aportar al principio de parcimonia, en el cual podemos identificar el número de parámetros que posiblemente puede describir mejor a la serie en un modelo ARMA(p, q).</p>
+<p>En el Cuadro <a href="procesos-estacionarios-univariados.html#tab:foo1">6.1</a> se muestra un resumen de las caranterísticas que debemos observar para determinar el número de parámetros de cada uno de los componentes AR y MA. Lo anterior por observación de las funciones de autocorrelación y autocorrelación parcial. Este enfoque no es el más formal, más adelante implemtaremos uno más formal y que puede ser más claro de cómo determinar el númeto de parámetros.</p>
+</div>
+<div id="procesos-de-medias-móviles-ma" class="section level2" number="6.3">
+<h2>
+<span class="header-section-number">6.3</span> Procesos de Medias Móviles (MA)<a class="anchor" aria-label="anchor" href="#procesos-de-medias-m%C3%B3viles-ma"><i class="fas fa-link"></i></a>
+</h2>
+<div id="ma1" class="section level3" number="6.3.1">
 <h3>
-<span class="header-section-number">6.2.1</span> MA(1)<a class="anchor" aria-label="anchor" href="#ma1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.3.1</span> MA(1)<a class="anchor" aria-label="anchor" href="#ma1"><i class="fas fa-link"></i></a>
 </h3>
 <p>Una vez planteado el proceso generalizado de <span class="math inline">\(AR(p)\)</span>, iniciamos el planteamiento de los proceso de medias móviles, denotados como <span class="math inline">\(MA(q)\)</span>. Iniciemos con el planteamiento del proceso <span class="math inline">\(MA(1)\)</span>, que se puede escribir como una ecuación como la siguiente:
 <span class="math display" id="eq:MA1Eq">\[\begin{equation}
     X_t = \mu + U_t - b_1 U_{t-1}
-    \tag{6.37}
+    \tag{6.39}
 \end{equation}\]</span></p>
 <p>O como:
 <span class="math display" id="eq:MA1Eq1">\[\begin{equation}
     X_t - \mu = (1 - b_1 L) U_{t}
-    \tag{6.38}
+    \tag{6.40}
 \end{equation}\]</span></p>
 <p>Donde <span class="math inline">\(U_t\)</span> es un proceso puramente aleatorio, es decir, con <span class="math inline">\(\mathbb{E}[U_t] = 0\)</span>, <span class="math inline">\(Var[U_t] = \sigma^2\)</span>, y <span class="math inline">\(Cov[U_t, U_s] = 0\)</span>. Así, un proceso <span class="math inline">\(MA(1)\)</span> puede verse como un proceso AR con una descomposición de Wold en la que <span class="math inline">\(\psi_0 = 1\)</span>, <span class="math inline">\(\psi_1 = - b_1\)</span> y <span class="math inline">\(\psi_j = 0\)</span> para todo <span class="math inline">\(j &gt; 1\)</span>.</p>
 <p>Al igual que los procesos autoregresivos, determinaremos los momentos de un proceso <span class="math inline">\(MA(1)\)</span>. En el caso de la media observamos que será:
 <span class="math display" id="eq:MA1Eq2">\[\begin{eqnarray}
     \mathbb{E}[X_t] &amp; = &amp; \mu + \mathbb{E}[U_t] - b_1 \mathbb{E}[U_{t - 1}] \nonumber \\
     &amp; = &amp; \mu
-    \tag{6.39}
+    \tag{6.41}
 \end{eqnarray}\]</span></p>
 <p>Por su parte la varianza estará dada por:
 <span class="math display" id="eq:MA1Eq3">\[\begin{eqnarray}
@@ -1110,7 +1155,7 @@ Figure 6.13: Diferencia entre la serie de tiempo original de precios de AMZN y s
     &amp; = &amp;\mathbb{E}[U_t^2] - 2 b_1 \mathbb{E}[U_t U_{t-1}] + b_1^2 \mathbb{E}[U_{t - 1}^2]] \nonumber \\
     &amp; = &amp; \sigma^2 + b_1^2 \sigma^2 \nonumber \\
     &amp; = &amp; (1 + b_1^2) \sigma^2 = \gamma(0)
-    \tag{6.40}
+    \tag{6.42}
 \end{eqnarray}\]</span></p>
 <p>De esta forma, la varianza del proceso es constante en cualquier periodo <span class="math inline">\(t\)</span>. Para determinar la covarianza utilizaremos la siguiente ecuación:
 <span class="math display" id="eq:MA1Cov">\[\begin{eqnarray}
@@ -1119,15 +1164,15 @@ Figure 6.13: Diferencia entre la serie de tiempo original de precios de AMZN y s
     &amp;   &amp; + b_1^2 U_{t - 1} U_{t + \tau - 1}] \nonumber \\
     &amp; = &amp; \mathbb{E}[U_t U_{t + \tau}] - b_1 \mathbb{E}[U_t U_{t + \tau - 1}] \nonumber \\
     &amp;   &amp; - b_1 \mathbb{E}[U_{t - 1} U_{t + \tau}] + b_1^2 \mathbb{E}[U_{t - 1} U_{t + \tau - 1}]
-    \tag{6.41}
+    \tag{6.43}
 \end{eqnarray}\]</span></p>
-<p>Si hacemos sustituciones de diferentes valores de <span class="math inline">\(\tau\)</span> en la ecuación <a href="procesos-estacionarios-univariados.html#eq:MA1Cov">(6.41)</a> notaremos que la covarianza será distinta de cero únicamente para el caso de <span class="math inline">\(\tau = 1, -1\)</span>. En ambos casos tendremos como resultado:
+<p>Si hacemos sustituciones de diferentes valores de <span class="math inline">\(\tau\)</span> en la ecuación <a href="procesos-estacionarios-univariados.html#eq:MA1Cov">(6.43)</a> notaremos que la covarianza será distinta de cero únicamente para el caso de <span class="math inline">\(\tau = 1, -1\)</span>. En ambos casos tendremos como resultado:
 <span class="math display" id="eq:MA1Cov1">\[\begin{eqnarray}
     \mathbb{E}[(x_t - \mu)(x_{t + 1} - \mu)] &amp; = &amp; \mathbb{E}[(x_t - \mu)(x_{t - 1} - \mu)] \nonumber \\
     &amp; = &amp; - b_1 \mathbb{E}[U_t U_{t}] \nonumber \\
     &amp; = &amp; - b_1 \mathbb{E}[U_{t - 1} U_{t - 1}] \nonumber \\
     &amp; = &amp; - b_1^2 \sigma^2 = \gamma(1)
-        \tag{6.42}
+        \tag{6.44}
 \end{eqnarray}\]</span></p>
 <p>De esta forma tendremos que las funciones de autocorrelación estarán dadas por los siguientes casos:
 <span class="math display">\[\begin{eqnarray}
@@ -1135,7 +1180,7 @@ Figure 6.13: Diferencia entre la serie de tiempo original de precios de AMZN y s
     \rho(1) &amp; = &amp; \frac{- b_1}{1 + b_1^2} \nonumber \\
     \rho(\tau) &amp; = &amp; 0 \text{ para todo } \tau &gt; 1 \nonumber
 \end{eqnarray}\]</span></p>
-<p>Ahora regresando a la ecuación <a href="procesos-estacionarios-univariados.html#eq:MA1Eq">(6.37)</a>,e su solución la podemos expresar como:
+<p>Ahora regresando a la ecuación <a href="procesos-estacionarios-univariados.html#eq:MA1Eq">(6.39)</a>,e su solución la podemos expresar como:
 <span class="math display">\[\begin{eqnarray}
     U_ t &amp; = &amp; - \frac{\mu}{1 - b_1} + \frac{1}{1 - b_1 L} X_t \nonumber \\
     &amp; = &amp; - \frac{\mu}{1 - b_1} + X_t + b_1 X_{t-1} + b_1^2 X_{t-2} + \ldots \nonumber
@@ -1143,28 +1188,28 @@ Figure 6.13: Diferencia entre la serie de tiempo original de precios de AMZN y s
 <p>Donde la condición para que se cumpla esta ecuación es que <span class="math inline">\(\lvert b_1 \lvert&lt; 1\)</span>. La manera de interpretar esta condición es como una condición de estabilidad de la solución y cómo una condición de invertibilidad. Notemos que un <span class="math inline">\(MA(1)\)</span> (y en general un <span class="math inline">\(MA(q)\)</span>) es equivalente a un <span class="math inline">\(AR(\infty)\)</span>, es decir, cuando se invierte un MA se genera un AR con infinitos rezagos.</p>
 <p>En esta sección no desarrollaremos un ejemplo, primero explicaremos en qué consiste una modelación del tipo <span class="math inline">\(MA(q)\)</span> y después platearemos un ejemplo en concreto.</p>
 </div>
-<div id="maq" class="section level3" number="6.2.2">
+<div id="maq" class="section level3" number="6.3.2">
 <h3>
-<span class="header-section-number">6.2.2</span> MA(q)<a class="anchor" aria-label="anchor" href="#maq"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.3.2</span> MA(q)<a class="anchor" aria-label="anchor" href="#maq"><i class="fas fa-link"></i></a>
 </h3>
 <p>En general, el proceso de medias móviles de orden <span class="math inline">\(q\)</span>, <span class="math inline">\(MA(q)\)</span>, puede ser escrito como:
 <span class="math display" id="eq:MAqEQ">\[\begin{equation}
     X_t = \mu + U_t - b_1 U_{t-1} - b_2 U_{t-2} - \ldots - b_q U_{t-q}
-    \tag{6.43}
+    \tag{6.45}
 \end{equation}\]</span></p>
-<p>Podemos reescribir la ecuación <a href="procesos-estacionarios-univariados.html#eq:MAqEQ">(6.43)</a> utilizando el operador rezago, así tendrémos el proceso de <span class="math inline">\(MA(q)\)</span> como:
+<p>Podemos reescribir la ecuación <a href="procesos-estacionarios-univariados.html#eq:MAqEQ">(6.45)</a> utilizando el operador rezago, así tendrémos el proceso de <span class="math inline">\(MA(q)\)</span> como:
 <span class="math display" id="eq:MAqRed">\[\begin{eqnarray}
     X_t - \mu &amp; = &amp; (1 - b_1 L - b_2 L^2 - \ldots - b_q L^q) U_{t} \nonumber \\
     X_t - \mu &amp; = &amp; \beta(L) U_t
-    \tag{6.44}
+    \tag{6.46}
 \end{eqnarray}\]</span></p>
-<p>Donde <span class="math inline">\(U_t\)</span> es un proceso puramente aleatorio con <span class="math inline">\(\mathbb{E}[U_t] = 0\)</span>, <span class="math inline">\(Var[U_t] = \mathbb{E}[U_t^2] = 0\)</span> y <span class="math inline">\(Cov[U_t, U_s] = \mathbb{E}[U_t, U_s] = 0\)</span>, y <span class="math inline">\(\beta(L) = 1 - b_1 L - b_2 L^2 - \ldots - b_q L^q\)</span> es un polinomio del operador rezago <span class="math inline">\(L\)</span>. la ecuación <a href="procesos-estacionarios-univariados.html#eq:MAqRed">(6.44)</a> puede ser interpretada como un proceso <span class="math inline">\(AR(q)\)</span> sobre la serie <span class="math inline">\(U_t\)</span>.</p>
+<p>Donde <span class="math inline">\(U_t\)</span> es un proceso puramente aleatorio con <span class="math inline">\(\mathbb{E}[U_t] = 0\)</span>, <span class="math inline">\(Var[U_t] = \mathbb{E}[U_t^2] = 0\)</span> y <span class="math inline">\(Cov[U_t, U_s] = \mathbb{E}[U_t, U_s] = 0\)</span>, y <span class="math inline">\(\beta(L) = 1 - b_1 L - b_2 L^2 - \ldots - b_q L^q\)</span> es un polinomio del operador rezago <span class="math inline">\(L\)</span>. la ecuación <a href="procesos-estacionarios-univariados.html#eq:MAqRed">(6.46)</a> puede ser interpretada como un proceso <span class="math inline">\(AR(q)\)</span> sobre la serie <span class="math inline">\(U_t\)</span>.</p>
 <p>Ahora determinemos los momentos de un proceso <span class="math inline">\(MA(q)\)</span>:
 <span class="math display" id="eq:MAqRed1">\[\begin{eqnarray}
     \mathbb{E}[X_t] &amp; = &amp; \mathbb{E}[\mu + U_t - b_1 U_{t-1} - b_2 U_{t-2} - \ldots - b_q U_{t-q}] \nonumber \\
     &amp; = &amp; \mu + \mathbb{E}[U_t] - b_1 \mathbb{E}[U_{t-1}] - b_2 \mathbb{E}[U_{t-2}] - \ldots - b_q \mathbb{E}[U_{t-q}] \nonumber \\
     &amp; = &amp; \mu
-    \tag{6.45}
+    \tag{6.47}
 \end{eqnarray}\]</span></p>
 <p>En el caso de la varianza tenemos que se puede expresar como:
 <span class="math display" id="eq:MAqRed2">\[\begin{eqnarray}
@@ -1176,7 +1221,7 @@ Figure 6.13: Diferencia entre la serie de tiempo original de precios de AMZN y s
     &amp;   &amp; - 2 b_1 \mathbb{E}[U_t U_{t - 1}] - \ldots - 2 b_{q - 1} b_q \mathbb{E}[U_{t - q + 1} U_{t - q}] \nonumber \\
     &amp; = &amp; \sigma^2 + b^2_1 \sigma^2 + b^2_2 \sigma^2 + \ldots + b^2_q \sigma^2 \nonumber \\
     &amp; = &amp; (1 + b^2_1 + b^2_2 + \ldots + b^2_q) \sigma^2
-    \tag{6.46}
+    \tag{6.48}
 \end{eqnarray}\]</span></p>
 <p>En el caso de las covarianzas podemos utilizar una idea similar al caso del <span class="math inline">\(AR(p)\)</span>, construir una expresión general para cualquier rezago <span class="math inline">\(\tau\)</span>:
 <span class="math display">\[\begin{eqnarray}
@@ -1196,40 +1241,40 @@ Figure 6.13: Diferencia entre la serie de tiempo original de precios de AMZN y s
 <span class="math display" id="eq:MAqEqSol">\[\begin{eqnarray}
     U_t &amp; = &amp; - \frac{\mu}{1 - b_1 - b_2 - \ldots - b_q} + \beta(L)^{-1} X_t \nonumber \\
     &amp;   &amp; - \frac{\mu}{1 - b_1 - b_2 - \ldots - b_q} + \sum_{j = 0}^{\infty} c_j X_{t-j}
-    \tag{6.47}
+    \tag{6.49}
 \end{eqnarray}\]</span></p>
-<p>Donde se cumple que: <span class="math inline">\(1 = (1 - b_1 L^1 - b_2 L^2 - \ldots - b_q L^q)(1 - c_1 L - c_2 L^2 - \ldots)\)</span> y los coeficientes <span class="math inline">\(c_j\)</span> se pueden determinar por un método de coeficientes indeterminados y en términos de los valores <span class="math inline">\(b_i\)</span>. De igual forma que en el caso de la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARpEq">(6.24)</a>, en la ecuación <a href="procesos-estacionarios-univariados.html#eq:MAqEqSol">(6.47)</a> se deben cumplir condiciones de estabilidad asociadas con las raíces del polinomio carácterististico dado por:
+<p>Donde se cumple que: <span class="math inline">\(1 = (1 - b_1 L^1 - b_2 L^2 - \ldots - b_q L^q)(1 - c_1 L - c_2 L^2 - \ldots)\)</span> y los coeficientes <span class="math inline">\(c_j\)</span> se pueden determinar por un método de coeficientes indeterminados y en términos de los valores <span class="math inline">\(b_i\)</span>. De igual forma que en el caso de la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARpEq">(6.24)</a>, en la ecuación <a href="procesos-estacionarios-univariados.html#eq:MAqEqSol">(6.49)</a> se deben cumplir condiciones de estabilidad asociadas con las raíces del polinomio carácterististico dado por:
 <span class="math display" id="eq:MAqEqSol2">\[\begin{equation}
     1 - b_1 x - b_2 x^2 - \ldots b_q x^q = 0
-    \tag{6.48}
+    \tag{6.50}
 \end{equation}\]</span></p>
 <p>El cual debe cumplir que <span class="math inline">\(\lvert x_i \lvert &lt; 1\)</span> y que <span class="math inline">\(1 - b_1 - b_2 - \ldots b_q &lt; 1\)</span>.</p>
 <p>Ahora veamos el ejemplo.</p>
-<div id="ejemplo-maq" class="section level4" number="6.2.2.1">
+<div id="ejemplo-maq" class="section level4" number="6.3.2.1">
 <h4>
-<span class="header-section-number">6.2.2.1</span> Ejemplo MA(q)<a class="anchor" aria-label="anchor" href="#ejemplo-maq"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.3.2.1</span> Ejemplo MA(q)<a class="anchor" aria-label="anchor" href="#ejemplo-maq"><i class="fas fa-link"></i></a>
 </h4>
 <p>Cuando nos fijamos en las figuras <a href="procesos-estacionarios-univariados.html#fig:pacfamzn">6.9</a> y <a href="procesos-estacionarios-univariados.html#fig:acfamzn">6.10</a> es claro que hay un proceso MA(1). Es decir que picos de un año estan causando efectos en valores futuros. Así pues, escogemos un valor de <span class="math inline">\(q=1\)</span>.</p>
-<p>Arima:</p>
+<p>MA:</p>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MA_price_amazn_ts_1</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,method <span class="op">=</span> <span class="st">"ML"</span><span class="op">)</span></span>
 <span><span class="va">MA_price_amazn_pl_1</span><span class="op">&lt;-</span><span class="fu">Arima</span><span class="op">(</span><span class="va">price_amazn_ts</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,method <span class="op">=</span> <span class="st">"ML"</span><span class="op">)</span></span></code></pre></div>
-<p>Raices MA(A):</p>
+<p>Raices MA(1):</p>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">plot.armaroots</span><span class="op">(</span><span class="fu">maroots</span><span class="op">(</span><span class="va">MA_price_amazn_ts_1</span><span class="op">)</span>, main<span class="op">=</span><span class="st">"Raices inversas de MA(1)"</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
-<span style="display:block;" id="fig:amazn20rootma1"></span>
-<img src="07-PE_Univariados_files/figure-html/amazn20rootma1-1.png" alt="Raices MA(1) Inversas de la serie de tiempo" width="672"><p class="caption">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">MA_price_amazn_ts_1</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:amazn20rootma11"></span>
+<img src="07-PE_Univariados_files/figure-html/amazn20rootma11-1.png" alt="Raices MA(1) Inversas de la serie de tiempo" width="100%"><p class="caption">
 Figure 6.14: Raices MA(1) Inversas de la serie de tiempo
 </p>
 </div>
-<p>Dado que el valor de la raiz inversa de MA(1) en la Figura <a href="procesos-estacionarios-univariados.html#fig:amazn20rootma1">6.14</a> sabemos que tenemos una serie convergente y estable.</p>
+<p>Dado que el valor de la raiz inversa de MA(1) en la Figura <a href="procesos-estacionarios-univariados.html#fig:amazn20rootma11">6.14</a> sabemos que tenemos una serie convergente y estable.</p>
 <p>Plot:</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">MA_price_amazn_pl_1</span><span class="op">$</span><span class="va">x</span>,col<span class="op">=</span><span class="st">"black"</span>, main <span class="op">=</span> <span class="st">"Diferencia entre la serie de tiempo original y MA(1)"</span>,xlab<span class="op">=</span><span class="st">"Tiempo"</span>,ylab<span class="op">=</span><span class="st">"Precio"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html">fitted</a></span><span class="op">(</span><span class="va">MA_price_amazn_pl_1</span><span class="op">)</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
+<div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:amazn20AR1"></span>
-<img src="07-PE_Univariados_files/figure-html/amazn20AR1-1.png" alt="Diferencia entre la serie de tiempo original de precios de AMZN y su AR(1)" width="672"><p class="caption">
+<img src="07-PE_Univariados_files/figure-html/amazn20AR1-1.png" alt="Diferencia entre la serie de tiempo original de precios de AMZN y su AR(1)" width="100%"><p class="caption">
 Figure 6.15: Diferencia entre la serie de tiempo original de precios de AMZN y su AR(1)
 </p>
 </div>
@@ -1238,36 +1283,36 @@ Figure 6.15: Diferencia entre la serie de tiempo original de precios de AMZN y s
 </div>
 </div>
 </div>
-<div id="procesos-armap-q-y-arimap-d-q" class="section level2" number="6.3">
+<div id="procesos-armap-q-y-arimap-d-q" class="section level2" number="6.4">
 <h2>
-<span class="header-section-number">6.3</span> Procesos ARMA(p, q) y ARIMA(p, d, q)<a class="anchor" aria-label="anchor" href="#procesos-armap-q-y-arimap-d-q"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.4</span> Procesos ARMA(p, q) y ARIMA(p, d, q)<a class="anchor" aria-label="anchor" href="#procesos-armap-q-y-arimap-d-q"><i class="fas fa-link"></i></a>
 </h2>
 <p>Hemos establecido algunas relaciones las de los porcesos AR y los procesos MA, es decir, cómo un <span class="math inline">\(MA(q)\)</span> de la serie <span class="math inline">\(X_t\)</span> puede ser reexpresada como un <span class="math inline">\(AR(\infty)\)</span> de la serie <span class="math inline">\(U_t\)</span>, y viceversa un <span class="math inline">\(AR(p)\)</span> de la serie <span class="math inline">\(X_t\)</span> puede ser reeexpresada como un <span class="math inline">\(MA(\infty)\)</span>.</p>
 <p>En este sentido, para cerrar esta sección veámos el caso de la especificación que conjunta ambos modelos en un modelo general conocido como <span class="math inline">\(ARMA(p, q)\)</span> o <span class="math inline">\(ARIMA(p, d, q)\)</span>. La diferencia entre el primero y el segundo es las veces que su tuvo que diferenciar la serie analizada, registro que se lleva en el índice <span class="math inline">\(d\)</span> de los paramétros dentro del concepto <span class="math inline">\(ARIMA(p, d, q)\)</span>. No obstante, en general nos referiremos al modelo como <span class="math inline">\(ARMA(p, q)\)</span> y dependerá del analista si modela la serie en niveles (por ejemplo, en logaritmos) o en diferencias logarítmicas (o diferencias sin logaritmos).</p>
-<div id="arma1-1" class="section level3" number="6.3.1">
+<div id="arma1-1" class="section level3" number="6.4.1">
 <h3>
-<span class="header-section-number">6.3.1</span> ARMA(1, 1)<a class="anchor" aria-label="anchor" href="#arma1-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.4.1</span> ARMA(1, 1)<a class="anchor" aria-label="anchor" href="#arma1-1"><i class="fas fa-link"></i></a>
 </h3>
 <p>Dicho lo anterior vamos a empezar con el análisis de un <span class="math inline">\(ARMA(1, 1)\)</span>. Un proceso <span class="math inline">\(ARMA(1, 1)\)</span> puede verse como:
 <span class="math display" id="eq:ARMA11Eq">\[\begin{equation}
     X_t = \delta + a_1 X_{t - 1} + U_t - b_1 U_{t - 1}
-    \tag{6.49}
+    \tag{6.51}
 \end{equation}\]</span></p>
-<p>Aplicando el operado rezago podemos rescribir la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMA11Eq">(6.49)</a> como:
+<p>Aplicando el operado rezago podemos rescribir la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMA11Eq">(6.51)</a> como:
 <span class="math display" id="eq:ARMA11Eq1">\[\begin{equation}
     (1 - a_1 L) X_t = \delta + (1 - b_1 L) U_t
-     \tag{6.50}
+     \tag{6.52}
 \end{equation}\]</span></p>
 <p>Donde <span class="math inline">\(U_t\)</span> es un proceso pueramente aleatorio como en los casos de <span class="math inline">\(AR(p)\)</span> y <span class="math inline">\(MA(q)\)</span>, y <span class="math inline">\(X_t\)</span> puede ser una serie en niveles o en diferencias (ambas, en términos logarítmicos).</p>
 <p>Así, el modelo <span class="math inline">\(ARIMA (p, q)\)</span> también tiene una representación de Wold que estará dada por las siguientes expresiones:
 <span class="math display" id="eq:ARMA11Prev">\[\begin{equation}
     X_t = \frac{\delta}{1 - a_1} + \frac{1 - b_1 L}{1 - a_1 L} U_t
-    \tag{6.51}
+    \tag{6.53}
 \end{equation}\]</span></p>
-<p>Donde <span class="math inline">\(a_1 \neq b_1\)</span>, puesto que en caso contrario <span class="math inline">\(X_t\)</span> sería un proceso puramente aleatorio con una media <span class="math inline">\(\mu = \frac{\delta}{1 - a_1}\)</span>. Así, podemos reescribir la descomposición de Wold a partir del componente de la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMA11Prev">(6.51)</a>
+<p>Donde <span class="math inline">\(a_1 \neq b_1\)</span>, puesto que en caso contrario <span class="math inline">\(X_t\)</span> sería un proceso puramente aleatorio con una media <span class="math inline">\(\mu = \frac{\delta}{1 - a_1}\)</span>. Así, podemos reescribir la descomposición de Wold a partir del componente de la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMA11Prev">(6.53)</a>
 <span class="math display" id="eq:ARMA11EQWold">\[\begin{equation}
     \frac{1 - b_1 L}{1 - a_1 L} = \psi_0 + \psi_1 L + \psi_2 L^2 + \psi_3 L^3 + \ldots
-    \tag{6.52}
+    \tag{6.54}
 \end{equation}\]</span></p>
 <p>Está ecuación es equivalente a la expresión:
 <span class="math display">\[\begin{eqnarray}
@@ -1284,108 +1329,108 @@ Figure 6.15: Diferencia entre la serie de tiempo original de precios de AMZN y s
      \vdots  &amp;  \vdots  &amp;  \vdots  &amp;  \vdots  \\
      L^j :  &amp;  \psi_j - a_1 \psi_{j - 1} = 0  &amp;  \Rightarrow  &amp;  \psi_j = a^{j - 1}_1(a_1 - b_1)
 \end{eqnarray}\]</span></p>
-<p>Así, la solución a la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMA11Eq">(6.49)</a> estará dada por la siguiente generalización:
+<p>Así, la solución a la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMA11Eq">(6.51)</a> estará dada por la siguiente generalización:
 <span class="math display" id="eq:ARMA11Sol">\[\begin{equation}
     X_t = \frac{\delta}{1 - a_1} + U_t + (a_1 - b_1) U_{t - 1} + a_1(a_1 - b_1) U_{t - 2} + a_1^2(a_1 - b_1) U_{t - 3} + \ldots
-\tag{6.53}
+\tag{6.55}
 \end{equation}\]</span></p>
-<p>En la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMA11Sol">(6.53)</a> las condiciones de estabilidad y de invertibilidad del sistema (de un MA a un AR, y viceversa) estarán dadas por: <span class="math inline">\(\lvert a_1 \lvert &lt; 1\)</span> y <span class="math inline">\(\lvert b_1 \lvert&lt; 1\)</span>. Adicionalmente, la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMA11Sol">(6.53)</a> expresa cómo una serie que tiene un comportamiento <span class="math inline">\(ARMA(1, 1)\)</span> es equivalente a una serie modelada bajo un <span class="math inline">\(MA(\infty)\)</span>.</p>
+<p>En la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMA11Sol">(6.55)</a> las condiciones de estabilidad y de invertibilidad del sistema (de un MA a un AR, y viceversa) estarán dadas por: <span class="math inline">\(\lvert a_1 \lvert &lt; 1\)</span> y <span class="math inline">\(\lvert b_1 \lvert&lt; 1\)</span>. Adicionalmente, la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMA11Sol">(6.55)</a> expresa cómo una serie que tiene un comportamiento <span class="math inline">\(ARMA(1, 1)\)</span> es equivalente a una serie modelada bajo un <span class="math inline">\(MA(\infty)\)</span>.</p>
 <p>Al igual que en los demás modelos, ahora determinaremos los momentos del proceso <span class="math inline">\(ARMA(1, 1)\)</span>. La media estará dada por:
 <span class="math display" id="eq:ARMA11Sol1">\[\begin{eqnarray}
     \mathbb{E}[X_t] &amp; = &amp; \mathbb{E}[\delta + a_1 X_{t-1} + U_t - b_1 U_{t-1}] \nonumber \\
     &amp; = &amp; \delta + a_1 \mathbb{E}[X_{t-1}] \nonumber \\
     &amp; = &amp; \frac{\delta}{1 - a_1} \nonumber \\
     &amp; = &amp; \mu
-    \tag{6.54}
+    \tag{6.56}
 \end{eqnarray}\]</span></p>
 <p>Donde hemos utilizado que <span class="math inline">\(\mathbb{E}[X_t] = \mathbb{E}[X_{t-1}] = \mu\)</span>. Es decir, la media de un <span class="math inline">\(ARMA(1, 1)\)</span> es idéntica a la de un <span class="math inline">\(AR(1)\)</span>.</p>
 <p>Para determinar la varianza tomaremos una estrategía similar a los casos de <span class="math inline">\(AR(p)\)</span> y <span class="math inline">\(MA(q)\)</span>. Por lo que para todo <span class="math inline">\(\tau \geq 0\)</span>, y suponiendo por simplicidad que <span class="math inline">\(\delta = 0\)</span> (lo que implica que <span class="math inline">\(\mu = 0\)</span>) tendremos:
 <span class="math display" id="eq:ARMA11Cov">\[\begin{eqnarray}
     \mathbb{E}[X_{t-\tau} X_t] &amp; = &amp; \mathbb{E}[(X_{t-\tau}) \cdot (a_1 X_{t-1} + U_t - b_1 U_{t-1})] \nonumber \\
     &amp; = &amp; a_1 \mathbb{E}[X_{t-\tau} X_{t-1}] + \mathbb{E}[X_{t-\tau} U_t] - b_1 \mathbb{E}[X_{t-\tau} U_{t-1}]
-    \tag{6.55}
+    \tag{6.57}
 \end{eqnarray}\]</span></p>
-<p>De la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMA11Cov">(6.55)</a> podemos determinar una expresión para el caso de <span class="math inline">\(\tau = 0\)</span>:
+<p>De la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMA11Cov">(6.57)</a> podemos determinar una expresión para el caso de <span class="math inline">\(\tau = 0\)</span>:
 <span class="math display" id="eq:ARMA11Cov1">\[\begin{eqnarray}
     \mathbb{E}[X_{t} X_t] &amp; = &amp; \gamma(0) \nonumber \\
     &amp; = &amp; a_1 \gamma(1) + \mathbb{E}[U_t X_t] - b_1 \mathbb{E}[X_t U_{t-1}] \nonumber \\
     &amp; = &amp; a_1 \gamma(1) + \sigma^2 + b_1 \mathbb{E}[U_{t-1} (a_1 X_{t-1} + U_t - b_1 U_{t-1})] \nonumber \\
     &amp; = &amp; a_1 \gamma(1) + \sigma^2 - b_1 a_1 \sigma^2 + b_1 \sigma^2 \nonumber \\
     &amp; = &amp; a_1 \gamma(1) + (1 - b_1 (a_1 - b_1)) \sigma^2
-        \tag{6.56}
+        \tag{6.58}
 \end{eqnarray}\]</span></p>
 <p>Para el caso en que <span class="math inline">\(\tau = 1\)</span>:
 <span class="math display" id="eq:ARMA11Cov2">\[\begin{eqnarray}
     \mathbb{E}[X_{t-1} X_t] &amp; = &amp; \gamma(1) \nonumber \\
     &amp; = &amp; a_1 \gamma(0) + \mathbb{E}[X_{t-1} U_t] - b_1 \mathbb{E}[X_{t-1} U_{t-1}] \nonumber \\
     &amp; = &amp; a_1 \gamma(0) - b_1 \sigma^2
-        \tag{6.57}
+        \tag{6.59}
 \end{eqnarray}\]</span></p>
 <p>Estas últimas expresiones podemos resolverlas como sistema para determinar los siguientes valores:
 <span class="math display" id="eq:ARMA11Cov3">\[\begin{eqnarray}
     \gamma(0) &amp; = &amp; \frac{1 + b_1^2 - 2 a_1 b_1}{1 - a_1^2} \sigma^2
-    \tag{6.58}
+    \tag{6.60}
 \end{eqnarray}\]</span></p>
 <p><span class="math display" id="eq:ARMA11Cov4">\[\begin{eqnarray}
     \gamma(1) &amp; = &amp; \frac{(a_1 - b_1)(1 - a_1 b_1)}{1 - a_1^2} \sigma^2
-    \tag{6.59}
+    \tag{6.61}
 \end{eqnarray}\]</span></p>
 <p>En general para cualquier valor <span class="math inline">\(\tau \geq 2\)</span> tenemos que la autocovarianza y la función de autocorrelación serán:
 <span class="math display" id="eq:ARMA11Cov5">\[\begin{eqnarray}
     \gamma(\tau) = a_1 \gamma(\tau - 1) \\
-    \tag{6.60}
+    \tag{6.62}
     \end{eqnarray}\]</span></p>
 <p><span class="math display" id="eq:ARMA11Cov6">\[\begin{eqnarray}    
     \rho(\tau) = a_1 \rho(\tau - 1)
-    \tag{6.61}
+    \tag{6.63}
 \end{eqnarray}\]</span></p>
 <p>Por ejemplo, para el caso de <span class="math inline">\(\tau = 1\)</span> tendríamos:
 <span class="math display" id="eq:ARMA11Cov7">\[\begin{equation}
     \rho(1) = \frac{(a_1 - b_1)(1 - a_1 b_1)}{1 + b_1^2 - 2 a_1 b_1}
-    \tag{6.62}
+    \tag{6.64}
 \end{equation}\]</span></p>
 <p>De esta forma, la función de autocorrelación oscilará en razón de los valores que tome <span class="math inline">\(a_1\)</span> y <span class="math inline">\(b_1\)</span>.</p>
 </div>
-<div id="armap-q" class="section level3" number="6.3.2">
+<div id="armap-q" class="section level3" number="6.4.2">
 <h3>
-<span class="header-section-number">6.3.2</span> ARMA(p, q)<a class="anchor" aria-label="anchor" href="#armap-q"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.4.2</span> ARMA(p, q)<a class="anchor" aria-label="anchor" href="#armap-q"><i class="fas fa-link"></i></a>
 </h3>
 <p>La especificación general de un <span class="math inline">\(ARMA(p, q)\)</span> (donde <span class="math inline">\(p, q \in \mathbb{N}\)</span>) puede ser descrita por la siguiente ecuación:
 <span class="math display" id="eq:ARMApqEq">\[\begin{eqnarray}
     X_t &amp; = &amp; \delta + a_1 X_{t - 1} + a_2 X_{t - 2} + \ldots + a_p X_{t - p} \nonumber \\
     &amp;   &amp; + U_t - b_1 U_{t - 1} - b_2  U_{t - 2} - \ldots - b_q  U_{t - q}
-    \tag{6.63}
+    \tag{6.65}
 \end{eqnarray}\]</span></p>
 <p>Donde <span class="math inline">\(U_t\)</span> es un proceso puramente aleatorio, y <span class="math inline">\(X_t\)</span> puede ser modelada en niveles o en diferencias (ya sea en logaritmos o sin transformación logarítmica).</p>
-<p>Mediante el uso del operador rezago se puede escribir la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMApqEq">(6.63)</a> como:
+<p>Mediante el uso del operador rezago se puede escribir la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMApqEq">(6.65)</a> como:
 <span class="math display" id="eq:ARMApqEQLag">\[\begin{equation}
     (1 - a_1 L - a_2 L^2 - \ldots - a_p L^p) X_t = \delta + (1 - b_1 L - b_2 L^2 - \ldots - b_q L^q) U_t
-    \tag{6.64}
+    \tag{6.66}
 \end{equation}\]</span></p>
-<p>En la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMApqEQLag">(6.64)</a> definamos dos polinomios: <span class="math inline">\(\alpha(L) = (1 - a_1 L - a_2 L^2 - \ldots - a_p L^p)\)</span> y <span class="math inline">\(\beta(L) = (1 - b_1 L - b_2 L^2 - \ldots - b_q L^q)\)</span>. Así, podemos reescribir la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMApqEQLag">(6.64)</a> como:
+<p>En la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMApqEQLag">(6.66)</a> definamos dos polinomios: <span class="math inline">\(\alpha(L) = (1 - a_1 L - a_2 L^2 - \ldots - a_p L^p)\)</span> y <span class="math inline">\(\beta(L) = (1 - b_1 L - b_2 L^2 - \ldots - b_q L^q)\)</span>. Así, podemos reescribir la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMApqEQLag">(6.66)</a> como:
 <span class="math display" id="eq:ARMApqEQLag1">\[\begin{equation}
     \alpha(L) X_t = \delta + \beta(L) U_t
-    \tag{6.65}
+    \tag{6.67}
 \end{equation}\]</span></p>
 <p>Asumiendo que existe el polinomio inverso tal que: <span class="math inline">\(\alpha(L)^{-1}\alpha(L) = 1\)</span>.La solución entonces puede ser escrita como:
 <span class="math display" id="eq:ARMApqWold">\[\begin{eqnarray}
     X_t &amp; = &amp; \alpha(L)^{-1} \delta + \alpha(L)^{-1} \beta(L) U_t \nonumber \\
     &amp; = &amp; \frac{\delta}{1 - a_1 - a_2 - \ldots - a_p} + \frac{\beta(L)}{\alpha(L)} U_t \nonumber \\
     &amp; = &amp; \frac{\delta}{1 - a_1 - a_2 - \ldots - a_p} + U_t + \psi_1 L U_t + \psi_2 L^2 U_t + \ldots
-    \tag{6.66}
+    \tag{6.68}
 \end{eqnarray}\]</span></p>
-<p>Donde la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMApqWold">(6.66)</a> nos permite interpretar que un ARMA(p, q) se puede reexpresar e interpreetar como un <span class="math inline">\(MA(\infty)\)</span> y donde las condiciones para la estabilidad de la solución y la invertibilidad es que las ráices de los polinomios característicos <span class="math inline">\(\alpha(L)\)</span> y <span class="math inline">\(\beta(L)\)</span> son en valor absoluto menores a 1.</p>
-<p>Adicionalmente, la fracción en la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMApqWold">(6.66)</a> se puede descomponer como en la forma de Wold:
+<p>Donde la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMApqWold">(6.68)</a> nos permite interpretar que un ARMA(p, q) se puede reexpresar e interpreetar como un <span class="math inline">\(MA(\infty)\)</span> y donde las condiciones para la estabilidad de la solución y la invertibilidad es que las ráices de los polinomios característicos <span class="math inline">\(\alpha(L)\)</span> y <span class="math inline">\(\beta(L)\)</span> son en valor absoluto menores a 1.</p>
+<p>Adicionalmente, la fracción en la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMApqWold">(6.68)</a> se puede descomponer como en la forma de Wold:
 <span class="math display" id="eq:ARMApqWold1">\[\begin{equation}
     \frac{\beta(L)}{\alpha(L)} = 1 + \psi_1 L + \psi_2 L^2 + \ldots
-    \tag{6.67}
+    \tag{6.69}
 \end{equation}\]</span></p>
-<p>Bajo los supuestos de estacionariedad del componente <span class="math inline">\(U_t\)</span>, los valores de la media y varianza de un proceso <span class="math inline">\(ARMA(p, q)\)</span> serán como describimos ahora. Para el caso de la media podemos partir de la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMApqWold">(6.66)</a> para generar:
+<p>Bajo los supuestos de estacionariedad del componente <span class="math inline">\(U_t\)</span>, los valores de la media y varianza de un proceso <span class="math inline">\(ARMA(p, q)\)</span> serán como describimos ahora. Para el caso de la media podemos partir de la ecuación <a href="procesos-estacionarios-univariados.html#eq:ARMApqWold">(6.68)</a> para generar:
 <span class="math display" id="eq:ARMApqWold2">\[\begin{eqnarray}
     \mathbb{E}[X_t] &amp; = &amp; \mathbb{E}\left[ \frac{\delta}{1 - a_1 - a_2 - \ldots - a_p} + U_t + \psi_1 U_{t-1} + \psi_2 U_{t-2} + \ldots \right] \nonumber \\
     &amp; = &amp; \frac{\delta}{1 - a_1 - a_2 - \ldots - a_p} \nonumber \\
     &amp; = &amp; \mu
-    \tag{6.68}
+    \tag{6.70}
 \end{eqnarray}\]</span></p>
 <p>Esta expresión indica que en general un proceso <span class="math inline">\(ARMA(p, q)\)</span> converge a una media idéntica a la de un porceso <span class="math inline">\(AR(p)\)</span>. Para determinar la varianza utilizaremos la misma estratégia que hemos utilizado para otros modelos <span class="math inline">\(AR(p)\)</span> y <span class="math inline">\(MA(q)\)</span>.</p>
 <p>Sin pérdida de generalidad podemos asumir que <span class="math inline">\(\delta = 0\)</span>, lo que implica que <span class="math inline">\(\mu = 0\)</span>, de lo que podemos establecer una expresión de autocovarianzas para cualquier valor <span class="math inline">\(\tau = 0, 1, 2, \ldots\)</span>:
@@ -1395,10 +1440,312 @@ Figure 6.15: Diferencia entre la serie de tiempo original de precios de AMZN y s
     &amp;   &amp; + U_t - b_1 U_{t - 1} - b_2  U_{t - 2} - \ldots - b_q  U_{t - q})] \nonumber \\
     &amp; = &amp; a_1 \gamma(\tau - 1) + a_2 \gamma(\tau - 2) + \ldots + a_p \gamma(\tau - p) \nonumber \\
     &amp;   &amp; + \mathbb{E}[X_{t-\tau} U_{t}] - b_1  \mathbb{E}[X_{t-\tau} U_{t-1}] - \ldots  - b_q  \mathbb{E}[X_{t-\tau} U_{t-q}]
-    \tag{6.69}
+    \tag{6.71}
 \end{eqnarray}\]</span></p>
-
 </div>
+</div>
+<div id="selección-de-las-constantes-p-q-d-en-un-arp-un-maq-un-armap-q-o-un-arimap-d-q" class="section level2" number="6.5">
+<h2>
+<span class="header-section-number">6.5</span> Selección de las constantes p, q, d en un AR(p), un MA(q), un ARMA(p, q) o un ARIMA(p, d, q)<a class="anchor" aria-label="anchor" href="#selecci%C3%B3n-de-las-constantes-p-q-d-en-un-arp-un-maq-un-armap-q-o-un-arimap-d-q"><i class="fas fa-link"></i></a>
+</h2>
+<p>Respecto de cómo estimar un proceso ARMA(p, q) –en general utilizaremos este modelo para discutir, pero lo planteado en esta sección es igualmente aplicable en cualquier otro caso como aquellos modelos que incluyen variables exogénas– existen diversas formas de estimar los paramétros <span class="math inline">\(a_i\)</span> y <span class="math inline">\(b_i\)</span>: i) por máxima verosimilitd y ii) por mínimos cuadrados órdinarios. El primer caso requiere que conozcamos la distribución del proceso aleatorio <span class="math inline">\(U_t\)</span>. El segundo, por el contrario, no requiere el mismo supuesto. No obstante, para el curso utilizaremos el método de máxima verosimilitud.</p>
+<p>Otra duda que debe quedar hasta el momento es ¿cómo determinar el orden <span class="math inline">\(p\)</span> y <span class="math inline">\(q\)</span> del proceso ARMA(p, q)? La manera más convencional y formal que existe para tal efecto es utilizar los criterios de información. Así, el orden se elije de acuerdo a aquel críterio de información que resulta ser el mínimo. En el caso de <span class="math inline">\(d\)</span> se selecciona revisando la gráfica que parezca más estacionaria–más adelante mostraremos un proceso más formal para su selección.</p>
+<p>Los criterios de información más comunes son los siguientes:</p>
+<ol style="list-style-type: decimal">
+<li><p>FPE (Final Prediction Error):
+<span class="math display" id="eq:ls1">\[\begin{equation}
+FPE = \frac{T+m}{T-m}\frac{1}{T}\sum_{t=1}^{T} \left( \hat{U}_t^{(p)} \right) ^2
+\tag{6.72}
+\end{equation}\]</span></p></li>
+<li><p>Akaike:
+<span class="math display" id="eq:ls2">\[\begin{equation}
+AIC = ln \left[ \frac{1}{T} \sum_{t=1}^{T} \left( \hat{U}_t^{(p)} \right) ^2 \right] + m \frac{2}{T}
+     \tag{6.73}
+\end{equation}\]</span></p></li>
+<li><p>Schwarz:
+<span class="math display" id="eq:ls3">\[\begin{equation}
+SC = ln \left[ \frac{1}{T} \sum_{t=1}^{T} \left( \hat{U}_t^{(p)} \right) ^2 \right] + m \frac{ln(T)}{T}
+   \tag{6.74}
+\end{equation}\]</span></p></li>
+<li><p>Hannan - Quinn:
+<span class="math display" id="eq:ls4">\[\begin{equation}
+HQ = ln \left[ \frac{1}{T} \sum_{t=1}^{T} \left( \hat{U}_t^{(p)} \right) ^2 \right] + m \frac{2 ln(ln(T))}{T}
+   \tag{6.75}
+\end{equation}\]</span></p></li>
+</ol>
+<p>Donde <span class="math inline">\(\hat{U}_t^{(p)}\)</span> son los residuales estimados mediante un proceso ARIMA y <span class="math inline">\(m\)</span> es el número de parametros estimados: <span class="math inline">\(m = p + q + 0 + 1\)</span> (ya que asumimos que <span class="math inline">\(d = 0\)</span>). Una propiedad que no se debe perder de vista es que los criterios de información cumplen la siguiente relación:
+<span class="math display" id="eq:ls5">\[\begin{equation}
+    orden(SC) \leq orden(HQ) \leq orden(AIC)
+    \tag{6.76}
+\end{equation}\]</span></p>
+<p>Por esta razón, durante el curso solo utilizaremos el criterio se Akaike para determinar el orden óptimo del proceso ARMA, ya que ello garantiza el orden más grande posible.</p>
+<p>Veamos el ejemplo.</p>
+<div id="ejemplo-arma" class="section level3" number="6.5.1">
+<h3>
+<span class="header-section-number">6.5.1</span> Ejemplo ARMA<a class="anchor" aria-label="anchor" href="#ejemplo-arma"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para este caso coemzaremos por agregar dos series de tiempo. Una correspone a una transformación logarítmica de los valores de los precios y, otra, corresponde la diferentcia logaritmica. Esto dado que:
+<span class="math display">\[log(X_t)-log(X_{t-k})\sim\frac{X_t-X_{t-k}}{X_t}\]</span>.</p>
+<p>Tranformacion de la serie original</p>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#original</span></span>
+<span><span class="va">price_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#logartimo</span></span>
+<span><span class="va">lprice_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span>, frequency <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span>
+<span><span class="co">#diferencias logaritmicas(cambio porcential)</span></span>
+<span><span class="va">dlprice_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span><span class="op">-</span><span class="fu">lag</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span>,<span class="fl">1</span><span class="op">)</span>, frequency <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code></pre></div>
+<p>Las tres series</p>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>, xlab <span class="op">=</span> <span class="st">"Tiempo"</span>, </span>
+<span>     main <span class="op">=</span> <span class="st">"Precios de apertura"</span>,</span>
+<span>     col <span class="op">=</span> <span class="st">"darkgreen"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lprice_amazn_ts</span>, xlab <span class="op">=</span> <span class="st">"Tiempo"</span>, </span>
+<span>     main <span class="op">=</span> <span class="st">"LN Precios de apertura"</span>,</span>
+<span>     col <span class="op">=</span> <span class="st">"darkblue"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">dlprice_amazn_ts</span>, xlab <span class="op">=</span> <span class="st">"Tiempo"</span>, </span>
+<span>     main <span class="op">=</span> <span class="st">"Diff LN de precios de apertura"</span>, </span>
+<span>     col <span class="op">=</span> <span class="st">"darkred"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="07-PE_Univariados_files/figure-html/unnamed-chunk-15-1.png" width="100%" style="display: block; margin: auto;"></div>
+<p>Como lo vimos en las figuras <a href="procesos-estacionarios-univariados.html#fig:pacfamzn">6.9</a> y <a href="procesos-estacionarios-univariados.html#fig:acfamzn">6.10</a>, es claro que debemos usar un valor <span class="math inline">\(q\)</span> de <span class="math inline">\(1\)</span> y <span class="math inline">\(p\)</span> de <span class="math inline">\(1\)</span>. Pero tambien necesitamos diferenciar, lo cual corresponde al valor <span class="math inline">\(d\)</span>. Así pues, dado que en las funciones de autocorrelacion solo vemos un pico arriba de la linea punteada azul, podemos asumir que el valor de diferenciación debe ser uno. Esto se debe seguir como regla de dedo, pero en general se debe usar el valor que minimice la desviacion estandar. Por tanto nuestro modelo debe ser <span class="math inline">\(arima(1,1,1)\)</span>.</p>
+<p>Utilizamos la funcion “auto.arima” para confirmar que nuestra serie de tiempo deba ser <span class="math inline">\(arima(1,1,1)\)</span>, el arima que debos usar es aquel que minimize el indice AIC.</p>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">auto.arima</span><span class="op">(</span><span class="va">price_amazn_ts</span>, trace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Fitting models using approximations to speed things up...</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  ARIMA(2,1,2)(1,0,1)[12] with drift         : 1528.26</span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,0)            with drift         : 1512.532</span></span>
+<span><span class="co">#&gt;  ARIMA(1,1,0)(1,0,0)[12] with drift         : 1522.422</span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,1)(0,0,1)[12] with drift         : 1509.916</span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,0)                               : 1512.493</span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,1)            with drift         : 1509.13</span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,1)(1,0,0)[12] with drift         : 1521.938</span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,1)(1,0,1)[12] with drift         : 1523.481</span></span>
+<span><span class="co">#&gt;  ARIMA(1,1,1)            with drift         : 1508.429</span></span>
+<span><span class="co">#&gt;  ARIMA(1,1,1)(1,0,0)[12] with drift         : 1521.993</span></span>
+<span><span class="co">#&gt;  ARIMA(1,1,1)(0,0,1)[12] with drift         : 1509.837</span></span>
+<span><span class="co">#&gt;  ARIMA(1,1,1)(1,0,1)[12] with drift         : 1523.466</span></span>
+<span><span class="co">#&gt;  ARIMA(1,1,0)            with drift         : 1509.457</span></span>
+<span><span class="co">#&gt;  ARIMA(2,1,1)            with drift         : 1511.497</span></span>
+<span><span class="co">#&gt;  ARIMA(1,1,2)            with drift         : 1510.476</span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,2)            with drift         : 1510.269</span></span>
+<span><span class="co">#&gt;  ARIMA(2,1,0)            with drift         : 1511.739</span></span>
+<span><span class="co">#&gt;  ARIMA(2,1,2)            with drift         : 1513.404</span></span>
+<span><span class="co">#&gt;  ARIMA(1,1,1)                               : 1508.952</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Now re-fitting the best model(s) without approximations...</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  ARIMA(1,1,1)            with drift         : 1510.998</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Best model: ARIMA(1,1,1)            with drift</span></span>
+<span><span class="co">#&gt; Series: price_amazn_ts </span></span>
+<span><span class="co">#&gt; ARIMA(1,1,1) with drift </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;           ar1     ma1   drift</span></span>
+<span><span class="co">#&gt;       -0.7405  0.5943  0.5371</span></span>
+<span><span class="co">#&gt; s.e.   0.1424  0.1551  0.3326</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; sigma^2 estimated as 31.89:  log likelihood=-751.41</span></span>
+<span><span class="co">#&gt; AIC=1510.83   AICc=1511   BIC=1524.73</span></span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ARIMA_price_amzn_ts_111</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,method <span class="op">=</span> <span class="st">"ML"</span><span class="op">)</span></span>
+<span><span class="va">ARIMA_price_amzn_pl_111</span><span class="op">&lt;-</span><span class="fu">Arima</span><span class="op">(</span><span class="va">price_amazn_ts</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,method <span class="op">=</span> <span class="st">"ML"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table style="text-align:center" class="table table-sm">
+<caption>
+<strong>ARMA(1,1,1) de los precios de apertura de AMZN</strong>
+</caption>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="1" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+price_amazn_ts
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+ar1
+</td>
+<td>
+-0.744<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.141)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+ma1
+</td>
+<td>
+0.603<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.153)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+239
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Log Likelihood
+</td>
+<td>
+-752.705
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+sigma<sup>2</sup>
+</td>
+<td>
+31.837
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Akaike Inf. Crit.
+</td>
+<td>
+1,511.411
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td style="text-align:right">
+<sup><em></em></sup>p&lt;0.1; <sup><strong></strong></sup>p&lt;0.05; <sup></sup>p&lt;0.01
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td style="text-align:right">
+(p&lt;0.1)=[*], (p&lt;0.05)=[**], (p&lt;0.01)=[***]
+</td>
+</tr>
+</table></div>
+<p>Raices MA(A):</p>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">ARIMA_price_amzn_ts_111</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:amazn20rootma1"></span>
+<img src="07-PE_Univariados_files/figure-html/amazn20rootma1-1.png" alt="Raices ARMA(1) Inversas de la serie de tiempo" width="100%"><p class="caption">
+Figure 6.16: Raices ARMA(1) Inversas de la serie de tiempo
+</p>
+</div>
+<p>Dado esto, sabemos claramente que podremos analizar de mejor manera estos valores y, en consecuencia, hacer mejores estimaciones.</p>
+</div>
+</div>
+<div id="pronósticos" class="section level2" number="6.6">
+<h2>
+<span class="header-section-number">6.6</span> Pronósticos<a class="anchor" aria-label="anchor" href="#pron%C3%B3sticos"><i class="fas fa-link"></i></a>
+</h2>
+<p>Para pronósticar el valor de la serie es necesario determinar cuál es el valor esperado de la serie en un momento <span class="math inline">\(t + \tau\)</span> condicional en que ésta se comporta como un <span class="math inline">\(AR(p)\)</span>, un <span class="math inline">\(MA(q)\)</span> o un <span class="math inline">\(ARMA(p, q)\)</span> y a que los valores antes de <span class="math inline">\(t\)</span> están dados. Por lo que el pronóstico de la serie estará dado por una expresión:</p>
+<p><span class="math display" id="eq:ARMApqFor">\[\begin{eqnarray}
+    \mathbb{E}_t[X_{t+\tau}] = \delta + a_1 \mathbb{E}_t[X_{t+\tau-1}] + a_2 \mathbb{E}_t[X_{t+\tau-2}] + \ldots + + a_p \mathbb{E}_t[X_{t+\tau-p}]
+    \tag{6.77}
+\end{eqnarray}\]</span></p>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ARIMA_price_amzn_ts_111_F</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">ARIMA_price_amzn_ts_111</span>, n.ahead <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span>
+<span><span class="va">ARIMA_price_amzn_ts_111_F</span></span>
+<span><span class="co">#&gt; $pred</span></span>
+<span><span class="co">#&gt;           Jan      Feb      Mar      Apr      May      Jun</span></span>
+<span><span class="co">#&gt; 2022                                                      </span></span>
+<span><span class="co">#&gt; 2023 128.1292 129.7641 128.5484 129.4524 128.7802 129.2800</span></span>
+<span><span class="co">#&gt;           Jul      Aug      Sep      Oct      Nov      Dec</span></span>
+<span><span class="co">#&gt; 2022                            131.3473 127.3711 130.3278</span></span>
+<span><span class="co">#&gt; 2023 128.9083 129.1847 128.9792                           </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $se</span></span>
+<span><span class="co">#&gt;            Jan       Feb       Mar       Apr       May</span></span>
+<span><span class="co">#&gt; 2022                                                  </span></span>
+<span><span class="co">#&gt; 2023 10.483308 11.758574 12.810074 13.849268 14.768530</span></span>
+<span><span class="co">#&gt;            Jun       Jul       Aug       Sep       Oct</span></span>
+<span><span class="co">#&gt; 2022                                          5.642432</span></span>
+<span><span class="co">#&gt; 2023 15.666911 16.493117 17.296433 18.052249          </span></span>
+<span><span class="co">#&gt;            Nov       Dec</span></span>
+<span><span class="co">#&gt; 2022  7.438623  9.214713</span></span>
+<span><span class="co">#&gt; 2023</span></span></code></pre></div>
+<p>Valores en la base de datos original:</p>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pred</span><span class="op">&lt;-</span> <span class="fu">forecast</span><span class="op">(</span><span class="va">ARIMA_price_amzn_ts_111</span>,h<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">pred1</span> <span class="op">&lt;-</span> <span class="va">pred</span><span class="op">$</span><span class="va">mean</span></span>
+<span><span class="va">union</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.union.html">ts.union</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>,<span class="va">pred1</span><span class="op">)</span></span>
+<span><span class="va">df.pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">union</span><span class="op">)</span></span>
+<span><span class="va">df.pred</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">df.pred</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span><span class="va">df.pred</span><span class="op">$</span><span class="va">complete</span> <span class="op">&lt;-</span> <span class="va">df.pred</span><span class="op">$</span><span class="va">price_amazn_ts</span><span class="op">+</span><span class="va">df.pred</span><span class="op">$</span><span class="va">pred1</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df.pred</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   price_amazn_ts pred1 complete</span></span>
+<span><span class="co">#&gt; 1         0.8275     0   0.8275</span></span>
+<span><span class="co">#&gt; 2         0.9610     0   0.9610</span></span>
+<span><span class="co">#&gt; 3         1.2075     0   1.2075</span></span>
+<span><span class="co">#&gt; 4         0.9595     0   0.9595</span></span>
+<span><span class="co">#&gt; 5         1.0970     0   1.0970</span></span>
+<span><span class="co">#&gt; 6         1.1075     0   1.1075</span></span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="07-PE_Univariados_files/figure-html/unnamed-chunk-21-1.png" width="672"></div>
+
 </div>
 </div>
 
@@ -1425,21 +1772,25 @@ Figure 6.15: Diferencia entre la serie de tiempo original de precios de AMZN y s
 <li><a class="nav-link" href="#ar1"><span class="header-section-number">6.1.1</span> AR(1)</a></li>
 <li><a class="nav-link" href="#ar2"><span class="header-section-number">6.1.2</span> AR(2)</a></li>
 <li><a class="nav-link" href="#arp"><span class="header-section-number">6.1.3</span> AR(p)</a></li>
-<li><a class="nav-link" href="#arp-1"><span class="header-section-number">6.1.4</span> AR(p)</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#funci%C3%B3n-de-autocorrelaci%C3%B3n-parcial"><span class="header-section-number">6.2</span> Función de Autocorrelación Parcial</a></li>
+<li>
+<a class="nav-link" href="#procesos-de-medias-m%C3%B3viles-ma"><span class="header-section-number">6.3</span> Procesos de Medias Móviles (MA)</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#ma1"><span class="header-section-number">6.3.1</span> MA(1)</a></li>
+<li><a class="nav-link" href="#maq"><span class="header-section-number">6.3.2</span> MA(q)</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#procesos-de-medias-m%C3%B3viles-ma"><span class="header-section-number">6.2</span> Procesos de Medias Móviles (MA)</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#ma1"><span class="header-section-number">6.2.1</span> MA(1)</a></li>
-<li><a class="nav-link" href="#maq"><span class="header-section-number">6.2.2</span> MA(q)</a></li>
+<a class="nav-link" href="#procesos-armap-q-y-arimap-d-q"><span class="header-section-number">6.4</span> Procesos ARMA(p, q) y ARIMA(p, d, q)</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#arma1-1"><span class="header-section-number">6.4.1</span> ARMA(1, 1)</a></li>
+<li><a class="nav-link" href="#armap-q"><span class="header-section-number">6.4.2</span> ARMA(p, q)</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#procesos-armap-q-y-arimap-d-q"><span class="header-section-number">6.3</span> Procesos ARMA(p, q) y ARIMA(p, d, q)</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#arma1-1"><span class="header-section-number">6.3.1</span> ARMA(1, 1)</a></li>
-<li><a class="nav-link" href="#armap-q"><span class="header-section-number">6.3.2</span> ARMA(p, q)</a></li>
-</ul>
+<a class="nav-link" href="#selecci%C3%B3n-de-las-constantes-p-q-d-en-un-arp-un-maq-un-armap-q-o-un-arimap-d-q"><span class="header-section-number">6.5</span> Selección de las constantes p, q, d en un AR(p), un MA(q), un ARMA(p, q) o un ARIMA(p, d, q)</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#ejemplo-arma"><span class="header-section-number">6.5.1</span> Ejemplo ARMA</a></li></ul>
 </li>
+<li><a class="nav-link" href="#pron%C3%B3sticos"><span class="header-section-number">6.6</span> Pronósticos</a></li>
 </ul>
 
       <div class="book-extra">
@@ -1457,7 +1808,7 @@ Figure 6.15: Diferencia entre la serie de tiempo original de precios de AMZN y s
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-09-28.</p>
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-10-01.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -571,10 +571,10 @@ pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl,forecast,stats
 #Primero determinamos el lapso de tiempo
 pd<-Sys.Date()-(365*20) #primer fecha
 pd
-#> [1] "2002-10-03"
+#> [1] "2002-10-06"
 ld<-Sys.Date() #última fecha
 ld
-#> [1] "2022-09-28"
+#> [1] "2022-10-01"
 #Intervalos de tiempo
 int<-"monthly"
 
@@ -615,8 +615,8 @@ ret_20_amazn<-ggplot(data=data_precio_amzn, aes(x=ref.date))+
 ret_20_amazn
 ```
 
-<div class="figure">
-<img src="07-PE_Univariados_files/figure-html/amazn20-1.png" alt="Serie de tiempo de los precios de apertura de año en los últimos 20 años" width="672" />
+<div class="figure" style="text-align: center">
+<img src="07-PE_Univariados_files/figure-html/amazn20-1.png" alt="Serie de tiempo de los precios de apertura de año en los últimos 20 años" width="100%" />
 <p class="caption">(\#fig:amazn20)Serie de tiempo de los precios de apertura de año en los últimos 20 años</p>
 </div>
 
@@ -632,7 +632,7 @@ head(data_precio_amzn)#dado que ya estaba en orden cronológico nuestro df no ca
 #> # A tibble: 6 × 10
 #>   ticker ref.date     volume price…¹ price…² price…³ price…⁴
 #>   <chr>  <date>        <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
-#> 1 AMZN   2002-10-03   3.72e9   0.840    1.01   0.818   0.968
+#> 1 AMZN   2002-10-07   3.44e9   0.828    1.01   0.818   0.968
 #> 2 AMZN   2002-11-01   4.13e9   0.961    1.23   0.91    1.17 
 #> 3 AMZN   2002-12-02   3.11e9   1.21     1.25   0.922   0.944
 #> 4 AMZN   2003-01-02   3.38e9   0.960    1.16   0.928   1.09 
@@ -647,7 +647,7 @@ price_amazn_ts<-ts(data_precio_amzn$price.open, frequency = 12)
 plot(price_amazn_ts)#de esta manera podemos ver que se cargo bien debido a que es igual al ggplot
 ```
 
-<img src="07-PE_Univariados_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="07-PE_Univariados_files/figure-html/unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;" />
 
 Dado que queremos saber si existe un proceso $AR(2)$ en estos cambio
 debemos calcularlo. Para ello utilizamos la función $lm()$ que realizará una regresión lineal y veremos la relación de los valores con sus valores pasados en $t-2$:
@@ -665,28 +665,6 @@ lags<-function(mat,p){
 
 df.lags<-lags(priceopen_amazn,2)
 ar2_amazn<-lm(V1~., data=df.lags)
-summary(ar2_amazn)
-#> 
-#> Call:
-#> lm(formula = V1 ~ ., data = df.lags)
-#> 
-#> Residuals:
-#>     Min      1Q  Median      3Q     Max 
-#> -40.648  -0.933  -0.385   0.490  25.418 
-#> 
-#> Coefficients:
-#>             Estimate Std. Error t value Pr(>|t|)    
-#> (Intercept)  0.58019    0.45992   1.261   0.2084    
-#> V2           0.84000    0.06477  12.968   <2e-16 ***
-#> V3           0.16096    0.06522   2.468   0.0143 *  
-#> ---
-#> Signif. codes:  
-#> 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#> 
-#> Residual standard error: 5.696 on 235 degrees of freedom
-#>   (2 observations deleted due to missingness)
-#> Multiple R-squared:  0.9876,	Adjusted R-squared:  0.9875 
-#> F-statistic:  9359 on 2 and 235 DF,  p-value: < 2.2e-16
 ```
 
 Veamos la tabla de la regresión lineal:
@@ -706,7 +684,7 @@ Veamos la tabla de la regresión lineal:
 <tr><td style="text-align:left">R<sup>2</sup></td><td>0.988</td></tr>
 <tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.987</td></tr>
 <tr><td style="text-align:left">Residual Std. Error</td><td>5.696 (df = 235)</td></tr>
-<tr><td style="text-align:left">F Statistic</td><td>9,358.763<sup>***</sup> (df = 2; 235) (p = 0.000)</td></tr>
+<tr><td style="text-align:left">F Statistic</td><td>9,358.764<sup>***</sup> (df = 2; 235) (p = 0.000)</td></tr>
 <tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td style="text-align:left">(p<0.1)=[*], (p<0.05)=[**], (p<0.01)=[***]</td></tr>
 </table>
 
@@ -723,11 +701,11 @@ AR_price_amazn_pl<-Arima(price_amazn_ts,order=c(2,0,0),method = "ML")
 Veamos si las raices inversas mantienen la estabilidad al ser menores a 1.
 
 ```r
-plot.armaroots(arroots(AR_price_amazn_ts), main="Raices inversas de AR(2)")
+autoplot(AR_price_amazn_ts)+theme_light()
 ```
 
-<div class="figure">
-<img src="07-PE_Univariados_files/figure-html/amazn20root-1.png" alt="Raices AR(2) Inversas de la serie de tiempo" width="672" />
+<div class="figure" style="text-align: center">
+<img src="07-PE_Univariados_files/figure-html/amazn20root-1.png" alt="Raices AR(2) Inversas de la serie de tiempo" width="100%" />
 <p class="caption">(\#fig:amazn20root)Raices AR(2) Inversas de la serie de tiempo</p>
 </div>
 Claramente se puede en la Figura \@ref(fig:amazn20root) ver que los valores de las raices inversas están dentro del circulo unitario y, por consiguiente son menores a 1. Ahora veamos como se ve la estimación ajustada AR(2) con el plot original.
@@ -737,8 +715,8 @@ Claramente se puede en la Figura \@ref(fig:amazn20root) ver que los valores de l
 plot(AR_price_amazn_pl$x,col="black", main = "Diferencia entre la serie de tiempo original y AR(2)",xlab="Tiempo",ylab="Precio")+lines(fitted(AR_price_amazn_pl),col="blue")
 ```
 
-<div class="figure">
-<img src="07-PE_Univariados_files/figure-html/amazn20AR2-1.png" alt="Diferencia entre la serie de tiempo original de precios de AMZN y su AR(2)" width="672" />
+<div class="figure" style="text-align: center">
+<img src="07-PE_Univariados_files/figure-html/amazn20AR2-1.png" alt="Diferencia entre la serie de tiempo original de precios de AMZN y su AR(2)" width="100%" />
 <p class="caption">(\#fig:amazn20AR2)Diferencia entre la serie de tiempo original de precios de AMZN y su AR(2)</p>
 </div>
 
@@ -747,7 +725,6 @@ plot(AR_price_amazn_pl$x,col="black", main = "Diferencia entre la serie de tiemp
 ```
 Consecuentemente en la Figura \@ref(fig:amazn20AR2) es posible ver la manera en la que se suaviza un poco la línea lo cual debe ayudarnos a hacer una mejor estimación. Ahora veamos $AR(p)$.
 
-### AR(p)
 
 ### AR(p)
 
@@ -880,8 +857,8 @@ Veamos primero la función de autocorrelacion y el plot de los lags.
 pacf(price_amazn_ts, main="", lag.max = 60)
 ```
 
-<div class="figure">
-<img src="07-PE_Univariados_files/figure-html/pacfamzn-1.png" alt="Función de Autocorrelación parcial de la serie de tiempo de AMZN" width="672" />
+<div class="figure" style="text-align: center">
+<img src="07-PE_Univariados_files/figure-html/pacfamzn-1.png" alt="Función de Autocorrelación parcial de la serie de tiempo de AMZN" width="100%" />
 <p class="caption">(\#fig:pacfamzn)Función de Autocorrelación parcial de la serie de tiempo de AMZN</p>
 </div>
 
@@ -889,8 +866,8 @@ pacf(price_amazn_ts, main="", lag.max = 60)
 acf(price_amazn_ts, main="", lag.max = 60)
 ```
 
-<div class="figure">
-<img src="07-PE_Univariados_files/figure-html/acfamzn-1.png" alt="Función de Autocorrelación de la serie de tiempo de AMZN" width="672" />
+<div class="figure" style="text-align: center">
+<img src="07-PE_Univariados_files/figure-html/acfamzn-1.png" alt="Función de Autocorrelación de la serie de tiempo de AMZN" width="100%" />
 <p class="caption">(\#fig:acfamzn)Función de Autocorrelación de la serie de tiempo de AMZN</p>
 </div>
 
@@ -899,8 +876,8 @@ acf(price_amazn_ts, main="", lag.max = 60)
 lag.plot(price_amazn_ts, main="", lags=5)
 ```
 
-<div class="figure">
-<img src="07-PE_Univariados_files/figure-html/LAGamazn20-1.png" alt="5 plots de correlacion de los lags de la serie de tiempo de AMZN" width="672" />
+<div class="figure" style="text-align: center">
+<img src="07-PE_Univariados_files/figure-html/LAGamazn20-1.png" alt="5 plots de correlacion de los lags de la serie de tiempo de AMZN" width="100%" />
 <p class="caption">(\#fig:LAGamazn20)5 plots de correlacion de los lags de la serie de tiempo de AMZN</p>
 </div>
 Dado que se puede ver en las Figuras \@ref(fig:acfamzn), \@ref(fig:pacfamzn) y \@ref(fig:LAGamazn20) que los valores de lag=1 tienen correlación resulta relevante hacer un AR(1), que corresponde a 1 años. Así pues:
@@ -921,8 +898,8 @@ ar20_amazn<-lm(V1~., data=df.lags.1)
 
 <table style="text-align:center"><caption><strong>AR(1) de los precios de apertura de AMZN</strong></caption>
 <tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Statistic</td><td>N</td><td>Mean</td><td>St. Dev.</td><td>Min</td><td>Max</td></tr>
-<tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">V1</td><td>240</td><td>37.765</td><td>50.837</td><td>0.840</td><td>177.250</td></tr>
-<tr><td style="text-align:left">V2</td><td>239</td><td>37.395</td><td>50.620</td><td>0.840</td><td>177.250</td></tr>
+<tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">V1</td><td>240</td><td>37.765</td><td>50.837</td><td>0.828</td><td>177.250</td></tr>
+<tr><td style="text-align:left">V2</td><td>239</td><td>37.395</td><td>50.620</td><td>0.828</td><td>177.250</td></tr>
 <tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td colspan="6" style="text-align:left">(p<0.1)=[*], (p<0.05)=[**], (p<0.01)=[***]</td></tr>
 </table>
 
@@ -930,11 +907,11 @@ ar20_amazn<-lm(V1~., data=df.lags.1)
 Raices:
 
 ```r
-plot.armaroots(arroots(AR_price_amazn_ts_1), main="Raices inversas de AR(1)")
+autoplot(AR_price_amazn_ts_1)+theme_light()
 ```
 
-<div class="figure">
-<img src="07-PE_Univariados_files/figure-html/amazn20root20-1.png" alt="Raices AR(1) Inversas de la serie de tiempo" width="672" />
+<div class="figure" style="text-align: center">
+<img src="07-PE_Univariados_files/figure-html/amazn20root20-1.png" alt="Raices AR(1) Inversas de la serie de tiempo" width="100%" />
 <p class="caption">(\#fig:amazn20root20)Raices AR(1) Inversas de la serie de tiempo</p>
 </div>
 
@@ -944,14 +921,71 @@ Plot:
 plot(AR_price_amazn_pl_1$x,col="black", main = "Diferencia entre la serie de tiempo original y AR(1)",xlab="Tiempo",ylab="Precio")+lines(fitted(AR_price_amazn_pl_1),col="red")
 ```
 
-<div class="figure">
-<img src="07-PE_Univariados_files/figure-html/amazn20AR20-1.png" alt="Diferencia entre la serie de tiempo original de precios de AMZN y su AR(1)" width="672" />
+<div class="figure" style="text-align: center">
+<img src="07-PE_Univariados_files/figure-html/amazn20AR20-1.png" alt="Diferencia entre la serie de tiempo original de precios de AMZN y su AR(1)" width="100%" />
 <p class="caption">(\#fig:amazn20AR20)Diferencia entre la serie de tiempo original de precios de AMZN y su AR(1)</p>
 </div>
 
 ```
 #> integer(0)
 ```
+## Función de Autocorrelación Parcial
+
+Ahora introduciremos el concepto de Función de Autocorrelación Parcial (PACF, por sus siglas en inglés). Primero, dadas las condiciones de estabilidad y de convergencia, si suponemos que un proceso AR, MA, ARMA o ARIMA tienen toda la información de los rezagos de la serie en conjunto y toda la información de los promedio móviles del término de error, resulta importante construir una métrica para distinguir el efecto de $X_{t - \tau}$ o el efecto de $U_{t - \tau}$ (para cualquier $\tau$) sobre $X_t$ de forma individual.
+
+La idea es construir una métrica de la correlación que existe entre las diferentes varibles aleatorias, si para tal efecto se ha controlado el efecto del resto de la información. Así, podemos definir la ecuación que puede responder a este planteamiento como:
+\begin{equation}
+    X_t = \phi_{k1} X_{t-1} + \phi_{k2} X_{t-2} + \ldots + \phi_{kk} X_{t-k} + U_t
+    (\#eq:PACFEq)
+\end{equation}
+
+Donde $\phi_{ki}$ es el coeficiente de la variable dada con el rezago $i$ si el proceso tiene un órden $k$. Así, los coeficientes $\phi_{kk}$ son los coeficientes de la autocorrelación parcial (considerando un proceso AR(k)). Observemos que la autocorrelaicón parcial mide la correlación entre $X_t$ y $X_{t-k}$ que se mantiene cuando el efecto de las variables $X_{t-1}$, $X_{t-2}$, $\ldots$ y $X_{t-k-1}$ en $X_{t}$ y $X_{t-k}$ ha sido eliminado.
+
+Dada la expresión considerada en la ecuación \@ref(eq:PACFEq), podemos resolver el problema de establecer el valor de cada $\phi_{ki}$ mediante la solución del sistema que se representa en lo siguiente:
+
+Table: (\#tab:foo1) Relación entre la Función de autocorrelación y la Función de autocorrelación parcial de una serie $X_t$.
+
+|Modelo si:|Función de autocorrelación|Función de autocorrelación parcial|
+|:---:|:---:|:---:|
+| $MA(q)$ | Rompimientos en la función | No hay rompimientos |
+| $AR(q)$ | No hay rompimientos | Rompimientos en la función |
+
+\begin{equation}
+    \left[ 
+    \begin{array}{c}
+        \rho(1) \\
+        \rho(2) \\
+        \vdots \\
+        \rho(k)
+    \end{array} 
+    \right]
+    = 
+    \left[ 
+    \begin{array}{c c c c}
+        1 & \rho(1) & \ldots & \rho(k - 1)\\
+        \rho(1) & 1 & \ldots & \rho(k - 2)\\
+        \rho(2) & \rho(1) & \ldots & \rho(k - 3)\\
+        \vdots & \vdots & \ldots & \vdots\\
+        \rho(k - 1) & \rho(k - 2) & \ldots & 1\\
+    \end{array} 
+    \right]
+    \left[ 
+    \begin{array}{c}
+        \phi_{k1} \\
+        \phi_{k2} \\
+        \phi_{k3} \\
+        \vdots \\
+        \phi_{kk} \\
+    \end{array} 
+    \right]
+    (\#eq:PACFEq1)    
+\end{equation}
+
+Del cual se puede derivar una solución, resoviendo por el método de cramer, o cualquier otro método que consideremos y que permita calcular la solución de sistemas de ecuaciones.
+
+Posterior al análisis analítico platearemos un enfoque para interpretar las funciones de autocorrelación y autocorrelación parcial. Este enfoque pretende aportar al principio de parcimonia, en el cual podemos identificar el número de parámetros que posiblemente puede describir mejor a la serie en un modelo ARMA(p, q).
+
+En el Cuadro \@ref(tab:foo1) se muestra un resumen de las caranterísticas que debemos observar para determinar el número de parámetros de cada uno de los componentes AR y MA. Lo anterior por observación de las funciones de autocorrelación y autocorrelación parcial. Este enfoque no es el más formal, más adelante implemtaremos uno más formal y que puede ser más claro de cómo determinar el númeto de parámetros.
 
 ## Procesos de Medias Móviles (MA)
 
@@ -1100,7 +1134,7 @@ Ahora veamos el ejemplo.
 #### Ejemplo MA(q)
 Cuando nos fijamos en las figuras \@ref(fig:pacfamzn) y \@ref(fig:acfamzn) es claro que hay un proceso MA(1). Es decir que picos de un año estan causando efectos en valores futuros. Así pues, escogemos un valor de $q=1$.
 
-Arima:
+MA:
 
 ```r
 MA_price_amazn_ts_1<-arima(price_amazn_ts,order=c(0,0,1),method = "ML")
@@ -1108,17 +1142,18 @@ MA_price_amazn_pl_1<-Arima(price_amazn_ts,order=c(0,0,1),method = "ML")
 ```
 
 
-Raices MA(A):
+Raices MA(1):
 
 ```r
-plot.armaroots(maroots(MA_price_amazn_ts_1), main="Raices inversas de MA(1)")
+autoplot(MA_price_amazn_ts_1)+theme_light()
 ```
 
-<div class="figure">
-<img src="07-PE_Univariados_files/figure-html/amazn20rootma1-1.png" alt="Raices MA(1) Inversas de la serie de tiempo" width="672" />
-<p class="caption">(\#fig:amazn20rootma1)Raices MA(1) Inversas de la serie de tiempo</p>
+<div class="figure" style="text-align: center">
+<img src="07-PE_Univariados_files/figure-html/amazn20rootma11-1.png" alt="Raices MA(1) Inversas de la serie de tiempo" width="100%" />
+<p class="caption">(\#fig:amazn20rootma11)Raices MA(1) Inversas de la serie de tiempo</p>
 </div>
-Dado que el valor de la raiz inversa de MA(1) en la Figura \@ref(fig:amazn20rootma1) sabemos que tenemos una serie convergente y estable.
+
+Dado que el valor de la raiz inversa de MA(1) en la Figura \@ref(fig:amazn20rootma11) sabemos que tenemos una serie convergente y estable.
 
 Plot:
 
@@ -1126,8 +1161,8 @@ Plot:
 plot(MA_price_amazn_pl_1$x,col="black", main = "Diferencia entre la serie de tiempo original y MA(1)",xlab="Tiempo",ylab="Precio")+lines(fitted(MA_price_amazn_pl_1),col="red")
 ```
 
-<div class="figure">
-<img src="07-PE_Univariados_files/figure-html/amazn20AR1-1.png" alt="Diferencia entre la serie de tiempo original de precios de AMZN y su AR(1)" width="672" />
+<div class="figure" style="text-align: center">
+<img src="07-PE_Univariados_files/figure-html/amazn20AR1-1.png" alt="Diferencia entre la serie de tiempo original de precios de AMZN y su AR(1)" width="100%" />
 <p class="caption">(\#fig:amazn20AR1)Diferencia entre la serie de tiempo original de precios de AMZN y su AR(1)</p>
 </div>
 
@@ -1141,6 +1176,7 @@ En la Figura \@ref(fig:amazn20AR1), es muy fácil ver que los efectos de los pic
 Hemos establecido algunas relaciones las de los porcesos AR y los procesos MA, es decir, cómo un $MA(q)$ de la serie $X_t$ puede ser reexpresada como un $AR(\infty)$ de la serie $U_t$, y viceversa un $AR(p)$ de la serie $X_t$ puede ser reeexpresada como un $MA(\infty)$.
 
 En este sentido, para cerrar esta sección veámos el caso de la especificación que conjunta ambos modelos en un modelo general conocido como $ARMA(p, q)$ o $ARIMA(p, d, q)$. La diferencia entre el primero y el segundo es las veces que su tuvo que diferenciar la serie analizada, registro que se lleva en el índice $d$ de los paramétros dentro del concepto $ARIMA(p, d, q)$. No obstante, en general nos referiremos al modelo como $ARMA(p, q)$ y dependerá del analista si modela la serie en niveles (por ejemplo, en logaritmos) o en diferencias logarítmicas (o diferencias sin logaritmos).
+
 
 
 
@@ -1322,3 +1358,223 @@ Sin pérdida de generalidad podemos asumir que $\delta = 0$, lo que implica que 
     &   & + \mathbb{E}[X_{t-\tau} U_{t}] - b_1  \mathbb{E}[X_{t-\tau} U_{t-1}] - \ldots  - b_q  \mathbb{E}[X_{t-\tau} U_{t-q}] 
     (\#eq:ARMApqWold3)
 \end{eqnarray}
+
+
+## Selección de las constantes p, q, d en un AR(p), un MA(q), un ARMA(p, q) o un ARIMA(p, d, q)
+
+Respecto de cómo estimar un proceso ARMA(p, q) --en general utilizaremos este modelo para discutir, pero lo planteado en esta sección es igualmente aplicable en cualquier otro caso como aquellos modelos que incluyen variables exogénas-- existen diversas formas de estimar los paramétros $a_i$ y $b_i$: i) por máxima verosimilitd y ii) por mínimos cuadrados órdinarios. El primer caso requiere que conozcamos la distribución del proceso aleatorio $U_t$. El segundo, por el contrario, no requiere el mismo supuesto. No obstante, para el curso utilizaremos el método de máxima verosimilitud.
+
+Otra duda que debe quedar hasta el momento es ¿cómo determinar el orden $p$ y $q$ del proceso ARMA(p, q)? La manera más convencional y formal que existe para tal efecto es utilizar los criterios de información. Así, el orden se elije de acuerdo a aquel críterio de información que resulta ser el mínimo. En el caso de $d$ se selecciona revisando la gráfica que parezca más estacionaria--más adelante mostraremos un proceso más formal para su selección.
+
+Los criterios de información más comunes son los siguientes:
+
+1. FPE (Final Prediction Error):
+\begin{equation}
+    FPE = \frac{T+m}{T-m}\frac{1}{T}\sum_{t=1}^{T} \left( \hat{U}_t^{(p)} \right) ^2
+    (\#eq:ls1)
+\end{equation}
+
+2. Akaike:
+\begin{equation}
+    AIC = ln \left[ \frac{1}{T} \sum_{t=1}^{T} \left( \hat{U}_t^{(p)} \right) ^2 \right] + m \frac{2}{T}
+        (\#eq:ls2)
+\end{equation}
+
+3. Schwarz:
+\begin{equation}
+    SC = ln \left[ \frac{1}{T} \sum_{t=1}^{T} \left( \hat{U}_t^{(p)} \right) ^2 \right] + m \frac{ln(T)}{T}
+      (\#eq:ls3)
+\end{equation}
+
+4. Hannan - Quinn:
+\begin{equation}
+    HQ = ln \left[ \frac{1}{T} \sum_{t=1}^{T} \left( \hat{U}_t^{(p)} \right) ^2 \right] + m \frac{2 ln(ln(T))}{T}
+      (\#eq:ls4)
+\end{equation}
+
+Donde $\hat{U}_t^{(p)}$ son los residuales estimados mediante un proceso ARIMA y $m$ es el número de parametros estimados: $m = p + q + 0 + 1$ (ya que asumimos que $d = 0$). Una propiedad que no se debe perder de vista es que los criterios de información cumplen la siguiente relación:
+\begin{equation}
+    orden(SC) \leq orden(HQ) \leq orden(AIC)
+    (\#eq:ls5)
+\end{equation}
+
+Por esta razón, durante el curso solo utilizaremos el criterio se Akaike para determinar el orden óptimo del proceso ARMA, ya que ello garantiza el orden más grande posible.
+
+Veamos el ejemplo.
+
+### Ejemplo ARMA
+Para este caso coemzaremos por agregar dos series de tiempo. Una correspone a una transformación logarítmica de los valores de los precios y, otra, corresponde la diferentcia logaritmica. Esto dado que:
+$$log(X_t)-log(X_{t-k})\sim\frac{X_t-X_{t-k}}{X_t}$$.
+
+
+Tranformacion de la serie original
+
+```r
+#original
+price_amazn_ts<-ts(data_precio_amzn$price.open, frequency = 12, start=c(2002,10))
+#logartimo
+lprice_amazn_ts<-ts(log(data_precio_amzn$price.open), frequency = 12)
+#diferencias logaritmicas(cambio porcential)
+dlprice_amazn_ts<-ts(log(data_precio_amzn$price.open)-lag(log(data_precio_amzn$price.open),1), frequency = 12)
+```
+
+Las tres series
+
+```r
+par(mfrow = c(3,1))
+plot(price_amazn_ts, xlab = "Tiempo", 
+     main = "Precios de apertura",
+     col = "darkgreen")
+
+plot(lprice_amazn_ts, xlab = "Tiempo", 
+     main = "LN Precios de apertura",
+     col = "darkblue")
+
+plot(dlprice_amazn_ts, xlab = "Tiempo", 
+     main = "Diff LN de precios de apertura", 
+     col = "darkred")
+```
+
+<img src="07-PE_Univariados_files/figure-html/unnamed-chunk-15-1.png" width="100%" style="display: block; margin: auto;" />
+
+
+Como lo vimos en las figuras \@ref(fig:pacfamzn) y \@ref(fig:acfamzn), es claro que debemos usar un valor $q$ de $1$ y $p$ de $1$. Pero tambien necesitamos diferenciar, lo cual corresponde al valor $d$. Así pues, dado que en las funciones de autocorrelacion solo vemos un pico arriba de la linea punteada azul, podemos asumir que el valor de diferenciación debe ser uno. Esto se debe seguir como regla de dedo, pero en general se debe usar el valor que minimice la desviacion estandar. Por tanto nuestro modelo debe ser $arima(1,1,1)$.
+
+Utilizamos la funcion "auto.arima" para confirmar que nuestra serie de tiempo deba ser $arima(1,1,1)$, el arima que debos usar es aquel que minimize el indice AIC.
+
+```r
+auto.arima(price_amazn_ts, trace=TRUE)
+#> 
+#>  Fitting models using approximations to speed things up...
+#> 
+#>  ARIMA(2,1,2)(1,0,1)[12] with drift         : 1528.26
+#>  ARIMA(0,1,0)            with drift         : 1512.532
+#>  ARIMA(1,1,0)(1,0,0)[12] with drift         : 1522.422
+#>  ARIMA(0,1,1)(0,0,1)[12] with drift         : 1509.916
+#>  ARIMA(0,1,0)                               : 1512.493
+#>  ARIMA(0,1,1)            with drift         : 1509.13
+#>  ARIMA(0,1,1)(1,0,0)[12] with drift         : 1521.938
+#>  ARIMA(0,1,1)(1,0,1)[12] with drift         : 1523.481
+#>  ARIMA(1,1,1)            with drift         : 1508.429
+#>  ARIMA(1,1,1)(1,0,0)[12] with drift         : 1521.993
+#>  ARIMA(1,1,1)(0,0,1)[12] with drift         : 1509.837
+#>  ARIMA(1,1,1)(1,0,1)[12] with drift         : 1523.466
+#>  ARIMA(1,1,0)            with drift         : 1509.457
+#>  ARIMA(2,1,1)            with drift         : 1511.497
+#>  ARIMA(1,1,2)            with drift         : 1510.476
+#>  ARIMA(0,1,2)            with drift         : 1510.269
+#>  ARIMA(2,1,0)            with drift         : 1511.739
+#>  ARIMA(2,1,2)            with drift         : 1513.404
+#>  ARIMA(1,1,1)                               : 1508.952
+#> 
+#>  Now re-fitting the best model(s) without approximations...
+#> 
+#>  ARIMA(1,1,1)            with drift         : 1510.998
+#> 
+#>  Best model: ARIMA(1,1,1)            with drift
+#> Series: price_amazn_ts 
+#> ARIMA(1,1,1) with drift 
+#> 
+#> Coefficients:
+#>           ar1     ma1   drift
+#>       -0.7405  0.5943  0.5371
+#> s.e.   0.1424  0.1551  0.3326
+#> 
+#> sigma^2 estimated as 31.89:  log likelihood=-751.41
+#> AIC=1510.83   AICc=1511   BIC=1524.73
+```
+
+```r
+ARIMA_price_amzn_ts_111<-arima(price_amazn_ts,order=c(1,1,1),method = "ML")
+ARIMA_price_amzn_pl_111<-Arima(price_amazn_ts,order=c(1,1,1),method = "ML")
+```
+
+
+<table style="text-align:center"><caption><strong>ARMA(1,1,1) de los precios de apertura de AMZN</strong></caption>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td><em>Dependent variable:</em></td></tr>
+<tr><td></td><td colspan="1" style="border-bottom: 1px solid black"></td></tr>
+<tr><td style="text-align:left"></td><td>price_amazn_ts</td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">ar1</td><td>-0.744<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.141)</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">ma1</td><td>0.603<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.153)</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>239</td></tr>
+<tr><td style="text-align:left">Log Likelihood</td><td>-752.705</td></tr>
+<tr><td style="text-align:left">sigma<sup>2</sup></td><td>31.837</td></tr>
+<tr><td style="text-align:left">Akaike Inf. Crit.</td><td>1,511.411</td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
+<tr><td style="text-align:left"></td><td style="text-align:right">(p<0.1)=[*], (p<0.05)=[**], (p<0.01)=[***]</td></tr>
+</table>
+
+Raices MA(A):
+
+```r
+autoplot(ARIMA_price_amzn_ts_111)+theme_light()
+```
+
+<div class="figure" style="text-align: center">
+<img src="07-PE_Univariados_files/figure-html/amazn20rootma1-1.png" alt="Raices ARMA(1) Inversas de la serie de tiempo" width="100%" />
+<p class="caption">(\#fig:amazn20rootma1)Raices ARMA(1) Inversas de la serie de tiempo</p>
+</div>
+
+Dado esto, sabemos claramente que podremos analizar de mejor manera estos valores y, en consecuencia, hacer mejores estimaciones.
+
+
+
+## Pronósticos
+
+Para pronósticar el valor de la serie es necesario determinar cuál es el valor esperado de la serie en un momento $t + \tau$ condicional en que ésta se comporta como un $AR(p)$, un $MA(q)$ o un $ARMA(p, q)$ y a que los valores antes de $t$ están dados. Por lo que el pronóstico de la serie estará dado por una expresión:
+
+\begin{eqnarray}
+    \mathbb{E}_t[X_{t+\tau}] = \delta + a_1 \mathbb{E}_t[X_{t+\tau-1}] + a_2 \mathbb{E}_t[X_{t+\tau-2}] + \ldots + + a_p \mathbb{E}_t[X_{t+\tau-p}]
+    (\#eq:ARMApqFor)
+\end{eqnarray}
+
+```r
+ARIMA_price_amzn_ts_111_F<-predict(ARIMA_price_amzn_ts_111, n.ahead = 12)
+ARIMA_price_amzn_ts_111_F
+#> $pred
+#>           Jan      Feb      Mar      Apr      May      Jun
+#> 2022                                                      
+#> 2023 128.1292 129.7641 128.5484 129.4524 128.7802 129.2800
+#>           Jul      Aug      Sep      Oct      Nov      Dec
+#> 2022                            131.3473 127.3711 130.3278
+#> 2023 128.9083 129.1847 128.9792                           
+#> 
+#> $se
+#>            Jan       Feb       Mar       Apr       May
+#> 2022                                                  
+#> 2023 10.483308 11.758574 12.810074 13.849268 14.768530
+#>            Jun       Jul       Aug       Sep       Oct
+#> 2022                                          5.642432
+#> 2023 15.666911 16.493117 17.296433 18.052249          
+#>            Nov       Dec
+#> 2022  7.438623  9.214713
+#> 2023
+```
+Valores en la base de datos original:
+
+```r
+pred<- forecast(ARIMA_price_amzn_ts_111,h=10)
+pred1 <- pred$mean
+union <- ts.union(price_amazn_ts,pred1)
+df.pred <- data.frame(union)
+df.pred[is.na(df.pred)] <- 0
+df.pred$complete <- df.pred$price_amazn_ts+df.pred$pred1
+head(df.pred)
+#>   price_amazn_ts pred1 complete
+#> 1         0.8275     0   0.8275
+#> 2         0.9610     0   0.9610
+#> 3         1.2075     0   1.2075
+#> 4         0.9595     0   0.9595
+#> 5         1.0970     0   1.0970
+#> 6         1.1075     0   1.1075
+```
+
+```r
+plot(pred)
+```
+
+<img src="07-PE_Univariados_files/figure-html/unnamed-chunk-21-1.png" width="672" />

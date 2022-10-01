@@ -69,6 +69,9 @@ fig:acfamzn
 fig:LAGamazn20
 fig:amazn20root20
 fig:amazn20AR20
+eq:PACFEq
+tab:foo1
+eq:PACFEq1
 eq:MA1Eq
 eq:MA1Eq1
 eq:MA1Eq2
@@ -81,7 +84,7 @@ eq:MAqRed1
 eq:MAqRed2
 eq:MAqEqSol
 eq:MAqEqSol2
-fig:amazn20rootma1
+fig:amazn20rootma11
 fig:amazn20AR1
 eq:ARMA11Eq
 eq:ARMA11Eq1
@@ -104,6 +107,13 @@ eq:ARMApqWold
 eq:ARMApqWold1
 eq:ARMApqWold2
 eq:ARMApqWold3
+eq:ls1
+eq:ls2
+eq:ls3
+eq:ls4
+eq:ls5
+fig:amazn20rootma1
+eq:ARMApqFor
 mínimos-cuadrados-ordinarios
 el-problema
 estimación-r
@@ -149,8 +159,8 @@ ejemplo-ar1
 ar2
 ejemplo-ar2
 arp
-arp-1
 ejemplo-arp
+función-de-autocorrelación-parcial
 procesos-de-medias-móviles-ma
 ma1
 maq
@@ -158,3 +168,6 @@ ejemplo-maq
 procesos-armap-q-y-arimap-d-q
 arma1-1
 armap-q
+selección-de-las-constantes-p-q-d-en-un-arp-un-maq-un-armap-q-o-un-arimap-d-q
+ejemplo-arma
+pronósticos

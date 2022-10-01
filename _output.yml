@@ -1,9 +1,9 @@
 bookdown::bs4_book:
   css: style.css
-  theme:
-    primary: "#333963"
+  theme: 
+    primary: "#052F18"
     secondary : "#48DAC6"
-    bg : "#EDEDED" 
+    bg : "#DFDFDF" 
     fg : "#464646"
   repo: https://github.com/rstudio/bookdown-demo
 bookdown::pdf_book:

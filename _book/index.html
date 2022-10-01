@@ -112,10 +112,10 @@ Y se pueden despejar las dadas por:</p>
 <code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
 <span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span><span class="fl">365</span> <span class="co">#primer fecha</span></span>
 <span><span class="va">pd</span></span>
-<span><span class="co">#&gt; [1] "2021-09-28"</span></span>
+<span><span class="co">#&gt; [1] "2021-10-01"</span></span>
 <span><span class="va">ld</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#última fecha</span></span>
 <span><span class="va">ld</span></span>
-<span><span class="co">#&gt; [1] "2022-09-28"</span></span>
+<span><span class="co">#&gt; [1] "2022-10-01"</span></span>
 <span><span class="co">#Intervalos de tiempo</span></span>
 <span><span class="va">int</span><span class="op">&lt;-</span><span class="st">"monthly"</span></span>
 <span><span class="co">#Datos a elegir</span></span>
@@ -161,11 +161,11 @@ Y se pueden despejar las dadas por:</p>
 <code class="sourceCode R"><span><span class="co">#datos estadísticos</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">data_precio</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"price.open"</span>,<span class="st">"volume"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    price.open        volume         </span></span>
-<span><span class="co">#&gt;  Min.   :106.3   Min.   :1.967e+08  </span></span>
-<span><span class="co">#&gt;  1st Qu.:126.0   1st Qu.:1.273e+09  </span></span>
-<span><span class="co">#&gt;  Median :152.7   Median :1.465e+09  </span></span>
-<span><span class="co">#&gt;  Mean   :148.0   Mean   :1.396e+09  </span></span>
-<span><span class="co">#&gt;  3rd Qu.:167.6   3rd Qu.:1.628e+09  </span></span>
+<span><span class="co">#&gt;  Min.   :106.3   Min.   :1.170e+09  </span></span>
+<span><span class="co">#&gt;  1st Qu.:125.1   1st Qu.:1.284e+09  </span></span>
+<span><span class="co">#&gt;  Median :151.4   Median :1.490e+09  </span></span>
+<span><span class="co">#&gt;  Mean   :146.3   Mean   :1.511e+09  </span></span>
+<span><span class="co">#&gt;  3rd Qu.:165.2   3rd Qu.:1.644e+09  </span></span>
 <span><span class="co">#&gt;  Max.   :177.2   Max.   :2.258e+09</span></span>
 <span><span class="co">#análisis de regresión lineal lm() y=precio,x=fecha</span></span>
 <span><span class="va">reg_tiempo_precio</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">price.open</span><span class="op">~</span><span class="va">ref.date</span>, data<span class="op">=</span><span class="va">data_precio</span><span class="op">)</span> </span>
@@ -177,19 +177,19 @@ Y se pueden despejar las dadas por:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
-<span><span class="co">#&gt; -21.9717  -9.2427  -0.4443   9.4999  20.7440 </span></span>
+<span><span class="co">#&gt; -21.6344 -10.9642   0.7107   9.7532  20.3370 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;               Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept) 3319.11669  633.04069   5.243 0.000275 ***</span></span>
-<span><span class="co">#&gt; ref.date      -0.16642    0.03322  -5.009 0.000397 ***</span></span>
+<span><span class="co">#&gt; (Intercept) 3475.59131  719.13701   4.833 0.000689 ***</span></span>
+<span><span class="co">#&gt; ref.date      -0.17459    0.03771  -4.630 0.000937 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  </span></span>
 <span><span class="co">#&gt; 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 13.22 on 11 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.6952, Adjusted R-squared:  0.6675 </span></span>
-<span><span class="co">#&gt; F-statistic: 25.09 on 1 and 11 DF,  p-value: 0.0003966</span></span>
+<span><span class="co">#&gt; Residual standard error: 13.67 on 10 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.6819, Adjusted R-squared:   0.65 </span></span>
+<span><span class="co">#&gt; F-statistic: 21.43 on 1 and 10 DF,  p-value: 0.0009368</span></span>
 <span></span>
 <span><span class="co">#análisis de regresión lineal lm() y=volumen,x=fecha</span></span>
 <span><span class="va">reg_tiempo_volumen</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">volume</span><span class="op">~</span><span class="va">ref.date</span>, data<span class="op">=</span><span class="va">data_precio</span><span class="op">)</span></span>
@@ -200,16 +200,16 @@ Y se pueden despejar las dadas por:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;        Min         1Q     Median         3Q        Max </span></span>
-<span><span class="co">#&gt; -1.036e+09 -1.820e+08  3.992e+07  2.482e+08  8.011e+08 </span></span>
+<span><span class="co">#&gt; -329540424 -236332490  -25118403  131115435  751285836 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;               Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span><span class="co">#&gt; (Intercept) -1.846e+10  2.299e+10  -0.803    0.439</span></span>
-<span><span class="co">#&gt; ref.date     1.042e+06  1.206e+06   0.864    0.406</span></span>
+<span><span class="co">#&gt; (Intercept)  3.020e+09  1.675e+10    0.18    0.861</span></span>
+<span><span class="co">#&gt; ref.date    -7.913e+04  8.784e+05   -0.09    0.930</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 4.8e+08 on 11 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.0635, Adjusted R-squared:  -0.02164 </span></span>
-<span><span class="co">#&gt; F-statistic: 0.7459 on 1 and 11 DF,  p-value: 0.4062</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 318500000 on 10 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.0008109,  Adjusted R-squared:  -0.09911 </span></span>
+<span><span class="co">#&gt; F-statistic: 0.008115 on 1 and 10 DF,  p-value: 0.93</span></span></code></pre></div>
 </div>
 </div>
 <div id="ejercicio" class="section level2" number="1.3">
@@ -299,7 +299,7 @@ Y se pueden despejar las dadas por:</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-09-28.</p>
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-10-01.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
