@@ -588,13 +588,6 @@ data1<- BatchGetSymbols(tickers = dt,
                        freq.data = int,
                        do.cache = FALSE,
                        thresh.bad.data = 0)
-#> Warning: `BatchGetSymbols()` was deprecated in BatchGetSymbols 2.6.4.
-#> Please use `yfR::yf_get()` instead.
-#> 2022-05-01: Package BatchGetSymbols will soon be replaced by yfR. 
-#> More details about the change is available at github <<www.github.com/msperlin/yfR>
-#> You can install yfR by executing:
-#> 
-#> remotes::install_github('msperlin/yfR')
 
 #Generando data frame con los valores
 data_precio_amzn<-data1$df.tickers
@@ -1523,7 +1516,7 @@ Dado esto, sabemos claramente que podremos analizar de mejor manera estos valore
 
 
 
-## Pronósticos
+### Pronósticos
 
 Para pronósticar el valor de la serie es necesario determinar cuál es el valor esperado de la serie en un momento $t + \tau$ condicional en que ésta se comporta como un $AR(p)$, un $MA(q)$ o un $ARMA(p, q)$ y a que los valores antes de $t$ están dados. Por lo que el pronóstico de la serie estará dado por una expresión:
 
@@ -1577,4 +1570,7 @@ head(df.pred)
 plot(pred)
 ```
 
-<img src="07-PE_Univariados_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<div class="figure" style="text-align: center">
+<img src="07-PE_Univariados_files/figure-html/predarima111-1.png" alt="Predicción de $Arima(1,1,1)$" width="100%" />
+<p class="caption">(\#fig:predarima111)Predicción de $Arima(1,1,1)$</p>
+</div>

@@ -114,6 +114,7 @@ eq:ls4
 eq:ls5
 fig:amazn20rootma1
 eq:ARMApqFor
+fig:predarima111
 mínimos-cuadrados-ordinarios
 el-problema
 estimación-r

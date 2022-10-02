@@ -572,13 +572,6 @@ precio del ACTIVO AMZN como si fueran retornos:</p>
 <span>                       freq.data <span class="op">=</span> <span class="va">int</span>,</span>
 <span>                       do.cache <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                       thresh.bad.data <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: `BatchGetSymbols()` was deprecated in BatchGetSymbols 2.6.4.</span></span>
-<span><span class="co">#&gt; Please use `yfR::yf_get()` instead.</span></span>
-<span><span class="co">#&gt; 2022-05-01: Package BatchGetSymbols will soon be replaced by yfR. </span></span>
-<span><span class="co">#&gt; More details about the change is available at github &lt;&lt;www.github.com/msperlin/yfR&gt;</span></span>
-<span><span class="co">#&gt; You can install yfR by executing:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; remotes::install_github('msperlin/yfR')</span></span>
 <span></span>
 <span><span class="co">#Generando data frame con los valores</span></span>
 <span><span class="va">data_precio_amzn</span><span class="op">&lt;-</span><span class="va">data1</span><span class="op">$</span><span class="va">df.tickers</span></span>
@@ -1695,11 +1688,10 @@ Figure 6.16: Raices ARMA(1) Inversas de la serie de tiempo
 </div>
 <p>Dado esto, sabemos claramente que podremos analizar de mejor manera estos valores y, en consecuencia, hacer mejores estimaciones.</p>
 </div>
-</div>
-<div id="pronósticos" class="section level2" number="6.6">
-<h2>
-<span class="header-section-number">6.6</span> Pronósticos<a class="anchor" aria-label="anchor" href="#pron%C3%B3sticos"><i class="fas fa-link"></i></a>
-</h2>
+<div id="pronósticos" class="section level3" number="6.5.2">
+<h3>
+<span class="header-section-number">6.5.2</span> Pronósticos<a class="anchor" aria-label="anchor" href="#pron%C3%B3sticos"><i class="fas fa-link"></i></a>
+</h3>
 <p>Para pronósticar el valor de la serie es necesario determinar cuál es el valor esperado de la serie en un momento <span class="math inline">\(t + \tau\)</span> condicional en que ésta se comporta como un <span class="math inline">\(AR(p)\)</span>, un <span class="math inline">\(MA(q)\)</span> o un <span class="math inline">\(ARMA(p, q)\)</span> y a que los valores antes de <span class="math inline">\(t\)</span> están dados. Por lo que el pronóstico de la serie estará dado por una expresión:</p>
 <p><span class="math display" id="eq:ARMApqFor">\[\begin{eqnarray}
     \mathbb{E}_t[X_{t+\tau}] = \delta + a_1 \mathbb{E}_t[X_{t+\tau-1}] + a_2 \mathbb{E}_t[X_{t+\tau-2}] + \ldots + + a_p \mathbb{E}_t[X_{t+\tau-p}]
@@ -1744,8 +1736,14 @@ Figure 6.16: Raices ARMA(1) Inversas de la serie de tiempo
 <span><span class="co">#&gt; 6         1.1075     0   1.1075</span></span></code></pre></div>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pred</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="07-PE_Univariados_files/figure-html/unnamed-chunk-21-1.png" width="672"></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:predarima111"></span>
+<img src="07-PE_Univariados_files/figure-html/predarima111-1.png" alt="Predicción de $Arima(1,1,1)$" width="100%"><p class="caption">
+Figure 6.17: Predicción de <span class="math inline">\(Arima(1,1,1)\)</span>
+</p>
+</div>
 
+</div>
 </div>
 </div>
 
@@ -1788,9 +1786,11 @@ Figure 6.16: Raices ARMA(1) Inversas de la serie de tiempo
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#selecci%C3%B3n-de-las-constantes-p-q-d-en-un-arp-un-maq-un-armap-q-o-un-arimap-d-q"><span class="header-section-number">6.5</span> Selección de las constantes p, q, d en un AR(p), un MA(q), un ARMA(p, q) o un ARIMA(p, d, q)</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#ejemplo-arma"><span class="header-section-number">6.5.1</span> Ejemplo ARMA</a></li></ul>
+<a class="nav-link" href="#selecci%C3%B3n-de-las-constantes-p-q-d-en-un-arp-un-maq-un-armap-q-o-un-arimap-d-q"><span class="header-section-number">6.5</span> Selección de las constantes p, q, d en un AR(p), un MA(q), un ARMA(p, q) o un ARIMA(p, d, q)</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#ejemplo-arma"><span class="header-section-number">6.5.1</span> Ejemplo ARMA</a></li>
+<li><a class="nav-link" href="#pron%C3%B3sticos"><span class="header-section-number">6.5.2</span> Pronósticos</a></li>
+</ul>
 </li>
-<li><a class="nav-link" href="#pron%C3%B3sticos"><span class="header-section-number">6.6</span> Pronósticos</a></li>
 </ul>
 
       <div class="book-extra">
