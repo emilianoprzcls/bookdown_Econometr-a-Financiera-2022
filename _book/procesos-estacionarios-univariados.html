@@ -553,12 +553,13 @@ precio del ACTIVO AMZN como si fueran retornos:</p>
 <span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,<span class="va">BatchGetSymbols</span>,<span class="va">ggplot2</span>,<span class="va">lubridate</span>,<span class="va">readxl</span>,<span class="va">forecast</span>,<span class="va">stats</span>,<span class="va">stargazer</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
-<span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span><span class="op">(</span><span class="fl">365</span><span class="op">*</span><span class="fl">20</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
+<span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2002/9/30"</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
 <span><span class="va">pd</span></span>
-<span><span class="co">#&gt; [1] "2002-10-07"</span></span>
-<span><span class="va">ld</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#última fecha</span></span>
+<span><span class="co">#&gt; [1] "2002-09-30"</span></span>
+<span><span class="co">#&gt; [1] "2021-09-18"</span></span>
+<span><span class="va">ld</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2021/09/30"</span><span class="op">)</span><span class="co">#última fecha</span></span>
 <span><span class="va">ld</span></span>
-<span><span class="co">#&gt; [1] "2022-10-02"</span></span>
+<span><span class="co">#&gt; [1] "2021-09-30"</span></span>
 <span><span class="co">#Intervalos de tiempo</span></span>
 <span><span class="va">int</span><span class="op">&lt;-</span><span class="st">"monthly"</span></span>
 <span></span>
@@ -602,12 +603,12 @@ de que los datos esten en orden cronológico.</p>
 <span><span class="co">#&gt; # A tibble: 6 × 10</span></span>
 <span><span class="co">#&gt;   ticker ref.date     volume price…¹ price…² price…³ price…⁴</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 AMZN   2002-10-07   3.44e9   0.828    1.01   0.818   0.968</span></span>
-<span><span class="co">#&gt; 2 AMZN   2002-11-01   4.13e9   0.961    1.23   0.91    1.17 </span></span>
-<span><span class="co">#&gt; 3 AMZN   2002-12-02   3.11e9   1.21     1.25   0.922   0.944</span></span>
-<span><span class="co">#&gt; 4 AMZN   2003-01-02   3.38e9   0.960    1.16   0.928   1.09 </span></span>
-<span><span class="co">#&gt; 5 AMZN   2003-02-03   2.32e9   1.10     1.12   0.980   1.10 </span></span>
-<span><span class="co">#&gt; 6 AMZN   2003-03-03   3.28e9   1.11     1.40   1.07    1.30 </span></span>
+<span><span class="co">#&gt; 1 AMZN   2002-09-30   1.85e8   0.832   0.842   0.792   0.796</span></span>
+<span><span class="co">#&gt; 2 AMZN   2002-10-01   4.07e9   0.812   1.01    0.800   0.968</span></span>
+<span><span class="co">#&gt; 3 AMZN   2002-11-01   4.13e9   0.961   1.23    0.91    1.17 </span></span>
+<span><span class="co">#&gt; 4 AMZN   2002-12-02   3.11e9   1.21    1.25    0.922   0.944</span></span>
+<span><span class="co">#&gt; 5 AMZN   2003-01-02   3.38e9   0.960   1.16    0.928   1.09 </span></span>
+<span><span class="co">#&gt; 6 AMZN   2003-02-03   2.32e9   1.10    1.12    0.980   1.10 </span></span>
 <span><span class="co">#&gt; # … with 3 more variables: price.adjusted &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   ret.adjusted.prices &lt;dbl&gt;, ret.closing.prices &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   and abbreviated variable names ¹​price.open,</span></span>
@@ -668,14 +669,14 @@ V1
 V2
 </td>
 <td>
-0.840<sup>***</sup>
+0.944<sup>***</sup>
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(0.065)
+(0.067)
 </td>
 </tr>
 <tr>
@@ -683,14 +684,14 @@ V2
 V3
 </td>
 <td>
-0.161<sup>**</sup>
+0.076
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(0.065)
+(0.068)
 </td>
 </tr>
 <tr>
@@ -698,14 +699,14 @@ V3
 Constant
 </td>
 <td>
-0.580
+0.217
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(0.460)
+(0.342)
 </td>
 </tr>
 <tr>
@@ -717,7 +718,7 @@ Constant
 Observations
 </td>
 <td>
-238
+227
 </td>
 </tr>
 <tr>
@@ -725,7 +726,7 @@ Observations
 R<sup>2</sup>
 </td>
 <td>
-0.988
+0.991
 </td>
 </tr>
 <tr>
@@ -733,7 +734,7 @@ R<sup>2</sup>
 Adjusted R<sup>2</sup>
 </td>
 <td>
-0.987
+0.991
 </td>
 </tr>
 <tr>
@@ -741,7 +742,7 @@ Adjusted R<sup>2</sup>
 Residual Std. Error
 </td>
 <td>
-5.696 (df = 235)
+4.202 (df = 224)
 </td>
 </tr>
 <tr>
@@ -749,7 +750,7 @@ Residual Std. Error
 F Statistic
 </td>
 <td>
-9,358.764<sup>***</sup> (df = 2; 235) (p = 0.000)
+12,966.920<sup>***</sup> (df = 2; 224) (p = 0.000)
 </td>
 </tr>
 <tr>
@@ -976,19 +977,19 @@ Max
 V1
 </td>
 <td>
-240
+229
 </td>
 <td>
-37.765
+31.914
 </td>
 <td>
-50.837
+45.104
 </td>
 <td>
-0.828
+0.811
 </td>
 <td>
-177.250
+174.820
 </td>
 </tr>
 <tr>
@@ -996,19 +997,19 @@ V1
 V2
 </td>
 <td>
-239
+228
 </td>
 <td>
-37.395
+31.287
 </td>
 <td>
-50.620
+44.192
 </td>
 <td>
-0.828
+0.811
 </td>
 <td>
-177.250
+174.479
 </td>
 </tr>
 <tr>
@@ -1599,41 +1600,33 @@ Veamos con detenimiento el pico de la grafica original.</div>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Fitting models using approximations to speed things up...</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  ARIMA(2,1,2)(1,0,1)[12] with drift         : 1528.26</span></span>
-<span><span class="co">#&gt;  ARIMA(0,1,0)            with drift         : 1512.532</span></span>
-<span><span class="co">#&gt;  ARIMA(1,1,0)(1,0,0)[12] with drift         : 1522.422</span></span>
-<span><span class="co">#&gt;  ARIMA(0,1,1)(0,0,1)[12] with drift         : 1509.916</span></span>
-<span><span class="co">#&gt;  ARIMA(0,1,0)                               : 1512.493</span></span>
-<span><span class="co">#&gt;  ARIMA(0,1,1)            with drift         : 1509.13</span></span>
-<span><span class="co">#&gt;  ARIMA(0,1,1)(1,0,0)[12] with drift         : 1521.938</span></span>
-<span><span class="co">#&gt;  ARIMA(0,1,1)(1,0,1)[12] with drift         : 1523.481</span></span>
-<span><span class="co">#&gt;  ARIMA(1,1,1)            with drift         : 1508.429</span></span>
-<span><span class="co">#&gt;  ARIMA(1,1,1)(1,0,0)[12] with drift         : 1521.993</span></span>
-<span><span class="co">#&gt;  ARIMA(1,1,1)(0,0,1)[12] with drift         : 1509.837</span></span>
-<span><span class="co">#&gt;  ARIMA(1,1,1)(1,0,1)[12] with drift         : 1523.466</span></span>
-<span><span class="co">#&gt;  ARIMA(1,1,0)            with drift         : 1509.457</span></span>
-<span><span class="co">#&gt;  ARIMA(2,1,1)            with drift         : 1511.497</span></span>
-<span><span class="co">#&gt;  ARIMA(1,1,2)            with drift         : 1510.476</span></span>
-<span><span class="co">#&gt;  ARIMA(0,1,2)            with drift         : 1510.269</span></span>
-<span><span class="co">#&gt;  ARIMA(2,1,0)            with drift         : 1511.739</span></span>
-<span><span class="co">#&gt;  ARIMA(2,1,2)            with drift         : 1513.404</span></span>
-<span><span class="co">#&gt;  ARIMA(1,1,1)                               : 1508.952</span></span>
+<span><span class="co">#&gt;  ARIMA(2,2,2)(1,0,1)[12]                    : Inf</span></span>
+<span><span class="co">#&gt;  ARIMA(0,2,0)                               : 1458.057</span></span>
+<span><span class="co">#&gt;  ARIMA(1,2,0)(1,0,0)[12]                    : 1396.532</span></span>
+<span><span class="co">#&gt;  ARIMA(0,2,1)(0,0,1)[12]                    : 1296.904</span></span>
+<span><span class="co">#&gt;  ARIMA(0,2,1)                               : 1295.488</span></span>
+<span><span class="co">#&gt;  ARIMA(0,2,1)(1,0,0)[12]                    : 1308.745</span></span>
+<span><span class="co">#&gt;  ARIMA(0,2,1)(1,0,1)[12]                    : Inf</span></span>
+<span><span class="co">#&gt;  ARIMA(1,2,1)                               : 1297.615</span></span>
+<span><span class="co">#&gt;  ARIMA(0,2,2)                               : 1296.662</span></span>
+<span><span class="co">#&gt;  ARIMA(1,2,0)                               : 1382.899</span></span>
+<span><span class="co">#&gt;  ARIMA(1,2,2)                               : 1299.614</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Now re-fitting the best model(s) without approximations...</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  ARIMA(1,1,1)            with drift         : 1510.998</span></span>
+<span><span class="co">#&gt;  ARIMA(0,2,1)                               : 1305.631</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  Best model: ARIMA(1,1,1)            with drift</span></span>
+<span><span class="co">#&gt;  Best model: ARIMA(0,2,1)</span></span>
 <span><span class="co">#&gt; Series: price_amazn_ts </span></span>
-<span><span class="co">#&gt; ARIMA(1,1,1) with drift </span></span>
+<span><span class="co">#&gt; ARIMA(0,2,1) </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;           ar1     ma1   drift</span></span>
-<span><span class="co">#&gt;       -0.7405  0.5943  0.5371</span></span>
-<span><span class="co">#&gt; s.e.   0.1424  0.1551  0.3326</span></span>
+<span><span class="co">#&gt;           ma1</span></span>
+<span><span class="co">#&gt;       -0.9716</span></span>
+<span><span class="co">#&gt; s.e.   0.0140</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; sigma^2 estimated as 31.89:  log likelihood=-751.41</span></span>
-<span><span class="co">#&gt; AIC=1510.83   AICc=1511   BIC=1524.73</span></span></code></pre></div>
+<span><span class="co">#&gt; sigma^2 estimated as 17.95:  log likelihood=-650.79</span></span>
+<span><span class="co">#&gt; AIC=1305.58   AICc=1305.63   BIC=1312.43</span></span></code></pre></div>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#sin embargo hay que controlar con nuestra variable dummy</span></span>
 <span><span class="va">ARIMA_price_amzn_ts_111</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,</span>
@@ -1677,14 +1670,14 @@ price_amazn_ts
 ar1
 </td>
 <td>
--0.742<sup>***</sup>
+-0.507<sup>**</sup>
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(0.140)
+(0.235)
 </td>
 </tr>
 <tr>
@@ -1698,14 +1691,14 @@ ar1
 ma1
 </td>
 <td>
-0.544<sup>***</sup>
+0.378
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(0.158)
+(0.244)
 </td>
 </tr>
 <tr>
@@ -1719,14 +1712,14 @@ ma1
 junio2020ts
 </td>
 <td>
-2.417
+1.481
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(4.927)
+(3.612)
 </td>
 </tr>
 <tr>
@@ -1740,14 +1733,14 @@ junio2020ts
 julio2020ts
 </td>
 <td>
-9.840<sup>*</sup>
+10.100<sup>**</sup>
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(5.795)
+(4.345)
 </td>
 </tr>
 <tr>
@@ -1761,14 +1754,14 @@ julio2020ts
 agosto2020ts
 </td>
 <td>
-26.780<sup>***</sup>
+25.789<sup>***</sup>
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(6.648)
+(4.858)
 </td>
 </tr>
 <tr>
@@ -1782,14 +1775,14 @@ agosto2020ts
 sep2020ts
 </td>
 <td>
-34.847<sup>***</sup>
+35.028<sup>***</sup>
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(6.677)
+(4.974)
 </td>
 </tr>
 <tr>
@@ -1803,14 +1796,14 @@ sep2020ts
 oct2020ts
 </td>
 <td>
-16.176<sup>**</sup>
+15.220<sup>***</sup>
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(6.657)
+(4.844)
 </td>
 </tr>
 <tr>
@@ -1824,14 +1817,14 @@ oct2020ts
 nov2020ts
 </td>
 <td>
-1.637
+1.750
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(5.788)
+(4.320)
 </td>
 </tr>
 <tr>
@@ -1845,14 +1838,14 @@ nov2020ts
 diciembre2020ts
 </td>
 <td>
-3.465
+2.507
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(4.938)
+(3.520)
 </td>
 </tr>
 <tr>
@@ -1870,7 +1863,7 @@ diciembre2020ts
 Observations
 </td>
 <td>
-239
+228
 </td>
 </tr>
 <tr>
@@ -1878,7 +1871,7 @@ Observations
 Log Likelihood
 </td>
 <td>
--732.822
+-624.220
 </td>
 </tr>
 <tr>
@@ -1886,7 +1879,7 @@ Log Likelihood
 sigma<sup>2</sup>
 </td>
 <td>
-26.951
+13.980
 </td>
 </tr>
 <tr>
@@ -1894,7 +1887,7 @@ sigma<sup>2</sup>
 Akaike Inf. Crit.
 </td>
 <td>
-1,485.644
+1,268.441
 </td>
 </tr>
 <tr>
@@ -1982,16 +1975,16 @@ Point.Forecast
 13
 </td>
 <td>
-129.913
+173.848
 </td>
 <td>
-1.204
+0.159
 </td>
 <td>
-127.700
+173.392
 </td>
 <td>
-132.597
+174.115
 </td>
 </tr>
 <tr>
@@ -2002,16 +1995,16 @@ Lo.80
 13
 </td>
 <td>
-114.473
+162.405
 </td>
 <td>
-5.165
+3.523
 </td>
 <td>
-108.046
+157.667
 </td>
 <td>
-125.815
+168.503
 </td>
 </tr>
 <tr>
@@ -2022,16 +2015,16 @@ Hi.80
 13
 </td>
 <td>
-145.353
+185.290
 </td>
 <td>
-4.672
+3.628
 </td>
 <td>
-136.390
+178.281
 </td>
 <td>
-151.685
+190.077
 </td>
 </tr>
 <tr>
@@ -2042,16 +2035,16 @@ Lo.95
 13
 </td>
 <td>
-106.300
+156.348
 </td>
 <td>
-7.648
+5.413
 </td>
 <td>
-96.495
+149.089
 </td>
 <td>
-122.225
+165.915
 </td>
 </tr>
 <tr>
@@ -2062,16 +2055,16 @@ Hi.95
 13
 </td>
 <td>
-153.526
+191.347
 </td>
 <td>
-7.146
+5.518
 </td>
 <td>
-140.991
+180.870
 </td>
 <td>
-163.236
+198.655
 </td>
 </tr>
 <tr>

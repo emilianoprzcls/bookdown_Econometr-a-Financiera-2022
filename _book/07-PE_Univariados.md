@@ -569,12 +569,13 @@ pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl,forecast,stats
 
 ```r
 #Primero determinamos el lapso de tiempo
-pd<-Sys.Date()-(365*20) #primer fecha
+pd<-as.Date("2002/9/30") #primer fecha
 pd
-#> [1] "2002-10-07"
-ld<-Sys.Date() #última fecha
+#> [1] "2002-09-30"
+#> [1] "2021-09-18"
+ld<- as.Date("2021/09/30")#última fecha
 ld
-#> [1] "2022-10-02"
+#> [1] "2021-09-30"
 #Intervalos de tiempo
 int<-"monthly"
 
@@ -625,12 +626,12 @@ head(data_precio_amzn)#dado que ya estaba en orden cronológico nuestro df no ca
 #> # A tibble: 6 × 10
 #>   ticker ref.date     volume price…¹ price…² price…³ price…⁴
 #>   <chr>  <date>        <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
-#> 1 AMZN   2002-10-07   3.44e9   0.828    1.01   0.818   0.968
-#> 2 AMZN   2002-11-01   4.13e9   0.961    1.23   0.91    1.17 
-#> 3 AMZN   2002-12-02   3.11e9   1.21     1.25   0.922   0.944
-#> 4 AMZN   2003-01-02   3.38e9   0.960    1.16   0.928   1.09 
-#> 5 AMZN   2003-02-03   2.32e9   1.10     1.12   0.980   1.10 
-#> 6 AMZN   2003-03-03   3.28e9   1.11     1.40   1.07    1.30 
+#> 1 AMZN   2002-09-30   1.85e8   0.832   0.842   0.792   0.796
+#> 2 AMZN   2002-10-01   4.07e9   0.812   1.01    0.800   0.968
+#> 3 AMZN   2002-11-01   4.13e9   0.961   1.23    0.91    1.17 
+#> 4 AMZN   2002-12-02   3.11e9   1.21    1.25    0.922   0.944
+#> 5 AMZN   2003-01-02   3.38e9   0.960   1.16    0.928   1.09 
+#> 6 AMZN   2003-02-03   2.32e9   1.10    1.12    0.980   1.10 
 #> # … with 3 more variables: price.adjusted <dbl>,
 #> #   ret.adjusted.prices <dbl>, ret.closing.prices <dbl>,
 #> #   and abbreviated variable names ¹​price.open,
@@ -667,17 +668,17 @@ Veamos la tabla de la regresión lineal:
 <tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td><em>Dependent variable:</em></td></tr>
 <tr><td></td><td colspan="1" style="border-bottom: 1px solid black"></td></tr>
 <tr><td style="text-align:left"></td><td>V1</td></tr>
-<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">V2</td><td>0.840<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(0.065)</td></tr>
-<tr><td style="text-align:left">V3</td><td>0.161<sup>**</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(0.065)</td></tr>
-<tr><td style="text-align:left">Constant</td><td>0.580</td></tr>
-<tr><td style="text-align:left"></td><td>(0.460)</td></tr>
-<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>238</td></tr>
-<tr><td style="text-align:left">R<sup>2</sup></td><td>0.988</td></tr>
-<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.987</td></tr>
-<tr><td style="text-align:left">Residual Std. Error</td><td>5.696 (df = 235)</td></tr>
-<tr><td style="text-align:left">F Statistic</td><td>9,358.764<sup>***</sup> (df = 2; 235) (p = 0.000)</td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">V2</td><td>0.944<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.067)</td></tr>
+<tr><td style="text-align:left">V3</td><td>0.076</td></tr>
+<tr><td style="text-align:left"></td><td>(0.068)</td></tr>
+<tr><td style="text-align:left">Constant</td><td>0.217</td></tr>
+<tr><td style="text-align:left"></td><td>(0.342)</td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>227</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.991</td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.991</td></tr>
+<tr><td style="text-align:left">Residual Std. Error</td><td>4.202 (df = 224)</td></tr>
+<tr><td style="text-align:left">F Statistic</td><td>12,966.920<sup>***</sup> (df = 2; 224) (p = 0.000)</td></tr>
 <tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td style="text-align:left">(p<0.1)=[*], (p<0.05)=[**], (p<0.01)=[***]</td></tr>
 </table>
 
@@ -891,8 +892,8 @@ ar20_amazn<-lm(V1~., data=df.lags.1)
 
 <table style="text-align:center"><caption><strong>AR(1) de los precios de apertura de AMZN</strong></caption>
 <tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Statistic</td><td>N</td><td>Mean</td><td>St. Dev.</td><td>Min</td><td>Max</td></tr>
-<tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">V1</td><td>240</td><td>37.765</td><td>50.837</td><td>0.828</td><td>177.250</td></tr>
-<tr><td style="text-align:left">V2</td><td>239</td><td>37.395</td><td>50.620</td><td>0.828</td><td>177.250</td></tr>
+<tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">V1</td><td>229</td><td>31.914</td><td>45.104</td><td>0.811</td><td>174.820</td></tr>
+<tr><td style="text-align:left">V2</td><td>228</td><td>31.287</td><td>44.192</td><td>0.811</td><td>174.479</td></tr>
 <tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td colspan="6" style="text-align:left">(p<0.1)=[*], (p<0.05)=[**], (p<0.01)=[***]</td></tr>
 </table>
 
@@ -1533,41 +1534,33 @@ auto.arima(price_amazn_ts, trace=TRUE)
 #> 
 #>  Fitting models using approximations to speed things up...
 #> 
-#>  ARIMA(2,1,2)(1,0,1)[12] with drift         : 1528.26
-#>  ARIMA(0,1,0)            with drift         : 1512.532
-#>  ARIMA(1,1,0)(1,0,0)[12] with drift         : 1522.422
-#>  ARIMA(0,1,1)(0,0,1)[12] with drift         : 1509.916
-#>  ARIMA(0,1,0)                               : 1512.493
-#>  ARIMA(0,1,1)            with drift         : 1509.13
-#>  ARIMA(0,1,1)(1,0,0)[12] with drift         : 1521.938
-#>  ARIMA(0,1,1)(1,0,1)[12] with drift         : 1523.481
-#>  ARIMA(1,1,1)            with drift         : 1508.429
-#>  ARIMA(1,1,1)(1,0,0)[12] with drift         : 1521.993
-#>  ARIMA(1,1,1)(0,0,1)[12] with drift         : 1509.837
-#>  ARIMA(1,1,1)(1,0,1)[12] with drift         : 1523.466
-#>  ARIMA(1,1,0)            with drift         : 1509.457
-#>  ARIMA(2,1,1)            with drift         : 1511.497
-#>  ARIMA(1,1,2)            with drift         : 1510.476
-#>  ARIMA(0,1,2)            with drift         : 1510.269
-#>  ARIMA(2,1,0)            with drift         : 1511.739
-#>  ARIMA(2,1,2)            with drift         : 1513.404
-#>  ARIMA(1,1,1)                               : 1508.952
+#>  ARIMA(2,2,2)(1,0,1)[12]                    : Inf
+#>  ARIMA(0,2,0)                               : 1458.057
+#>  ARIMA(1,2,0)(1,0,0)[12]                    : 1396.532
+#>  ARIMA(0,2,1)(0,0,1)[12]                    : 1296.904
+#>  ARIMA(0,2,1)                               : 1295.488
+#>  ARIMA(0,2,1)(1,0,0)[12]                    : 1308.745
+#>  ARIMA(0,2,1)(1,0,1)[12]                    : Inf
+#>  ARIMA(1,2,1)                               : 1297.615
+#>  ARIMA(0,2,2)                               : 1296.662
+#>  ARIMA(1,2,0)                               : 1382.899
+#>  ARIMA(1,2,2)                               : 1299.614
 #> 
 #>  Now re-fitting the best model(s) without approximations...
 #> 
-#>  ARIMA(1,1,1)            with drift         : 1510.998
+#>  ARIMA(0,2,1)                               : 1305.631
 #> 
-#>  Best model: ARIMA(1,1,1)            with drift
+#>  Best model: ARIMA(0,2,1)
 #> Series: price_amazn_ts 
-#> ARIMA(1,1,1) with drift 
+#> ARIMA(0,2,1) 
 #> 
 #> Coefficients:
-#>           ar1     ma1   drift
-#>       -0.7405  0.5943  0.5371
-#> s.e.   0.1424  0.1551  0.3326
+#>           ma1
+#>       -0.9716
+#> s.e.   0.0140
 #> 
-#> sigma^2 estimated as 31.89:  log likelihood=-751.41
-#> AIC=1510.83   AICc=1511   BIC=1524.73
+#> sigma^2 estimated as 17.95:  log likelihood=-650.79
+#> AIC=1305.58   AICc=1305.63   BIC=1312.43
 ```
 
 ```r
@@ -1583,37 +1576,37 @@ ARIMA_price_amzn_pl_111<-Arima(price_amazn_ts,order=c(1,1,1),
 <tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td><em>Dependent variable:</em></td></tr>
 <tr><td></td><td colspan="1" style="border-bottom: 1px solid black"></td></tr>
 <tr><td style="text-align:left"></td><td>price_amazn_ts</td></tr>
-<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">ar1</td><td>-0.742<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(0.140)</td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">ar1</td><td>-0.507<sup>**</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.235)</td></tr>
 <tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">ma1</td><td>0.544<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(0.158)</td></tr>
+<tr><td style="text-align:left">ma1</td><td>0.378</td></tr>
+<tr><td style="text-align:left"></td><td>(0.244)</td></tr>
 <tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">junio2020ts</td><td>2.417</td></tr>
-<tr><td style="text-align:left"></td><td>(4.927)</td></tr>
+<tr><td style="text-align:left">junio2020ts</td><td>1.481</td></tr>
+<tr><td style="text-align:left"></td><td>(3.612)</td></tr>
 <tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">julio2020ts</td><td>9.840<sup>*</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(5.795)</td></tr>
+<tr><td style="text-align:left">julio2020ts</td><td>10.100<sup>**</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(4.345)</td></tr>
 <tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">agosto2020ts</td><td>26.780<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(6.648)</td></tr>
+<tr><td style="text-align:left">agosto2020ts</td><td>25.789<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(4.858)</td></tr>
 <tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">sep2020ts</td><td>34.847<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(6.677)</td></tr>
+<tr><td style="text-align:left">sep2020ts</td><td>35.028<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(4.974)</td></tr>
 <tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">oct2020ts</td><td>16.176<sup>**</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(6.657)</td></tr>
+<tr><td style="text-align:left">oct2020ts</td><td>15.220<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(4.844)</td></tr>
 <tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">nov2020ts</td><td>1.637</td></tr>
-<tr><td style="text-align:left"></td><td>(5.788)</td></tr>
+<tr><td style="text-align:left">nov2020ts</td><td>1.750</td></tr>
+<tr><td style="text-align:left"></td><td>(4.320)</td></tr>
 <tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">diciembre2020ts</td><td>3.465</td></tr>
-<tr><td style="text-align:left"></td><td>(4.938)</td></tr>
+<tr><td style="text-align:left">diciembre2020ts</td><td>2.507</td></tr>
+<tr><td style="text-align:left"></td><td>(3.520)</td></tr>
 <tr><td style="text-align:left"></td><td></td></tr>
-<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>239</td></tr>
-<tr><td style="text-align:left">Log Likelihood</td><td>-732.822</td></tr>
-<tr><td style="text-align:left">sigma<sup>2</sup></td><td>26.951</td></tr>
-<tr><td style="text-align:left">Akaike Inf. Crit.</td><td>1,485.644</td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>228</td></tr>
+<tr><td style="text-align:left">Log Likelihood</td><td>-624.220</td></tr>
+<tr><td style="text-align:left">sigma<sup>2</sup></td><td>13.980</td></tr>
+<tr><td style="text-align:left">Akaike Inf. Crit.</td><td>1,268.441</td></tr>
 <tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
 <tr><td style="text-align:left"></td><td style="text-align:right">(p<0.1)=[*], (p<0.05)=[**], (p<0.01)=[***]</td></tr>
 </table>
@@ -1657,11 +1650,11 @@ stargazer(forecast.Arima.df,type = "html")
 
 
 <table style="text-align:center"><tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Statistic</td><td>N</td><td>Mean</td><td>St. Dev.</td><td>Min</td><td>Max</td></tr>
-<tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Point.Forecast</td><td>13</td><td>129.913</td><td>1.204</td><td>127.700</td><td>132.597</td></tr>
-<tr><td style="text-align:left">Lo.80</td><td>13</td><td>114.473</td><td>5.165</td><td>108.046</td><td>125.815</td></tr>
-<tr><td style="text-align:left">Hi.80</td><td>13</td><td>145.353</td><td>4.672</td><td>136.390</td><td>151.685</td></tr>
-<tr><td style="text-align:left">Lo.95</td><td>13</td><td>106.300</td><td>7.648</td><td>96.495</td><td>122.225</td></tr>
-<tr><td style="text-align:left">Hi.95</td><td>13</td><td>153.526</td><td>7.146</td><td>140.991</td><td>163.236</td></tr>
+<tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Point.Forecast</td><td>13</td><td>173.848</td><td>0.159</td><td>173.392</td><td>174.115</td></tr>
+<tr><td style="text-align:left">Lo.80</td><td>13</td><td>162.405</td><td>3.523</td><td>157.667</td><td>168.503</td></tr>
+<tr><td style="text-align:left">Hi.80</td><td>13</td><td>185.290</td><td>3.628</td><td>178.281</td><td>190.077</td></tr>
+<tr><td style="text-align:left">Lo.95</td><td>13</td><td>156.348</td><td>5.413</td><td>149.089</td><td>165.915</td></tr>
+<tr><td style="text-align:left">Hi.95</td><td>13</td><td>191.347</td><td>5.518</td><td>180.870</td><td>198.655</td></tr>
 <tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr></table>
 
 ```r

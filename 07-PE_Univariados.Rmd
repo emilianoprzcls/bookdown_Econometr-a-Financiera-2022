@@ -540,9 +540,10 @@ pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl,forecast,stats
 
 ```{r fig.show='hide', message=FALSE, , echo=TRUE, fig.align='center', out.width="100%", warning=FALSE}
 #Primero determinamos el lapso de tiempo
-pd<-Sys.Date()-(365*20) #primer fecha
+pd<-as.Date("2002/9/30") #primer fecha
 pd
-ld<-Sys.Date() #última fecha
+#> [1] "2021-09-18"
+ld<- as.Date("2021/09/30")#última fecha
 ld
 #Intervalos de tiempo
 int<-"monthly"
