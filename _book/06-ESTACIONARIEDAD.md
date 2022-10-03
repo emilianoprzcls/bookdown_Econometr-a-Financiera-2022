@@ -298,10 +298,10 @@ Figura \@ref(fig:LAGSCAMINATA1) se ven tan correlacionados.
 #Primero determinamos el lapso de tiempo
 pd<-Sys.Date()-(365*20) #primer fecha
 pd
-#> [1] "2002-10-06"
+#> [1] "2002-10-07"
 ld<-Sys.Date() #última fecha
 ld
-#> [1] "2022-10-01"
+#> [1] "2022-10-02"
 #Intervalos de tiempo
 int<-"monthly"
 #Datos a elegir

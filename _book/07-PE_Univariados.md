@@ -571,10 +571,10 @@ pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl,forecast,stats
 #Primero determinamos el lapso de tiempo
 pd<-Sys.Date()-(365*20) #primer fecha
 pd
-#> [1] "2002-10-06"
+#> [1] "2002-10-07"
 ld<-Sys.Date() #última fecha
 ld
-#> [1] "2022-10-01"
+#> [1] "2022-10-02"
 #Intervalos de tiempo
 int<-"monthly"
 
@@ -1429,6 +1429,99 @@ plot(dlprice_amazn_ts, xlab = "Tiempo",
 ```
 
 <img src="07-PE_Univariados_files/figure-html/unnamed-chunk-15-1.png" width="100%" style="display: block; margin: auto;" />
+Veamos con detenimiento el pico de la grafica original.
+
+Es claro que este pico se da en 2020 desde junio hasta julio, probablemente causado por el aumento del uso en amzn durante la pandemia. Esos son outlier que debemos considerar. Por ello hay que marcarlos con una variable dummy.
+
+```r
+#Generamos el rango de tiempo
+junio2020 <- seq.Date(
+  from=as.Date("2020-06-01"),
+  to=as.Date("2020-6-29"),
+  by="day")
+julio2020 <- seq.Date(
+  from=as.Date("2020-07-01"),
+  to=as.Date("2020-07-29"),
+  by="day")
+agosto2020 <- seq.Date(
+  from=as.Date("2020-08-01"),
+  to=as.Date("2020-08-29"),
+  by="day")
+sept2020 <- seq.Date(
+  from=as.Date("2020-09-01"),
+  to=as.Date("2020-09-29"),
+  by="day")
+oct2020 <- seq.Date(
+  from=as.Date("2020-10-01"),
+  to=as.Date("2020-10-29"),
+  by="day")
+nov2020 <- seq.Date(
+  from=as.Date("2020-11-01"),
+  to=as.Date("2020-11-29"),
+  by="day")
+diciembre2020 <- seq.Date(
+  from=as.Date("2020-12-01"),
+  to=as.Date("2020-12-29"),
+  by="day")
+#Añadimos valores 1 y 0 dependiento si estan dentro(1) o no
+data_precio_amzn$junio2020<-ifelse(data_precio_amzn$ref.date%in%junio2020,1,0)
+data_precio_amzn$julio2020<-ifelse(data_precio_amzn$ref.date%in%julio2020,1,0)
+data_precio_amzn$agosto2020<-ifelse(data_precio_amzn$ref.date%in%agosto2020,1,0)
+data_precio_amzn$sept2020<-ifelse(data_precio_amzn$ref.date%in%sept2020,1,0)
+data_precio_amzn$oct2020<-ifelse(data_precio_amzn$ref.date%in%oct2020,1,0)
+data_precio_amzn$nov2020<-ifelse(data_precio_amzn$ref.date%in%nov2020,1,0)
+data_precio_amzn$diciembre2020<-ifelse(data_precio_amzn$ref.date%in%diciembre2020,1,0)
+#ts
+junio2020ts<-ts(data_precio_amzn$junio2020, frequency = 12, start=c(2002,10))
+julio2020ts<-ts(data_precio_amzn$julio2020, frequency = 12, start=c(2002,10))
+agosto2020ts<-ts(data_precio_amzn$agosto2020, frequency = 12, start=c(2002,10))
+sep2020ts<-ts(data_precio_amzn$sept2020, frequency = 12, start=c(2002,10))
+oct2020ts<-ts(data_precio_amzn$oct2020, frequency = 12, start=c(2002,10))
+nov2020ts<-ts(data_precio_amzn$nov2020, frequency = 12, start=c(2002,10))
+diciembre2020ts<-ts(data_precio_amzn$diciembre2020, frequency = 12, start=c(2002,10))
+#espacio de prediccion
+#dummies
+timepred <- seq.Date(
+  from=as.Date("2022-10-01"),
+  to=as.Date("2023-10-10"),
+  by="month")
+junio2020 <- rep(0,13)
+julio2020 <- rep(0,13)
+agosto2020 <- rep(0,13)
+sep2020 <- rep(0,13)
+oct2020 <- rep(0,13)
+nov2020 <- rep(0,13)
+diciembre2020 <- rep(0,13)
+#data frame
+pred.df <- data.frame(timepred,junio2020,julio2020, agosto2020,sep2020, oct2020, nov2020, diciembre2020)
+#dummies
+d.enero <- seq.Date(
+  from=as.Date("2023-01-01"),
+  to=as.Date("2023-01-29"),
+  by="day")
+d.junio <- seq.Date(
+  from=as.Date("2023-06-01"),
+  to=as.Date("2023-06-29"),
+  by="day")
+d.dic <- seq.Date(
+  from=as.Date("2023-12-01"),
+  to=as.Date("2023-12-29"),
+  by="day")
+pred.df$d.enero<-ifelse(pred.df$timepred%in%d.enero,1,0)
+pred.df$d.junio<-ifelse(pred.df$timepred%in%d.junio,1,0)
+pred.df$d.dic<-ifelse(pred.df$timepred%in%d.dic,1,0)
+#series de tiempo predictivas
+f.junio2020 <- ts(pred.df$junio2020, frequency = 12, start=c(2022,10))
+f.agosto2020 <- ts(pred.df$junio2020, frequency = 12, start=c(2022,10))
+f.sep2020 <- ts(pred.df$junio2020, frequency = 12, start=c(2022,10))
+f.oct2020 <- ts(pred.df$junio2020, frequency = 12, start=c(2022,10))
+f.nov2020 <- ts(pred.df$junio2020, frequency = 12, start=c(2022,10))
+f.julio2020 <- ts(pred.df$junio2020, frequency = 12, start=c(2022,10))
+f.enero <- ts(pred.df$d.enero, frequency = 12, start=c(2022,10))
+f.junio <- ts(pred.df$d.junio, frequency = 12, start=c(2022,10))
+f.diciembre <- ts(pred.df$d.dic, frequency = 12, start=c(2022,10))
+```
+
 
 
 Como lo vimos en las figuras \@ref(fig:pacfamzn) y \@ref(fig:acfamzn), es claro que debemos usar un valor $q$ de $1$ y $p$ de $1$. Pero tambien necesitamos diferenciar, lo cual corresponde al valor $d$. Así pues, dado que en las funciones de autocorrelacion solo vemos un pico arriba de la linea punteada azul, podemos asumir que el valor de diferenciación debe ser uno. Esto se debe seguir como regla de dedo, pero en general se debe usar el valor que minimice la desviacion estandar. Por tanto nuestro modelo debe ser $arima(1,1,1)$.
@@ -1478,8 +1571,11 @@ auto.arima(price_amazn_ts, trace=TRUE)
 ```
 
 ```r
-ARIMA_price_amzn_ts_111<-arima(price_amazn_ts,order=c(1,1,1),method = "ML")
-ARIMA_price_amzn_pl_111<-Arima(price_amazn_ts,order=c(1,1,1),method = "ML")
+#sin embargo hay que controlar con nuestra variable dummy
+ARIMA_price_amzn_ts_111<-arima(price_amazn_ts,order=c(1,1,1),
+                               method = "ML",xreg=cbind(junio2020ts,julio2020ts,agosto2020ts,sep2020ts,oct2020ts,nov2020ts,diciembre2020ts))
+ARIMA_price_amzn_pl_111<-Arima(price_amazn_ts,order=c(1,1,1),
+                               method = "ML",xreg=cbind(junio2020ts,julio2020ts,agosto2020ts,sep2020ts,oct2020ts,nov2020ts,diciembre2020ts))
 ```
 
 
@@ -1487,16 +1583,37 @@ ARIMA_price_amzn_pl_111<-Arima(price_amazn_ts,order=c(1,1,1),method = "ML")
 <tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td><em>Dependent variable:</em></td></tr>
 <tr><td></td><td colspan="1" style="border-bottom: 1px solid black"></td></tr>
 <tr><td style="text-align:left"></td><td>price_amazn_ts</td></tr>
-<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">ar1</td><td>-0.744<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(0.141)</td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">ar1</td><td>-0.742<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.140)</td></tr>
 <tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">ma1</td><td>0.603<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(0.153)</td></tr>
+<tr><td style="text-align:left">ma1</td><td>0.544<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.158)</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">junio2020ts</td><td>2.417</td></tr>
+<tr><td style="text-align:left"></td><td>(4.927)</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">julio2020ts</td><td>9.840<sup>*</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(5.795)</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">agosto2020ts</td><td>26.780<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(6.648)</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">sep2020ts</td><td>34.847<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(6.677)</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">oct2020ts</td><td>16.176<sup>**</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(6.657)</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">nov2020ts</td><td>1.637</td></tr>
+<tr><td style="text-align:left"></td><td>(5.788)</td></tr>
+<tr><td style="text-align:left"></td><td></td></tr>
+<tr><td style="text-align:left">diciembre2020ts</td><td>3.465</td></tr>
+<tr><td style="text-align:left"></td><td>(4.938)</td></tr>
 <tr><td style="text-align:left"></td><td></td></tr>
 <tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>239</td></tr>
-<tr><td style="text-align:left">Log Likelihood</td><td>-752.705</td></tr>
-<tr><td style="text-align:left">sigma<sup>2</sup></td><td>31.837</td></tr>
-<tr><td style="text-align:left">Akaike Inf. Crit.</td><td>1,511.411</td></tr>
+<tr><td style="text-align:left">Log Likelihood</td><td>-732.822</td></tr>
+<tr><td style="text-align:left">sigma<sup>2</sup></td><td>26.951</td></tr>
+<tr><td style="text-align:left">Akaike Inf. Crit.</td><td>1,485.644</td></tr>
 <tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
 <tr><td style="text-align:left"></td><td style="text-align:right">(p<0.1)=[*], (p<0.05)=[**], (p<0.01)=[***]</td></tr>
 </table>
@@ -1526,48 +1643,29 @@ Para pronósticar el valor de la serie es necesario determinar cuál es el valor
 \end{eqnarray}
 
 ```r
-ARIMA_price_amzn_ts_111_F<-predict(ARIMA_price_amzn_ts_111, n.ahead = 12)
-ARIMA_price_amzn_ts_111_F
-#> $pred
-#>           Jan      Feb      Mar      Apr      May      Jun
-#> 2022                                                      
-#> 2023 128.1292 129.7641 128.5484 129.4524 128.7802 129.2800
-#>           Jul      Aug      Sep      Oct      Nov      Dec
-#> 2022                            131.3473 127.3711 130.3278
-#> 2023 128.9083 129.1847 128.9792                           
-#> 
-#> $se
-#>            Jan       Feb       Mar       Apr       May
-#> 2022                                                  
-#> 2023 10.483308 11.758574 12.810074 13.849268 14.768530
-#>            Jun       Jul       Aug       Sep       Oct
-#> 2022                                          5.642432
-#> 2023 15.666911 16.493117 17.296433 18.052249          
-#>            Nov       Dec
-#> 2022  7.438623  9.214713
-#> 2023
-```
-Valores en la base de datos original:
+ARIMA_price_amzn_ts_111_F<-predict(ARIMA_price_amzn_ts_111,n.ahead=13,newxreg=cbind(f.junio2020,f.julio2020,f.agosto2020,f.sep2020,f.oct2020,f.nov2020,f.diciembre))
 
-```r
-pred<- forecast(ARIMA_price_amzn_ts_111,h=10)
-pred1 <- pred$mean
-union <- ts.union(price_amazn_ts,pred1)
-df.pred <- data.frame(union)
-df.pred[is.na(df.pred)] <- 0
-df.pred$complete <- df.pred$price_amazn_ts+df.pred$pred1
-head(df.pred)
-#>   price_amazn_ts pred1 complete
-#> 1         0.8275     0   0.8275
-#> 2         0.9610     0   0.9610
-#> 3         1.2075     0   1.2075
-#> 4         0.9595     0   0.9595
-#> 5         1.0970     0   1.0970
-#> 6         1.1075     0   1.1075
+forecast.Arima <- forecast(ARIMA_price_amzn_pl_111,h=13, xreg=cbind(f.junio2020,f.julio2020,f.agosto2020,f.sep2020,f.oct2020,f.nov2020,f.diciembre))
 ```
 
+Valores:
+
 ```r
-plot(pred)
+forecast.Arima.df <- data.frame(forecast.Arima)
+stargazer(forecast.Arima.df,type = "html")
+```
+
+
+<table style="text-align:center"><tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Statistic</td><td>N</td><td>Mean</td><td>St. Dev.</td><td>Min</td><td>Max</td></tr>
+<tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Point.Forecast</td><td>13</td><td>129.913</td><td>1.204</td><td>127.700</td><td>132.597</td></tr>
+<tr><td style="text-align:left">Lo.80</td><td>13</td><td>114.473</td><td>5.165</td><td>108.046</td><td>125.815</td></tr>
+<tr><td style="text-align:left">Hi.80</td><td>13</td><td>145.353</td><td>4.672</td><td>136.390</td><td>151.685</td></tr>
+<tr><td style="text-align:left">Lo.95</td><td>13</td><td>106.300</td><td>7.648</td><td>96.495</td><td>122.225</td></tr>
+<tr><td style="text-align:left">Hi.95</td><td>13</td><td>153.526</td><td>7.146</td><td>140.991</td><td>163.236</td></tr>
+<tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr></table>
+
+```r
+plot(forecast.Arima, main ="Forecast ARIMA(1,1,1) de los precios de AMZN")
 ```
 
 <div class="figure" style="text-align: center">
