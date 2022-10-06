@@ -49,6 +49,7 @@
 <li><a class="" href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> CAPITAL ASSET PRICING MODEL (CAPM)</a></li>
 <li><a class="active" href="estacionariedad.html"><span class="header-section-number">5</span> Estacionariedad</a></li>
 <li><a class="" href="procesos-estacionarios-univariados.html"><span class="header-section-number">6</span> Procesos estacionarios univariados</a></li>
+<li><a class="" href="estacionalidad.html"><span class="header-section-number">7</span> ESTACIONALIDAD</a></li>
 </ul>
 
         <div class="book-extra">
@@ -340,10 +341,10 @@ Figura <a href="estacionariedad.html#fig:LAGSCAMINATA1">5.4</a> se ven tan corre
 <code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
 <span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span><span class="op">(</span><span class="fl">365</span><span class="op">*</span><span class="fl">20</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
 <span><span class="va">pd</span></span>
-<span><span class="co">#&gt; [1] "2002-10-07"</span></span>
+<span><span class="co">#&gt; [1] "2002-10-10"</span></span>
 <span><span class="va">ld</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#última fecha</span></span>
 <span><span class="va">ld</span></span>
-<span><span class="co">#&gt; [1] "2022-10-02"</span></span>
+<span><span class="co">#&gt; [1] "2022-10-05"</span></span>
 <span><span class="co">#Intervalos de tiempo</span></span>
 <span><span class="va">int</span><span class="op">&lt;-</span><span class="st">"monthly"</span></span>
 <span><span class="co">#Datos a elegir</span></span>
@@ -368,7 +369,7 @@ Figura <a href="estacionariedad.html#fig:LAGSCAMINATA1">5.4</a> se ven tan corre
 <span><span class="co">#necesitamos convertir la serie de tiempo de precios en retornos continuos compuestos de los precios de apertura</span></span>
 <span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span> ,<span class="fl">100</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="co">#agregamos un valor NA al principio</span></span>
 <span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="co">#estos son los retornos</span></span>
-<span><span class="co">#&gt;   [1]           NA  14.95653017  22.83329766 -22.98950701</span></span>
+<span><span class="co">#&gt;   [1]           NA  11.33703095  22.83329766 -22.98950701</span></span>
 <span><span class="co">#&gt;   [5]  13.39221448   0.95260416  14.27998202  11.55626991</span></span>
 <span><span class="co">#&gt;   [9]  24.11122449  -0.46684144  13.08785513  11.63599301</span></span>
 <span><span class="co">#&gt;  [13]   3.89974592  12.48104071  -0.73260401  -3.06108260</span></span>
@@ -428,6 +429,7 @@ Figura <a href="estacionariedad.html#fig:LAGSCAMINATA1">5.4</a> se ven tan corre
 <span><span class="co">#&gt; [229]  -6.11473001   2.18899134   5.30616390  -5.62793333</span></span>
 <span><span class="co">#&gt; [233] -11.06465380   1.80527180   7.20896224 -29.34750864</span></span>
 <span><span class="co">#&gt; [237]  -0.11853658 -13.99459654  23.88072732  -6.86965832</span></span>
+<span><span class="co">#&gt; [241] -10.37744549</span></span>
 <span><span class="co">#tenemos 20 retornos a lo largo de 20 años</span></span></code></pre></div>
 <p>Veamos la serie de tiempo</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
@@ -452,7 +454,7 @@ de que los datos esten en orden cronológico.</p>
 <span><span class="co">#&gt; # A tibble: 6 × 11</span></span>
 <span><span class="co">#&gt;   ticker ref.date     volume price…¹ price…² price…³ price…⁴</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 AMZN   2002-10-07   3.44e9   0.828    1.01   0.818   0.968</span></span>
+<span><span class="co">#&gt; 1 AMZN   2002-10-10   3.08e9   0.858    1.01   0.858   0.968</span></span>
 <span><span class="co">#&gt; 2 AMZN   2002-11-01   4.13e9   0.961    1.23   0.91    1.17 </span></span>
 <span><span class="co">#&gt; 3 AMZN   2002-12-02   3.11e9   1.21     1.25   0.922   0.944</span></span>
 <span><span class="co">#&gt; 4 AMZN   2003-01-02   3.38e9   0.960    1.16   0.928   1.09 </span></span>
@@ -549,7 +551,7 @@ hay estacionariedad</strong>.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-10-02.</p>
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-10-05.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

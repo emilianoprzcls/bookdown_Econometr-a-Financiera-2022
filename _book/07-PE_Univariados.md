@@ -563,19 +563,19 @@ precio del ACTIVO AMZN como si fueran retornos:
 #install.packages("pacman")
 #pacman nos permite cargar varias librerias en una sola línea
 library(pacman)
-pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl,forecast,stats,stargazer)
+pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl,forecast,stats,stargazer,knitr)
 ```
 
 
 ```r
 #Primero determinamos el lapso de tiempo
-pd<-as.Date("2002/9/30") #primer fecha
+pd<-as.Date("2002/9/01") #primer fecha
 pd
-#> [1] "2002-09-30"
+#> [1] "2002-09-01"
 #> [1] "2021-09-18"
-ld<- as.Date("2021/09/30")#última fecha
+ld<- as.Date("2021/10/01")#última fecha
 ld
-#> [1] "2021-09-30"
+#> [1] "2021-10-01"
 #Intervalos de tiempo
 int<-"monthly"
 
@@ -626,7 +626,7 @@ head(data_precio_amzn)#dado que ya estaba en orden cronológico nuestro df no ca
 #> # A tibble: 6 × 10
 #>   ticker ref.date     volume price…¹ price…² price…³ price…⁴
 #>   <chr>  <date>        <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
-#> 1 AMZN   2002-09-30   1.85e8   0.832   0.842   0.792   0.796
+#> 1 AMZN   2002-09-03   2.92e9   0.736   0.896   0.712   0.796
 #> 2 AMZN   2002-10-01   4.07e9   0.812   1.01    0.800   0.968
 #> 3 AMZN   2002-11-01   4.13e9   0.961   1.23    0.91    1.17 
 #> 4 AMZN   2002-12-02   3.11e9   1.21    1.25    0.922   0.944
@@ -892,8 +892,8 @@ ar20_amazn<-lm(V1~., data=df.lags.1)
 
 <table style="text-align:center"><caption><strong>AR(1) de los precios de apertura de AMZN</strong></caption>
 <tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Statistic</td><td>N</td><td>Mean</td><td>St. Dev.</td><td>Min</td><td>Max</td></tr>
-<tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">V1</td><td>229</td><td>31.914</td><td>45.104</td><td>0.811</td><td>174.820</td></tr>
-<tr><td style="text-align:left">V2</td><td>228</td><td>31.287</td><td>44.192</td><td>0.811</td><td>174.479</td></tr>
+<tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">V1</td><td>229</td><td>31.913</td><td>45.104</td><td>0.736</td><td>174.820</td></tr>
+<tr><td style="text-align:left">V2</td><td>228</td><td>31.286</td><td>44.193</td><td>0.736</td><td>174.479</td></tr>
 <tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td colspan="6" style="text-align:left">(p<0.1)=[*], (p<0.05)=[**], (p<0.01)=[***]</td></tr>
 </table>
 
@@ -1405,7 +1405,7 @@ Tranformacion de la serie original
 
 ```r
 #original
-price_amazn_ts<-ts(data_precio_amzn$price.open, frequency = 12, start=c(2002,10))
+price_amazn_ts<-ts(data_precio_amzn$price.open, frequency = 12, start=c(2002,09))
 #logartimo
 lprice_amazn_ts<-ts(log(data_precio_amzn$price.open), frequency = 12)
 #diferencias logaritmicas(cambio porcential)
@@ -1430,7 +1430,7 @@ plot(dlprice_amazn_ts, xlab = "Tiempo",
 ```
 
 <img src="07-PE_Univariados_files/figure-html/unnamed-chunk-15-1.png" width="100%" style="display: block; margin: auto;" />
-Veamos con detenimiento el pico de la grafica original.
+Veamos con detenimiento el pico de la gráfica original.
 
 Es claro que este pico se da en 2020 desde junio hasta julio, probablemente causado por el aumento del uso en amzn durante la pandemia. Esos son outlier que debemos considerar. Por ello hay que marcarlos con una variable dummy.
 
@@ -1525,9 +1525,9 @@ f.diciembre <- ts(pred.df$d.dic, frequency = 12, start=c(2022,10))
 
 
 
-Como lo vimos en las figuras \@ref(fig:pacfamzn) y \@ref(fig:acfamzn), es claro que debemos usar un valor $q$ de $1$ y $p$ de $1$. Pero tambien necesitamos diferenciar, lo cual corresponde al valor $d$. Así pues, dado que en las funciones de autocorrelacion solo vemos un pico arriba de la linea punteada azul, podemos asumir que el valor de diferenciación debe ser uno. Esto se debe seguir como regla de dedo, pero en general se debe usar el valor que minimice la desviacion estandar. Por tanto nuestro modelo debe ser $arima(1,1,1)$.
+Como lo vimos en las figuras \@ref(fig:pacfamzn) y \@ref(fig:acfamzn), es claro que debemos usar un valor $q$ de $1$ y $p$ de $0$, esto debido a que cuando vemos \@ref(fig:pacfamzn) no hay una correlación de ninguno de los valores. Asímismo, también necesitamos diferenciar, lo cual corresponde al valor $d$. Así pues, dado que en las funciones de autocorrelacion solo vemos uno o dos picos arriba de la linea punteada azul, podemos asumir que el valor de diferenciación debe ser uno o dos, en este caso dos. Esto se debe seguir como regla de dedo, pero en general se debe usar el valor que minimice la desviacion estandar y también el que minimice AIC. Por tanto nuestro modelo debe ser $arima(0,2,1)$.
 
-Utilizamos la funcion "auto.arima" para confirmar que nuestra serie de tiempo deba ser $arima(1,1,1)$, el arima que debos usar es aquel que minimize el indice AIC.
+Utilizamos la funcion "auto.arima" para confirmar que nuestra serie de tiempo deba ser $arima(0,2,1)$, el arima que debos usar es aquel que minimize el indice AIC.
 
 ```r
 auto.arima(price_amazn_ts, trace=TRUE)
@@ -1535,20 +1535,20 @@ auto.arima(price_amazn_ts, trace=TRUE)
 #>  Fitting models using approximations to speed things up...
 #> 
 #>  ARIMA(2,2,2)(1,0,1)[12]                    : Inf
-#>  ARIMA(0,2,0)                               : 1458.057
+#>  ARIMA(0,2,0)                               : 1458.056
 #>  ARIMA(1,2,0)(1,0,0)[12]                    : 1396.532
-#>  ARIMA(0,2,1)(0,0,1)[12]                    : 1296.904
-#>  ARIMA(0,2,1)                               : 1295.488
-#>  ARIMA(0,2,1)(1,0,0)[12]                    : 1308.745
+#>  ARIMA(0,2,1)(0,0,1)[12]                    : 1296.885
+#>  ARIMA(0,2,1)                               : 1295.472
+#>  ARIMA(0,2,1)(1,0,0)[12]                    : 1308.746
 #>  ARIMA(0,2,1)(1,0,1)[12]                    : Inf
 #>  ARIMA(1,2,1)                               : 1297.615
-#>  ARIMA(0,2,2)                               : 1296.662
+#>  ARIMA(0,2,2)                               : 1296.649
 #>  ARIMA(1,2,0)                               : 1382.899
-#>  ARIMA(1,2,2)                               : 1299.614
+#>  ARIMA(1,2,2)                               : 1299.616
 #> 
 #>  Now re-fitting the best model(s) without approximations...
 #> 
-#>  ARIMA(0,2,1)                               : 1305.631
+#>  ARIMA(0,2,1)                               : 1305.63
 #> 
 #>  Best model: ARIMA(0,2,1)
 #> Series: price_amazn_ts 
@@ -1565,48 +1565,36 @@ auto.arima(price_amazn_ts, trace=TRUE)
 
 ```r
 #sin embargo hay que controlar con nuestra variable dummy
-ARIMA_price_amzn_ts_111<-arima(price_amazn_ts,order=c(1,1,1),
-                               method = "ML",xreg=cbind(junio2020ts,julio2020ts,agosto2020ts,sep2020ts,oct2020ts,nov2020ts,diciembre2020ts))
-ARIMA_price_amzn_pl_111<-Arima(price_amazn_ts,order=c(1,1,1),
-                               method = "ML",xreg=cbind(junio2020ts,julio2020ts,agosto2020ts,sep2020ts,oct2020ts,nov2020ts,diciembre2020ts))
+ARIMA_price_amzn_ts_111<-arima(price_amazn_ts,order=c(0,2,1),
+                               method = "ML",xreg=cbind(julio2020ts,agosto2020ts,sep2020ts,oct2020ts))
+ARIMA_price_amzn_pl_111<-Arima(price_amazn_ts,order=c(0,2,1),
+                               method = "ML",xreg=cbind(julio2020ts,agosto2020ts,sep2020ts,oct2020ts))
 ```
 
 
-<table style="text-align:center"><caption><strong>ARMA(1,1,1) de los precios de apertura de AMZN</strong></caption>
+<table style="text-align:center"><caption><strong>ARMA(0,2,1) de los precios de apertura de AMZN</strong></caption>
 <tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td><em>Dependent variable:</em></td></tr>
 <tr><td></td><td colspan="1" style="border-bottom: 1px solid black"></td></tr>
 <tr><td style="text-align:left"></td><td>price_amazn_ts</td></tr>
-<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">ar1</td><td>-0.507<sup>**</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(0.235)</td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">ma1</td><td>-0.966<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.015)</td></tr>
 <tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">ma1</td><td>0.378</td></tr>
-<tr><td style="text-align:left"></td><td>(0.244)</td></tr>
+<tr><td style="text-align:left">julio2020ts</td><td>9.383<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(3.220)</td></tr>
 <tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">junio2020ts</td><td>1.481</td></tr>
-<tr><td style="text-align:left"></td><td>(3.612)</td></tr>
+<tr><td style="text-align:left">agosto2020ts</td><td>24.377<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(3.946)</td></tr>
 <tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">julio2020ts</td><td>10.100<sup>**</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(4.345)</td></tr>
+<tr><td style="text-align:left">sep2020ts</td><td>33.689<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(3.946)</td></tr>
 <tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">agosto2020ts</td><td>25.789<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(4.858)</td></tr>
+<tr><td style="text-align:left">oct2020ts</td><td>13.462<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(3.220)</td></tr>
 <tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">sep2020ts</td><td>35.028<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(4.974)</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">oct2020ts</td><td>15.220<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(4.844)</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">nov2020ts</td><td>1.750</td></tr>
-<tr><td style="text-align:left"></td><td>(4.320)</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">diciembre2020ts</td><td>2.507</td></tr>
-<tr><td style="text-align:left"></td><td>(3.520)</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>228</td></tr>
-<tr><td style="text-align:left">Log Likelihood</td><td>-624.220</td></tr>
-<tr><td style="text-align:left">sigma<sup>2</sup></td><td>13.980</td></tr>
-<tr><td style="text-align:left">Akaike Inf. Crit.</td><td>1,268.441</td></tr>
+<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>227</td></tr>
+<tr><td style="text-align:left">Log Likelihood</td><td>-617.954</td></tr>
+<tr><td style="text-align:left">sigma<sup>2</sup></td><td>13.393</td></tr>
+<tr><td style="text-align:left">Akaike Inf. Crit.</td><td>1,247.908</td></tr>
 <tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
 <tr><td style="text-align:left"></td><td style="text-align:right">(p<0.1)=[*], (p<0.05)=[**], (p<0.01)=[***]</td></tr>
 </table>
@@ -1636,29 +1624,138 @@ Para pronósticar el valor de la serie es necesario determinar cuál es el valor
 \end{eqnarray}
 
 ```r
-ARIMA_price_amzn_ts_111_F<-predict(ARIMA_price_amzn_ts_111,n.ahead=13,newxreg=cbind(f.junio2020,f.julio2020,f.agosto2020,f.sep2020,f.oct2020,f.nov2020,f.diciembre))
+ARIMA_price_amzn_ts_111_F<-predict(ARIMA_price_amzn_ts_111,n.ahead=13,newxreg=cbind(f.julio2020,f.agosto2020,f.sep2020,f.oct2020))
 
-forecast.Arima <- forecast(ARIMA_price_amzn_pl_111,h=13, xreg=cbind(f.junio2020,f.julio2020,f.agosto2020,f.sep2020,f.oct2020,f.nov2020,f.diciembre))
+forecast.Arima <- forecast(ARIMA_price_amzn_pl_111,h=13, xreg=cbind(f.julio2020,f.agosto2020,f.sep2020,f.oct2020))
 ```
 
 Valores:
 
 ```r
-forecast.Arima.df <- data.frame(forecast.Arima)
-stargazer(forecast.Arima.df,type = "html")
+kable(forecast.Arima,"html")
 ```
 
-
-<table style="text-align:center"><tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Statistic</td><td>N</td><td>Mean</td><td>St. Dev.</td><td>Min</td><td>Max</td></tr>
-<tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Point.Forecast</td><td>13</td><td>173.848</td><td>0.159</td><td>173.392</td><td>174.115</td></tr>
-<tr><td style="text-align:left">Lo.80</td><td>13</td><td>162.405</td><td>3.523</td><td>157.667</td><td>168.503</td></tr>
-<tr><td style="text-align:left">Hi.80</td><td>13</td><td>185.290</td><td>3.628</td><td>178.281</td><td>190.077</td></tr>
-<tr><td style="text-align:left">Lo.95</td><td>13</td><td>156.348</td><td>5.413</td><td>149.089</td><td>165.915</td></tr>
-<tr><td style="text-align:left">Hi.95</td><td>13</td><td>191.347</td><td>5.518</td><td>180.870</td><td>198.655</td></tr>
-<tr><td colspan="6" style="border-bottom: 1px solid black"></td></tr></table>
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> Point Forecast </th>
+   <th style="text-align:right;"> Lo 80 </th>
+   <th style="text-align:right;"> Hi 80 </th>
+   <th style="text-align:right;"> Lo 95 </th>
+   <th style="text-align:right;"> Hi 95 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Oct 2021 </td>
+   <td style="text-align:right;"> 177.2339 </td>
+   <td style="text-align:right;"> 172.4914 </td>
+   <td style="text-align:right;"> 181.9763 </td>
+   <td style="text-align:right;"> 169.9809 </td>
+   <td style="text-align:right;"> 184.4869 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Nov 2021 </td>
+   <td style="text-align:right;"> 179.6477 </td>
+   <td style="text-align:right;"> 172.8267 </td>
+   <td style="text-align:right;"> 186.4688 </td>
+   <td style="text-align:right;"> 169.2158 </td>
+   <td style="text-align:right;"> 190.0796 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Dec 2021 </td>
+   <td style="text-align:right;"> 182.0616 </td>
+   <td style="text-align:right;"> 173.5670 </td>
+   <td style="text-align:right;"> 190.5562 </td>
+   <td style="text-align:right;"> 169.0702 </td>
+   <td style="text-align:right;"> 195.0530 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Jan 2022 </td>
+   <td style="text-align:right;"> 184.4754 </td>
+   <td style="text-align:right;"> 174.5036 </td>
+   <td style="text-align:right;"> 194.4473 </td>
+   <td style="text-align:right;"> 169.2248 </td>
+   <td style="text-align:right;"> 199.7261 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Feb 2022 </td>
+   <td style="text-align:right;"> 186.8893 </td>
+   <td style="text-align:right;"> 175.5573 </td>
+   <td style="text-align:right;"> 198.2213 </td>
+   <td style="text-align:right;"> 169.5584 </td>
+   <td style="text-align:right;"> 204.2202 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Mar 2022 </td>
+   <td style="text-align:right;"> 189.3032 </td>
+   <td style="text-align:right;"> 176.6880 </td>
+   <td style="text-align:right;"> 201.9183 </td>
+   <td style="text-align:right;"> 170.0099 </td>
+   <td style="text-align:right;"> 208.5964 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Apr 2022 </td>
+   <td style="text-align:right;"> 191.7170 </td>
+   <td style="text-align:right;"> 177.8725 </td>
+   <td style="text-align:right;"> 205.5615 </td>
+   <td style="text-align:right;"> 170.5436 </td>
+   <td style="text-align:right;"> 212.8904 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> May 2022 </td>
+   <td style="text-align:right;"> 194.1309 </td>
+   <td style="text-align:right;"> 179.0958 </td>
+   <td style="text-align:right;"> 209.1659 </td>
+   <td style="text-align:right;"> 171.1368 </td>
+   <td style="text-align:right;"> 217.1250 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Jun 2022 </td>
+   <td style="text-align:right;"> 196.5447 </td>
+   <td style="text-align:right;"> 180.3479 </td>
+   <td style="text-align:right;"> 212.7415 </td>
+   <td style="text-align:right;"> 171.7738 </td>
+   <td style="text-align:right;"> 221.3156 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Jul 2022 </td>
+   <td style="text-align:right;"> 198.9586 </td>
+   <td style="text-align:right;"> 181.6215 </td>
+   <td style="text-align:right;"> 216.2957 </td>
+   <td style="text-align:right;"> 172.4437 </td>
+   <td style="text-align:right;"> 225.4735 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Aug 2022 </td>
+   <td style="text-align:right;"> 201.3724 </td>
+   <td style="text-align:right;"> 182.9111 </td>
+   <td style="text-align:right;"> 219.8338 </td>
+   <td style="text-align:right;"> 173.1382 </td>
+   <td style="text-align:right;"> 229.6067 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Sep 2022 </td>
+   <td style="text-align:right;"> 203.7863 </td>
+   <td style="text-align:right;"> 184.2127 </td>
+   <td style="text-align:right;"> 223.3599 </td>
+   <td style="text-align:right;"> 173.8511 </td>
+   <td style="text-align:right;"> 233.7216 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Oct 2022 </td>
+   <td style="text-align:right;"> 206.2002 </td>
+   <td style="text-align:right;"> 185.5232 </td>
+   <td style="text-align:right;"> 226.8772 </td>
+   <td style="text-align:right;"> 174.5774 </td>
+   <td style="text-align:right;"> 237.8229 </td>
+  </tr>
+</tbody>
+</table>
 
 ```r
-plot(forecast.Arima, main ="Forecast ARIMA(1,1,1) de los precios de AMZN")
+plot(forecast.Arima, main ="Forecast ARIMA(0,2,1) de los precios de AMZN")
 ```
 
 <div class="figure" style="text-align: center">

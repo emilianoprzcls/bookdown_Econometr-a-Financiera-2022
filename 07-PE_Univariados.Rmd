@@ -535,15 +535,15 @@ precio del ACTIVO AMZN como si fueran retornos:
 #install.packages("pacman")
 #pacman nos permite cargar varias librerias en una sola línea
 library(pacman)
-pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl,forecast,stats,stargazer)
+pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl,forecast,stats,stargazer,knitr)
 ```
 
 ```{r fig.show='hide', message=FALSE, , echo=TRUE, fig.align='center', out.width="100%", warning=FALSE}
 #Primero determinamos el lapso de tiempo
-pd<-as.Date("2002/9/30") #primer fecha
+pd<-as.Date("2002/9/01") #primer fecha
 pd
 #> [1] "2021-09-18"
-ld<- as.Date("2021/09/30")#última fecha
+ld<- as.Date("2021/10/01")#última fecha
 ld
 #Intervalos de tiempo
 int<-"monthly"
@@ -1267,7 +1267,7 @@ $$log(X_t)-log(X_{t-k})\sim\frac{X_t-X_{t-k}}{X_t}$$.
 Tranformacion de la serie original
 ```{r, fig.align='center', out.width="100%", warning=FALSE, message=FALSE, fig.align='center', out.width="100%"}
 #original
-price_amazn_ts<-ts(data_precio_amzn$price.open, frequency = 12, start=c(2002,10))
+price_amazn_ts<-ts(data_precio_amzn$price.open, frequency = 12, start=c(2002,09))
 #logartimo
 lprice_amazn_ts<-ts(log(data_precio_amzn$price.open), frequency = 12)
 #diferencias logaritmicas(cambio porcential)
@@ -1289,7 +1289,7 @@ plot(dlprice_amazn_ts, xlab = "Tiempo",
      main = "Diff LN de precios de apertura", 
      col = "darkred")
 ```
-Veamos con detenimiento el pico de la grafica original.
+Veamos con detenimiento el pico de la gráfica original.
 
 Es claro que este pico se da en 2020 desde junio hasta julio, probablemente causado por el aumento del uso en amzn durante la pandemia. Esos son outlier que debemos considerar. Por ello hay que marcarlos con una variable dummy.
 ```{r}
@@ -1383,26 +1383,26 @@ f.diciembre <- ts(pred.df$d.dic, frequency = 12, start=c(2022,10))
 
 
 
-Como lo vimos en las figuras \@ref(fig:pacfamzn) y \@ref(fig:acfamzn), es claro que debemos usar un valor $q$ de $1$ y $p$ de $1$. Pero tambien necesitamos diferenciar, lo cual corresponde al valor $d$. Así pues, dado que en las funciones de autocorrelacion solo vemos un pico arriba de la linea punteada azul, podemos asumir que el valor de diferenciación debe ser uno. Esto se debe seguir como regla de dedo, pero en general se debe usar el valor que minimice la desviacion estandar. Por tanto nuestro modelo debe ser $arima(1,1,1)$.
+Como lo vimos en las figuras \@ref(fig:pacfamzn) y \@ref(fig:acfamzn), es claro que debemos usar un valor $q$ de $1$ y $p$ de $0$, esto debido a que cuando vemos \@ref(fig:pacfamzn) no hay una correlación de ninguno de los valores. Asímismo, también necesitamos diferenciar, lo cual corresponde al valor $d$. Así pues, dado que en las funciones de autocorrelacion solo vemos uno o dos picos arriba de la linea punteada azul, podemos asumir que el valor de diferenciación debe ser uno o dos, en este caso dos. Esto se debe seguir como regla de dedo, pero en general se debe usar el valor que minimice la desviacion estandar y también el que minimice AIC. Por tanto nuestro modelo debe ser $arima(0,2,1)$.
 
-Utilizamos la funcion "auto.arima" para confirmar que nuestra serie de tiempo deba ser $arima(1,1,1)$, el arima que debos usar es aquel que minimize el indice AIC.
+Utilizamos la funcion "auto.arima" para confirmar que nuestra serie de tiempo deba ser $arima(0,2,1)$, el arima que debos usar es aquel que minimize el indice AIC.
 ```{r, fig.align='center', out.width="100%", warning=FALSE, message=FALSE, fig.align='center', out.width="100%"}
 auto.arima(price_amazn_ts, trace=TRUE)
 ```
 ```{r, fig.align='center', out.width="100%", warning=FALSE, message=FALSE, fig.align='center', out.width="100%"}
 #sin embargo hay que controlar con nuestra variable dummy
-ARIMA_price_amzn_ts_111<-arima(price_amazn_ts,order=c(1,1,1),
-                               method = "ML",xreg=cbind(junio2020ts,julio2020ts,agosto2020ts,sep2020ts,oct2020ts,nov2020ts,diciembre2020ts))
-ARIMA_price_amzn_pl_111<-Arima(price_amazn_ts,order=c(1,1,1),
-                               method = "ML",xreg=cbind(junio2020ts,julio2020ts,agosto2020ts,sep2020ts,oct2020ts,nov2020ts,diciembre2020ts))
+ARIMA_price_amzn_ts_111<-arima(price_amazn_ts,order=c(0,2,1),
+                               method = "ML",xreg=cbind(julio2020ts,agosto2020ts,sep2020ts,oct2020ts))
+ARIMA_price_amzn_pl_111<-Arima(price_amazn_ts,order=c(0,2,1),
+                               method = "ML",xreg=cbind(julio2020ts,agosto2020ts,sep2020ts,oct2020ts))
 ```
 
 ```{r, results='asis', echo=FALSE, fig.align='center', out.width="100%"}
-arima111<-stats::arima(price_amazn_ts,order=c(1,1,1),
-                               method = "ML",xreg=cbind(junio2020ts,julio2020ts,agosto2020ts,sep2020ts,oct2020ts,nov2020ts,diciembre2020ts))
+arima111<-stats::arima(price_amazn_ts,order=c(0,2,1),
+                               method = "ML",xreg=cbind(julio2020ts,agosto2020ts,sep2020ts,oct2020ts))
 stargazer(arima111,type = "html", 
           notes=c("(p<0.1)=[*], (p<0.05)=[**], (p<0.01)=[***]"),
-          title ="ARMA(1,1,1) de los precios de apertura de AMZN")
+          title ="ARMA(0,2,1) de los precios de apertura de AMZN")
 ```
 
 Raices MA(A):
@@ -1423,17 +1423,16 @@ Para pronósticar el valor de la serie es necesario determinar cuál es el valor
     (\#eq:ARMApqFor)
 \end{eqnarray}
 ```{r, warning=FALSE, message=FALSE, fig.align='center', out.width="100%"}
-ARIMA_price_amzn_ts_111_F<-predict(ARIMA_price_amzn_ts_111,n.ahead=13,newxreg=cbind(f.junio2020,f.julio2020,f.agosto2020,f.sep2020,f.oct2020,f.nov2020,f.diciembre))
+ARIMA_price_amzn_ts_111_F<-predict(ARIMA_price_amzn_ts_111,n.ahead=13,newxreg=cbind(f.julio2020,f.agosto2020,f.sep2020,f.oct2020))
 
-forecast.Arima <- forecast(ARIMA_price_amzn_pl_111,h=13, xreg=cbind(f.junio2020,f.julio2020,f.agosto2020,f.sep2020,f.oct2020,f.nov2020,f.diciembre))
+forecast.Arima <- forecast(ARIMA_price_amzn_pl_111,h=13, xreg=cbind(f.julio2020,f.agosto2020,f.sep2020,f.oct2020))
 
 ```
 
 Valores:
 ```{r, warning=FALSE, message=FALSE, fig.align='center', out.width="100%", results='asis'}
-forecast.Arima.df <- data.frame(forecast.Arima)
-stargazer(forecast.Arima.df,type = "html")
+kable(forecast.Arima,"html")
 ```
 ```{r predarima111, fig.cap="Predicción de $Arima(1,1,1)$", warning=FALSE, message=FALSE, fig.align='center', out.width="100%"}
-plot(forecast.Arima, main ="Forecast ARIMA(1,1,1) de los precios de AMZN")
+plot(forecast.Arima, main ="Forecast ARIMA(0,2,1) de los precios de AMZN")
 ```

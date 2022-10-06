@@ -49,6 +49,7 @@
 <li><a class="" href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> CAPITAL ASSET PRICING MODEL (CAPM)</a></li>
 <li><a class="" href="estacionariedad.html"><span class="header-section-number">5</span> Estacionariedad</a></li>
 <li><a class="active" href="procesos-estacionarios-univariados.html"><span class="header-section-number">6</span> Procesos estacionarios univariados</a></li>
+<li><a class="" href="estacionalidad.html"><span class="header-section-number">7</span> ESTACIONALIDAD</a></li>
 </ul>
 
         <div class="book-extra">
@@ -550,16 +551,16 @@ precio del ACTIVO AMZN como si fueran retornos:</p>
 <code class="sourceCode R"><span><span class="co">#install.packages("pacman")</span></span>
 <span><span class="co">#pacman nos permite cargar varias librerias en una sola línea</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span></span>
-<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,<span class="va">BatchGetSymbols</span>,<span class="va">ggplot2</span>,<span class="va">lubridate</span>,<span class="va">readxl</span>,<span class="va">forecast</span>,<span class="va">stats</span>,<span class="va">stargazer</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,<span class="va">BatchGetSymbols</span>,<span class="va">ggplot2</span>,<span class="va">lubridate</span>,<span class="va">readxl</span>,<span class="va">forecast</span>,<span class="va">stats</span>,<span class="va">stargazer</span>,<span class="va">knitr</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
-<span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2002/9/30"</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
+<span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2002/9/01"</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
 <span><span class="va">pd</span></span>
-<span><span class="co">#&gt; [1] "2002-09-30"</span></span>
+<span><span class="co">#&gt; [1] "2002-09-01"</span></span>
 <span><span class="co">#&gt; [1] "2021-09-18"</span></span>
-<span><span class="va">ld</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2021/09/30"</span><span class="op">)</span><span class="co">#última fecha</span></span>
+<span><span class="va">ld</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2021/10/01"</span><span class="op">)</span><span class="co">#última fecha</span></span>
 <span><span class="va">ld</span></span>
-<span><span class="co">#&gt; [1] "2021-09-30"</span></span>
+<span><span class="co">#&gt; [1] "2021-10-01"</span></span>
 <span><span class="co">#Intervalos de tiempo</span></span>
 <span><span class="va">int</span><span class="op">&lt;-</span><span class="st">"monthly"</span></span>
 <span></span>
@@ -603,7 +604,7 @@ de que los datos esten en orden cronológico.</p>
 <span><span class="co">#&gt; # A tibble: 6 × 10</span></span>
 <span><span class="co">#&gt;   ticker ref.date     volume price…¹ price…² price…³ price…⁴</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 AMZN   2002-09-30   1.85e8   0.832   0.842   0.792   0.796</span></span>
+<span><span class="co">#&gt; 1 AMZN   2002-09-03   2.92e9   0.736   0.896   0.712   0.796</span></span>
 <span><span class="co">#&gt; 2 AMZN   2002-10-01   4.07e9   0.812   1.01    0.800   0.968</span></span>
 <span><span class="co">#&gt; 3 AMZN   2002-11-01   4.13e9   0.961   1.23    0.91    1.17 </span></span>
 <span><span class="co">#&gt; 4 AMZN   2002-12-02   3.11e9   1.21    1.25    0.922   0.944</span></span>
@@ -980,13 +981,13 @@ V1
 229
 </td>
 <td>
-31.914
+31.913
 </td>
 <td>
 45.104
 </td>
 <td>
-0.811
+0.736
 </td>
 <td>
 174.820
@@ -1000,13 +1001,13 @@ V2
 228
 </td>
 <td>
-31.287
+31.286
 </td>
 <td>
-44.192
+44.193
 </td>
 <td>
-0.811
+0.736
 </td>
 <td>
 174.479
@@ -1483,7 +1484,7 @@ HQ = ln \left[ \frac{1}{T} \sum_{t=1}^{T} \left( \hat{U}_t^{(p)} \right) ^2 \rig
 <p>Tranformacion de la serie original</p>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#original</span></span>
-<span><span class="va">price_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">price_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">09</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#logartimo</span></span>
 <span><span class="va">lprice_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span>, frequency <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span>
 <span><span class="co">#diferencias logaritmicas(cambio porcential)</span></span>
@@ -1504,7 +1505,7 @@ HQ = ln \left[ \frac{1}{T} \sum_{t=1}^{T} \left( \hat{U}_t^{(p)} \right) ^2 \rig
 <span>     col <span class="op">=</span> <span class="st">"darkred"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure">
 <img src="07-PE_Univariados_files/figure-html/unnamed-chunk-15-1.png" width="100%" style="display: block; margin: auto;">
-Veamos con detenimiento el pico de la grafica original.</div>
+Veamos con detenimiento el pico de la gráfica original.</div>
 <p>Es claro que este pico se da en 2020 desde junio hasta julio, probablemente causado por el aumento del uso en amzn durante la pandemia. Esos son outlier que debemos considerar. Por ello hay que marcarlos con una variable dummy.</p>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Generamos el rango de tiempo</span></span>
@@ -1593,28 +1594,28 @@ Veamos con detenimiento el pico de la grafica original.</div>
 <span><span class="va">f.enero</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">pred.df</span><span class="op">$</span><span class="va">d.enero</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2022</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">f.junio</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">pred.df</span><span class="op">$</span><span class="va">d.junio</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2022</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">f.diciembre</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">pred.df</span><span class="op">$</span><span class="va">d.dic</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2022</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Como lo vimos en las figuras <a href="procesos-estacionarios-univariados.html#fig:pacfamzn">6.9</a> y <a href="procesos-estacionarios-univariados.html#fig:acfamzn">6.10</a>, es claro que debemos usar un valor <span class="math inline">\(q\)</span> de <span class="math inline">\(1\)</span> y <span class="math inline">\(p\)</span> de <span class="math inline">\(1\)</span>. Pero tambien necesitamos diferenciar, lo cual corresponde al valor <span class="math inline">\(d\)</span>. Así pues, dado que en las funciones de autocorrelacion solo vemos un pico arriba de la linea punteada azul, podemos asumir que el valor de diferenciación debe ser uno. Esto se debe seguir como regla de dedo, pero en general se debe usar el valor que minimice la desviacion estandar. Por tanto nuestro modelo debe ser <span class="math inline">\(arima(1,1,1)\)</span>.</p>
-<p>Utilizamos la funcion “auto.arima” para confirmar que nuestra serie de tiempo deba ser <span class="math inline">\(arima(1,1,1)\)</span>, el arima que debos usar es aquel que minimize el indice AIC.</p>
+<p>Como lo vimos en las figuras <a href="procesos-estacionarios-univariados.html#fig:pacfamzn">6.9</a> y <a href="procesos-estacionarios-univariados.html#fig:acfamzn">6.10</a>, es claro que debemos usar un valor <span class="math inline">\(q\)</span> de <span class="math inline">\(1\)</span> y <span class="math inline">\(p\)</span> de <span class="math inline">\(0\)</span>, esto debido a que cuando vemos <a href="procesos-estacionarios-univariados.html#fig:pacfamzn">6.9</a> no hay una correlación de ninguno de los valores. Asímismo, también necesitamos diferenciar, lo cual corresponde al valor <span class="math inline">\(d\)</span>. Así pues, dado que en las funciones de autocorrelacion solo vemos uno o dos picos arriba de la linea punteada azul, podemos asumir que el valor de diferenciación debe ser uno o dos, en este caso dos. Esto se debe seguir como regla de dedo, pero en general se debe usar el valor que minimice la desviacion estandar y también el que minimice AIC. Por tanto nuestro modelo debe ser <span class="math inline">\(arima(0,2,1)\)</span>.</p>
+<p>Utilizamos la funcion “auto.arima” para confirmar que nuestra serie de tiempo deba ser <span class="math inline">\(arima(0,2,1)\)</span>, el arima que debos usar es aquel que minimize el indice AIC.</p>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">auto.arima</span><span class="op">(</span><span class="va">price_amazn_ts</span>, trace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Fitting models using approximations to speed things up...</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  ARIMA(2,2,2)(1,0,1)[12]                    : Inf</span></span>
-<span><span class="co">#&gt;  ARIMA(0,2,0)                               : 1458.057</span></span>
+<span><span class="co">#&gt;  ARIMA(0,2,0)                               : 1458.056</span></span>
 <span><span class="co">#&gt;  ARIMA(1,2,0)(1,0,0)[12]                    : 1396.532</span></span>
-<span><span class="co">#&gt;  ARIMA(0,2,1)(0,0,1)[12]                    : 1296.904</span></span>
-<span><span class="co">#&gt;  ARIMA(0,2,1)                               : 1295.488</span></span>
-<span><span class="co">#&gt;  ARIMA(0,2,1)(1,0,0)[12]                    : 1308.745</span></span>
+<span><span class="co">#&gt;  ARIMA(0,2,1)(0,0,1)[12]                    : 1296.885</span></span>
+<span><span class="co">#&gt;  ARIMA(0,2,1)                               : 1295.472</span></span>
+<span><span class="co">#&gt;  ARIMA(0,2,1)(1,0,0)[12]                    : 1308.746</span></span>
 <span><span class="co">#&gt;  ARIMA(0,2,1)(1,0,1)[12]                    : Inf</span></span>
 <span><span class="co">#&gt;  ARIMA(1,2,1)                               : 1297.615</span></span>
-<span><span class="co">#&gt;  ARIMA(0,2,2)                               : 1296.662</span></span>
+<span><span class="co">#&gt;  ARIMA(0,2,2)                               : 1296.649</span></span>
 <span><span class="co">#&gt;  ARIMA(1,2,0)                               : 1382.899</span></span>
-<span><span class="co">#&gt;  ARIMA(1,2,2)                               : 1299.614</span></span>
+<span><span class="co">#&gt;  ARIMA(1,2,2)                               : 1299.616</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Now re-fitting the best model(s) without approximations...</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  ARIMA(0,2,1)                               : 1305.631</span></span>
+<span><span class="co">#&gt;  ARIMA(0,2,1)                               : 1305.63</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Best model: ARIMA(0,2,1)</span></span>
 <span><span class="co">#&gt; Series: price_amazn_ts </span></span>
@@ -1629,13 +1630,13 @@ Veamos con detenimiento el pico de la grafica original.</div>
 <span><span class="co">#&gt; AIC=1305.58   AICc=1305.63   BIC=1312.43</span></span></code></pre></div>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#sin embargo hay que controlar con nuestra variable dummy</span></span>
-<span><span class="va">ARIMA_price_amzn_ts_111</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,</span>
-<span>                               method <span class="op">=</span> <span class="st">"ML"</span>,xreg<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">junio2020ts</span>,<span class="va">julio2020ts</span>,<span class="va">agosto2020ts</span>,<span class="va">sep2020ts</span>,<span class="va">oct2020ts</span>,<span class="va">nov2020ts</span>,<span class="va">diciembre2020ts</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">ARIMA_price_amzn_pl_111</span><span class="op">&lt;-</span><span class="fu">Arima</span><span class="op">(</span><span class="va">price_amazn_ts</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,</span>
-<span>                               method <span class="op">=</span> <span class="st">"ML"</span>,xreg<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">junio2020ts</span>,<span class="va">julio2020ts</span>,<span class="va">agosto2020ts</span>,<span class="va">sep2020ts</span>,<span class="va">oct2020ts</span>,<span class="va">nov2020ts</span>,<span class="va">diciembre2020ts</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">ARIMA_price_amzn_ts_111</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,</span>
+<span>                               method <span class="op">=</span> <span class="st">"ML"</span>,xreg<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">julio2020ts</span>,<span class="va">agosto2020ts</span>,<span class="va">sep2020ts</span>,<span class="va">oct2020ts</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">ARIMA_price_amzn_pl_111</span><span class="op">&lt;-</span><span class="fu">Arima</span><span class="op">(</span><span class="va">price_amazn_ts</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,</span>
+<span>                               method <span class="op">=</span> <span class="st">"ML"</span>,xreg<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">julio2020ts</span>,<span class="va">agosto2020ts</span>,<span class="va">sep2020ts</span>,<span class="va">oct2020ts</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-table"><table style="text-align:center" class="table table-sm">
 <caption>
-<strong>ARMA(1,1,1) de los precios de apertura de AMZN</strong>
+<strong>ARMA(0,2,1) de los precios de apertura de AMZN</strong>
 </caption>
 <tr>
 <td colspan="2" style="border-bottom: 1px solid black">
@@ -1667,59 +1668,17 @@ price_amazn_ts
 </tr>
 <tr>
 <td style="text-align:left">
-ar1
-</td>
-<td>
--0.507<sup>**</sup>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-(0.235)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
 ma1
 </td>
 <td>
-0.378
+-0.966<sup>***</sup>
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(0.244)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-junio2020ts
-</td>
-<td>
-1.481
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-(3.612)
+(0.015)
 </td>
 </tr>
 <tr>
@@ -1733,14 +1692,14 @@ junio2020ts
 julio2020ts
 </td>
 <td>
-10.100<sup>**</sup>
+9.383<sup>***</sup>
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(4.345)
+(3.220)
 </td>
 </tr>
 <tr>
@@ -1754,14 +1713,14 @@ julio2020ts
 agosto2020ts
 </td>
 <td>
-25.789<sup>***</sup>
+24.377<sup>***</sup>
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(4.858)
+(3.946)
 </td>
 </tr>
 <tr>
@@ -1775,14 +1734,14 @@ agosto2020ts
 sep2020ts
 </td>
 <td>
-35.028<sup>***</sup>
+33.689<sup>***</sup>
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(4.974)
+(3.946)
 </td>
 </tr>
 <tr>
@@ -1796,56 +1755,14 @@ sep2020ts
 oct2020ts
 </td>
 <td>
-15.220<sup>***</sup>
+13.462<sup>***</sup>
 </td>
 </tr>
 <tr>
 <td style="text-align:left">
 </td>
 <td>
-(4.844)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-nov2020ts
-</td>
-<td>
-1.750
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-(4.320)
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-diciembre2020ts
-</td>
-<td>
-2.507
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-</td>
-<td>
-(3.520)
+(3.220)
 </td>
 </tr>
 <tr>
@@ -1863,7 +1780,7 @@ diciembre2020ts
 Observations
 </td>
 <td>
-228
+227
 </td>
 </tr>
 <tr>
@@ -1871,7 +1788,7 @@ Observations
 Log Likelihood
 </td>
 <td>
--624.220
+-617.954
 </td>
 </tr>
 <tr>
@@ -1879,7 +1796,7 @@ Log Likelihood
 sigma<sup>2</sup>
 </td>
 <td>
-13.980
+13.393
 </td>
 </tr>
 <tr>
@@ -1887,7 +1804,7 @@ sigma<sup>2</sup>
 Akaike Inf. Crit.
 </td>
 <td>
-1,268.441
+1,247.908
 </td>
 </tr>
 <tr>
@@ -1931,149 +1848,297 @@ Figure 6.16: Raices ARMA(1) Inversas de la serie de tiempo
     \tag{6.77}
 \end{eqnarray}\]</span></p>
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ARIMA_price_amzn_ts_111_F</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">ARIMA_price_amzn_ts_111</span>,n.ahead<span class="op">=</span><span class="fl">13</span>,newxreg<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">f.junio2020</span>,<span class="va">f.julio2020</span>,<span class="va">f.agosto2020</span>,<span class="va">f.sep2020</span>,<span class="va">f.oct2020</span>,<span class="va">f.nov2020</span>,<span class="va">f.diciembre</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">ARIMA_price_amzn_ts_111_F</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">ARIMA_price_amzn_ts_111</span>,n.ahead<span class="op">=</span><span class="fl">13</span>,newxreg<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">f.julio2020</span>,<span class="va">f.agosto2020</span>,<span class="va">f.sep2020</span>,<span class="va">f.oct2020</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">forecast.Arima</span> <span class="op">&lt;-</span> <span class="fu">forecast</span><span class="op">(</span><span class="va">ARIMA_price_amzn_pl_111</span>,h<span class="op">=</span><span class="fl">13</span>, xreg<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">f.junio2020</span>,<span class="va">f.julio2020</span>,<span class="va">f.agosto2020</span>,<span class="va">f.sep2020</span>,<span class="va">f.oct2020</span>,<span class="va">f.nov2020</span>,<span class="va">f.diciembre</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">forecast.Arima</span> <span class="op">&lt;-</span> <span class="fu">forecast</span><span class="op">(</span><span class="va">ARIMA_price_amzn_pl_111</span>,h<span class="op">=</span><span class="fl">13</span>, xreg<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">f.julio2020</span>,<span class="va">f.agosto2020</span>,<span class="va">f.sep2020</span>,<span class="va">f.oct2020</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Valores:</p>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">forecast.Arima.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">forecast.Arima</span><span class="op">)</span></span>
-<span><span class="fu">stargazer</span><span class="op">(</span><span class="va">forecast.Arima.df</span>,type <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-table"><table style="text-align:center" class="table table-sm">
+<code class="sourceCode R"><span><span class="fu">kable</span><span class="op">(</span><span class="va">forecast.Arima</span>,<span class="st">"html"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Point Forecast
+</th>
+<th style="text-align:right;">
+Lo 80
+</th>
+<th style="text-align:right;">
+Hi 80
+</th>
+<th style="text-align:right;">
+Lo 95
+</th>
+<th style="text-align:right;">
+Hi 95
+</th>
+</tr></thead>
+<tbody>
 <tr>
-<td colspan="6" style="border-bottom: 1px solid black">
+<td style="text-align:left;">
+Oct 2021
+</td>
+<td style="text-align:right;">
+177.2339
+</td>
+<td style="text-align:right;">
+172.4914
+</td>
+<td style="text-align:right;">
+181.9763
+</td>
+<td style="text-align:right;">
+169.9809
+</td>
+<td style="text-align:right;">
+184.4869
 </td>
 </tr>
 <tr>
-<td style="text-align:left">
-Statistic
+<td style="text-align:left;">
+Nov 2021
 </td>
-<td>
-N
+<td style="text-align:right;">
+179.6477
 </td>
-<td>
-Mean
+<td style="text-align:right;">
+172.8267
 </td>
-<td>
-St. Dev.
+<td style="text-align:right;">
+186.4688
 </td>
-<td>
-Min
+<td style="text-align:right;">
+169.2158
 </td>
-<td>
-Max
-</td>
-</tr>
-<tr>
-<td colspan="6" style="border-bottom: 1px solid black">
+<td style="text-align:right;">
+190.0796
 </td>
 </tr>
 <tr>
-<td style="text-align:left">
-Point.Forecast
+<td style="text-align:left;">
+Dec 2021
 </td>
-<td>
-13
+<td style="text-align:right;">
+182.0616
 </td>
-<td>
-173.848
+<td style="text-align:right;">
+173.5670
 </td>
-<td>
-0.159
+<td style="text-align:right;">
+190.5562
 </td>
-<td>
-173.392
+<td style="text-align:right;">
+169.0702
 </td>
-<td>
-174.115
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Lo.80
-</td>
-<td>
-13
-</td>
-<td>
-162.405
-</td>
-<td>
-3.523
-</td>
-<td>
-157.667
-</td>
-<td>
-168.503
+<td style="text-align:right;">
+195.0530
 </td>
 </tr>
 <tr>
-<td style="text-align:left">
-Hi.80
+<td style="text-align:left;">
+Jan 2022
 </td>
-<td>
-13
+<td style="text-align:right;">
+184.4754
 </td>
-<td>
-185.290
+<td style="text-align:right;">
+174.5036
 </td>
-<td>
-3.628
+<td style="text-align:right;">
+194.4473
 </td>
-<td>
-178.281
+<td style="text-align:right;">
+169.2248
 </td>
-<td>
-190.077
-</td>
-</tr>
-<tr>
-<td style="text-align:left">
-Lo.95
-</td>
-<td>
-13
-</td>
-<td>
-156.348
-</td>
-<td>
-5.413
-</td>
-<td>
-149.089
-</td>
-<td>
-165.915
+<td style="text-align:right;">
+199.7261
 </td>
 </tr>
 <tr>
-<td style="text-align:left">
-Hi.95
+<td style="text-align:left;">
+Feb 2022
 </td>
-<td>
-13
+<td style="text-align:right;">
+186.8893
 </td>
-<td>
-191.347
+<td style="text-align:right;">
+175.5573
 </td>
-<td>
-5.518
+<td style="text-align:right;">
+198.2213
 </td>
-<td>
-180.870
+<td style="text-align:right;">
+169.5584
 </td>
-<td>
-198.655
+<td style="text-align:right;">
+204.2202
 </td>
 </tr>
 <tr>
-<td colspan="6" style="border-bottom: 1px solid black">
+<td style="text-align:left;">
+Mar 2022
+</td>
+<td style="text-align:right;">
+189.3032
+</td>
+<td style="text-align:right;">
+176.6880
+</td>
+<td style="text-align:right;">
+201.9183
+</td>
+<td style="text-align:right;">
+170.0099
+</td>
+<td style="text-align:right;">
+208.5964
 </td>
 </tr>
+<tr>
+<td style="text-align:left;">
+Apr 2022
+</td>
+<td style="text-align:right;">
+191.7170
+</td>
+<td style="text-align:right;">
+177.8725
+</td>
+<td style="text-align:right;">
+205.5615
+</td>
+<td style="text-align:right;">
+170.5436
+</td>
+<td style="text-align:right;">
+212.8904
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+May 2022
+</td>
+<td style="text-align:right;">
+194.1309
+</td>
+<td style="text-align:right;">
+179.0958
+</td>
+<td style="text-align:right;">
+209.1659
+</td>
+<td style="text-align:right;">
+171.1368
+</td>
+<td style="text-align:right;">
+217.1250
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Jun 2022
+</td>
+<td style="text-align:right;">
+196.5447
+</td>
+<td style="text-align:right;">
+180.3479
+</td>
+<td style="text-align:right;">
+212.7415
+</td>
+<td style="text-align:right;">
+171.7738
+</td>
+<td style="text-align:right;">
+221.3156
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Jul 2022
+</td>
+<td style="text-align:right;">
+198.9586
+</td>
+<td style="text-align:right;">
+181.6215
+</td>
+<td style="text-align:right;">
+216.2957
+</td>
+<td style="text-align:right;">
+172.4437
+</td>
+<td style="text-align:right;">
+225.4735
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Aug 2022
+</td>
+<td style="text-align:right;">
+201.3724
+</td>
+<td style="text-align:right;">
+182.9111
+</td>
+<td style="text-align:right;">
+219.8338
+</td>
+<td style="text-align:right;">
+173.1382
+</td>
+<td style="text-align:right;">
+229.6067
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sep 2022
+</td>
+<td style="text-align:right;">
+203.7863
+</td>
+<td style="text-align:right;">
+184.2127
+</td>
+<td style="text-align:right;">
+223.3599
+</td>
+<td style="text-align:right;">
+173.8511
+</td>
+<td style="text-align:right;">
+233.7216
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Oct 2022
+</td>
+<td style="text-align:right;">
+206.2002
+</td>
+<td style="text-align:right;">
+185.5232
+</td>
+<td style="text-align:right;">
+226.8772
+</td>
+<td style="text-align:right;">
+174.5774
+</td>
+<td style="text-align:right;">
+237.8229
+</td>
+</tr>
+</tbody>
 </table></div>
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">forecast.Arima</span>, main <span class="op">=</span><span class="st">"Forecast ARIMA(1,1,1) de los precios de AMZN"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">forecast.Arima</span>, main <span class="op">=</span><span class="st">"Forecast ARIMA(0,2,1) de los precios de AMZN"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:predarima111"></span>
 <img src="07-PE_Univariados_files/figure-html/predarima111-1.png" alt="Predicción de $Arima(1,1,1)$" width="100%"><p class="caption">
@@ -2085,20 +2150,9 @@ Figure 6.17: Predicción de <span class="math inline">\(Arima(1,1,1)\)</span>
 </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
   <div class="chapter-nav">
 <div class="prev"><a href="estacionariedad.html"><span class="header-section-number">5</span> Estacionariedad</a></div>
-<div class="empty"></div>
+<div class="next"><a href="estacionalidad.html"><span class="header-section-number">7</span> ESTACIONALIDAD</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -2146,7 +2200,7 @@ Figure 6.17: Predicción de <span class="math inline">\(Arima(1,1,1)\)</span>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-10-02.</p>
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-10-05.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

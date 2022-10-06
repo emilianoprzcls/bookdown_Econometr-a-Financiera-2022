@@ -115,6 +115,8 @@ eq:ls5
 fig:amazn20rootma1
 eq:ARMApqFor
 fig:predarima111
+fig:3series
+fig:amzndiffln
 mínimos-cuadrados-ordinarios
 el-problema
 estimación-r
@@ -172,3 +174,4 @@ armap-q
 selección-de-las-constantes-p-q-d-en-un-arp-un-maq-un-armap-q-o-un-arimap-d-q
 ejemplo-arma
 pronósticos
+estacionalidad
