@@ -1,4 +1,4 @@
-# ESTACIONALIDAD
+# Estacionalidad
 Recordando el tema pasado y la serie en la que evaluamos los cambios de
 precio del ACTIVO AMZN como si fueran retornos:
 

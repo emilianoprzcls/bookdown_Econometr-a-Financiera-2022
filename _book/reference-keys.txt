@@ -208,3 +208,7 @@ adf-test
 pp-test
 pp-test-1
 kpss-test
+volatilidad-y-heterocedasticidad
+ejemplo-1
+pruebas-de-heterocedasticidad-condicionada
+mcleod-li

@@ -1,4 +1,4 @@
-# CAPITAL ASSET PRICING MODEL (CAPM)
+# Capital Asset Pricing Model (CAPM)
 
 ## El problema
 
@@ -215,7 +215,7 @@ data3<-BatchGetSymbols(tickers = dt3,
 #>    tickers =AAPL
 #>    Downloading data for benchmark ticker
 #> ^GSPC | yahoo (1|1)
-#> AAPL | yahoo (1|1) - Got 100% of valid prices | Good job!
+#> AAPL | yahoo (1|1) - Got 100% of valid prices | Mais faceiro que guri de bombacha nova!
 data_precio_AAPL<-data3$df.tickers
 colnames(data_precio_AAPL)
 #>  [1] "ticker"              "ref.date"           

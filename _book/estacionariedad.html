@@ -46,11 +46,12 @@
 <li><a class="" href="index.html"><span class="header-section-number">1</span> Mínimos Cuadrados Ordinarios</a></li>
 <li><a class="" href="m%C3%A1xima-verosimilitud.html"><span class="header-section-number">2</span> Máxima Verosimilitud</a></li>
 <li><a class="" href="m%C3%A9todo-generalizado-de-momentos-mgm.html"><span class="header-section-number">3</span> Método Generalizado de Momentos (MGM)</a></li>
-<li><a class="" href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> CAPITAL ASSET PRICING MODEL (CAPM)</a></li>
+<li><a class="" href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> Capital Asset Pricing Model (CAPM)</a></li>
 <li><a class="active" href="estacionariedad.html"><span class="header-section-number">5</span> Estacionariedad</a></li>
 <li><a class="" href="procesos-estacionarios-univariados.html"><span class="header-section-number">6</span> Procesos estacionarios univariados</a></li>
-<li><a class="" href="estacionalidad.html"><span class="header-section-number">7</span> ESTACIONALIDAD</a></li>
+<li><a class="" href="estacionalidad.html"><span class="header-section-number">7</span> Estacionalidad</a></li>
 <li><a class="" href="raiz-unitaria.html"><span class="header-section-number">8</span> Raiz Unitaria</a></li>
+<li><a class="" href="volatilidad-y-heterocedasticidad.html"><span class="header-section-number">9</span> Volatilidad y Heterocedasticidad</a></li>
 </ul>
 
         <div class="book-extra">
@@ -342,10 +343,10 @@ Figura <a href="estacionariedad.html#fig:LAGSCAMINATA1">5.4</a> se ven tan corre
 <code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
 <span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span><span class="op">(</span><span class="fl">365</span><span class="op">*</span><span class="fl">20</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
 <span><span class="va">pd</span></span>
-<span><span class="co">#&gt; [1] "2002-10-20"</span></span>
+<span><span class="co">#&gt; [1] "2002-10-23"</span></span>
 <span><span class="va">ld</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#última fecha</span></span>
 <span><span class="va">ld</span></span>
-<span><span class="co">#&gt; [1] "2022-10-15"</span></span>
+<span><span class="co">#&gt; [1] "2022-10-18"</span></span>
 <span><span class="co">#Intervalos de tiempo</span></span>
 <span><span class="va">int</span><span class="op">&lt;-</span><span class="st">"monthly"</span></span>
 <span><span class="co">#Datos a elegir</span></span>
@@ -370,7 +371,7 @@ Figura <a href="estacionariedad.html#fig:LAGSCAMINATA1">5.4</a> se ven tan corre
 <span><span class="co">#necesitamos convertir la serie de tiempo de precios en retornos continuos compuestos de los precios de apertura</span></span>
 <span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span> ,<span class="fl">100</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="co">#agregamos un valor NA al principio</span></span>
 <span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ccrAMZN</span><span class="co">#estos son los retornos</span></span>
-<span><span class="co">#&gt;   [1]           NA   1.73187220  22.83329766 -22.98950701</span></span>
+<span><span class="co">#&gt;   [1]           NA  -1.54881774  22.83329766 -22.98950701</span></span>
 <span><span class="co">#&gt;   [5]  13.39221448   0.95260416  14.27998202  11.55626991</span></span>
 <span><span class="co">#&gt;   [9]  24.11122449  -0.46684144  13.08785513  11.63599301</span></span>
 <span><span class="co">#&gt;  [13]   3.89974592  12.48104071  -0.73260401  -3.06108260</span></span>
@@ -455,7 +456,7 @@ de que los datos esten en orden cronológico.</p>
 <span><span class="co">#&gt; # A tibble: 6 × 11</span></span>
 <span><span class="co">#&gt;   ticker ref.date     volume price…¹ price…² price…³ price…⁴</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;  &lt;date&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 AMZN   2002-10-21   1.61e9   0.944    1.01   0.904   0.968</span></span>
+<span><span class="co">#&gt; 1 AMZN   2002-10-23   1.30e9   0.976    1.01   0.904   0.968</span></span>
 <span><span class="co">#&gt; 2 AMZN   2002-11-01   4.13e9   0.961    1.23   0.91    1.17 </span></span>
 <span><span class="co">#&gt; 3 AMZN   2002-12-02   3.11e9   1.21     1.25   0.922   0.944</span></span>
 <span><span class="co">#&gt; 4 AMZN   2003-01-02   3.38e9   0.960    1.16   0.928   1.09 </span></span>
@@ -508,7 +509,7 @@ hay estacionariedad</strong>.</p>
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> CAPITAL ASSET PRICING MODEL (CAPM)</a></div>
+<div class="prev"><a href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> Capital Asset Pricing Model (CAPM)</a></div>
 <div class="next"><a href="procesos-estacionarios-univariados.html"><span class="header-section-number">6</span> Procesos estacionarios univariados</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
@@ -552,7 +553,7 @@ hay estacionariedad</strong>.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-10-15.</p>
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-10-18.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

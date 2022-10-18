@@ -1,4 +1,4 @@
-# CAPITAL ASSET PRICING MODEL (CAPM)
+# Capital Asset Pricing Model (CAPM)
 
 ## El problema
 

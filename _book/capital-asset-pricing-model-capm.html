@@ -4,15 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 4 CAPITAL ASSET PRICING MODEL (CAPM) | Diplomado de Econometría Financiera</title>
+<title>Chapter 4 Capital Asset Pricing Model (CAPM) | Diplomado de Econometría Financiera</title>
 <meta name="author" content="Benjamin Oliva y Emiliano Pérez Caullieres">
 <meta name="description" content="4.1 El problema Una vez que hemos establecido la manera en la que se pueden estimar algunos valores –como las regresiones lineales y el método de máxima verosimilitud–, además de la naturaleza de...">
 <meta name="generator" content="bookdown 0.27 with bs4_book()">
-<meta property="og:title" content="Chapter 4 CAPITAL ASSET PRICING MODEL (CAPM) | Diplomado de Econometría Financiera">
+<meta property="og:title" content="Chapter 4 Capital Asset Pricing Model (CAPM) | Diplomado de Econometría Financiera">
 <meta property="og:type" content="book">
 <meta property="og:description" content="4.1 El problema Una vez que hemos establecido la manera en la que se pueden estimar algunos valores –como las regresiones lineales y el método de máxima verosimilitud–, además de la naturaleza de...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 4 CAPITAL ASSET PRICING MODEL (CAPM) | Diplomado de Econometría Financiera">
+<meta name="twitter:title" content="Chapter 4 Capital Asset Pricing Model (CAPM) | Diplomado de Econometría Financiera">
 <meta name="twitter:description" content="4.1 El problema Una vez que hemos establecido la manera en la que se pueden estimar algunos valores –como las regresiones lineales y el método de máxima verosimilitud–, además de la naturaleza de...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -46,11 +46,12 @@
 <li><a class="" href="index.html"><span class="header-section-number">1</span> Mínimos Cuadrados Ordinarios</a></li>
 <li><a class="" href="m%C3%A1xima-verosimilitud.html"><span class="header-section-number">2</span> Máxima Verosimilitud</a></li>
 <li><a class="" href="m%C3%A9todo-generalizado-de-momentos-mgm.html"><span class="header-section-number">3</span> Método Generalizado de Momentos (MGM)</a></li>
-<li><a class="active" href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> CAPITAL ASSET PRICING MODEL (CAPM)</a></li>
+<li><a class="active" href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> Capital Asset Pricing Model (CAPM)</a></li>
 <li><a class="" href="estacionariedad.html"><span class="header-section-number">5</span> Estacionariedad</a></li>
 <li><a class="" href="procesos-estacionarios-univariados.html"><span class="header-section-number">6</span> Procesos estacionarios univariados</a></li>
-<li><a class="" href="estacionalidad.html"><span class="header-section-number">7</span> ESTACIONALIDAD</a></li>
+<li><a class="" href="estacionalidad.html"><span class="header-section-number">7</span> Estacionalidad</a></li>
 <li><a class="" href="raiz-unitaria.html"><span class="header-section-number">8</span> Raiz Unitaria</a></li>
+<li><a class="" href="volatilidad-y-heterocedasticidad.html"><span class="header-section-number">9</span> Volatilidad y Heterocedasticidad</a></li>
 </ul>
 
         <div class="book-extra">
@@ -60,7 +61,7 @@
 </div>
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="capital-asset-pricing-model-capm" class="section level1" number="4">
 <h1>
-<span class="header-section-number">4</span> CAPITAL ASSET PRICING MODEL (CAPM)<a class="anchor" aria-label="anchor" href="#capital-asset-pricing-model-capm"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4</span> Capital Asset Pricing Model (CAPM)<a class="anchor" aria-label="anchor" href="#capital-asset-pricing-model-capm"><i class="fas fa-link"></i></a>
 </h1>
 <div id="el-problema-3" class="section level2" number="4.1">
 <h2>
@@ -269,7 +270,7 @@ Figure 4.2: Relación de excesos de retornos entre TSLA y SP500
 <span><span class="co">#&gt;    tickers =AAPL</span></span>
 <span><span class="co">#&gt;    Downloading data for benchmark ticker</span></span>
 <span><span class="co">#&gt; ^GSPC | yahoo (1|1)</span></span>
-<span><span class="co">#&gt; AAPL | yahoo (1|1) - Got 100% of valid prices | Good job!</span></span>
+<span><span class="co">#&gt; AAPL | yahoo (1|1) - Got 100% of valid prices | Mais faceiro que guri de bombacha nova!</span></span>
 <span><span class="va">data_precio_AAPL</span><span class="op">&lt;-</span><span class="va">data3</span><span class="op">$</span><span class="va">df.tickers</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data_precio_AAPL</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "ticker"              "ref.date"           </span></span>
@@ -318,7 +319,7 @@ Figure 4.2: Relación de excesos de retornos entre TSLA y SP500
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#capital-asset-pricing-model-capm"><span class="header-section-number">4</span> CAPITAL ASSET PRICING MODEL (CAPM)</a></li>
+<li><a class="nav-link" href="#capital-asset-pricing-model-capm"><span class="header-section-number">4</span> Capital Asset Pricing Model (CAPM)</a></li>
 <li><a class="nav-link" href="#el-problema-3"><span class="header-section-number">4.1</span> El problema</a></li>
 <li><a class="nav-link" href="#estimaci%C3%B3n-r-1"><span class="header-section-number">4.2</span> Estimación R</a></li>
 <li>
@@ -345,7 +346,7 @@ Figure 4.2: Relación de excesos de retornos entre TSLA y SP500
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-10-15.</p>
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-10-18.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

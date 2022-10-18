@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 9 Volatilidad y Heterocedasticidad | Diplomado de Econometría Financiera</title>
+<meta name="author" content="Benjamin Oliva y Emiliano Pérez Caullieres">
+<meta name="description" content="En esta lección analizaremos la manera en la que la volatilidad puede afectar la manera en la que estudiamos las series de tiempo. Como definición, la volatilidad es la desviación estándar de un...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 9 Volatilidad y Heterocedasticidad | Diplomado de Econometría Financiera">
+<meta property="og:type" content="book">
+<meta property="og:description" content="En esta lección analizaremos la manera en la que la volatilidad puede afectar la manera en la que estudiamos las series de tiempo. Como definición, la volatilidad es la desviación estándar de un...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 9 Volatilidad y Heterocedasticidad | Diplomado de Econometría Financiera">
+<meta name="twitter:description" content="En esta lección analizaremos la manera en la que la volatilidad puede afectar la manera en la que estudiamos las series de tiempo. Como definición, la volatilidad es la desviación estándar de un...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Diplomado de Econometría Financiera</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Mínimos Cuadrados Ordinarios</a></li>
+<li><a class="" href="m%C3%A1xima-verosimilitud.html"><span class="header-section-number">2</span> Máxima Verosimilitud</a></li>
+<li><a class="" href="m%C3%A9todo-generalizado-de-momentos-mgm.html"><span class="header-section-number">3</span> Método Generalizado de Momentos (MGM)</a></li>
+<li><a class="" href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> Capital Asset Pricing Model (CAPM)</a></li>
+<li><a class="" href="estacionariedad.html"><span class="header-section-number">5</span> Estacionariedad</a></li>
+<li><a class="" href="procesos-estacionarios-univariados.html"><span class="header-section-number">6</span> Procesos estacionarios univariados</a></li>
+<li><a class="" href="estacionalidad.html"><span class="header-section-number">7</span> Estacionalidad</a></li>
+<li><a class="" href="raiz-unitaria.html"><span class="header-section-number">8</span> Raiz Unitaria</a></li>
+<li><a class="active" href="volatilidad-y-heterocedasticidad.html"><span class="header-section-number">9</span> Volatilidad y Heterocedasticidad</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="volatilidad-y-heterocedasticidad" class="section level1" number="9">
+<h1>
+<span class="header-section-number">9</span> Volatilidad y Heterocedasticidad<a class="anchor" aria-label="anchor" href="#volatilidad-y-heterocedasticidad"><i class="fas fa-link"></i></a>
+</h1>
+<p>En esta lección analizaremos la manera en la que la volatilidad puede afectar la manera en la que estudiamos las series de tiempo. Como definición, la volatilidad es la desviación estándar de un determinado activo. Lo que quiere decir esto es que la desviación estándar de los activos no es siempre constante y, por consiguiente, puede reaccionar de distintas manera a distintos cambios de precio. Esto es de relevancia para los siguientes modelos que utilizaremos llamados Auto Regressive Conditional Heteroskedasticity (ARCH) y Generalized Auto Regressive Conditional Heteroskedasticity (GARCH), pues intentan modelar la heterocedasticidad condicional de los modelos.</p>
+<p>Algunos de los problemas de la volatilidad es que no es directamente observable porque la volatilidad de un activo depende de valores entre días o de la noche a la mañana, por lo que es difícil ver qué tanto afecta o cambia.</p>
+<p>Aquí las principales características de la volatilidad.</p>
+<p>La volatilidad puede ser alta o baja en ciertos periodos de tiempo. A esto se le conoce como <em>volatility clusters</em>.
+- La volatilidad evoluciona continuamente con el tiempo, por lo que los picos de volatilidad son raros.
+- La volatilidad no tiene al infinito, tiene una varianza alrededor de un valor fijo. En términos que hemos mencionado antes, la volatilidad es estacionaria.
+- La volatilidad reacciona de maneras diferentes a picos o valles en los valores de los precios. A esto se le conoce como <em>leverage effect</em>.</p>
+<p>Sean <span class="math inline">\(a_t=r_t-\mu_t\)</span> los residuales de una ecuación de media. La serie <span class="math inline">\(a_t^2\)</span> es utilizada para determinar la heterocedasticidad condicional, lo cual se conoce como <strong>el efecto ARCH</strong>. Existen dos tests:
+- El test se aplica el Ljung-Box estadístico <span class="math inline">\(Q(m)\)</span> a la serie <span class="math inline">\({a_t^2}\)</span> y fue construido por Mcleod y Li (1983). La hipótesis nula es que los primeros <span class="math inline">\(m\)</span> lags de la Función de Autocorrelación de la serie <span class="math inline">\(a_t^2\)</span> son iguales a cero.
+- El segundo esta basado en el Multiplicador de Lagrange de Engle (1982) y es equivalente a utilizar un <span class="math inline">\(F\)</span> test para probar que <span class="math inline">\(\alpha_i=0\)</span> donde <span class="math inline">\((i=1,\dots,m)\)</span> en <span class="math display">\[a_t^2=\alpha_0+\alpha_1a_{t-1}^2+\dots+\alpha_m a_{t-m}^2+e_t\]</span>
+Por lo que los test funcionan igual. Específicamente, la hipótesis nula es <span class="math inline">\(H_0:\alpha_0=\dots=\alpha_m=0\)</span>. Determinemos que <span class="math inline">\(SSR_0=\sum_{t=m+1}^T(a_t^2-\bar{w})^2\)</span>, donde <span class="math inline">\(\bar{w}=\frac{1}{T}\sum_{t=1}^Ta_t^2\)</span> es la media muestral de <span class="math inline">\(a_t^2\)</span> y <span class="math inline">\(SSR_1=\sum_{t=m+1}^Te_t^2\)</span>. Por lo que F es igual a <span class="math display">\[F=\frac{(SSR_0-SSR_1)/m}{SSR_1/(T-2m-1)}\]</span>. De esa manera rechazamos la hipotesis nula, como regla de dedo si <span class="math inline">\(F&gt;X_m^2(\alpha)\)</span> y decimos que existe un efecto ARCH. Cabe aclarar que <span class="math inline">\(X_m^2(\alpha)\)</span> es el porcentíl <span class="math inline">\(100(1-\alpha)\)</span>esimo alto de <span class="math inline">\(X_m^2\)</span>. O el <span class="math inline">\(p\)</span>-value de F es menor que <span class="math inline">\(\alpha\)</span>.</p>
+<div id="ejemplo-1" class="section level2" number="9.1">
+<h2>
+<span class="header-section-number">9.1</span> Ejemplo<a class="anchor" aria-label="anchor" href="#ejemplo-1"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#install.packages("pacman")</span></span>
+<span><span class="co">#pacman nos permite cargar varias librerias en una sola línea</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,<span class="va">BatchGetSymbols</span>,<span class="va">ggplot2</span>,<span class="va">lubridate</span>,<span class="va">readxl</span>,<span class="va">forecast</span>,<span class="va">stats</span>,<span class="va">stargazer</span>,<span class="va">knitr</span>,<span class="va">tseries</span>, <span class="va">aTSA</span>, <span class="va">TSA</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
+<span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2002/9/30"</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
+<span><span class="va">pd</span></span>
+<span><span class="co">#&gt; [1] "2002-09-30"</span></span>
+<span><span class="co">#&gt; [1] "2021-09-18"</span></span>
+<span><span class="va">ld</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2021/09/30"</span><span class="op">)</span><span class="co">#última fecha</span></span>
+<span><span class="va">ld</span></span>
+<span><span class="co">#&gt; [1] "2021-09-30"</span></span>
+<span><span class="co">#Intervalos de tiempo</span></span>
+<span><span class="va">int</span><span class="op">&lt;-</span><span class="st">"monthly"</span></span>
+<span></span>
+<span><span class="co">#Datos a elegir</span></span>
+<span><span class="va">dt</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AMZN"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Descargando los valores</span></span>
+<span><span class="va">data1</span><span class="op">&lt;-</span> <span class="fu">BatchGetSymbols</span><span class="op">(</span>tickers <span class="op">=</span> <span class="va">dt</span>,</span>
+<span>                       first.date <span class="op">=</span> <span class="va">pd</span>,</span>
+<span>                       last.date <span class="op">=</span> <span class="va">ld</span>,</span>
+<span>                       freq.data <span class="op">=</span> <span class="va">int</span>,</span>
+<span>                       do.cache <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                       thresh.bad.data <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Generando data frame con los valores</span></span>
+<span><span class="va">data_precio_amzn</span><span class="op">&lt;-</span><span class="va">data1</span><span class="op">$</span><span class="va">df.tickers</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "ticker"              "ref.date"           </span></span>
+<span><span class="co">#&gt;  [3] "volume"              "price.open"         </span></span>
+<span><span class="co">#&gt;  [5] "price.high"          "price.low"          </span></span>
+<span><span class="co">#&gt;  [7] "price.close"         "price.adjusted"     </span></span>
+<span><span class="co">#&gt;  [9] "ret.adjusted.prices" "ret.closing.prices"</span></span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#original</span></span>
+<span><span class="va">price_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">09</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#logartimo</span></span>
+<span><span class="va">lprice_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span>, frequency <span class="op">=</span> <span class="fl">12</span>,start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">09</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#diferencias logaritmicas(cambio porcential)</span></span>
+<span><span class="va">dlprice_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span><span class="op">-</span><span class="fu">lag</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span>,<span class="fl">1</span><span class="op">)</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dlprice_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">dlprice_amazn_ts</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="pruebas-de-heterocedasticidad-condicionada" class="section level2" number="9.2">
+<h2>
+<span class="header-section-number">9.2</span> Pruebas de Heterocedasticidad Condicionada<a class="anchor" aria-label="anchor" href="#pruebas-de-heterocedasticidad-condicionada"><i class="fas fa-link"></i></a>
+</h2>
+<div id="mcleod-li" class="section level3" number="9.2.1">
+<h3>
+<span class="header-section-number">9.2.1</span> McLeod &amp; Li<a class="anchor" aria-label="anchor" href="#mcleod-li"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">McLeod.Li.test</span><span class="op">(</span>y<span class="op">=</span><span class="va">dlprice_amazn_ts</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="10-Volatilidad_files/figure-html/unnamed-chunk-4-1.png" width="672"></div>
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/box.test.html">Box.test</a></span><span class="op">(</span><span class="va">lprice_amazn_ts</span>,lag<span class="op">=</span><span class="fl">12</span>,type<span class="op">=</span><span class="st">"Ljung"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Box-Ljung test</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; data:  lprice_amazn_ts</span></span>
+<span><span class="co">#&gt; X-squared = 2310.6, df = 12, p-value &lt; 2.2e-16</span></span>
+<span><span class="fu">McLeod.Li.test</span><span class="op">(</span>y<span class="op">=</span><span class="va">lprice_amazn_ts</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="10-Volatilidad_files/figure-html/unnamed-chunk-5-1.png" width="672"></div>
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">McLeod.Li.test</span><span class="op">(</span>y<span class="op">=</span><span class="va">price_amazn_ts</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure">
+<img src="10-Volatilidad_files/figure-html/unnamed-chunk-6-1.png" width="672">
+### Engels</div>
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span><span class="va">dlprice_amazn_ts</span>,order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">arch.test</span><span class="op">(</span><span class="va">mod1</span>, output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ARCH heteroscedasticity test for residuals </span></span>
+<span><span class="co">#&gt; alternative: heteroscedastic </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Portmanteau-Q test: </span></span>
+<span><span class="co">#&gt;      order    PQ  p.value</span></span>
+<span><span class="co">#&gt; [1,]     4  2.52 6.41e-01</span></span>
+<span><span class="co">#&gt; [2,]     8  4.51 8.08e-01</span></span>
+<span><span class="co">#&gt; [3,]    12 46.10 6.68e-06</span></span>
+<span><span class="co">#&gt; [4,]    16 48.74 3.63e-05</span></span>
+<span><span class="co">#&gt; [5,]    20 71.95 8.74e-08</span></span>
+<span><span class="co">#&gt; [6,]    24 85.13 9.07e-09</span></span>
+<span><span class="co">#&gt; Lagrange-Multiplier test: </span></span>
+<span><span class="co">#&gt;      order     LM  p.value</span></span>
+<span><span class="co">#&gt; [1,]     4 149.98 0.00e+00</span></span>
+<span><span class="co">#&gt; [2,]     8  70.53 1.15e-12</span></span>
+<span><span class="co">#&gt; [3,]    12  21.89 2.52e-02</span></span>
+<span><span class="co">#&gt; [4,]    16  13.71 5.48e-01</span></span>
+<span><span class="co">#&gt; [5,]    20   8.27 9.84e-01</span></span>
+<span><span class="co">#&gt; [6,]    24   5.99 1.00e+00</span></span></code></pre></div>
+<div class="inline-figure"><img src="10-Volatilidad_files/figure-html/unnamed-chunk-7-1.png" width="672"></div>
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span><span class="va">lprice_amazn_ts</span>,order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">arch.test</span><span class="op">(</span><span class="va">mod2</span>, output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ARCH heteroscedasticity test for residuals </span></span>
+<span><span class="co">#&gt; alternative: heteroscedastic </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Portmanteau-Q test: </span></span>
+<span><span class="co">#&gt;      order    PQ  p.value</span></span>
+<span><span class="co">#&gt; [1,]     4  2.67 6.15e-01</span></span>
+<span><span class="co">#&gt; [2,]     8  4.04 8.54e-01</span></span>
+<span><span class="co">#&gt; [3,]    12 43.16 2.12e-05</span></span>
+<span><span class="co">#&gt; [4,]    16 45.87 1.02e-04</span></span>
+<span><span class="co">#&gt; [5,]    20 64.29 1.51e-06</span></span>
+<span><span class="co">#&gt; [6,]    24 79.84 6.45e-08</span></span>
+<span><span class="co">#&gt; Lagrange-Multiplier test: </span></span>
+<span><span class="co">#&gt;      order     LM  p.value</span></span>
+<span><span class="co">#&gt; [1,]     4 122.98 0.00e+00</span></span>
+<span><span class="co">#&gt; [2,]     8  60.92 9.88e-11</span></span>
+<span><span class="co">#&gt; [3,]    12  21.53 2.83e-02</span></span>
+<span><span class="co">#&gt; [4,]    16  13.25 5.83e-01</span></span>
+<span><span class="co">#&gt; [5,]    20   8.46 9.81e-01</span></span>
+<span><span class="co">#&gt; [6,]    24   6.14 1.00e+00</span></span></code></pre></div>
+<div class="inline-figure"><img src="10-Volatilidad_files/figure-html/unnamed-chunk-8-1.png" width="672"></div>
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#mod3 &lt;- estimate(price_amazn_ts,p = 1)</span></span>
+<span><span class="co">#arch.test(mod3, output = TRUE)</span></span></code></pre></div>
+<p>Dadas todas las pruebas podemos ver que hay heterocedasticidad menos en el de diferencias de logaritmos.</p>
+
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="chapter-nav">
+<div class="prev"><a href="raiz-unitaria.html"><span class="header-section-number">8</span> Raiz Unitaria</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#volatilidad-y-heterocedasticidad"><span class="header-section-number">9</span> Volatilidad y Heterocedasticidad</a></li>
+<li><a class="nav-link" href="#ejemplo-1"><span class="header-section-number">9.1</span> Ejemplo</a></li>
+<li>
+<a class="nav-link" href="#pruebas-de-heterocedasticidad-condicionada"><span class="header-section-number">9.2</span> Pruebas de Heterocedasticidad Condicionada</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#mcleod-li"><span class="header-section-number">9.2.1</span> McLeod &amp; Li</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rstudio/bookdown-demo/blob/master/10-Volatilidad.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rstudio/bookdown-demo/edit/master/10-Volatilidad.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-10-18.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
