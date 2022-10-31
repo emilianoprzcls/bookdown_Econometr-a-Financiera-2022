@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 10 Heterocedasticidad condicionada | Diplomado de Econometría Financiera</title>
+<meta name="author" content="Benjamin Oliva y Emiliano Pérez Caullieres">
+<meta name="description" content="10.1 Modelos ARCH y GARCH Univariados Estos modelos de Heterocedásticidad Condicional Autoregresiva (ARCH, por sus siglas en inglés) y modelos Heterocedásticidad Condicional Autoregresiva...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 10 Heterocedasticidad condicionada | Diplomado de Econometría Financiera">
+<meta property="og:type" content="book">
+<meta property="og:description" content="10.1 Modelos ARCH y GARCH Univariados Estos modelos de Heterocedásticidad Condicional Autoregresiva (ARCH, por sus siglas en inglés) y modelos Heterocedásticidad Condicional Autoregresiva...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 10 Heterocedasticidad condicionada | Diplomado de Econometría Financiera">
+<meta name="twitter:description" content="10.1 Modelos ARCH y GARCH Univariados Estos modelos de Heterocedásticidad Condicional Autoregresiva (ARCH, por sus siglas en inglés) y modelos Heterocedásticidad Condicional Autoregresiva...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Diplomado de Econometría Financiera</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 10</span> Heterocedasticidad condicionada</a></li></ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="heterocedasticidad-condicionada" class="section level1" number="10">
+<h1>
+<span class="header-section-number">10</span> Heterocedasticidad condicionada<a class="anchor" aria-label="anchor" href="#heterocedasticidad-condicionada"><i class="fas fa-link"></i></a>
+</h1>
+<div id="modelos-arch-y-garch-univariados" class="section level2" number="10.1">
+<h2>
+<span class="header-section-number">10.1</span> Modelos ARCH y GARCH Univariados<a class="anchor" aria-label="anchor" href="#modelos-arch-y-garch-univariados"><i class="fas fa-link"></i></a>
+</h2>
+<p>Estos modelos de Heterocedásticidad Condicional Autoregresiva (ARCH, por sus siglas en inglés) y modelos Heterocedásticidad Condicional Autoregresiva Generalizados (GARCH, por sus siglas en inglés) tienen la característica de modelar situaciones como las que ilustra la Figutra <a href="heterocedasticidad-condicionada.html#fig:GARCHReturn">10.1</a>. Es decir: 1) existen zonas donde la variación de los datos es mayor y zonas donde la variación es más estable –a estas situaciones se les conoce como de variabilidad por clúster–, y 2) los datos corresponden a innformación de alta frecuencia.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:GARCHReturn"></span>
+<img src="imagenes/G_ARCH_Return.png" alt="Rendimientos (diferenccias logarítmicas) de tres acciones seleccionadas: Apple, Pfizer, Tesla, enero 2011 a noviembre de 2020" width="100%"><p class="caption">
+Figure 10.1: Rendimientos (diferenccias logarítmicas) de tres acciones seleccionadas: Apple, Pfizer, Tesla, enero 2011 a noviembre de 2020
+</p>
+</div>
+<p>Para plantear el modelo supongamos –por simplicidad– que hemos construido y estimado un modelo AR(1). Es decir, asumamos que el proceso subyacente para la media condicional está dada por:
+<span class="math display" id="eq:em1">\[\begin{equation}
+    X_t = a_0 + a_1 X_{t-1} + U_t
+    \tag{10.1}
+\end{equation}\]</span></p>
+<p>Donde <span class="math inline">\(|a_1|&lt; 1\)</span> para garantizar la convergencia del proceso en el largo plazo, en el cual:
+<span class="math display">\[\begin{eqnarray*}
+    \mathbb{E}[X_t] &amp; = &amp; \frac{a_0 }{1 - a_1} = \mu \\
+    Var[X_t] &amp; = &amp; \frac{\sigma^2}{1 - a_1^2}
+\end{eqnarray*}\]</span></p>
+<p>Ahora, supongamos que este tipo de modelos pueden ser extendidos y generalizados a un modelo ARMA(p, q), que incluya otras variables exogénas. Denotemos a como <span class="math inline">\(\mathbf{Z}_t\)</span> al conjunto que incluye los componentes AR, MA y variables exogénas que pueden explicar a <span class="math inline">\(X_t\)</span> de forma que el proceso estará dado por:
+<span class="math display" id="eq:em2">\[\begin{equation}
+    X_t = \mathbf{Z}_t \boldsymbol{\beta} + U_t
+        \tag{10.2}
+\end{equation}\]</span></p>
+<p>Donde <span class="math inline">\(U_t\)</span> es un proceso estacionario que representa el error asociado a un proceso ARMA(p, q) y donde siguen diendo válidos los supuestos:
+<span class="math display">\[\begin{eqnarray*}
+    \mathbb{E}[U_t] &amp; = &amp; 0 \\
+    Var[U_t^2] &amp; = &amp; \sigma^2
+\end{eqnarray*}\]</span></p>
+<p>No obstante, en este caso podemos suponer que existe autocorrelación en el término de error que puede ser capturada por un porceso similar a uno de medias móviles (MA) dado por:
+<span class="math display" id="eq:em3">\[\begin{equation}
+    U_t^2 = \gamma_0 + \gamma_1 U_{t-1}^2 + \gamma_2 U_{t-2}^2 + \ldots + \gamma_q U_{t-q}^2 + \nu_t
+        \tag{10.3}
+\end{equation}\]</span></p>
+<p>Donde <span class="math inline">\(\nu_t\)</span> es un ruido blanco y <span class="math inline">\(U_{t-i} = X_{t-i} - \mathbf{Z}_{t-i} \boldsymbol{\beta}\)</span>, $i = 1, 2 ,$. Si bien los procesos son estacionarios por los supuestos antes enunciados, la varianza condicional estará dada por:
+<span class="math display">\[\begin{eqnarray*}
+    \sigma^2_{t | t-1} &amp; = &amp; Var[ U_t | \Omega_{t-1} ] \\
+    &amp; = &amp; \mathbb{E}[ U^2_t | \Omega_{t-1} ]
+\end{eqnarray*}\]</span></p>
+<p>Donde <span class="math inline">\(\Omega_{t-1} = \{U_{t-1}, U_{t-2}, \ldots \}\)</span> es el conjunto de toda la información pasada de <span class="math inline">\(U_t\)</span> y observada hasta el momento <span class="math inline">\(t-1\)</span>, por lo que:
+<span class="math display">\[\begin{equation*}
+    U_t | \Omega_{t-1} \sim \mathbb{D}(0, \sigma^2_{t | t-1})
+\end{equation*}\]</span></p>
+<p>Así, de forma similar a un proceso MA(q) podemos decir que la varianza condicional tendrá efectos ARCH de orden <span class="math inline">\(q\)</span> (ARCH(q)) cuando:
+<span class="math display" id="eq:ARCHEffect">\[\begin{equation}
+    \sigma^2_{t | t-1} = \gamma_0 + \gamma_1 U_{t-1}^2 + \gamma_2 U_{t-2}^2 + \ldots + \gamma_q U_{t-q}^2
+        \tag{10.4}
+\end{equation}\]</span></p>
+<p>Donde <span class="math inline">\(\mathbb{E}[\nu_t] = 0\)</span> y <span class="math inline">\(\gamma_0\)</span> y <span class="math inline">\(\gamma_i \geq 0\)</span>, para <span class="math inline">\(i = 1, 2, \ldots, q-1\)</span> y <span class="math inline">\(\gamma_q &gt; 0\)</span>. Estas condiciones son necesarias para garantizar que la varianza sea positiva. En general, la varianza condicional se expresa de la forma <span class="math inline">\(\sigma^2_{t | t-1}\)</span>, no obstante, para facilitar la notación, nos referiremos en cada caso a esta simplemente como <span class="math inline">\(\sigma^2_{t}\)</span>.</p>
+<p>Podemos generalizar está situación si asumimos a la varianza condicional como dependiente de lo valores de la varianza rezagados, es decir, como si fuera un proceso AR de orden <span class="math inline">\(p\)</span> para la varianza y juntandolo con la ecuación <a href="heterocedasticidad-condicionada.html#eq:ARCHEffect">(10.4)</a>. Bollerslev (1986) y Taylor (1986) generalizaron el problema de heterocedásticidad condicional. El modelo se conoce como GARCH(p, q), el cual se especifica como:
+<span class="math display" id="eq:GARCHEffect">\[\begin{equation}
+    \sigma^2_t = \gamma_0 + \gamma_1 U_{t-1}^2 + \gamma_2 U_{t-2}^2 + \ldots + \gamma_q U_{t-q}^2 + \beta_1 \sigma^2_{t-1} + \beta_2 \sigma^2_{t-2} + \ldots + \beta_p \sigma^2_{t-p}
+    \tag{10.5}
+\end{equation}\]</span></p>
+<p>Donde las condiciones de no negatividad son que <span class="math inline">\(\gamma_0 &gt; 0\)</span>, <span class="math inline">\(\gamma_i \geq 0\)</span>, <span class="math inline">\(i = 1, 2, \ldots, q-1\)</span>, <span class="math inline">\(\beta_j \geq 0\)</span>, <span class="math inline">\(j = 1, 2, \ldots, p-1\)</span>, <span class="math inline">\(\gamma_q &gt; 0\)</span> y <span class="math inline">\(\beta_p &gt; 0\)</span>. Además, otra condición de convergencia es que:
+<span class="math display">\[\begin{equation*}
+    \gamma_1 + \ldots + \gamma_q + \beta_1 + \ldots + \beta_p &lt; 1
+\end{equation*}\]</span></p>
+<p>Usando el operador rezago <span class="math inline">\(L\)</span> en la ecuación <a href="heterocedasticidad-condicionada.html#eq:GARCHEffect">(10.5)</a> podemos obtener:
+<span class="math display" id="eq:GARCHEffectL">\[\begin{equation}
+    \sigma^2_t = \gamma_0 + \alpha(L) U_t^2 + \beta(L) \sigma^2_t
+        \tag{10.6}
+\end{equation}\]</span></p>
+<p>De donde podemos establecer:
+<span class="math display" id="eq:em4">\[\begin{equation}
+    \sigma^2_t = \frac{\gamma_0}{1 - \beta(L)} + \frac{\alpha(L)}{1 - \beta(L)} U_t^2         \tag{10.7}
+\end{equation}\]</span></p>
+<p>Por lo que la ecuación <a href="heterocedasticidad-condicionada.html#eq:GARCHEffect">(10.5)</a> del GARCH(p, q) representa un ARCH(<span class="math inline">\(\infty\)</span>):
+<span class="math display" id="eq:em5">\[\begin{equation}
+    \sigma^2_t = \frac{a_0}{1 - b_1 - b_2 - \ldots - b_p} + \sum_{i = 1}^\infty U_{t-i}^2
+            \tag{10.8}
+\end{equation}\]</span></p>
+</div>
+<div id="ejemplo-2" class="section level2" number="10.2">
+<h2>
+<span class="header-section-number">10.2</span> Ejemplo<a class="anchor" aria-label="anchor" href="#ejemplo-2"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#install.packages("pacman")</span></span>
+<span><span class="co">#pacman nos permite cargar varias librerias en una sola línea</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,<span class="va">BatchGetSymbols</span>,<span class="va">ggplot2</span>,<span class="va">lubridate</span>,<span class="va">readxl</span>,<span class="va">forecast</span>,<span class="va">stats</span>,<span class="va">stargazer</span>,<span class="va">knitr</span>,<span class="va">tseries</span>, <span class="va">aTSA</span>, <span class="va">TSA</span>, <span class="va">rugarch</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
+<span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2002/9/30"</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
+<span><span class="va">pd</span></span>
+<span><span class="co">#&gt; [1] "2002-09-30"</span></span>
+<span><span class="co">#&gt; [1] "2021-09-18"</span></span>
+<span><span class="va">ld</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2021/09/30"</span><span class="op">)</span><span class="co">#última fecha</span></span>
+<span><span class="va">ld</span></span>
+<span><span class="co">#&gt; [1] "2021-09-30"</span></span>
+<span><span class="co">#Intervalos de tiempo</span></span>
+<span><span class="va">int</span><span class="op">&lt;-</span><span class="st">"monthly"</span></span>
+<span></span>
+<span><span class="co">#Datos a elegir</span></span>
+<span><span class="va">dt</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AMZN"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Descargando los valores</span></span>
+<span><span class="va">data1</span><span class="op">&lt;-</span> <span class="fu">BatchGetSymbols</span><span class="op">(</span>tickers <span class="op">=</span> <span class="va">dt</span>,</span>
+<span>                       first.date <span class="op">=</span> <span class="va">pd</span>,</span>
+<span>                       last.date <span class="op">=</span> <span class="va">ld</span>,</span>
+<span>                       freq.data <span class="op">=</span> <span class="va">int</span>,</span>
+<span>                       do.cache <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                       thresh.bad.data <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Generando data frame con los valores</span></span>
+<span><span class="va">data_precio_amzn</span><span class="op">&lt;-</span><span class="va">data1</span><span class="op">$</span><span class="va">df.tickers</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "ticker"              "ref.date"           </span></span>
+<span><span class="co">#&gt;  [3] "volume"              "price.open"         </span></span>
+<span><span class="co">#&gt;  [5] "price.high"          "price.low"          </span></span>
+<span><span class="co">#&gt;  [7] "price.close"         "price.adjusted"     </span></span>
+<span><span class="co">#&gt;  [9] "ret.adjusted.prices" "ret.closing.prices"</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#original</span></span>
+<span><span class="va">price_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">09</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#logartimo</span></span>
+<span><span class="va">lprice_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span>, frequency <span class="op">=</span> <span class="fl">12</span>,start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">09</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#diferencias logaritmicas(cambio porcential)</span></span>
+<span><span class="va">dlprice_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span>,<span class="fl">1</span><span class="op">)</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dlprice_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">dlprice_amazn_ts</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">auto.arima</span><span class="op">(</span><span class="va">price_amazn_ts</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Series: price_amazn_ts </span></span>
+<span><span class="co">#&gt; ARIMA(0,2,1) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;           ma1</span></span>
+<span><span class="co">#&gt;       -0.9716</span></span>
+<span><span class="co">#&gt; s.e.   0.0140</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; sigma^2 estimated as 17.95:  log likelihood=-650.79</span></span>
+<span><span class="co">#&gt; AIC=1305.58   AICc=1305.63   BIC=1312.43</span></span>
+<span><span class="va">arima021</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>,</span>
+<span>                  order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,</span>
+<span>                  method <span class="op">=</span> <span class="st">"ML"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">arima021</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-5"></span>
+<img src="11-Heterocedasticidadcondicionada_files/figure-html/unnamed-chunk-5-1.png" alt="Serie de tiempo de los retornos de año en los últimos 20 años" width="100%"><p class="caption">
+Figure 10.2: Serie de tiempo de los retornos de año en los últimos 20 años
+</p>
+</div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">resarima021</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">arima021</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">resarima021</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:amazn20"></span>
+<img src="11-Heterocedasticidadcondicionada_files/figure-html/amazn20-1.png" alt="Serie de tiempo de los retornos de año en los últimos 20 años" width="100%"><p class="caption">
+Figure 10.3: Serie de tiempo de los retornos de año en los últimos 20 años
+</p>
+</div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">auto.arima</span><span class="op">(</span><span class="va">resarima021</span>, trace <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Fitting models using approximations to speed things up...</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  ARIMA(2,1,2)(1,0,1)[12] with drift         : Inf</span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,0)            with drift         : 2580.559</span></span>
+<span><span class="co">#&gt;  ARIMA(1,1,0)(1,0,0)[12] with drift         : 2483.806</span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,1)(0,0,1)[12] with drift         : 2459.32</span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,0)                               : 2578.524</span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,1)            with drift         : 2457.799</span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,1)(1,0,0)[12] with drift         : 2471.589</span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,1)(1,0,1)[12] with drift         : Inf</span></span>
+<span><span class="co">#&gt;  ARIMA(1,1,1)            with drift         : 2462.02</span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,2)            with drift         : 2468.224</span></span>
+<span><span class="co">#&gt;  ARIMA(1,1,0)            with drift         : 2469.957</span></span>
+<span><span class="co">#&gt;  ARIMA(1,1,2)            with drift         : 2463.999</span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,1)                               : 2457.284</span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,1)(1,0,0)[12]                    : 2471.293</span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,1)(0,0,1)[12]                    : 2458.924</span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,1)(1,0,1)[12]                    : 2472.638</span></span>
+<span><span class="co">#&gt;  ARIMA(1,1,1)                               : 2459.962</span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,2)                               : 2466.155</span></span>
+<span><span class="co">#&gt;  ARIMA(1,1,0)                               : 2467.907</span></span>
+<span><span class="co">#&gt;  ARIMA(1,1,2)                               : 2461.911</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Now re-fitting the best model(s) without approximations...</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  ARIMA(0,1,1)                               : 2467.364</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Best model: ARIMA(0,1,1)</span></span>
+<span><span class="co">#&gt; Series: resarima021 </span></span>
+<span><span class="co">#&gt; ARIMA(0,1,1) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;           ma1</span></span>
+<span><span class="co">#&gt;       -0.8877</span></span>
+<span><span class="co">#&gt; s.e.   0.0418</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; sigma^2 estimated as 2875:  log likelihood=-1231.66</span></span>
+<span><span class="co">#&gt; AIC=2467.31   AICc=2467.36   BIC=2474.17</span></span>
+<span><span class="va">garch.amzn</span> <span class="op">&lt;-</span> <span class="fu">ugarchspec</span><span class="op">(</span>mean.model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>armaOrder<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                         variance.model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>garchOrder<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">garch.amzn011</span> <span class="op">&lt;-</span> <span class="fu">ugarchfit</span><span class="op">(</span>spec <span class="op">=</span> <span class="va">garch.amzn</span>, </span>
+<span>                           data <span class="op">=</span> <span class="va">price_amazn_ts</span><span class="op">)</span></span>
+<span><span class="va">garch.amzn011</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; *---------------------------------*</span></span>
+<span><span class="co">#&gt; *          GARCH Model Fit        *</span></span>
+<span><span class="co">#&gt; *---------------------------------*</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Conditional Variance Dynamics    </span></span>
+<span><span class="co">#&gt; -----------------------------------</span></span>
+<span><span class="co">#&gt; GARCH Model  : sGARCH(0,1)</span></span>
+<span><span class="co">#&gt; Mean Model   : ARFIMA(0,0,2)</span></span>
+<span><span class="co">#&gt; Distribution : norm </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Optimal Parameters</span></span>
+<span><span class="co">#&gt; ------------------------------------</span></span>
+<span><span class="co">#&gt;        Estimate  Std. Error   t value Pr(&gt;|t|)</span></span>
+<span><span class="co">#&gt; mu     24.95198    3.157546    7.9023    0e+00</span></span>
+<span><span class="co">#&gt; ma1     1.30976    0.030288   43.2438    0e+00</span></span>
+<span><span class="co">#&gt; ma2     0.92045    0.027681   33.2521    0e+00</span></span>
+<span><span class="co">#&gt; omega   0.85535    0.187792    4.5547    5e-06</span></span>
+<span><span class="co">#&gt; beta1   0.99900    0.000742 1345.5614    0e+00</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Robust Standard Errors:</span></span>
+<span><span class="co">#&gt;        Estimate  Std. Error   t value Pr(&gt;|t|)</span></span>
+<span><span class="co">#&gt; mu     24.95198    4.118254    6.0589 0.000000</span></span>
+<span><span class="co">#&gt; ma1     1.30976    0.025642   51.0793 0.000000</span></span>
+<span><span class="co">#&gt; ma2     0.92045    0.026220   35.1049 0.000000</span></span>
+<span><span class="co">#&gt; omega   0.85535    0.331671    2.5789 0.009912</span></span>
+<span><span class="co">#&gt; beta1   0.99900    0.000605 1651.1260 0.000000</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; LogLikelihood : -944.8252 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Information Criteria</span></span>
+<span><span class="co">#&gt; ------------------------------------</span></span>
+<span><span class="co">#&gt;                    </span></span>
+<span><span class="co">#&gt; Akaike       8.2954</span></span>
+<span><span class="co">#&gt; Bayes        8.3704</span></span>
+<span><span class="co">#&gt; Shibata      8.2945</span></span>
+<span><span class="co">#&gt; Hannan-Quinn 8.3257</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Weighted Ljung-Box Test on Standardized Residuals</span></span>
+<span><span class="co">#&gt; ------------------------------------</span></span>
+<span><span class="co">#&gt;                         statistic p-value</span></span>
+<span><span class="co">#&gt; Lag[1]                      121.1       0</span></span>
+<span><span class="co">#&gt; Lag[2*(p+q)+(p+q)-1][5]     419.8       0</span></span>
+<span><span class="co">#&gt; Lag[4*(p+q)+(p+q)-1][9]     673.2       0</span></span>
+<span><span class="co">#&gt; d.o.f=2</span></span>
+<span><span class="co">#&gt; H0 : No serial correlation</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Weighted Ljung-Box Test on Standardized Squared Residuals</span></span>
+<span><span class="co">#&gt; ------------------------------------</span></span>
+<span><span class="co">#&gt;                         statistic p-value</span></span>
+<span><span class="co">#&gt; Lag[1]                      75.93       0</span></span>
+<span><span class="co">#&gt; Lag[2*(p+q)+(p+q)-1][2]    140.42       0</span></span>
+<span><span class="co">#&gt; Lag[4*(p+q)+(p+q)-1][5]    289.77       0</span></span>
+<span><span class="co">#&gt; d.o.f=1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Weighted ARCH LM Tests</span></span>
+<span><span class="co">#&gt; ------------------------------------</span></span>
+<span><span class="co">#&gt;             Statistic Shape Scale P-Value</span></span>
+<span><span class="co">#&gt; ARCH Lag[2]     126.7 0.500 2.000       0</span></span>
+<span><span class="co">#&gt; ARCH Lag[4]     239.1 1.397 1.611       0</span></span>
+<span><span class="co">#&gt; ARCH Lag[6]     322.8 2.222 1.500       0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Nyblom stability test</span></span>
+<span><span class="co">#&gt; ------------------------------------</span></span>
+<span><span class="co">#&gt; Joint Statistic:  75.7755</span></span>
+<span><span class="co">#&gt; Individual Statistics:              </span></span>
+<span><span class="co">#&gt; mu    12.39823</span></span>
+<span><span class="co">#&gt; ma1    0.01388</span></span>
+<span><span class="co">#&gt; ma2    0.61855</span></span>
+<span><span class="co">#&gt; omega  4.26665</span></span>
+<span><span class="co">#&gt; beta1  3.42184</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Asymptotic Critical Values (10% 5% 1%)</span></span>
+<span><span class="co">#&gt; Joint Statistic:          1.28 1.47 1.88</span></span>
+<span><span class="co">#&gt; Individual Statistic:     0.35 0.47 0.75</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Sign Bias Test</span></span>
+<span><span class="co">#&gt; ------------------------------------</span></span>
+<span><span class="co">#&gt;                      t-value      prob sig</span></span>
+<span><span class="co">#&gt; Sign Bias            1.17559 2.410e-01    </span></span>
+<span><span class="co">#&gt; Negative Sign Bias   0.08769 9.302e-01    </span></span>
+<span><span class="co">#&gt; Positive Sign Bias   8.59226 1.470e-15 ***</span></span>
+<span><span class="co">#&gt; Joint Effect       175.55530 8.040e-38 ***</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Adjusted Pearson Goodness-of-Fit Test:</span></span>
+<span><span class="co">#&gt; ------------------------------------</span></span>
+<span><span class="co">#&gt;   group statistic p-value(g-1)</span></span>
+<span><span class="co">#&gt; 1    20     305.9    1.214e-53</span></span>
+<span><span class="co">#&gt; 2    30     315.1    8.413e-50</span></span>
+<span><span class="co">#&gt; 3    40     331.2    5.579e-48</span></span>
+<span><span class="co">#&gt; 4    50     337.6    9.995e-45</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Elapsed time : 0.2208209</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">garch.amzn011</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    Length     Class      Mode </span></span>
+<span><span class="co">#&gt;         1 uGARCHfit        S4</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f.garch.amzn011</span> <span class="op">&lt;-</span> <span class="fu">ugarchforecast</span><span class="op">(</span><span class="va">garch.amzn011</span>, n.ahead<span class="op">=</span><span class="fl">12</span><span class="op">)</span></span>
+<span><span class="va">f.garch.amzn011</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; *------------------------------------*</span></span>
+<span><span class="co">#&gt; *       GARCH Model Forecast         *</span></span>
+<span><span class="co">#&gt; *------------------------------------*</span></span>
+<span><span class="co">#&gt; Model: sGARCH</span></span>
+<span><span class="co">#&gt; Horizon: 12</span></span>
+<span><span class="co">#&gt; Roll Steps: 0</span></span>
+<span><span class="co">#&gt; Out of Sample: 0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; 0-roll forecast [T0=Sep 2021]:</span></span>
+<span><span class="co">#&gt;      Series Sigma</span></span>
+<span><span class="co">#&gt; T+1  113.91 19.11</span></span>
+<span><span class="co">#&gt; T+2   60.07 19.12</span></span>
+<span><span class="co">#&gt; T+3   24.95 19.13</span></span>
+<span><span class="co">#&gt; T+4   24.95 19.14</span></span>
+<span><span class="co">#&gt; T+5   24.95 19.16</span></span>
+<span><span class="co">#&gt; T+6   24.95 19.17</span></span>
+<span><span class="co">#&gt; T+7   24.95 19.18</span></span>
+<span><span class="co">#&gt; T+8   24.95 19.20</span></span>
+<span><span class="co">#&gt; T+9   24.95 19.21</span></span>
+<span><span class="co">#&gt; T+10  24.95 19.22</span></span>
+<span><span class="co">#&gt; T+11  24.95 19.23</span></span>
+<span><span class="co">#&gt; T+12  24.95 19.25</span></span></code></pre></div>
+</div>
+<div id="ejemplo-3" class="section level2" number="10.3">
+<h2>
+<span class="header-section-number">10.3</span> Ejemplo<a class="anchor" aria-label="anchor" href="#ejemplo-3"><i class="fas fa-link"></i></a>
+</h2>
+<p>Realice el mismo procedimiento pero con la serie de tiempo de diferencias logaritmicas.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="empty"></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <div id="book-on-this-page"></div>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-10-18.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
