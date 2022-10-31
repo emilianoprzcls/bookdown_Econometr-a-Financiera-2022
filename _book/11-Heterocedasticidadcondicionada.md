@@ -165,8 +165,8 @@ plot(arima021)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-Heterocedasticidadcondicionada_files/figure-html/unnamed-chunk-5-1.png" alt="Serie de tiempo de los retornos de año en los últimos 20 años" width="100%" />
-<p class="caption">(\#fig:unnamed-chunk-5)Serie de tiempo de los retornos de año en los últimos 20 años</p>
+<img src="11-Heterocedasticidadcondicionada_files/figure-html/unnamed-chunk-5-1.png" alt="Serie de tiempo de los precios en los últimos 20 años" width="100%" />
+<p class="caption">(\#fig:unnamed-chunk-5)Serie de tiempo de los precios en los últimos 20 años</p>
 </div>
 
 
@@ -180,8 +180,8 @@ plot(resarima021)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-Heterocedasticidadcondicionada_files/figure-html/amazn20-1.png" alt="Serie de tiempo de los retornos de año en los últimos 20 años" width="100%" />
-<p class="caption">(\#fig:amazn20)Serie de tiempo de los retornos de año en los últimos 20 años</p>
+<img src="11-Heterocedasticidadcondicionada_files/figure-html/amazn20-1.png" alt="Serie de tiempo de los residuos al cuadrado ${a^2}$" width="100%" />
+<p class="caption">(\#fig:amazn20)Serie de tiempo de los residuos al cuadrado ${a^2}$</p>
 </div>
 
 
@@ -325,7 +325,7 @@ garch.amzn011
 #> 4    50     337.6    9.995e-45
 #> 
 #> 
-#> Elapsed time : 0.2208209
+#> Elapsed time : 0.1169131
 summary(garch.amzn011)
 #>    Length     Class      Mode 
 #>         1 uGARCHfit        S4

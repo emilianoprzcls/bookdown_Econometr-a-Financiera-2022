@@ -139,7 +139,7 @@ arima021 <- arima(price_amazn_ts,
                   method = "ML")
 ```
 
-```{r, fig.cap="Serie de tiempo de los retornos de año en los últimos 20 años", warning=FALSE, message=FALSE,  fig.align='center', out.width="100%", warning=FALSE, message=FALSE}
+```{r, fig.cap="Serie de tiempo de los precios en los últimos 20 años", warning=FALSE, message=FALSE,  fig.align='center', out.width="100%", warning=FALSE, message=FALSE}
 plot(arima021)
 ```
 
@@ -147,7 +147,7 @@ plot(arima021)
 resarima021 <- resid(arima021)^2
 ```
 
-```{r amazn20, fig.cap="Serie de tiempo de los retornos de año en los últimos 20 años", warning=FALSE, message=FALSE,  fig.align='center', out.width="100%", warning=FALSE, message=FALSE}
+```{r amazn20, fig.cap="Serie de tiempo de los residuos al cuadrado ${a^2}$", warning=FALSE, message=FALSE,  fig.align='center', out.width="100%", warning=FALSE, message=FALSE}
 plot(resarima021)
 ```
 
