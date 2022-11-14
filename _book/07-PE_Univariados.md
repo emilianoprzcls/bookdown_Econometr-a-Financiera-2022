@@ -304,6 +304,13 @@ head(X_t)
 ```
 
 
+
+```
+#> Warning: Using `size` aesthetic for lines was deprecated in ggplot2
+#> 3.4.0.
+#> ℹ Please use `linewidth` instead.
+```
+
 <div class="figure" style="text-align: center">
 <img src="07-PE_Univariados_files/figure-html/GAR1Real-1.png" alt="AR(1) considerando $X_t=5+0.9X_{t-1}+U_t$ ; $X_0=50$ y que $U_t$~$N(0, 4)$ y que $U_t \sim \mathcal{N}(0, 4)$" width="100%" />
 <p class="caption">(\#fig:GAR1Real)AR(1) considerando $X_t=5+0.9X_{t-1}+U_t$ ; $X_0=50$ y que $U_t$~$N(0, 4)$ y que $U_t \sim \mathcal{N}(0, 4)$</p>
@@ -1559,7 +1566,7 @@ auto.arima(price_amazn_ts, trace=TRUE)
 #>       -0.9716
 #> s.e.   0.0140
 #> 
-#> sigma^2 estimated as 17.95:  log likelihood=-650.79
+#> sigma^2 = 17.95:  log likelihood = -650.79
 #> AIC=1305.58   AICc=1305.63   BIC=1312.43
 ```
 

@@ -53,6 +53,7 @@
 <li><a class="" href="raiz-unitaria.html"><span class="header-section-number">8</span> Raiz Unitaria</a></li>
 <li><a class="active" href="volatilidad-y-heterocedasticidad.html"><span class="header-section-number">9</span> Volatilidad y Heterocedasticidad</a></li>
 <li><a class="" href="heterocedasticidad-condicionada.html"><span class="header-section-number">10</span> Heterocedasticidad condicionada</a></li>
+<li><a class="" href="markov-switching-regime-model.html"><span class="header-section-number">11</span> Markov Switching Regime Model</a></li>
 </ul>
 
         <div class="book-extra">
@@ -79,12 +80,12 @@ Por lo que los test funcionan igual. Específicamente, la hipótesis nula es <sp
 <h2>
 <span class="header-section-number">9.1</span> Ejemplo<a class="anchor" aria-label="anchor" href="#ejemplo-1"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#install.packages("pacman")</span></span>
 <span><span class="co">#pacman nos permite cargar varias librerias en una sola línea</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span></span>
 <span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,<span class="va">BatchGetSymbols</span>,<span class="va">ggplot2</span>,<span class="va">lubridate</span>,<span class="va">readxl</span>,<span class="va">forecast</span>,<span class="va">stats</span>,<span class="va">stargazer</span>,<span class="va">knitr</span>,<span class="va">tseries</span>, <span class="va">aTSA</span>, <span class="va">TSA</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
 <span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2002/9/30"</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
 <span><span class="va">pd</span></span>
@@ -115,7 +116,7 @@ Por lo que los test funcionan igual. Específicamente, la hipótesis nula es <sp
 <span><span class="co">#&gt;  [5] "price.high"          "price.low"          </span></span>
 <span><span class="co">#&gt;  [7] "price.close"         "price.adjusted"     </span></span>
 <span><span class="co">#&gt;  [9] "ret.adjusted.prices" "ret.closing.prices"</span></span></code></pre></div>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#original</span></span>
 <span><span class="va">price_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">09</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#logartimo</span></span>
@@ -132,10 +133,10 @@ Por lo que los test funcionan igual. Específicamente, la hipótesis nula es <sp
 <h3>
 <span class="header-section-number">9.2.1</span> McLeod &amp; Li<a class="anchor" aria-label="anchor" href="#mcleod-li"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">McLeod.Li.test</span><span class="op">(</span>y<span class="op">=</span><span class="va">dlprice_amazn_ts</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="10-Volatilidad_files/figure-html/unnamed-chunk-4-1.png" width="672"></div>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/box.test.html">Box.test</a></span><span class="op">(</span><span class="va">lprice_amazn_ts</span>,lag<span class="op">=</span><span class="fl">12</span>,type<span class="op">=</span><span class="st">"Ljung"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Box-Ljung test</span></span>
@@ -144,12 +145,12 @@ Por lo que los test funcionan igual. Específicamente, la hipótesis nula es <sp
 <span><span class="co">#&gt; X-squared = 2310.6, df = 12, p-value &lt; 2.2e-16</span></span>
 <span><span class="fu">McLeod.Li.test</span><span class="op">(</span>y<span class="op">=</span><span class="va">lprice_amazn_ts</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="10-Volatilidad_files/figure-html/unnamed-chunk-5-1.png" width="672"></div>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">McLeod.Li.test</span><span class="op">(</span>y<span class="op">=</span><span class="va">price_amazn_ts</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure">
 <img src="10-Volatilidad_files/figure-html/unnamed-chunk-6-1.png" width="672">
 ### Engels</div>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span><span class="va">dlprice_amazn_ts</span>,order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">arch.test</span><span class="op">(</span><span class="va">mod1</span>, output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ARCH heteroscedasticity test for residuals </span></span>
@@ -172,7 +173,7 @@ Por lo que los test funcionan igual. Específicamente, la hipótesis nula es <sp
 <span><span class="co">#&gt; [5,]    20   8.27 9.84e-01</span></span>
 <span><span class="co">#&gt; [6,]    24   5.99 1.00e+00</span></span></code></pre></div>
 <div class="inline-figure"><img src="10-Volatilidad_files/figure-html/unnamed-chunk-7-1.png" width="672"></div>
-<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span><span class="va">lprice_amazn_ts</span>,order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">arch.test</span><span class="op">(</span><span class="va">mod2</span>, output <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ARCH heteroscedasticity test for residuals </span></span>
@@ -195,7 +196,7 @@ Por lo que los test funcionan igual. Específicamente, la hipótesis nula es <sp
 <span><span class="co">#&gt; [5,]    20   8.46 9.81e-01</span></span>
 <span><span class="co">#&gt; [6,]    24   6.14 1.00e+00</span></span></code></pre></div>
 <div class="inline-figure"><img src="10-Volatilidad_files/figure-html/unnamed-chunk-8-1.png" width="672"></div>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#mod3 &lt;- estimate(price_amazn_ts,p = 1)</span></span>
 <span><span class="co">#arch.test(mod3, output = TRUE)</span></span></code></pre></div>
 <p>Dadas todas las pruebas podemos ver que hay heterocedasticidad menos en el de diferencias de logaritmos.</p>
@@ -231,7 +232,7 @@ Por lo que los test funcionan igual. Específicamente, la hipótesis nula es <sp
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-10-31.</p>
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-11-14.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -147,6 +147,15 @@ eq:GARCHEffectL
 eq:em4
 eq:em5
 fig:unnamed-chunk-5
+eq:GARCHM
+fig:simplot
+tab:unnamed-chunk-7
+tab:unnamed-chunk-8
+fig:Mu
+fig:Ma1
+fig:Ma2
+fig:omega
+fig:beta1
 mínimos-cuadrados-ordinarios
 el-problema
 estimación-r
@@ -226,3 +235,8 @@ heterocedasticidad-condicionada
 modelos-arch-y-garch-univariados
 ejemplo-2
 ejemplo-3
+markov-switching-regime-model
+motivación
+ejemplo-4
+cambio-de-régimen
+simulación-de-monte-carlo

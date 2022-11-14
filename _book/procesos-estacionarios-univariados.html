@@ -53,6 +53,7 @@
 <li><a class="" href="raiz-unitaria.html"><span class="header-section-number">8</span> Raiz Unitaria</a></li>
 <li><a class="" href="volatilidad-y-heterocedasticidad.html"><span class="header-section-number">9</span> Volatilidad y Heterocedasticidad</a></li>
 <li><a class="" href="heterocedasticidad-condicionada.html"><span class="header-section-number">10</span> Heterocedasticidad condicionada</a></li>
+<li><a class="" href="markov-switching-regime-model.html"><span class="header-section-number">11</span> Markov Switching Regime Model</a></li>
 </ul>
 
         <div class="book-extra">
@@ -332,13 +333,16 @@ desviación estándar constante <span class="math inline">\(\sigma^2=4\)</span><
 <span><span class="co">#&gt; 4      3 -1.8139887 54.08785 54.01398 0.656100</span></span>
 <span><span class="co">#&gt; 5      4  2.4235498 52.89769 51.79859 0.590490</span></span>
 <span><span class="co">#&gt; 6      5 -7.2718239 54.32877 54.04228 0.531441</span></span></code></pre></div>
+<pre><code>#&gt; Warning: Using `size` aesthetic for lines was deprecated in ggplot2
+#&gt; 3.4.0.
+#&gt; ℹ Please use `linewidth` instead.</code></pre>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:GAR1Real"></span>
 <img src="07-PE_Univariados_files/figure-html/GAR1Real-1.png" alt="AR(1) considerando $X_t=5+0.9X_{t-1}+U_t$ ; $X_0=50$ y que $U_t$~$N(0, 4)$ y que $U_t \sim \mathcal{N}(0, 4)$" width="100%"><p class="caption">
 Figure 6.1: AR(1) considerando <span class="math inline">\(X_t=5+0.9X_{t-1}+U_t\)</span> ; <span class="math inline">\(X_0=50\)</span> y que <span class="math inline">\(U_t\)</span>~<span class="math inline">\(N(0, 4)\)</span> y que <span class="math inline">\(U_t \sim \mathcal{N}(0, 4)\)</span>
 </p>
 </div>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">X_t</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Tiempo</span>, y <span class="op">=</span> <span class="va">X_t</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.5</span>, color <span class="op">=</span> <span class="st">"#0F531C"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -360,7 +364,7 @@ Figure 6.1: AR(1) considerando <span class="math inline">\(X_t=5+0.9X_{t-1}+U_t\
 Figure 6.2: <span class="math inline">\(X_t = \frac{5}{1 - 0.9} + \sum_{j = 0}^{t-1} 0.9^j U_{t-j}\)</span>, y que <span class="math inline">\(U_t \sim \mathcal{N}(0, 4)\)</span>}
 </p>
 </div>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/acf.html">acf</a></span><span class="op">(</span><span class="va">X_t</span><span class="op">$</span><span class="va">XR_t</span>, lag.max <span class="op">=</span> <span class="fl">30</span>, col <span class="op">=</span> <span class="st">"blue"</span>, </span>
 <span>    ylab <span class="op">=</span> <span class="st">"Autocorrelacion"</span>,</span>
@@ -372,7 +376,7 @@ Figure 6.2: <span class="math inline">\(X_t = \frac{5}{1 - 0.9} + \sum_{j = 0}^{
 Figure 6.3: Función de autocorrelación de un AR(1): <span class="math inline">\(\rho(\tau)=\frac{\gamma( au)}{\gamma(0)}\)</span>
 </p>
 </div>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html">barplot</a></span><span class="op">(</span><span class="va">X_t</span><span class="op">$</span><span class="va">rho</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">30</span><span class="op">]</span>, names.arg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span>, border<span class="op">=</span><span class="st">"blue"</span>, density <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">20</span><span class="op">)</span>, </span>
 <span>        ylab <span class="op">=</span> <span class="st">"Autocorrelacion"</span>, </span>
@@ -384,7 +388,7 @@ Figure 6.3: Función de autocorrelación de un AR(1): <span class="math inline">
 Figure 6.4: Función de autocorrelación de un AR(1): <span class="math inline">\(\rho(\tau)= a_1^\tau\)</span>
 </p>
 </div>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/acf.html">acf</a></span><span class="op">(</span><span class="va">X_t</span><span class="op">$</span><span class="va">XR_t</span>, lag.max <span class="op">=</span> <span class="fl">30</span>, col <span class="op">=</span> <span class="st">"blue"</span>, </span>
 <span>    ylab <span class="op">=</span> <span class="st">"Autocorrelacion"</span>,</span>
@@ -396,7 +400,7 @@ Figure 6.4: Función de autocorrelación de un AR(1): <span class="math inline">
 Figure 6.5: Función de autocorrelación de un AR(1): <span class="math inline">\(\rho(\tau)= a_1^\tau\)</span>
 </p>
 </div>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">X_t</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Tiempo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">XR_t</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">0.5</span>, color <span class="op">=</span> <span class="st">"darkred"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -550,12 +554,12 @@ tiempo en especifico:</p>
 </h4>
 <p>Recordando el tema pasado y la serie en la que evaluamos los cambios de
 precio del ACTIVO AMZN como si fueran retornos:</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#install.packages("pacman")</span></span>
 <span><span class="co">#pacman nos permite cargar varias librerias en una sola línea</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span></span>
 <span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,<span class="va">BatchGetSymbols</span>,<span class="va">ggplot2</span>,<span class="va">lubridate</span>,<span class="va">readxl</span>,<span class="va">forecast</span>,<span class="va">stats</span>,<span class="va">stargazer</span>,<span class="va">knitr</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
 <span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2002/9/01"</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
 <span><span class="va">pd</span></span>
@@ -586,7 +590,7 @@ precio del ACTIVO AMZN como si fueran retornos:</p>
 <span><span class="co">#&gt;  [5] "price.high"          "price.low"          </span></span>
 <span><span class="co">#&gt;  [7] "price.close"         "price.adjusted"     </span></span>
 <span><span class="co">#&gt;  [9] "ret.adjusted.prices" "ret.closing.prices"</span></span></code></pre></div>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ret_20_amazn</span><span class="op">&lt;-</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">data_precio_amzn</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">ref.date</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">price.open</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title<span class="op">=</span><span class="st">"Precios de apertura de AMZN en los últimos 20 años"</span>,y<span class="op">=</span><span class="st">"Retornos"</span>, x<span class="op">=</span><span class="st">"Año"</span><span class="op">)</span><span class="op">+</span></span>
@@ -601,7 +605,7 @@ Figure 5.5: Serie de tiempo de los precios de apertura de año en los últimos 2
 <p>Primero que nada es importante cargar los datos a un objeto series de
 tiempo. Esto nos lo permite la función ts(). Además debemos serciorarnos
 de que los datos esten en orden cronológico.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_precio_amzn</span><span class="op">&lt;-</span><span class="va">data_precio_amzn</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">ref.date</span><span class="op">)</span>,<span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">)</span><span class="co">#dado que ya estaba en orden cronológico nuestro df no cambia</span></span>
 <span><span class="co">#&gt; # A tibble: 6 × 10</span></span>
@@ -623,7 +627,7 @@ de que los datos esten en orden cronológico.</p>
 <div class="inline-figure"><img src="07-PE_Univariados_files/figure-html/unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;"></div>
 <p>Dado que queremos saber si existe un proceso <span class="math inline">\(AR(2)\)</span> en estos cambio
 debemos calcularlo. Para ello utilizamos la función <span class="math inline">\(lm()\)</span> que realizará una regresión lineal y veremos la relación de los valores con sus valores pasados en <span class="math inline">\(t-2\)</span>:</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">priceopen</span><span class="op">&lt;-</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span></span>
 <span><span class="va">priceopen_amazn</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.matrix.html">data.matrix</a></span><span class="op">(</span><span class="va">priceopen</span><span class="op">)</span></span>
 <span><span class="va">lags</span><span class="op">&lt;-</span><span class="kw">function</span><span class="op">(</span><span class="va">mat</span>,<span class="va">p</span><span class="op">)</span><span class="op">{</span></span>
@@ -772,11 +776,11 @@ F Statistic
 </table></div>
 <p>La tabla anterior claramente indica que <strong>hay una relación entre el valor del precio y sus valores anteriores en un proceso AR(2)</strong>.</p>
 <p>Así pues es importante modificar la serie de tiempo para ilustrar como se puede controlar los efectos de los autoregresores <span class="math inline">\(AR(2)\)</span>. Para ello, utilizaremos la función <span class="math inline">\(arima()\)</span>. En “order” tenemos un vector <span class="math inline">\(c(p,d,q)\)</span> que corresponde <span class="math inline">\(p\)</span> a el grado de AR, <span class="math inline">\(d\)</span> el grado de diferención y <span class="math inline">\(q\)</span> el grado de MA que utilizaremos. El valor <span class="math inline">\(q\)</span> quedaráá en <span class="math inline">\(0\)</span> por ahora pero será analizado más adelante.</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">AR_price_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>,method <span class="op">=</span> <span class="st">"ML"</span><span class="op">)</span></span>
 <span><span class="va">AR_price_amazn_pl</span><span class="op">&lt;-</span><span class="fu">Arima</span><span class="op">(</span><span class="va">price_amazn_ts</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>,method <span class="op">=</span> <span class="st">"ML"</span><span class="op">)</span></span></code></pre></div>
 <p>Veamos si las raices inversas mantienen la estabilidad al ser menores a 1.</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">AR_price_amazn_ts</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:amazn20root"></span>
@@ -785,7 +789,7 @@ Figure 6.7: Raices AR(2) Inversas de la serie de tiempo
 </p>
 </div>
 <p>Claramente se puede en la Figura <a href="procesos-estacionarios-univariados.html#fig:amazn20root">6.7</a> ver que los valores de las raices inversas están dentro del circulo unitario y, por consiguiente son menores a 1. Ahora veamos como se ve la estimación ajustada AR(2) con el plot original.</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">AR_price_amazn_pl</span><span class="op">$</span><span class="va">x</span>,col<span class="op">=</span><span class="st">"black"</span>, main <span class="op">=</span> <span class="st">"Diferencia entre la serie de tiempo original y AR(2)"</span>,xlab<span class="op">=</span><span class="st">"Tiempo"</span>,ylab<span class="op">=</span><span class="st">"Precio"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html">fitted</a></span><span class="op">(</span><span class="va">AR_price_amazn_pl</span><span class="op">)</span>,col<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:amazn20AR2"></span>
@@ -911,7 +915,7 @@ Figure 6.8: Diferencia entre la serie de tiempo original de precios de AMZN y su
 <span class="header-section-number">6.1.3.1</span> Ejemplo AR(p)<a class="anchor" aria-label="anchor" href="#ejemplo-arp"><i class="fas fa-link"></i></a>
 </h4>
 <p>Veamos primero la función de autocorrelacion y el plot de los lags.</p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/acf.html">pacf</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>, main<span class="op">=</span><span class="st">""</span>, lag.max <span class="op">=</span> <span class="fl">60</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:pacfamzn"></span>
@@ -919,7 +923,7 @@ Figure 6.8: Diferencia entre la serie de tiempo original de precios de AMZN y su
 Figure 6.9: Función de Autocorrelación parcial de la serie de tiempo de AMZN
 </p>
 </div>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/acf.html">acf</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>, main<span class="op">=</span><span class="st">""</span>, lag.max <span class="op">=</span> <span class="fl">60</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:acfamzn"></span>
@@ -927,7 +931,7 @@ Figure 6.9: Función de Autocorrelación parcial de la serie de tiempo de AMZN
 Figure 6.10: Función de Autocorrelación de la serie de tiempo de AMZN
 </p>
 </div>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lag.plot.html">lag.plot</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>, main<span class="op">=</span><span class="st">""</span>, lags<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:LAGamazn20"></span>
@@ -937,11 +941,11 @@ Figure 6.11: 5 plots de correlacion de los lags de la serie de tiempo de AMZN
 </div>
 <p>Dado que se puede ver en las Figuras <a href="procesos-estacionarios-univariados.html#fig:acfamzn">6.10</a>, <a href="procesos-estacionarios-univariados.html#fig:pacfamzn">6.9</a> y <a href="procesos-estacionarios-univariados.html#fig:LAGamazn20">6.11</a> que los valores de lag=1 tienen correlación resulta relevante hacer un AR(1), que corresponde a 1 años. Así pues:</p>
 <p>AR:</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">AR_price_amazn_ts_1</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>,method <span class="op">=</span> <span class="st">"ML"</span><span class="op">)</span></span>
 <span><span class="va">AR_price_amazn_pl_1</span><span class="op">&lt;-</span><span class="fu">Arima</span><span class="op">(</span><span class="va">price_amazn_ts</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>,method <span class="op">=</span> <span class="st">"ML"</span><span class="op">)</span></span></code></pre></div>
 <p>Regresión lineal:</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df.lags.1</span><span class="op">&lt;-</span><span class="fu">lags</span><span class="op">(</span><span class="va">priceopen_amazn</span>,<span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">ar20_amazn</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">V1</span><span class="op">~</span><span class="va">.</span>, data<span class="op">=</span><span class="va">df.lags.1</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-table"><table style="text-align:center" class="table table-sm">
@@ -1027,7 +1031,7 @@ V2
 </tr>
 </table></div>
 <p>Raices:</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">AR_price_amazn_ts_1</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:amazn20root20"></span>
@@ -1036,7 +1040,7 @@ Figure 6.12: Raices AR(1) Inversas de la serie de tiempo
 </p>
 </div>
 <p>Plot:</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">AR_price_amazn_pl_1</span><span class="op">$</span><span class="va">x</span>,col<span class="op">=</span><span class="st">"black"</span>, main <span class="op">=</span> <span class="st">"Diferencia entre la serie de tiempo original y AR(1)"</span>,xlab<span class="op">=</span><span class="st">"Tiempo"</span>,ylab<span class="op">=</span><span class="st">"Precio"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html">fitted</a></span><span class="op">(</span><span class="va">AR_price_amazn_pl_1</span><span class="op">)</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:amazn20AR20"></span>
@@ -1254,11 +1258,11 @@ Figure 6.13: Diferencia entre la serie de tiempo original de precios de AMZN y s
 </h4>
 <p>Cuando nos fijamos en las figuras <a href="procesos-estacionarios-univariados.html#fig:pacfamzn">6.9</a> y <a href="procesos-estacionarios-univariados.html#fig:acfamzn">6.10</a> es claro que hay un proceso MA(1). Es decir que picos de un año estan causando efectos en valores futuros. Así pues, escogemos un valor de <span class="math inline">\(q=1\)</span>.</p>
 <p>MA:</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MA_price_amazn_ts_1</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,method <span class="op">=</span> <span class="st">"ML"</span><span class="op">)</span></span>
 <span><span class="va">MA_price_amazn_pl_1</span><span class="op">&lt;-</span><span class="fu">Arima</span><span class="op">(</span><span class="va">price_amazn_ts</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,method <span class="op">=</span> <span class="st">"ML"</span><span class="op">)</span></span></code></pre></div>
 <p>Raices MA(1):</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">MA_price_amazn_ts_1</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:amazn20rootma11"></span>
@@ -1268,7 +1272,7 @@ Figure 6.14: Raices MA(1) Inversas de la serie de tiempo
 </div>
 <p>Dado que el valor de la raiz inversa de MA(1) en la Figura <a href="procesos-estacionarios-univariados.html#fig:amazn20rootma11">6.14</a> sabemos que tenemos una serie convergente y estable.</p>
 <p>Plot:</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">MA_price_amazn_pl_1</span><span class="op">$</span><span class="va">x</span>,col<span class="op">=</span><span class="st">"black"</span>, main <span class="op">=</span> <span class="st">"Diferencia entre la serie de tiempo original y MA(1)"</span>,xlab<span class="op">=</span><span class="st">"Tiempo"</span>,ylab<span class="op">=</span><span class="st">"Precio"</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html">fitted</a></span><span class="op">(</span><span class="va">MA_price_amazn_pl_1</span><span class="op">)</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:amazn20AR1"></span>
@@ -1485,7 +1489,7 @@ HQ = ln \left[ \frac{1}{T} \sum_{t=1}^{T} \left( \hat{U}_t^{(p)} \right) ^2 \rig
 <p>Para este caso coemzaremos por agregar dos series de tiempo. Una correspone a una transformación logarítmica de los valores de los precios y, otra, corresponde la diferentcia logaritmica. Esto dado que:
 <span class="math display">\[log(X_t)-log(X_{t-k})\sim\frac{X_t-X_{t-k}}{X_t}\]</span>.</p>
 <p>Tranformacion de la serie original</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#original</span></span>
 <span><span class="va">price_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">09</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#logartimo</span></span>
@@ -1493,7 +1497,7 @@ HQ = ln \left[ \frac{1}{T} \sum_{t=1}^{T} \left( \hat{U}_t^{(p)} \right) ^2 \rig
 <span><span class="co">#diferencias logaritmicas(cambio porcential)</span></span>
 <span><span class="va">dlprice_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span><span class="op">-</span><span class="fu">lag</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span>,<span class="fl">1</span><span class="op">)</span>, frequency <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code></pre></div>
 <p>Las tres series</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>, xlab <span class="op">=</span> <span class="st">"Tiempo"</span>, </span>
 <span>     main <span class="op">=</span> <span class="st">"Precios de apertura"</span>,</span>
@@ -1510,7 +1514,7 @@ HQ = ln \left[ \frac{1}{T} \sum_{t=1}^{T} \left( \hat{U}_t^{(p)} \right) ^2 \rig
 <img src="07-PE_Univariados_files/figure-html/unnamed-chunk-15-1.png" width="100%" style="display: block; margin: auto;">
 Veamos con detenimiento el pico de la gráfica original.</div>
 <p>Es claro que este pico se da en 2020 desde junio hasta julio, probablemente causado por el aumento del uso en amzn durante la pandemia. Esos son outlier que debemos considerar. Por ello hay que marcarlos con una variable dummy.</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Generamos el rango de tiempo</span></span>
 <span><span class="va">junio2020</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.Date.html">seq.Date</a></span><span class="op">(</span></span>
 <span>  from<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2020-06-01"</span><span class="op">)</span>,</span>
@@ -1599,7 +1603,7 @@ Veamos con detenimiento el pico de la gráfica original.</div>
 <span><span class="va">f.diciembre</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">pred.df</span><span class="op">$</span><span class="va">d.dic</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2022</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Como lo vimos en las figuras <a href="procesos-estacionarios-univariados.html#fig:pacfamzn">6.9</a> y <a href="procesos-estacionarios-univariados.html#fig:acfamzn">6.10</a>, es claro que debemos usar un valor <span class="math inline">\(q\)</span> de <span class="math inline">\(1\)</span> y <span class="math inline">\(p\)</span> de <span class="math inline">\(0\)</span>, esto debido a que cuando vemos <a href="procesos-estacionarios-univariados.html#fig:pacfamzn">6.9</a> no hay una correlación de ninguno de los valores. Asímismo, también necesitamos diferenciar, lo cual corresponde al valor <span class="math inline">\(d\)</span>. Así pues, dado que en las funciones de autocorrelacion solo vemos uno o dos picos arriba de la linea punteada azul, podemos asumir que el valor de diferenciación debe ser uno o dos, en este caso dos. Esto se debe seguir como regla de dedo, pero en general se debe usar el valor que minimice la desviacion estandar y también el que minimice AIC. Por tanto nuestro modelo debe ser <span class="math inline">\(arima(0,2,1)\)</span>.</p>
 <p>Utilizamos la funcion “auto.arima” para confirmar que nuestra serie de tiempo deba ser <span class="math inline">\(arima(0,2,1)\)</span>, el arima que debos usar es aquel que minimize el indice AIC.</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">auto.arima</span><span class="op">(</span><span class="va">price_amazn_ts</span>, trace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Fitting models using approximations to speed things up...</span></span>
@@ -1629,9 +1633,9 @@ Veamos con detenimiento el pico de la gráfica original.</div>
 <span><span class="co">#&gt;       -0.9716</span></span>
 <span><span class="co">#&gt; s.e.   0.0140</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; sigma^2 estimated as 17.95:  log likelihood=-650.79</span></span>
+<span><span class="co">#&gt; sigma^2 = 17.95:  log likelihood = -650.79</span></span>
 <span><span class="co">#&gt; AIC=1305.58   AICc=1305.63   BIC=1312.43</span></span></code></pre></div>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#sin embargo hay que controlar con nuestra variable dummy</span></span>
 <span><span class="va">ARIMA_price_amzn_ts_111</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,</span>
 <span>                               method <span class="op">=</span> <span class="st">"ML"</span>,xreg<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">julio2020ts</span>,<span class="va">agosto2020ts</span>,<span class="va">sep2020ts</span>,<span class="va">oct2020ts</span><span class="op">)</span><span class="op">)</span></span>
@@ -1831,7 +1835,7 @@ Akaike Inf. Crit.
 </tr>
 </table></div>
 <p>Raices MA(A):</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">ARIMA_price_amzn_ts_111</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:amazn20rootma1"></span>
@@ -1850,12 +1854,12 @@ Figure 6.16: Raices ARMA(1) Inversas de la serie de tiempo
     \mathbb{E}_t[X_{t+\tau}] = \delta + a_1 \mathbb{E}_t[X_{t+\tau-1}] + a_2 \mathbb{E}_t[X_{t+\tau-2}] + \ldots + + a_p \mathbb{E}_t[X_{t+\tau-p}]
     \tag{6.77}
 \end{eqnarray}\]</span></p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ARIMA_price_amzn_ts_111_F</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">ARIMA_price_amzn_ts_111</span>,n.ahead<span class="op">=</span><span class="fl">13</span>,newxreg<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">f.julio2020</span>,<span class="va">f.agosto2020</span>,<span class="va">f.sep2020</span>,<span class="va">f.oct2020</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">forecast.Arima</span> <span class="op">&lt;-</span> <span class="fu">forecast</span><span class="op">(</span><span class="va">ARIMA_price_amzn_pl_111</span>,h<span class="op">=</span><span class="fl">13</span>, xreg<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">f.julio2020</span>,<span class="va">f.agosto2020</span>,<span class="va">f.sep2020</span>,<span class="va">f.oct2020</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Valores:</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">kable</span><span class="op">(</span><span class="va">forecast.Arima</span>,<span class="st">"html"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
 <thead><tr>
@@ -2140,7 +2144,7 @@ Oct 2022
 </tr>
 </tbody>
 </table></div>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">forecast.Arima</span>, main <span class="op">=</span><span class="st">"Forecast ARIMA(0,2,1) de los precios de AMZN"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:predarima111"></span>
@@ -2203,7 +2207,7 @@ Figure 6.17: Predicción de <span class="math inline">\(Arima(1,1,1)\)</span>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-10-31.</p>
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-11-14.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

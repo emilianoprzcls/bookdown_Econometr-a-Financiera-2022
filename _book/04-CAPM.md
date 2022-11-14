@@ -141,7 +141,7 @@ CAPM$excess_ret_TSLA<-CAPM$ccrTSLA-cete_1_año
 #relacion entre los excesos de demanda
 ggplot(CAPM, aes(x=excess_ret_AMZN, y=excess_ret_SP500))+geom_point()+labs(title="Relación de excesos de retornos entre TSLA y AMZN",y="Exceso de demanda de SP500", x="Exceso de demanda de AMZN")+theme_light()
 #> Warning: Removed 2 rows containing missing values
-#> (geom_point).
+#> (`geom_point()`).
 ```
 
 <div class="figure">
@@ -154,7 +154,7 @@ ggplot(CAPM, aes(x=excess_ret_AMZN, y=excess_ret_SP500))+geom_point()+labs(title
 #relacion entre los excesos de demanda
 ggplot(CAPM, aes(x=excess_ret_TSLA, y=excess_ret_SP500))+geom_point()+labs(title="Relación de excesos de retornos entre TSLA y AMZN",y="Exceso de demanda de SP500", x="Exceso de demanda de TSLA")+theme_light()
 #> Warning: Removed 2 rows containing missing values
-#> (geom_point).
+#> (`geom_point()`).
 ```
 
 <div class="figure">
@@ -203,13 +203,6 @@ data3<-BatchGetSymbols(tickers = dt3,
                        freq.data = int,
                        do.cache = FALSE,
                        thresh.bad.data = 0)
-#> Warning: `BatchGetSymbols()` was deprecated in BatchGetSymbols 2.6.4.
-#> Please use `yfR::yf_get()` instead.
-#> 2022-05-01: Package BatchGetSymbols will soon be replaced by yfR. 
-#> More details about the change is available at github <<www.github.com/msperlin/yfR>
-#> You can install yfR by executing:
-#> 
-#> remotes::install_github('msperlin/yfR')
 #> 
 #> Running BatchGetSymbols for:
 #>    tickers =AAPL

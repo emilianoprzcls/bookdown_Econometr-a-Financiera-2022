@@ -53,6 +53,7 @@
 <li><a class="" href="raiz-unitaria.html"><span class="header-section-number">8</span> Raiz Unitaria</a></li>
 <li><a class="" href="volatilidad-y-heterocedasticidad.html"><span class="header-section-number">9</span> Volatilidad y Heterocedasticidad</a></li>
 <li><a class="active" href="heterocedasticidad-condicionada.html"><span class="header-section-number">10</span> Heterocedasticidad condicionada</a></li>
+<li><a class="" href="markov-switching-regime-model.html"><span class="header-section-number">11</span> Markov Switching Regime Model</a></li>
 </ul>
 
         <div class="book-extra">
@@ -143,12 +144,12 @@ Figure 10.1: Rendimientos (diferenccias logarítmicas) de tres acciones seleccio
 <h2>
 <span class="header-section-number">10.2</span> Ejemplo<a class="anchor" aria-label="anchor" href="#ejemplo-2"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#install.packages("pacman")</span></span>
 <span><span class="co">#pacman nos permite cargar varias librerias en una sola línea</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span></span>
 <span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,<span class="va">BatchGetSymbols</span>,<span class="va">ggplot2</span>,<span class="va">lubridate</span>,<span class="va">readxl</span>,<span class="va">forecast</span>,<span class="va">stats</span>,<span class="va">stargazer</span>,<span class="va">knitr</span>,<span class="va">tseries</span>, <span class="va">aTSA</span>, <span class="va">TSA</span>, <span class="va">rugarch</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
 <span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2002/9/30"</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
 <span><span class="va">pd</span></span>
@@ -179,7 +180,7 @@ Figure 10.1: Rendimientos (diferenccias logarítmicas) de tres acciones seleccio
 <span><span class="co">#&gt;  [5] "price.high"          "price.low"          </span></span>
 <span><span class="co">#&gt;  [7] "price.close"         "price.adjusted"     </span></span>
 <span><span class="co">#&gt;  [9] "ret.adjusted.prices" "ret.closing.prices"</span></span></code></pre></div>
-<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#original</span></span>
 <span><span class="va">price_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">09</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#logartimo</span></span>
@@ -187,7 +188,7 @@ Figure 10.1: Rendimientos (diferenccias logarítmicas) de tres acciones seleccio
 <span><span class="co">#diferencias logaritmicas(cambio porcential)</span></span>
 <span><span class="va">dlprice_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span><span class="op">-</span><span class="fu">lag</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span>,<span class="fl">1</span><span class="op">)</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">dlprice_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">dlprice_amazn_ts</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">auto.arima</span><span class="op">(</span><span class="va">price_amazn_ts</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Series: price_amazn_ts </span></span>
 <span><span class="co">#&gt; ARIMA(0,2,1) </span></span>
@@ -197,12 +198,12 @@ Figure 10.1: Rendimientos (diferenccias logarítmicas) de tres acciones seleccio
 <span><span class="co">#&gt;       -0.9716</span></span>
 <span><span class="co">#&gt; s.e.   0.0140</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; sigma^2 estimated as 17.95:  log likelihood=-650.79</span></span>
+<span><span class="co">#&gt; sigma^2 = 17.95:  log likelihood = -650.79</span></span>
 <span><span class="co">#&gt; AIC=1305.58   AICc=1305.63   BIC=1312.43</span></span>
 <span><span class="va">arima021</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>,</span>
 <span>                  order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,</span>
 <span>                  method <span class="op">=</span> <span class="st">"ML"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">arima021</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:unnamed-chunk-5"></span>
@@ -210,9 +211,9 @@ Figure 10.1: Rendimientos (diferenccias logarítmicas) de tres acciones seleccio
 Figure 10.2: Serie de tiempo de los precios en los últimos 20 años
 </p>
 </div>
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">resarima021</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">arima021</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span></code></pre></div>
 <div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">resarima021</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">arima021</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">resarima021</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:amazn20"></span>
@@ -220,7 +221,7 @@ Figure 10.2: Serie de tiempo de los precios en los últimos 20 años
 Figure 5.5: Serie de tiempo de los residuos al cuadrado <span class="math inline">\({a^2}\)</span>
 </p>
 </div>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">auto.arima</span><span class="op">(</span><span class="va">resarima021</span>, trace <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Fitting models using approximations to speed things up...</span></span>
@@ -259,7 +260,7 @@ Figure 5.5: Serie de tiempo de los residuos al cuadrado <span class="math inline
 <span><span class="co">#&gt;       -0.8877</span></span>
 <span><span class="co">#&gt; s.e.   0.0418</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; sigma^2 estimated as 2875:  log likelihood=-1231.66</span></span>
+<span><span class="co">#&gt; sigma^2 = 2875:  log likelihood = -1231.66</span></span>
 <span><span class="co">#&gt; AIC=2467.31   AICc=2467.36   BIC=2474.17</span></span>
 <span><span class="va">garch.amzn</span> <span class="op">&lt;-</span> <span class="fu">ugarchspec</span><span class="op">(</span>mean.model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>armaOrder<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                         variance.model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>garchOrder<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -360,11 +361,11 @@ Figure 5.5: Serie de tiempo de los residuos al cuadrado <span class="math inline
 <span><span class="co">#&gt; 4    50     337.6    9.995e-45</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Elapsed time : 0.1169131</span></span>
+<span><span class="co">#&gt; Elapsed time : 0.1353078</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">garch.amzn011</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    Length     Class      Mode </span></span>
 <span><span class="co">#&gt;         1 uGARCHfit        S4</span></span></code></pre></div>
-<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f.garch.amzn011</span> <span class="op">&lt;-</span> <span class="fu">ugarchforecast</span><span class="op">(</span><span class="va">garch.amzn011</span>, n.ahead<span class="op">=</span><span class="fl">12</span><span class="op">)</span></span>
 <span><span class="va">f.garch.amzn011</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -399,20 +400,9 @@ Figure 5.5: Serie de tiempo de los residuos al cuadrado <span class="math inline
 
 </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
   <div class="chapter-nav">
 <div class="prev"><a href="volatilidad-y-heterocedasticidad.html"><span class="header-section-number">9</span> Volatilidad y Heterocedasticidad</a></div>
-<div class="empty"></div>
+<div class="next"><a href="markov-switching-regime-model.html"><span class="header-section-number">11</span> Markov Switching Regime Model</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -437,7 +427,7 @@ Figure 5.5: Serie de tiempo de los residuos al cuadrado <span class="math inline
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-10-31.</p>
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-11-14.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

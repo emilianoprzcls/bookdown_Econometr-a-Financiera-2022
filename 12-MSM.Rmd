@@ -1,0 +1,228 @@
+# Markov Switching Regime Model
+
+## Motivación
+
+Conforme vamos avanzando en las lecciones hemos construido modelos que consideran --concretamente-- más y más particularidades de las series de tiempo. Realmente, lo más complicado de las series de tiempo es la presencia de la volatilidad. Cuando vimos $GARCH$ pudimos ver una manera de modelarla; sin embargo, en esta lección consideraremos distintas dinámicas de volatilidad y como -- puede haber comportamientos distintos en momentos de expansión y contracción económica. Veremos en concreto qué tan posible es ver estos cambios de una dinámica a otra --cambios de régimen-- y adaptarnos a estos cambios para hacer mejores ajustes y predicciones.
+
+  Supongamos que tenemos una serie de rendimientos $r_t$ que tiene dos estados de Markov con diferentes primas de riesgo y diferentes dinámicas GARCH:
+    \begin{equation}
+    (\#eq:GARCHM)
+r_t = \left\lbrace
+\begin{array}{ll}
+\beta_1\sqrt{h_t}+\sqrt{h_t}\epsilon_t, \quad h_t=\alpha_{10}+\alpha_{11}h_{t-1}+\alpha_{12}a^2_{t-1}\quad\mathrm{ si } \quad s_t=1\\
+\beta_2\sqrt{h_t}+\sqrt{h_t}\epsilon_t,\quad h_t=\alpha_{20}+\alpha_{21}h_{t-1}+\alpha_{22}a^2_{t-1}\quad\mathrm{ si } \quad s_t=2
+\end{array}
+\right.
+\end{equation}
+
+Donde $a_t=\sqrt{h_t}\epsilon_t$ son los residuos y ${\epsilon_t}$ es una secuencia Gausiana de ruido blanco con media $0$ y varianza $1$. La probabilidad de transicionar de un régimen a otro esta descrita por:
+\begin{equation}
+    P(s_t=2|s_{t-1}=1)=e_1,\quad P(s_t=1|s_{t-1}=2)=e_2
+\end{equation}
+
+Donde $e_i$ va de 0 a 1 y un valor muy pequeño de $e_i$ significa que la serie de tiempo tiene una tendencia muy alta de quedarse en el régimen i con una duración de $\frac{1}{e_i}$. Asumiendo que $\beta_1<\beta_2$ por lo que el régimen 2 tiene una prima por riesgo mayor. Un caso particular e interesante es si $\alpha_{1j}=\alpha_{2j}$ para todas las jotas entonces tenemos un simple GARCH. Por lo que si $\beta_i\sqrt{h_t}$ es remplazado por $\beta_i$, entonces el modelo \@ref(eq:GARCHM) es un Modelo de cambio de régimen de Markov: $GARCH-M$.
+
+ Por simplicidad, asumiremos que la volatilidad $h_1$ tiene el mismo valor que la varianza muestral de $r_t$. El modelo tradicional la volatilidad debe ser calculada como un parámetro cualquiera. Sin embargo, al fijar $h_1$ simplificamos las cosas y con una muestra grande no debería importar.
+    
+Así pues, los modelos de $GARCH-M$ son $\beta=(\beta_1,\beta_2)^{'}$, $\alpha=(\alpha_{i0},alpha_{i1},alpha_{i2})^{'}$, vector de transición $e=(e_1,e_2)^{'}$, el vector de estado $S=(s_1,s_2,\dots,s_n)^{'}$ y el vector de volatilidad es $H=(h_2,\dots,h_n)^{'}$. Dado que hay dependencia del retorno en la volatilidad, entonces también sabemos que esta serialmente correlacionado, por lo que se puede predecir el retorno. Sin embargo, la predicción es complicada debido a que hay muchas combinaciones entre todos las configuraciones. Por ello, usaremos el método de Gibbs solo las siguientes:
+    $$f(\beta|R,S,H,\alpha_1,\alpha_2), \quad f(\alpha_1|R,S,H,\alpha_{j\neq i}),$$
+    $$P(S|R,h_1,\alpha_1,\alpha_2),\quad f(e_i|S), \quad\mathrm{ para } i=1,2$$
+    Donde R es la colección de todos los retornos observados y las distribuciones son:
+    $$\beta_i\sim N(\beta_{io},\sigma^2_{io}), \quad e_i\sim Beta(\gamma{i1},\gamma{i2})$$ Cabe mencionar que la distribucion anterior de $\alpha_{ij}$ es uniforme sobre un intervalo bien especificado
+    
+
+La distribución posterior de $\beta_i$ depende solamente del régimen i en el que está. 
+   \begin{equation}
+r_t = \left\lbrace
+\begin{array}{ll}
+\frac{r_t}{\sqrt{h_t}} \quad\mathrm{ si } s_t=i\\
+0\quad\mathrm{ c.o.c }
+\end{array}
+\right.
+\end{equation}
+Por lo que tenemos:
+\begin{equation}
+    r_{it}=\beta_i+\epsilon_t,\quad \mathrm{si }s_t=i
+\end{equation}
+
+En consecuencia, la informacion en $\beta_i$ está contenida en la media muestral de $r_{it}$. $\bar{r_i}=(\sum_{s_t=i}r_{it}/n_i$ donde la suma son los puntos en el régimen i y $n_i$ es la cantidad de numero es ese punto. Por lo mimso, la distribucion posterior condicional de $\beta_i$ es normal con media en $\beta_i^*$ y varianza $\sigma^{2*}_i$, donde,
+
+\begin{equation}
+    \frac{1}{\sigma^{2*}_i}=n_i+\frac{1}{\sigma^{2*}_{io}}, \quad \beta_i^*=\sigma^{2*}_{i}(n_i\bar{r_i}+\beta{io}/\sigma^{2}_{io})
+\end{equation}
+
+Los parametros $\alpha_ij$ pueden ser definidos usando el metodo _Griddy Gibbs_. Dado $h_i,S,\alpha_{v\neq i}$y $\alpha_{iv}$ tenemos la distribucion condicional posterior se ve:
+    
+
+$$ f(\alpha_{ij}|.) \alpha - \frac{1}{2} \left[ ln(h_t) + \frac{(r_t-\beta_i \sqrt{ht})^{2}}{h_t}\right],  \quad \mathrm{ para } \quad s_t=i $$
+
+    
+Y se evaluan estos puntos en un intervalo bien definido porque $0\geq\alpha_{11}<\alpha_{12}$\\
+
+La distribucion condicional posterior de $e_i$ solo toma en cuenta $S$. Donde $l_t$ es el numero de cambios del regimen 1 a 2 y $l_2$ al revés, tenemos que $n_i$ es el numero de puntos en el estado i.Su distribución es $Beta(\gamma_{i1}+l_i,\gamma_{i2}+n_i-l_i)$.
+
+Finalmente, los elementos de S de pueden definir uno por uno. Donde $S_{-j}$ es el vector al quitar $s_j$ de S, $s_j$ tiene dos posibilidades ($s_j=1$ o $s_j=2$) y si distribución condicional posterior es:
+    \begin{equation}
+        P(s_j|.)\alpha\prod_{t=j}^nf(a_t|H)P(s_j|S_{-j})    
+        \end{equation}
+  
+La probabilidad esta dada por:
+$$P(s:j=i|s_{-k}=P(s_{j=i}|s_{j-1},s_{j+1}),\quad i=1,2$$
+Adicionalmente, asumiento que $s_j=i$, uno puede computar h_t para $t\geq j$. La funcion de verosimilitud, denodtada por $L(S_j)$ está dada por:
+
+\begin{equation}
+    L(s_j=i)\equiv\prod_{t=j}^nf(a_t|H)\alpha exp(f_{ji}), \quad f_{ji}=\sum_{t=j}^n
+-\frac{1}{2}\left[ln(h_t)+\frac{a_t^2}{h_t}\right]
+\end{equation}
+
+Donde $a_t$ puede ser $a_t=r_t-\beta_1\sqrt{h_t}$ o $a_t=r_t-\beta_2\sqrt{h_t}$, por lo que la probabilidad de estar en el régimen $s_j=1$ es:
+
+\begin{equation}
+    P(s_j=1|.)=\frac{P(s_j=1|s_{j-1},s_{j+1})L(s_j=1)}{P(s_j=1|s_{j-1},s_{j+1})L(s_j=1)+P(s_j=2|s_{j-1},s_{j+1})L(s_j=2)}
+\end{equation}
+
+Por lo que el régimen $s_j$ puede ser dibujado fácilmente como una distribución uniforme con intervalo $[0,1]$.
+
+## Ejemplo
+```{r message=FALSE, warning=FALSE, warning=FALSE, message=FALSE , fig.align='center', out.width="100%",  fig.align='center', out.width="100%", warning=FALSE, message=FALSE}
+#install.packages("pacman")
+#pacman nos permite cargar varias librerias en una sola línea
+library(pacman)
+pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl,forecast,stats,stargazer,knitr,tseries,aTSA, TSA, rugarch, MSwM, MSGARCH, fGarch, ggpubr, knitr, MSGARCH)
+library(MSGARCH)
+```
+
+```{r fig.show='hide', message=FALSE, , echo=TRUE, fig.align='center', out.width="100%", warning=FALSE,  fig.align='center', out.width="100%", warning=FALSE, message=FALSE}
+#Primero determinamos el lapso de tiempo
+pd<-as.Date("2002/9/30") #primer fecha
+pd
+#> [1] "2021-09-18"
+ld<- as.Date("2021/09/30")#última fecha
+ld
+#Intervalos de tiempo
+int<-"monthly"
+
+#Datos a elegir
+dt<-c("AMZN")
+
+#Descargando los valores
+data1<- BatchGetSymbols(tickers = dt,
+                       first.date = pd,
+                       last.date = ld,
+                       freq.data = int,
+                       do.cache = FALSE,
+                       thresh.bad.data = 0)
+
+#Generando data frame con los valores
+data_precio_amzn<-data1$df.tickers
+colnames(data_precio_amzn)
+```
+
+```{r, fig.align='center', out.width="100%", warning=FALSE, message=FALSE, fig.align='center', out.width="100%"}
+#original
+price_amazn_ts<-ts(data_precio_amzn$price.open, frequency = 12, start=c(2002,09))
+#logartimo
+lprice_amazn_ts<-ts(log(data_precio_amzn$price.open), frequency = 12,start=c(2002,09))
+#diferencias logaritmicas(cambio porcential)
+dlprice_amazn_ts<-ts(log(data_precio_amzn$price.open)-lag(log(data_precio_amzn$price.open),1), frequency = 12, start=c(2002,10))
+dlprice_amazn_ts<-na.omit(dlprice_amazn_ts)
+```
+
+```{r}
+# GARCH creado el capitulo pasado
+garch.amzn <- ugarchspec(mean.model = list(armaOrder=c(0,2,1)),
+                         variance.model = list(garchOrder=c(0,1,1)))
+garch.amzn011 <- ugarchfit(spec = garch.amzn, 
+                           data = price_amazn_ts)
+garch.amzn011
+```
+
+### Cambio de Régimen
+Asumiendo que es de GARCH(1,1) y que no ha ARIMA, podemos calcular la cantidad de regímenes con el paquete MSGARCH.
+```{r}
+#Definimos las caracteristicas
+spec <- CreateSpec(
+      variance.spec = list(model = c("sGARCH")),
+      distribution.spec = list(distribution = c("norm")),
+      switch.spec = list(do.mix = FALSE, K = 2),
+      constraint.spec = list(fixed = list(), regime.const = NULL),
+      prior = list(mean = list(), sd = list())
+)
+summary(spec)
+#Corremos el calculo de los regímenes
+#maximum likelihood
+fit.ml <- FitML(spec, dlprice_amazn_ts, ctr = list())
+fit.ml
+
+#simulación bayesiana de monte carlo
+set.seed(1234)
+fit.mcmc <- FitMCMC(spec, dlprice_amazn_ts, ctr = list())
+fit.mcmc
+
+P.matrix <- matrix(c(0.9577,0.7307,0.0423,0.2693),2,2)
+t.end <- 100
+
+s0 <- 1 
+st <- function(i) sample(1:2,1,prob = P.matrix[i,])
+
+s <- st(s0)
+for(t in 2:t.end) {
+  s <- c(s,st(s[t-1]))
+}
+```
+
+```{r simplot, fig.cap = "Simulacion de las trancisiones del primer y segundo régimen", echo=TRUE, out.width="100%"}
+plot(s, pch = 20,cex = 0.5)
+```
+
+#### Simulación de Monte Carlo
+Utilizando el modelo GARCH utilizado en el capítulo pasado podemos haccer una simulacion de los coeficientes. Esto para ver si, dado una simulacion Monte Carlo, son consistentes a lo que calculamos.
+
+```{r, message=FALSE, warning=FALSE}
+#-------------------------
+# SIMULACIÓN
+#-------------------------
+dist <- ugarchdistribution(garch.amzn011, n.sim = 100, m.sim = 5000, n.start = 10, rseed = 1234)
+dist.garch.amzn011 <- as.data.frame(dist)
+
+#-------------------------
+# Coeficientes iterados
+#-------------------------
+head(dist.garch.amzn011)
+```
+
+```{r, results='asis'}
+kable(as.data.frame(cbind(mu=mean(dist.garch.amzn011$mu,na.rm=TRUE),ma1=mean(dist.garch.amzn011$ma1,na.rm=TRUE),ma2=mean(dist.garch.amzn011$ma2,na.rm=TRUE),omega=mean(dist.garch.amzn011$omega,na.rm=TRUE),beat1=mean(dist.garch.amzn011$beta1,na.rm=TRUE))), "html", caption = "Medias estándar de los coeficientes")
+```
+
+```{r, results='asis'}
+kable(as.data.frame(cbind(mu=sd(dist.garch.amzn011$mu,na.rm=TRUE),ma1=sd(dist.garch.amzn011$ma1,na.rm=TRUE),ma2=sd(dist.garch.amzn011$ma2,na.rm=TRUE),omega=sd(dist.garch.amzn011$omega,na.rm=TRUE),beat1=sd(dist.garch.amzn011$beta1,na.rm=TRUE))),"html", caption = "Desviaciones estándar de los coeficientes")
+```
+
+Veamos los histogramas de los coeficientes
+```{r Mu, fig.cap = "Histograma de $\\mu$", echo=FALSE, out.width="100%"}
+mu_hist<-ggplot(dist.garch.amzn011,aes(x=mu))+geom_histogram(aes(fill=..count..))+scale_fill_gradient(low="#1e313b", high="#65c7f7")+theme_light()+geom_vline(xintercept = mean(x=dist.garch.amzn011$mu, na.rm=TRUE), color="black", size=1)+annotate(geom = "text", x = (mean(x=dist.garch.amzn011$mu,na.rm=TRUE)+sd(x=dist.garch.amzn011$mu,na.rm=TRUE)), y=40, label=paste("Media=",mean(x=dist.garch.amzn011$mu,na.rm=TRUE)))+labs(title="Disttibución Mu",x="Mu", y="Frecuencia", fill = "Frecuencia")
+mu_hist
+```
+
+```{r Ma1, fig.cap = "Histograma de $MA_1$", echo=FALSE, out.width="100%"}
+ma1_hist<-ggplot(dist.garch.amzn011,aes(x=ma1))+geom_histogram(aes(fill=..count..))+scale_fill_gradient(low="#1e313b", high="#65c7f7")+theme_light()+geom_vline(xintercept = mean(x=dist.garch.amzn011$ma1, na.rm=TRUE), color="black", size=1)+annotate(geom = "text", x = (mean(x=dist.garch.amzn011$ma1,na.rm=TRUE)+sd(x=dist.garch.amzn011$ma1,na.rm=TRUE)), y=40, label=paste("Media=",mean(x=dist.garch.amzn011$ma1,na.rm=TRUE)))+labs(title="Disttibución ma1",x="ma1", y="Frecuencia", fill = "Frecuencia")
+ma1_hist
+```
+
+```{r Ma2, fig.cap = "Histograma de $MA_2$", echo=FALSE, out.width="100%"}
+ma2_hist<-ggplot(dist.garch.amzn011,aes(x=ma2))+geom_histogram(aes(fill=..count..))+scale_fill_gradient(low="#1e313b", high="#65c7f7")+theme_light()+geom_vline(xintercept = mean(x=dist.garch.amzn011$ma2, na.rm=TRUE), color="black", size=1)+annotate(geom = "text", x = (mean(x=dist.garch.amzn011$ma2,na.rm=TRUE)+sd(x=dist.garch.amzn011$ma2,na.rm=TRUE)), y=40, label=paste("Media=",mean(x=dist.garch.amzn011$ma2,na.rm=TRUE)))+labs(title="Disttibución ma2",x="ma2", y="Frecuencia", fill = "Frecuencia")
+ma2_hist
+```
+
+```{r omega, fig.cap = "Histograma de $\\Omega$", echo=FALSE, out.width="100%"}
+omega_hist<-ggplot(dist.garch.amzn011,aes(x=omega))+geom_histogram(aes(fill=..count..))+scale_fill_gradient(low="#1e313b", high="#65c7f7")+theme_light()+geom_vline(xintercept = mean(x=dist.garch.amzn011$omega, na.rm=TRUE), color="black", size=1)+annotate(geom = "text", x = (mean(x=dist.garch.amzn011$omega,na.rm=TRUE)+sd(x=dist.garch.amzn011$omega,na.rm=TRUE)), y=40, label=paste("Media=",mean(x=dist.garch.amzn011$omega,na.rm=TRUE)))+labs(title="Disttibución omega",x="omega", y="Frecuencia", fill = "Frecuencia")
+omega_hist
+```
+
+```{r beta1, fig.cap = "Histograma de $\beta_1$", echo=FALSE, out.width="100%"}
+beta1_hist<-ggplot(dist.garch.amzn011,aes(x=beta1))+geom_histogram(aes(fill=..count..))+scale_fill_gradient(low="#1e313b", high="#65c7f7")+theme_light()+geom_vline(xintercept = mean(x=dist.garch.amzn011$beta1, na.rm=TRUE), color="black", size=1)+annotate(geom = "text", x = (mean(x=dist.garch.amzn011$beta1,na.rm=TRUE)+sd(x=dist.garch.amzn011$beta1,na.rm=TRUE)), y=40, label=paste("Media=",mean(x=dist.garch.amzn011$beta1,na.rm=TRUE)))+labs(title="Disttibución beta1",x="beta1", y="Frecuencia", fill = "Frecuencia")
+beta1_hist
+```
+
+Evidentemente esto demuestra que si convergen a los valores estimados.

@@ -1,0 +1,73 @@
+# Raiz Unitaria
+
+
+## Ejemplo
+```{r message=FALSE, warning=FALSE, warning=FALSE, message=FALSE , fig.align='center', out.width="100%"}
+#install.packages("pacman")
+#pacman nos permite cargar varias librerias en una sola línea
+library(pacman)
+pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl,forecast,stats,stargazer,knitr,tseries)
+```
+
+```{r fig.show='hide', message=FALSE, , echo=TRUE, fig.align='center', out.width="100%", warning=FALSE}
+#Primero determinamos el lapso de tiempo
+pd<-as.Date("2002/9/30") #primer fecha
+pd
+#> [1] "2021-09-18"
+ld<- as.Date("2021/09/30")#última fecha
+ld
+#Intervalos de tiempo
+int<-"monthly"
+
+#Datos a elegir
+dt<-c("AMZN")
+
+#Descargando los valores
+data1<- BatchGetSymbols(tickers = dt,
+                       first.date = pd,
+                       last.date = ld,
+                       freq.data = int,
+                       do.cache = FALSE,
+                       thresh.bad.data = 0)
+
+#Generando data frame con los valores
+data_precio_amzn<-data1$df.tickers
+colnames(data_precio_amzn)
+```
+
+```{r, fig.align='center', out.width="100%", warning=FALSE, message=FALSE, fig.align='center', out.width="100%"}
+#original
+price_amazn_ts<-ts(data_precio_amzn$price.open, frequency = 12, start=c(2002,09))
+#logartimo
+lprice_amazn_ts<-ts(log(data_precio_amzn$price.open), frequency = 12,start=c(2002,09))
+#diferencias logaritmicas(cambio porcential)
+dlprice_amazn_ts<-ts(log(data_precio_amzn$price.open)-lag(log(data_precio_amzn$price.open),1), frequency = 12, start=c(2002,10))
+```
+
+## DF test
+```{r}
+dlprice_amazn_ts<-na.omit(dlprice_amazn_ts)
+adf.test(dlprice_amazn_ts, k=0) # DF test
+```
+
+## ADF test
+```{r}
+adf.test(dlprice_amazn_ts) # DF test
+```
+
+## PP test
+```{r}
+pp.test(dlprice_amazn_ts) # DF test
+```
+
+## PP test
+```{r}
+pp.test(dlprice_amazn_ts) # DF test
+```
+
+## KPSS test
+```{r}
+kpss.test(dlprice_amazn_ts) # DF test
+```
+
+Claramente podemos ver que todos los tests arrojan que se rechaza la hipótesis nula de $\beta_0=1$ y, por consiguiente, es estacionaria.

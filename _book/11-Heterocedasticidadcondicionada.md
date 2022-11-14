@@ -152,7 +152,7 @@ auto.arima(price_amazn_ts)
 #>       -0.9716
 #> s.e.   0.0140
 #> 
-#> sigma^2 estimated as 17.95:  log likelihood=-650.79
+#> sigma^2 = 17.95:  log likelihood = -650.79
 #> AIC=1305.58   AICc=1305.63   BIC=1312.43
 arima021 <- arima(price_amazn_ts,
                   order=c(0,2,1),
@@ -224,7 +224,7 @@ auto.arima(resarima021, trace = T)
 #>       -0.8877
 #> s.e.   0.0418
 #> 
-#> sigma^2 estimated as 2875:  log likelihood=-1231.66
+#> sigma^2 = 2875:  log likelihood = -1231.66
 #> AIC=2467.31   AICc=2467.36   BIC=2474.17
 garch.amzn <- ugarchspec(mean.model = list(armaOrder=c(0,2,1)),
                          variance.model = list(garchOrder=c(0,1,1)))
@@ -325,7 +325,7 @@ garch.amzn011
 #> 4    50     337.6    9.995e-45
 #> 
 #> 
-#> Elapsed time : 0.1169131
+#> Elapsed time : 0.1353078
 summary(garch.amzn011)
 #>    Length     Class      Mode 
 #>         1 uGARCHfit        S4

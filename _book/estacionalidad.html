@@ -53,6 +53,7 @@
 <li><a class="" href="raiz-unitaria.html"><span class="header-section-number">8</span> Raiz Unitaria</a></li>
 <li><a class="" href="volatilidad-y-heterocedasticidad.html"><span class="header-section-number">9</span> Volatilidad y Heterocedasticidad</a></li>
 <li><a class="" href="heterocedasticidad-condicionada.html"><span class="header-section-number">10</span> Heterocedasticidad condicionada</a></li>
+<li><a class="" href="markov-switching-regime-model.html"><span class="header-section-number">11</span> Markov Switching Regime Model</a></li>
 </ul>
 
         <div class="book-extra">
@@ -66,12 +67,12 @@
 </h1>
 <p>Recordando el tema pasado y la serie en la que evaluamos los cambios de
 precio del ACTIVO AMZN como si fueran retornos:</p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#install.packages("pacman")</span></span>
 <span><span class="co">#pacman nos permite cargar varias librerias en una sola línea</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span></span>
 <span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,<span class="va">BatchGetSymbols</span>,<span class="va">ggplot2</span>,<span class="va">lubridate</span>,<span class="va">readxl</span>,<span class="va">forecast</span>,<span class="va">stats</span>,<span class="va">stargazer</span>,<span class="va">knitr</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
 <span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2002/9/30"</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
 <span><span class="va">pd</span></span>
@@ -105,7 +106,7 @@ precio del ACTIVO AMZN como si fueran retornos:</p>
 <p>Para este caso coemzaremos por agregar dos series de tiempo. Una correspone a una transformación logarítmica de los valores de los precios y, otra, corresponde la diferentcia logaritmica. Esto dado que:
 <span class="math display">\[log(X_t)-log(X_{t-k})\sim\frac{X_t-X_{t-k}}{X_t}\]</span>.</p>
 <p>Tranformacion de la serie original</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#original</span></span>
 <span><span class="va">price_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">09</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#logartimo</span></span>
@@ -113,7 +114,7 @@ precio del ACTIVO AMZN como si fueran retornos:</p>
 <span><span class="co">#diferencias logaritmicas(cambio porcential)</span></span>
 <span><span class="va">dlprice_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span><span class="op">-</span><span class="fu">lag</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span>,<span class="fl">1</span><span class="op">)</span>, frequency <span class="op">=</span> <span class="fl">12</span>, , start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Las tres series</p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">price_amazn_ts</span>, xlab <span class="op">=</span> <span class="st">"Tiempo"</span>, </span>
 <span>     main <span class="op">=</span> <span class="st">"Precios de apertura"</span>,</span>
@@ -133,7 +134,7 @@ Figure 7.1: Serie de timpo LN, DiffLn y AMZN
 </p>
 </div>
 <p>Tomemos la de diferencias logarítmicas como ejemplo.</p>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">dlprice_amazn_ts</span>, xlab <span class="op">=</span> <span class="st">"Tiempo"</span>, </span>
 <span>     main <span class="op">=</span> <span class="st">"Diff LN de precios de apertura"</span>, </span>
 <span>     col <span class="op">=</span> <span class="st">"darkred"</span><span class="op">)</span></span></code></pre></div>
@@ -144,7 +145,7 @@ Figure 7.2: Diff LN de precios de apertura de AMZN
 </p>
 </div>
 <p>Aquí es posible ver que hay un proceso estacional muy claro. Cuando vemos el plot <a href="procesos-estacionarios-univariados.html#eq:ARMA11Eq">(6.51)</a> es dificil verlo con exactitud. Sin embargo altas y bajas constantes como lo vemos en la figura son buenos indicadores de que puede haber un proceso estacional: de estaciones.</p>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">auto.arima</span><span class="op">(</span><span class="va">dlprice_amazn_ts</span>, trace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Fitting models using approximations to speed things up...</span></span>
@@ -183,7 +184,7 @@ Figure 7.2: Diff LN de precios de apertura de AMZN
 <span><span class="co">#&gt;       -0.9433  -0.0537  0.8062  0.0233</span></span>
 <span><span class="co">#&gt; s.e.   0.1790   0.0869  0.1669  0.0062</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; sigma^2 estimated as 0.01094:  log likelihood=192.72</span></span>
+<span><span class="co">#&gt; sigma^2 = 0.01094:  log likelihood = 192.72</span></span>
 <span><span class="co">#&gt; AIC=-375.43   AICc=-375.16   BIC=-358.28</span></span></code></pre></div>
 <p>Como lo sospechabamos este proceso es puramente estacional y se utilizan estaciones AR(p) y MA(p), pero de manera estacional.</p>
 <div class="inline-table"><table style="text-align:center" class="table table-sm">
@@ -351,7 +352,7 @@ Akaike Inf. Crit.
 </td>
 </tr>
 </table></div>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SARIMA_price_amzn_ts_201</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span><span class="va">dlprice_amazn_ts</span>,</span>
 <span>                        order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>, </span>
 <span>                        seasonal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,</span>
@@ -361,7 +362,7 @@ Akaike Inf. Crit.
 <span>                        seasonal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,</span>
 <span>                        method <span class="op">=</span> <span class="st">"ML"</span><span class="op">)</span></span></code></pre></div>
 <p>Raices MA(A):</p>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">SARIMA_price_amzn_ts_201</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:amazn20rootma1"></span>
@@ -369,7 +370,7 @@ Akaike Inf. Crit.
 Figure 6.16: Raices ARMA(1) Inversas de la serie de tiempo
 </p>
 </div>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SARIMA_price_amzn_ts_201_F</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">SARIMA_price_amzn_ts_201</span>,n.ahead<span class="op">=</span><span class="fl">13</span><span class="op">)</span></span>
 <span><span class="va">SARIMA_price_amzn_ts_201_F</span></span></code></pre></div>
 <p>$pred
@@ -392,7 +393,7 @@ Jun Jul Aug Sep Oct
 Nov Dec
 2021 0.1035781 0.1035781
 2022 0.1047972</p>
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SARIMA_price_amzn_PL_201_F</span> <span class="op">&lt;-</span><span class="fu">forecast</span><span class="op">(</span><span class="va">SARIMA_price_amzn_pl_201</span>,h<span class="op">=</span><span class="fl">13</span><span class="op">)</span></span>
 <span><span class="fu">kable</span><span class="op">(</span><span class="va">SARIMA_price_amzn_PL_201_F</span>,<span class="st">"html"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
@@ -679,7 +680,7 @@ Nov 2022
 </tbody>
 </table></div>
 <p>Valores:</p>
-<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">SARIMA_price_amzn_PL_201_F</span>, main <span class="op">=</span><span class="st">"Forecast SARIMA(0,0,0)(2,0,1)  de los precios de AMZN"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:predarima111"></span>
@@ -711,7 +712,7 @@ Figure 6.17: Predicción de <span class="math inline">\(Arima(1,1,1)\)</span>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-10-31.</p>
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-11-14.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

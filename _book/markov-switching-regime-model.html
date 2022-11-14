@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 11 Markov Switching Regime Model | Diplomado de Econometría Financiera</title>
+<meta name="author" content="Benjamin Oliva y Emiliano Pérez Caullieres">
+<meta name="description" content="11.1 Motivación Conforme vamos avanzando en las lecciones hemos construido modelos que consideran –concretamente– más y más particularidades de las series de tiempo. Realmente, lo más complicado...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 11 Markov Switching Regime Model | Diplomado de Econometría Financiera">
+<meta property="og:type" content="book">
+<meta property="og:description" content="11.1 Motivación Conforme vamos avanzando en las lecciones hemos construido modelos que consideran –concretamente– más y más particularidades de las series de tiempo. Realmente, lo más complicado...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 11 Markov Switching Regime Model | Diplomado de Econometría Financiera">
+<meta name="twitter:description" content="11.1 Motivación Conforme vamos avanzando en las lecciones hemos construido modelos que consideran –concretamente– más y más particularidades de las series de tiempo. Realmente, lo más complicado...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Diplomado de Econometría Financiera</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Mínimos Cuadrados Ordinarios</a></li>
+<li><a class="" href="m%C3%A1xima-verosimilitud.html"><span class="header-section-number">2</span> Máxima Verosimilitud</a></li>
+<li><a class="" href="m%C3%A9todo-generalizado-de-momentos-mgm.html"><span class="header-section-number">3</span> Método Generalizado de Momentos (MGM)</a></li>
+<li><a class="" href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> Capital Asset Pricing Model (CAPM)</a></li>
+<li><a class="" href="estacionariedad.html"><span class="header-section-number">5</span> Estacionariedad</a></li>
+<li><a class="" href="procesos-estacionarios-univariados.html"><span class="header-section-number">6</span> Procesos estacionarios univariados</a></li>
+<li><a class="" href="estacionalidad.html"><span class="header-section-number">7</span> Estacionalidad</a></li>
+<li><a class="" href="raiz-unitaria.html"><span class="header-section-number">8</span> Raiz Unitaria</a></li>
+<li><a class="" href="volatilidad-y-heterocedasticidad.html"><span class="header-section-number">9</span> Volatilidad y Heterocedasticidad</a></li>
+<li><a class="" href="heterocedasticidad-condicionada.html"><span class="header-section-number">10</span> Heterocedasticidad condicionada</a></li>
+<li><a class="active" href="markov-switching-regime-model.html"><span class="header-section-number">11</span> Markov Switching Regime Model</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="markov-switching-regime-model" class="section level1" number="11">
+<h1>
+<span class="header-section-number">11</span> Markov Switching Regime Model<a class="anchor" aria-label="anchor" href="#markov-switching-regime-model"><i class="fas fa-link"></i></a>
+</h1>
+<div id="motivación" class="section level2" number="11.1">
+<h2>
+<span class="header-section-number">11.1</span> Motivación<a class="anchor" aria-label="anchor" href="#motivaci%C3%B3n"><i class="fas fa-link"></i></a>
+</h2>
+<p>Conforme vamos avanzando en las lecciones hemos construido modelos que consideran –concretamente– más y más particularidades de las series de tiempo. Realmente, lo más complicado de las series de tiempo es la presencia de la volatilidad. Cuando vimos <span class="math inline">\(GARCH\)</span> pudimos ver una manera de modelarla; sin embargo, en esta lección consideraremos distintas dinámicas de volatilidad y como – puede haber comportamientos distintos en momentos de expansión y contracción económica. Veremos en concreto qué tan posible es ver estos cambios de una dinámica a otra –cambios de régimen– y adaptarnos a estos cambios para hacer mejores ajustes y predicciones.</p>
+<p>Supongamos que tenemos una serie de rendimientos <span class="math inline">\(r_t\)</span> que tiene dos estados de Markov con diferentes primas de riesgo y diferentes dinámicas GARCH:
+<span class="math display" id="eq:GARCHM">\[\begin{equation}
+    \tag{11.1}
+r_t = \left\lbrace
+\begin{array}{ll}
+\beta_1\sqrt{h_t}+\sqrt{h_t}\epsilon_t, \quad h_t=\alpha_{10}+\alpha_{11}h_{t-1}+\alpha_{12}a^2_{t-1}\quad\mathrm{ si } \quad s_t=1\\
+\beta_2\sqrt{h_t}+\sqrt{h_t}\epsilon_t,\quad h_t=\alpha_{20}+\alpha_{21}h_{t-1}+\alpha_{22}a^2_{t-1}\quad\mathrm{ si } \quad s_t=2
+\end{array}
+\right.
+\end{equation}\]</span></p>
+<p>Donde <span class="math inline">\(a_t=\sqrt{h_t}\epsilon_t\)</span> son los residuos y <span class="math inline">\({\epsilon_t}\)</span> es una secuencia Gausiana de ruido blanco con media <span class="math inline">\(0\)</span> y varianza <span class="math inline">\(1\)</span>. La probabilidad de transicionar de un régimen a otro esta descrita por:
+<span class="math display">\[\begin{equation}
+    P(s_t=2|s_{t-1}=1)=e_1,\quad P(s_t=1|s_{t-1}=2)=e_2
+\end{equation}\]</span></p>
+<p>Donde <span class="math inline">\(e_i\)</span> va de 0 a 1 y un valor muy pequeño de <span class="math inline">\(e_i\)</span> significa que la serie de tiempo tiene una tendencia muy alta de quedarse en el régimen i con una duración de <span class="math inline">\(\frac{1}{e_i}\)</span>. Asumiendo que <span class="math inline">\(\beta_1&lt;\beta_2\)</span> por lo que el régimen 2 tiene una prima por riesgo mayor. Un caso particular e interesante es si <span class="math inline">\(\alpha_{1j}=\alpha_{2j}\)</span> para todas las jotas entonces tenemos un simple GARCH. Por lo que si <span class="math inline">\(\beta_i\sqrt{h_t}\)</span> es remplazado por <span class="math inline">\(\beta_i\)</span>, entonces el modelo <a href="markov-switching-regime-model.html#eq:GARCHM">(11.1)</a> es un Modelo de cambio de régimen de Markov: <span class="math inline">\(GARCH-M\)</span>.</p>
+<p>Por simplicidad, asumiremos que la volatilidad <span class="math inline">\(h_1\)</span> tiene el mismo valor que la varianza muestral de <span class="math inline">\(r_t\)</span>. El modelo tradicional la volatilidad debe ser calculada como un parámetro cualquiera. Sin embargo, al fijar <span class="math inline">\(h_1\)</span> simplificamos las cosas y con una muestra grande no debería importar.</p>
+<p>Así pues, los modelos de <span class="math inline">\(GARCH-M\)</span> son <span class="math inline">\(\beta=(\beta_1,\beta_2)^{'}\)</span>, <span class="math inline">\(\alpha=(\alpha_{i0},alpha_{i1},alpha_{i2})^{'}\)</span>, vector de transición <span class="math inline">\(e=(e_1,e_2)^{'}\)</span>, el vector de estado <span class="math inline">\(S=(s_1,s_2,\dots,s_n)^{'}\)</span> y el vector de volatilidad es <span class="math inline">\(H=(h_2,\dots,h_n)^{'}\)</span>. Dado que hay dependencia del retorno en la volatilidad, entonces también sabemos que esta serialmente correlacionado, por lo que se puede predecir el retorno. Sin embargo, la predicción es complicada debido a que hay muchas combinaciones entre todos las configuraciones. Por ello, usaremos el método de Gibbs solo las siguientes:
+<span class="math display">\[f(\beta|R,S,H,\alpha_1,\alpha_2), \quad f(\alpha_1|R,S,H,\alpha_{j\neq i}),\]</span>
+<span class="math display">\[P(S|R,h_1,\alpha_1,\alpha_2),\quad f(e_i|S), \quad\mathrm{ para } i=1,2\]</span>
+Donde R es la colección de todos los retornos observados y las distribuciones son:
+<span class="math display">\[\beta_i\sim N(\beta_{io},\sigma^2_{io}), \quad e_i\sim Beta(\gamma{i1},\gamma{i2})\]</span> Cabe mencionar que la distribucion anterior de <span class="math inline">\(\alpha_{ij}\)</span> es uniforme sobre un intervalo bien especificado</p>
+<p>La distribución posterior de <span class="math inline">\(\beta_i\)</span> depende solamente del régimen i en el que está.
+<span class="math display">\[\begin{equation}
+r_t = \left\lbrace
+\begin{array}{ll}
+\frac{r_t}{\sqrt{h_t}} \quad\mathrm{ si } s_t=i\\
+0\quad\mathrm{ c.o.c }
+\end{array}
+\right.
+\end{equation}\]</span>
+Por lo que tenemos:
+<span class="math display">\[\begin{equation}
+    r_{it}=\beta_i+\epsilon_t,\quad \mathrm{si }s_t=i
+\end{equation}\]</span></p>
+<p>En consecuencia, la informacion en <span class="math inline">\(\beta_i\)</span> está contenida en la media muestral de <span class="math inline">\(r_{it}\)</span>. <span class="math inline">\(\bar{r_i}=(\sum_{s_t=i}r_{it}/n_i\)</span> donde la suma son los puntos en el régimen i y <span class="math inline">\(n_i\)</span> es la cantidad de numero es ese punto. Por lo mimso, la distribucion posterior condicional de <span class="math inline">\(\beta_i\)</span> es normal con media en <span class="math inline">\(\beta_i^*\)</span> y varianza <span class="math inline">\(\sigma^{2*}_i\)</span>, donde,</p>
+<p><span class="math display">\[\begin{equation}
+    \frac{1}{\sigma^{2*}_i}=n_i+\frac{1}{\sigma^{2*}_{io}}, \quad \beta_i^*=\sigma^{2*}_{i}(n_i\bar{r_i}+\beta{io}/\sigma^{2}_{io})
+\end{equation}\]</span></p>
+<p>Los parametros <span class="math inline">\(\alpha_ij\)</span> pueden ser definidos usando el metodo <em>Griddy Gibbs</em>. Dado <span class="math inline">\(h_i,S,\alpha_{v\neq i}\)</span>y <span class="math inline">\(\alpha_{iv}\)</span> tenemos la distribucion condicional posterior se ve:</p>
+<p><span class="math display">\[ f(\alpha_{ij}|.) \alpha - \frac{1}{2} \left[ ln(h_t) + \frac{(r_t-\beta_i \sqrt{ht})^{2}}{h_t}\right],  \quad \mathrm{ para } \quad s_t=i \]</span></p>
+<p>Y se evaluan estos puntos en un intervalo bien definido porque <span class="math inline">\(0\geq\alpha_{11}&lt;\alpha_{12}\)</span>\</p>
+<p>La distribucion condicional posterior de <span class="math inline">\(e_i\)</span> solo toma en cuenta <span class="math inline">\(S\)</span>. Donde <span class="math inline">\(l_t\)</span> es el numero de cambios del regimen 1 a 2 y <span class="math inline">\(l_2\)</span> al revés, tenemos que <span class="math inline">\(n_i\)</span> es el numero de puntos en el estado i.Su distribución es <span class="math inline">\(Beta(\gamma_{i1}+l_i,\gamma_{i2}+n_i-l_i)\)</span>.</p>
+<p>Finalmente, los elementos de S de pueden definir uno por uno. Donde <span class="math inline">\(S_{-j}\)</span> es el vector al quitar <span class="math inline">\(s_j\)</span> de S, <span class="math inline">\(s_j\)</span> tiene dos posibilidades (<span class="math inline">\(s_j=1\)</span> o <span class="math inline">\(s_j=2\)</span>) y si distribución condicional posterior es:
+<span class="math display">\[\begin{equation}
+        P(s_j|.)\alpha\prod_{t=j}^nf(a_t|H)P(s_j|S_{-j})    
+        \end{equation}\]</span></p>
+<p>La probabilidad esta dada por:
+<span class="math display">\[P(s:j=i|s_{-k}=P(s_{j=i}|s_{j-1},s_{j+1}),\quad i=1,2\]</span>
+Adicionalmente, asumiento que <span class="math inline">\(s_j=i\)</span>, uno puede computar h_t para <span class="math inline">\(t\geq j\)</span>. La funcion de verosimilitud, denodtada por <span class="math inline">\(L(S_j)\)</span> está dada por:</p>
+<p><span class="math display">\[\begin{equation}
+    L(s_j=i)\equiv\prod_{t=j}^nf(a_t|H)\alpha exp(f_{ji}), \quad f_{ji}=\sum_{t=j}^n
+-\frac{1}{2}\left[ln(h_t)+\frac{a_t^2}{h_t}\right]
+\end{equation}\]</span></p>
+<p>Donde <span class="math inline">\(a_t\)</span> puede ser <span class="math inline">\(a_t=r_t-\beta_1\sqrt{h_t}\)</span> o <span class="math inline">\(a_t=r_t-\beta_2\sqrt{h_t}\)</span>, por lo que la probabilidad de estar en el régimen <span class="math inline">\(s_j=1\)</span> es:</p>
+<p><span class="math display">\[\begin{equation}
+    P(s_j=1|.)=\frac{P(s_j=1|s_{j-1},s_{j+1})L(s_j=1)}{P(s_j=1|s_{j-1},s_{j+1})L(s_j=1)+P(s_j=2|s_{j-1},s_{j+1})L(s_j=2)}
+\end{equation}\]</span></p>
+<p>Por lo que el régimen <span class="math inline">\(s_j\)</span> puede ser dibujado fácilmente como una distribución uniforme con intervalo <span class="math inline">\([0,1]\)</span>.</p>
+</div>
+<div id="ejemplo-4" class="section level2" number="11.2">
+<h2>
+<span class="header-section-number">11.2</span> Ejemplo<a class="anchor" aria-label="anchor" href="#ejemplo-4"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#install.packages("pacman")</span></span>
+<span><span class="co">#pacman nos permite cargar varias librerias en una sola línea</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,<span class="va">BatchGetSymbols</span>,<span class="va">ggplot2</span>,<span class="va">lubridate</span>,<span class="va">readxl</span>,<span class="va">forecast</span>,<span class="va">stats</span>,<span class="va">stargazer</span>,<span class="va">knitr</span>,<span class="va">tseries</span>,<span class="va">aTSA</span>, <span class="va">TSA</span>, <span class="va">rugarch</span>, <span class="va">MSwM</span>, <span class="va">MSGARCH</span>, <span class="va">fGarch</span>, <span class="va">ggpubr</span>, <span class="va">knitr</span>, <span class="va">MSGARCH</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/keblu/MSGARCH">MSGARCH</a></span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
+<span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2002/9/30"</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
+<span><span class="va">pd</span></span>
+<span><span class="co">#&gt; [1] "2002-09-30"</span></span>
+<span><span class="co">#&gt; [1] "2021-09-18"</span></span>
+<span><span class="va">ld</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2021/09/30"</span><span class="op">)</span><span class="co">#última fecha</span></span>
+<span><span class="va">ld</span></span>
+<span><span class="co">#&gt; [1] "2021-09-30"</span></span>
+<span><span class="co">#Intervalos de tiempo</span></span>
+<span><span class="va">int</span><span class="op">&lt;-</span><span class="st">"monthly"</span></span>
+<span></span>
+<span><span class="co">#Datos a elegir</span></span>
+<span><span class="va">dt</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AMZN"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Descargando los valores</span></span>
+<span><span class="va">data1</span><span class="op">&lt;-</span> <span class="fu">BatchGetSymbols</span><span class="op">(</span>tickers <span class="op">=</span> <span class="va">dt</span>,</span>
+<span>                       first.date <span class="op">=</span> <span class="va">pd</span>,</span>
+<span>                       last.date <span class="op">=</span> <span class="va">ld</span>,</span>
+<span>                       freq.data <span class="op">=</span> <span class="va">int</span>,</span>
+<span>                       do.cache <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                       thresh.bad.data <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Generando data frame con los valores</span></span>
+<span><span class="va">data_precio_amzn</span><span class="op">&lt;-</span><span class="va">data1</span><span class="op">$</span><span class="va">df.tickers</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "ticker"              "ref.date"           </span></span>
+<span><span class="co">#&gt;  [3] "volume"              "price.open"         </span></span>
+<span><span class="co">#&gt;  [5] "price.high"          "price.low"          </span></span>
+<span><span class="co">#&gt;  [7] "price.close"         "price.adjusted"     </span></span>
+<span><span class="co">#&gt;  [9] "ret.adjusted.prices" "ret.closing.prices"</span></span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#original</span></span>
+<span><span class="va">price_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">09</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#logartimo</span></span>
+<span><span class="va">lprice_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span>, frequency <span class="op">=</span> <span class="fl">12</span>,start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">09</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#diferencias logaritmicas(cambio porcential)</span></span>
+<span><span class="va">dlprice_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span><span class="op">-</span><span class="fu">lag</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span>,<span class="fl">1</span><span class="op">)</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dlprice_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">dlprice_amazn_ts</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># GARCH creado el capitulo pasado</span></span>
+<span><span class="va">garch.amzn</span> <span class="op">&lt;-</span> <span class="fu">ugarchspec</span><span class="op">(</span>mean.model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>armaOrder<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                         variance.model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>garchOrder<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">garch.amzn011</span> <span class="op">&lt;-</span> <span class="fu">ugarchfit</span><span class="op">(</span>spec <span class="op">=</span> <span class="va">garch.amzn</span>, </span>
+<span>                           data <span class="op">=</span> <span class="va">price_amazn_ts</span><span class="op">)</span></span>
+<span><span class="va">garch.amzn011</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; *---------------------------------*</span></span>
+<span><span class="co">#&gt; *          GARCH Model Fit        *</span></span>
+<span><span class="co">#&gt; *---------------------------------*</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Conditional Variance Dynamics    </span></span>
+<span><span class="co">#&gt; -----------------------------------</span></span>
+<span><span class="co">#&gt; GARCH Model  : sGARCH(0,1)</span></span>
+<span><span class="co">#&gt; Mean Model   : ARFIMA(0,0,2)</span></span>
+<span><span class="co">#&gt; Distribution : norm </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Optimal Parameters</span></span>
+<span><span class="co">#&gt; ------------------------------------</span></span>
+<span><span class="co">#&gt;        Estimate  Std. Error   t value Pr(&gt;|t|)</span></span>
+<span><span class="co">#&gt; mu     24.95198    3.157546    7.9023    0e+00</span></span>
+<span><span class="co">#&gt; ma1     1.30976    0.030288   43.2438    0e+00</span></span>
+<span><span class="co">#&gt; ma2     0.92045    0.027681   33.2521    0e+00</span></span>
+<span><span class="co">#&gt; omega   0.85535    0.187792    4.5547    5e-06</span></span>
+<span><span class="co">#&gt; beta1   0.99900    0.000742 1345.5614    0e+00</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Robust Standard Errors:</span></span>
+<span><span class="co">#&gt;        Estimate  Std. Error   t value Pr(&gt;|t|)</span></span>
+<span><span class="co">#&gt; mu     24.95198    4.118254    6.0589 0.000000</span></span>
+<span><span class="co">#&gt; ma1     1.30976    0.025642   51.0793 0.000000</span></span>
+<span><span class="co">#&gt; ma2     0.92045    0.026220   35.1049 0.000000</span></span>
+<span><span class="co">#&gt; omega   0.85535    0.331671    2.5789 0.009912</span></span>
+<span><span class="co">#&gt; beta1   0.99900    0.000605 1651.1260 0.000000</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; LogLikelihood : -944.8252 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Information Criteria</span></span>
+<span><span class="co">#&gt; ------------------------------------</span></span>
+<span><span class="co">#&gt;                    </span></span>
+<span><span class="co">#&gt; Akaike       8.2954</span></span>
+<span><span class="co">#&gt; Bayes        8.3704</span></span>
+<span><span class="co">#&gt; Shibata      8.2945</span></span>
+<span><span class="co">#&gt; Hannan-Quinn 8.3257</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Weighted Ljung-Box Test on Standardized Residuals</span></span>
+<span><span class="co">#&gt; ------------------------------------</span></span>
+<span><span class="co">#&gt;                         statistic p-value</span></span>
+<span><span class="co">#&gt; Lag[1]                      121.1       0</span></span>
+<span><span class="co">#&gt; Lag[2*(p+q)+(p+q)-1][5]     419.8       0</span></span>
+<span><span class="co">#&gt; Lag[4*(p+q)+(p+q)-1][9]     673.2       0</span></span>
+<span><span class="co">#&gt; d.o.f=2</span></span>
+<span><span class="co">#&gt; H0 : No serial correlation</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Weighted Ljung-Box Test on Standardized Squared Residuals</span></span>
+<span><span class="co">#&gt; ------------------------------------</span></span>
+<span><span class="co">#&gt;                         statistic p-value</span></span>
+<span><span class="co">#&gt; Lag[1]                      75.93       0</span></span>
+<span><span class="co">#&gt; Lag[2*(p+q)+(p+q)-1][2]    140.42       0</span></span>
+<span><span class="co">#&gt; Lag[4*(p+q)+(p+q)-1][5]    289.77       0</span></span>
+<span><span class="co">#&gt; d.o.f=1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Weighted ARCH LM Tests</span></span>
+<span><span class="co">#&gt; ------------------------------------</span></span>
+<span><span class="co">#&gt;             Statistic Shape Scale P-Value</span></span>
+<span><span class="co">#&gt; ARCH Lag[2]     126.7 0.500 2.000       0</span></span>
+<span><span class="co">#&gt; ARCH Lag[4]     239.1 1.397 1.611       0</span></span>
+<span><span class="co">#&gt; ARCH Lag[6]     322.8 2.222 1.500       0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Nyblom stability test</span></span>
+<span><span class="co">#&gt; ------------------------------------</span></span>
+<span><span class="co">#&gt; Joint Statistic:  75.7755</span></span>
+<span><span class="co">#&gt; Individual Statistics:              </span></span>
+<span><span class="co">#&gt; mu    12.39823</span></span>
+<span><span class="co">#&gt; ma1    0.01388</span></span>
+<span><span class="co">#&gt; ma2    0.61855</span></span>
+<span><span class="co">#&gt; omega  4.26665</span></span>
+<span><span class="co">#&gt; beta1  3.42184</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Asymptotic Critical Values (10% 5% 1%)</span></span>
+<span><span class="co">#&gt; Joint Statistic:          1.28 1.47 1.88</span></span>
+<span><span class="co">#&gt; Individual Statistic:     0.35 0.47 0.75</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Sign Bias Test</span></span>
+<span><span class="co">#&gt; ------------------------------------</span></span>
+<span><span class="co">#&gt;                      t-value      prob sig</span></span>
+<span><span class="co">#&gt; Sign Bias            1.17559 2.410e-01    </span></span>
+<span><span class="co">#&gt; Negative Sign Bias   0.08769 9.302e-01    </span></span>
+<span><span class="co">#&gt; Positive Sign Bias   8.59226 1.470e-15 ***</span></span>
+<span><span class="co">#&gt; Joint Effect       175.55530 8.040e-38 ***</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Adjusted Pearson Goodness-of-Fit Test:</span></span>
+<span><span class="co">#&gt; ------------------------------------</span></span>
+<span><span class="co">#&gt;   group statistic p-value(g-1)</span></span>
+<span><span class="co">#&gt; 1    20     305.9    1.214e-53</span></span>
+<span><span class="co">#&gt; 2    30     315.1    8.413e-50</span></span>
+<span><span class="co">#&gt; 3    40     331.2    5.579e-48</span></span>
+<span><span class="co">#&gt; 4    50     337.6    9.995e-45</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Elapsed time : 0.1384768</span></span></code></pre></div>
+<div id="cambio-de-régimen" class="section level3" number="11.2.1">
+<h3>
+<span class="header-section-number">11.2.1</span> Cambio de Régimen<a class="anchor" aria-label="anchor" href="#cambio-de-r%C3%A9gimen"><i class="fas fa-link"></i></a>
+</h3>
+<p>Asumiendo que es de GARCH(1,1) y que no ha ARIMA, podemos calcular la cantidad de regímenes con el paquete MSGARCH.</p>
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Definimos las caracteristicas</span></span>
+<span><span class="va">spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MSGARCH/man/CreateSpec.html">CreateSpec</a></span><span class="op">(</span></span>
+<span>      variance.spec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sGARCH"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>      distribution.spec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>distribution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"norm"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>      switch.spec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>do.mix <span class="op">=</span> <span class="cn">FALSE</span>, K <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>      constraint.spec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>fixed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>, regime.const <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,</span>
+<span>      prior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">spec</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Specification type: Markov-switching</span></span>
+<span><span class="co">#&gt; Specification name: sGARCH_norm sGARCH_norm</span></span>
+<span><span class="co">#&gt; Number of parameters in each variance model: 3 3</span></span>
+<span><span class="co">#&gt; Number of parameters in each distribution: 0 0</span></span>
+<span><span class="co">#&gt; ------------------------------------------</span></span>
+<span><span class="co">#&gt; Fixed parameters:</span></span>
+<span><span class="co">#&gt; None</span></span>
+<span><span class="co">#&gt; ------------------------------------------</span></span>
+<span><span class="co">#&gt; Across regime constrained parameters:</span></span>
+<span><span class="co">#&gt; None</span></span>
+<span><span class="co">#&gt; ------------------------------------------</span></span>
+<span><span class="co">#Corremos el calculo de los regímenes</span></span>
+<span><span class="co">#maximum likelihood</span></span>
+<span><span class="va">fit.ml</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MSGARCH/man/FitML.html">FitML</a></span><span class="op">(</span><span class="va">spec</span>, <span class="va">dlprice_amazn_ts</span>, ctr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">fit.ml</span></span>
+<span><span class="co">#&gt; Specification type: Markov-switching</span></span>
+<span><span class="co">#&gt; Specification name: sGARCH_norm sGARCH_norm</span></span>
+<span><span class="co">#&gt; Number of parameters in each variance model: 3 3</span></span>
+<span><span class="co">#&gt; Number of parameters in each distribution: 0 0</span></span>
+<span><span class="co">#&gt; ------------------------------------------</span></span>
+<span><span class="co">#&gt; Fixed parameters:</span></span>
+<span><span class="co">#&gt; None</span></span>
+<span><span class="co">#&gt; ------------------------------------------</span></span>
+<span><span class="co">#&gt; Across regime constrained parameters:</span></span>
+<span><span class="co">#&gt; None</span></span>
+<span><span class="co">#&gt; ------------------------------------------</span></span>
+<span><span class="co">#&gt; Fitted parameters:</span></span>
+<span><span class="co">#&gt;          Estimate Std. Error  t value  Pr(&gt;|t|)</span></span>
+<span><span class="co">#&gt; alpha0_1   0.0018     0.0018   0.9788 1.638e-01</span></span>
+<span><span class="co">#&gt; alpha1_1   0.0457     0.0935   0.4885 3.126e-01</span></span>
+<span><span class="co">#&gt; beta_1     0.6847     0.2768   2.4734 6.693e-03</span></span>
+<span><span class="co">#&gt; alpha0_2   0.0000     0.0020   0.0053 4.979e-01</span></span>
+<span><span class="co">#&gt; alpha1_2   0.0000     0.0043   0.0043 4.983e-01</span></span>
+<span><span class="co">#&gt; beta_2     0.9994     0.1040   9.6103    &lt;1e-16</span></span>
+<span><span class="co">#&gt; P_1_1      0.9954     0.0069 144.2269    &lt;1e-16</span></span>
+<span><span class="co">#&gt; P_2_1      0.0056     0.0060   0.9408 1.734e-01</span></span>
+<span><span class="co">#&gt; ------------------------------------------</span></span>
+<span><span class="co">#&gt; Transition matrix:</span></span>
+<span><span class="co">#&gt;       t+1|k=1 t+1|k=2</span></span>
+<span><span class="co">#&gt; t|k=1  0.9954  0.0046</span></span>
+<span><span class="co">#&gt; t|k=2  0.0056  0.9944</span></span>
+<span><span class="co">#&gt; ------------------------------------------</span></span>
+<span><span class="co">#&gt; Stable probabilities:</span></span>
+<span><span class="co">#&gt; State 1 State 2 </span></span>
+<span><span class="co">#&gt;  0.5521  0.4479 </span></span>
+<span><span class="co">#&gt; ------------------------------------------</span></span>
+<span><span class="co">#&gt; LL: 194.849</span></span>
+<span><span class="co">#&gt; AIC: -373.6981</span></span>
+<span><span class="co">#&gt; BIC: -346.2633</span></span>
+<span><span class="co">#&gt; ------------------------------------------</span></span>
+<span></span>
+<span><span class="co">#simulación bayesiana de monte carlo</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
+<span><span class="va">fit.mcmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MSGARCH/man/FitMCMC.html">FitMCMC</a></span><span class="op">(</span><span class="va">spec</span>, <span class="va">dlprice_amazn_ts</span>, ctr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">fit.mcmc</span></span>
+<span><span class="co">#&gt; Specification type: Markov-switching</span></span>
+<span><span class="co">#&gt; Specification name: sGARCH_norm sGARCH_norm</span></span>
+<span><span class="co">#&gt; Number of parameters in each variance model: 3 3</span></span>
+<span><span class="co">#&gt; Number of parameters in each distribution: 0 0</span></span>
+<span><span class="co">#&gt; ------------------------------------------</span></span>
+<span><span class="co">#&gt; Fixed parameters:</span></span>
+<span><span class="co">#&gt; None</span></span>
+<span><span class="co">#&gt; ------------------------------------------</span></span>
+<span><span class="co">#&gt; Across regime constrained parameters:</span></span>
+<span><span class="co">#&gt; None</span></span>
+<span><span class="co">#&gt; ------------------------------------------</span></span>
+<span><span class="co">#&gt; Posterior sample (size: 1000)</span></span>
+<span><span class="co">#&gt;            Mean     SD     SE   TSSE    RNE</span></span>
+<span><span class="co">#&gt; alpha0_1 0.0041 0.0022 0.0001 0.0002 0.0875</span></span>
+<span><span class="co">#&gt; alpha1_1 0.1429 0.0785 0.0025 0.0039 0.4022</span></span>
+<span><span class="co">#&gt; beta_1   0.4299 0.2350 0.0074 0.0277 0.0719</span></span>
+<span><span class="co">#&gt; alpha0_2 0.1164 0.2122 0.0067 0.0178 0.1426</span></span>
+<span><span class="co">#&gt; alpha1_2 0.2857 0.2169 0.0069 0.0122 0.3181</span></span>
+<span><span class="co">#&gt; beta_2   0.4039 0.1613 0.0051 0.0095 0.2856</span></span>
+<span><span class="co">#&gt; P_1_1    0.9577 0.0315 0.0010 0.0017 0.3345</span></span>
+<span><span class="co">#&gt; P_2_1    0.7307 0.2221 0.0070 0.0124 0.3196</span></span>
+<span><span class="co">#&gt; ------------------------------------------</span></span>
+<span><span class="co">#&gt; Posterior mean transition matrix:</span></span>
+<span><span class="co">#&gt;       t+1|k=1 t+1|k=2</span></span>
+<span><span class="co">#&gt; t|k=1  0.9577  0.0423</span></span>
+<span><span class="co">#&gt; t|k=2  0.7307  0.2693</span></span>
+<span><span class="co">#&gt; ------------------------------------------</span></span>
+<span><span class="co">#&gt; Posterior mean stable probabilities:</span></span>
+<span><span class="co">#&gt; State 1 State 2 </span></span>
+<span><span class="co">#&gt;  0.9453  0.0547 </span></span>
+<span><span class="co">#&gt; ------------------------------------------</span></span>
+<span><span class="co">#&gt; Acceptance rate MCMC sampler: 28.2%</span></span>
+<span><span class="co">#&gt; nmcmc: 10000</span></span>
+<span><span class="co">#&gt; nburn: 5000</span></span>
+<span><span class="co">#&gt; nthin: 10</span></span>
+<span><span class="co">#&gt; ------------------------------------------</span></span>
+<span><span class="co">#&gt; DIC: -366.1017</span></span>
+<span><span class="co">#&gt; ------------------------------------------</span></span>
+<span></span>
+<span><span class="va">P.matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.9577</span>,<span class="fl">0.7307</span>,<span class="fl">0.0423</span>,<span class="fl">0.2693</span><span class="op">)</span>,<span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">t.end</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
+<span></span>
+<span><span class="va">s0</span> <span class="op">&lt;-</span> <span class="fl">1</span> </span>
+<span><span class="va">st</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="fl">1</span>,prob <span class="op">=</span> <span class="va">P.matrix</span><span class="op">[</span><span class="va">i</span>,<span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">st</span><span class="op">(</span><span class="va">s0</span><span class="op">)</span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">t</span> <span class="kw">in</span> <span class="fl">2</span><span class="op">:</span><span class="va">t.end</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">s</span>,<span class="fu">st</span><span class="op">(</span><span class="va">s</span><span class="op">[</span><span class="va">t</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">s</span>, pch <span class="op">=</span> <span class="fl">20</span>,cex <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:simplot"></span>
+<img src="12-MSM_files/figure-html/simplot-1.png" alt="Simulacion de las trancisiones del primer y segundo régimen" width="100%"><p class="caption">
+Figure 11.1: Simulacion de las trancisiones del primer y segundo régimen
+</p>
+</div>
+<div id="simulación-de-monte-carlo" class="section level4" number="11.2.1.1">
+<h4>
+<span class="header-section-number">11.2.1.1</span> Simulación de Monte Carlo<a class="anchor" aria-label="anchor" href="#simulaci%C3%B3n-de-monte-carlo"><i class="fas fa-link"></i></a>
+</h4>
+<p>Utilizando el modelo GARCH utilizado en el capítulo pasado podemos haccer una simulacion de los coeficientes. Esto para ver si, dado una simulacion Monte Carlo, son consistentes a lo que calculamos.</p>
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#-------------------------</span></span>
+<span><span class="co"># SIMULACIÓN</span></span>
+<span><span class="co">#-------------------------</span></span>
+<span><span class="va">dist</span> <span class="op">&lt;-</span> <span class="fu">ugarchdistribution</span><span class="op">(</span><span class="va">garch.amzn011</span>, n.sim <span class="op">=</span> <span class="fl">100</span>, m.sim <span class="op">=</span> <span class="fl">5000</span>, n.start <span class="op">=</span> <span class="fl">10</span>, rseed <span class="op">=</span> <span class="fl">1234</span><span class="op">)</span></span>
+<span><span class="va">dist.garch.amzn011</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">dist</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#-------------------------</span></span>
+<span><span class="co"># Coeficientes iterados</span></span>
+<span><span class="co">#-------------------------</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">dist.garch.amzn011</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          mu      ma1       ma2        omega     beta1</span></span>
+<span><span class="co">#&gt; 1 -3.100545 1.291266 0.9193533 1.141042e-04 0.9989541</span></span>
+<span><span class="co">#&gt; 2 40.541769 1.273353 0.8643736 4.861132e+00 0.9952600</span></span>
+<span><span class="co">#&gt; 3 11.815010 1.300380 1.0229470 1.883227e-05 0.9987412</span></span>
+<span><span class="co">#&gt; 4  4.943115 1.354630 1.0343739 6.946167e+00 0.9912582</span></span>
+<span><span class="co">#&gt; 5 41.911480 1.267513 0.8490696 4.929588e-05 0.9964037</span></span>
+<span><span class="co">#&gt; 6 24.796880 1.224390 0.7188740 1.122114e-05 0.9957013</span></span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">kable</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span>mu<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">dist.garch.amzn011</span><span class="op">$</span><span class="va">mu</span>,na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,ma1<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">dist.garch.amzn011</span><span class="op">$</span><span class="va">ma1</span>,na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,ma2<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">dist.garch.amzn011</span><span class="op">$</span><span class="va">ma2</span>,na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,omega<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">dist.garch.amzn011</span><span class="op">$</span><span class="va">omega</span>,na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,beat1<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">dist.garch.amzn011</span><span class="op">$</span><span class="va">beta1</span>,na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, <span class="st">"html"</span>, caption <span class="op">=</span> <span class="st">"Medias estándar de los coeficientes"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:unnamed-chunk-7">Table 11.1: </span>Medias estándar de los coeficientes
+</caption>
+<thead><tr>
+<th style="text-align:right;">
+mu
+</th>
+<th style="text-align:right;">
+ma1
+</th>
+<th style="text-align:right;">
+ma2
+</th>
+<th style="text-align:right;">
+omega
+</th>
+<th style="text-align:right;">
+beat1
+</th>
+</tr></thead>
+<tbody><tr>
+<td style="text-align:right;">
+24.99298
+</td>
+<td style="text-align:right;">
+1.268642
+</td>
+<td style="text-align:right;">
+0.8640634
+</td>
+<td style="text-align:right;">
+9.965659
+</td>
+<td style="text-align:right;">
+0.9874355
+</td>
+</tr></tbody>
+</table></div>
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">kable</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span>mu<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">dist.garch.amzn011</span><span class="op">$</span><span class="va">mu</span>,na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,ma1<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">dist.garch.amzn011</span><span class="op">$</span><span class="va">ma1</span>,na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,ma2<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">dist.garch.amzn011</span><span class="op">$</span><span class="va">ma2</span>,na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,omega<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">dist.garch.amzn011</span><span class="op">$</span><span class="va">omega</span>,na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,beat1<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">dist.garch.amzn011</span><span class="op">$</span><span class="va">beta1</span>,na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,<span class="st">"html"</span>, caption <span class="op">=</span> <span class="st">"Desviaciones estándar de los coeficientes"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:unnamed-chunk-8">Table 11.2: </span>Desviaciones estándar de los coeficientes
+</caption>
+<thead><tr>
+<th style="text-align:right;">
+mu
+</th>
+<th style="text-align:right;">
+ma1
+</th>
+<th style="text-align:right;">
+ma2
+</th>
+<th style="text-align:right;">
+omega
+</th>
+<th style="text-align:right;">
+beat1
+</th>
+</tr></thead>
+<tbody><tr>
+<td style="text-align:right;">
+13.2315
+</td>
+<td style="text-align:right;">
+0.0877943
+</td>
+<td style="text-align:right;">
+0.1069285
+</td>
+<td style="text-align:right;">
+37.35116
+</td>
+<td style="text-align:right;">
+0.0442266
+</td>
+</tr></tbody>
+</table></div>
+<p>Veamos los histogramas de los coeficientes</p>
+<pre><code>#&gt; Warning: Using `size` aesthetic for lines was deprecated in ggplot2
+#&gt; 3.4.0.
+#&gt; ℹ Please use `linewidth` instead.
+#&gt; Warning: The dot-dot notation (`..count..`) was deprecated in
+#&gt; ggplot2 3.4.0.
+#&gt; ℹ Please use `after_stat(count)` instead.
+#&gt; `stat_bin()` using `bins = 30`. Pick better value with
+#&gt; `binwidth`.
+#&gt; Warning: Removed 2 rows containing non-finite values
+#&gt; (`stat_bin()`).</code></pre>
+<div class="figure">
+<span style="display:block;" id="fig:Mu"></span>
+<img src="12-MSM_files/figure-html/Mu-1.png" alt="Histograma de $\mu$" width="100%"><p class="caption">
+Figure 11.2: Histograma de <span class="math inline">\(\mu\)</span>
+</p>
+</div>
+<pre><code>#&gt; `stat_bin()` using `bins = 30`. Pick better value with
+#&gt; `binwidth`.
+#&gt; Warning: Removed 2 rows containing non-finite values
+#&gt; (`stat_bin()`).</code></pre>
+<div class="figure">
+<span style="display:block;" id="fig:Ma1"></span>
+<img src="12-MSM_files/figure-html/Ma1-1.png" alt="Histograma de $MA_1$" width="100%"><p class="caption">
+Figure 11.3: Histograma de <span class="math inline">\(MA_1\)</span>
+</p>
+</div>
+<pre><code>#&gt; `stat_bin()` using `bins = 30`. Pick better value with
+#&gt; `binwidth`.
+#&gt; Warning: Removed 2 rows containing non-finite values
+#&gt; (`stat_bin()`).</code></pre>
+<div class="figure">
+<span style="display:block;" id="fig:Ma2"></span>
+<img src="12-MSM_files/figure-html/Ma2-1.png" alt="Histograma de $MA_2$" width="100%"><p class="caption">
+Figure 11.4: Histograma de <span class="math inline">\(MA_2\)</span>
+</p>
+</div>
+<pre><code>#&gt; `stat_bin()` using `bins = 30`. Pick better value with
+#&gt; `binwidth`.
+#&gt; Warning: Removed 2 rows containing non-finite values
+#&gt; (`stat_bin()`).</code></pre>
+<div class="figure">
+<span style="display:block;" id="fig:omega"></span>
+<img src="12-MSM_files/figure-html/omega-1.png" alt="Histograma de $\Omega$" width="100%"><p class="caption">
+Figure 11.5: Histograma de <span class="math inline">\(\Omega\)</span>
+</p>
+</div>
+<pre><code>#&gt; `stat_bin()` using `bins = 30`. Pick better value with
+#&gt; `binwidth`.
+#&gt; Warning: Removed 2 rows containing non-finite values
+#&gt; (`stat_bin()`).</code></pre>
+<div class="figure">
+<span style="display:block;" id="fig:beta1"></span>
+<img src="12-MSM_files/figure-html/beta1-1.png" alt="Histograma de $eta_1$" width="100%"><p class="caption">
+Figure 11.6: Histograma de <span class="math inline">\(eta_1\)</span>
+</p>
+</div>
+<p>Evidentemente esto demuestra que si convergen a los valores estimados.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="chapter-nav">
+<div class="prev"><a href="heterocedasticidad-condicionada.html"><span class="header-section-number">10</span> Heterocedasticidad condicionada</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#markov-switching-regime-model"><span class="header-section-number">11</span> Markov Switching Regime Model</a></li>
+<li><a class="nav-link" href="#motivaci%C3%B3n"><span class="header-section-number">11.1</span> Motivación</a></li>
+<li>
+<a class="nav-link" href="#ejemplo-4"><span class="header-section-number">11.2</span> Ejemplo</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#cambio-de-r%C3%A9gimen"><span class="header-section-number">11.2.1</span> Cambio de Régimen</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rstudio/bookdown-demo/blob/master/12-MSM.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rstudio/bookdown-demo/edit/master/12-MSM.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-11-14.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

@@ -138,7 +138,7 @@ auto.arima(dlprice_amazn_ts, trace=TRUE)
 #>       -0.9433  -0.0537  0.8062  0.0233
 #> s.e.   0.1790   0.0869  0.1669  0.0062
 #> 
-#> sigma^2 estimated as 0.01094:  log likelihood=192.72
+#> sigma^2 = 0.01094:  log likelihood = 192.72
 #> AIC=-375.43   AICc=-375.16   BIC=-358.28
 ```
 

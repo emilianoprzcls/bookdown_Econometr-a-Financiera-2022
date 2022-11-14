@@ -53,6 +53,7 @@
 <li><a class="" href="raiz-unitaria.html"><span class="header-section-number">8</span> Raiz Unitaria</a></li>
 <li><a class="" href="volatilidad-y-heterocedasticidad.html"><span class="header-section-number">9</span> Volatilidad y Heterocedasticidad</a></li>
 <li><a class="" href="heterocedasticidad-condicionada.html"><span class="header-section-number">10</span> Heterocedasticidad condicionada</a></li>
+<li><a class="" href="markov-switching-regime-model.html"><span class="header-section-number">11</span> Markov Switching Regime Model</a></li>
 </ul>
 
         <div class="book-extra">
@@ -201,7 +202,7 @@
 <code class="sourceCode R"><span><span class="co">#relacion entre los excesos de demanda</span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">CAPM</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">excess_ret_AMZN</span>, y<span class="op">=</span><span class="va">excess_ret_SP500</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span><span class="op">+</span><span class="fu">labs</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Relación de excesos de retornos entre TSLA y AMZN"</span>,y<span class="op">=</span><span class="st">"Exceso de demanda de SP500"</span>, x<span class="op">=</span><span class="st">"Exceso de demanda de AMZN"</span><span class="op">)</span><span class="op">+</span><span class="fu">theme_light</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 2 rows containing missing values</span></span>
-<span><span class="co">#&gt; (geom_point).</span></span></code></pre></div>
+<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
 <div class="figure">
 <span style="display:block;" id="fig:TSTSLAAMAZN1"></span>
 <img src="04-CAPM_files/figure-html/TSTSLAAMAZN1-1.png" alt="Relación de excesos de retornos entre AMZN y SP500" width="672"><p class="caption">
@@ -212,7 +213,7 @@ Figure 4.1: Relación de excesos de retornos entre AMZN y SP500
 <code class="sourceCode R"><span><span class="co">#relacion entre los excesos de demanda</span></span>
 <span><span class="fu">ggplot</span><span class="op">(</span><span class="va">CAPM</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">excess_ret_TSLA</span>, y<span class="op">=</span><span class="va">excess_ret_SP500</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span><span class="op">+</span><span class="fu">labs</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Relación de excesos de retornos entre TSLA y AMZN"</span>,y<span class="op">=</span><span class="st">"Exceso de demanda de SP500"</span>, x<span class="op">=</span><span class="st">"Exceso de demanda de TSLA"</span><span class="op">)</span><span class="op">+</span><span class="fu">theme_light</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 2 rows containing missing values</span></span>
-<span><span class="co">#&gt; (geom_point).</span></span></code></pre></div>
+<span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
 <div class="figure">
 <span style="display:block;" id="fig:TSTSLAAMAZN2"></span>
 <img src="04-CAPM_files/figure-html/TSTSLAAMAZN2-1.png" alt="Relación de excesos de retornos entre TSLA y SP500" width="672"><p class="caption">
@@ -259,13 +260,6 @@ Figure 4.2: Relación de excesos de retornos entre TSLA y SP500
 <span>                       freq.data <span class="op">=</span> <span class="va">int</span>,</span>
 <span>                       do.cache <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                       thresh.bad.data <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: `BatchGetSymbols()` was deprecated in BatchGetSymbols 2.6.4.</span></span>
-<span><span class="co">#&gt; Please use `yfR::yf_get()` instead.</span></span>
-<span><span class="co">#&gt; 2022-05-01: Package BatchGetSymbols will soon be replaced by yfR. </span></span>
-<span><span class="co">#&gt; More details about the change is available at github &lt;&lt;www.github.com/msperlin/yfR&gt;</span></span>
-<span><span class="co">#&gt; You can install yfR by executing:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; remotes::install_github('msperlin/yfR')</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Running BatchGetSymbols for:</span></span>
 <span><span class="co">#&gt;    tickers =AAPL</span></span>
@@ -347,7 +341,7 @@ Figure 4.2: Relación de excesos de retornos entre TSLA y SP500
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-10-31.</p>
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-11-14.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
