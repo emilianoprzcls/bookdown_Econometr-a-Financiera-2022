@@ -156,6 +156,9 @@ fig:Ma1
 fig:Ma2
 fig:omega
 fig:beta1
+eq:mdstar
+eq:regaux
+eq:denscon
 mínimos-cuadrados-ordinarios
 el-problema
 estimación-r
@@ -240,3 +243,10 @@ motivación
 ejemplo-4
 cambio-de-régimen
 simulación-de-monte-carlo
+setar-star-linear-test
+setar-y-star
+pruebas-de-detección-lineal.
+test-setar
+test-star
+test-markov
+test-garch

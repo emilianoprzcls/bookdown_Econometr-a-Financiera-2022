@@ -54,6 +54,7 @@
 <li><a class="" href="volatilidad-y-heterocedasticidad.html"><span class="header-section-number">9</span> Volatilidad y Heterocedasticidad</a></li>
 <li><a class="" href="heterocedasticidad-condicionada.html"><span class="header-section-number">10</span> Heterocedasticidad condicionada</a></li>
 <li><a class="active" href="markov-switching-regime-model.html"><span class="header-section-number">11</span> Markov Switching Regime Model</a></li>
+<li><a class="" href="setar-star-linear-test.html"><span class="header-section-number">12</span> SETAR-STAR-LINEAR-TEST</a></li>
 </ul>
 
         <div class="book-extra">
@@ -137,7 +138,7 @@ Adicionalmente, asumiento que <span class="math inline">\(s_j=i\)</span>, uno pu
 <code class="sourceCode R"><span><span class="co">#install.packages("pacman")</span></span>
 <span><span class="co">#pacman nos permite cargar varias librerias en una sola línea</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span></span>
-<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,<span class="va">BatchGetSymbols</span>,<span class="va">ggplot2</span>,<span class="va">lubridate</span>,<span class="va">readxl</span>,<span class="va">forecast</span>,<span class="va">stats</span>,<span class="va">stargazer</span>,<span class="va">knitr</span>,<span class="va">tseries</span>,<span class="va">aTSA</span>, <span class="va">TSA</span>, <span class="va">rugarch</span>, <span class="va">MSwM</span>, <span class="va">MSGARCH</span>, <span class="va">fGarch</span>, <span class="va">ggpubr</span>, <span class="va">knitr</span>, <span class="va">MSGARCH</span><span class="op">)</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,<span class="va">BatchGetSymbols</span>,<span class="va">ggplot2</span>,<span class="va">lubridate</span>,<span class="va">readxl</span>,<span class="va">forecast</span>,<span class="va">stats</span>,<span class="va">stargazer</span>,<span class="va">knitr</span>,<span class="va">tseries</span>,<span class="va">aTSA</span>, <span class="va">TSA</span>, <span class="va">rugarch</span>, <span class="va">MSwM</span>, <span class="va">MSGARCH</span>, <span class="va">fGarch</span>, <span class="va">ggpubr</span>, <span class="va">knitr</span>, <span class="va">MSGARCH</span>,<span class="va">paletteer</span>,<span class="va">MetBrewer</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/keblu/MSGARCH">MSGARCH</a></span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
@@ -279,7 +280,7 @@ Adicionalmente, asumiento que <span class="math inline">\(s_j=i\)</span>, uno pu
 <span><span class="co">#&gt; 4    50     337.6    9.995e-45</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Elapsed time : 0.1384768</span></span></code></pre></div>
+<span><span class="co">#&gt; Elapsed time : 0.1644711</span></span></code></pre></div>
 <div id="cambio-de-régimen" class="section level3" number="11.2.1">
 <h3>
 <span class="header-section-number">11.2.1</span> Cambio de Régimen<a class="anchor" aria-label="anchor" href="#cambio-de-r%C3%A9gimen"><i class="fas fa-link"></i></a>
@@ -407,10 +408,11 @@ Adicionalmente, asumiento que <span class="math inline">\(s_j=i\)</span>, uno pu
 Figure 11.1: Simulacion de las trancisiones del primer y segundo régimen
 </p>
 </div>
-<div id="simulación-de-monte-carlo" class="section level4" number="11.2.1.1">
-<h4>
-<span class="header-section-number">11.2.1.1</span> Simulación de Monte Carlo<a class="anchor" aria-label="anchor" href="#simulaci%C3%B3n-de-monte-carlo"><i class="fas fa-link"></i></a>
-</h4>
+</div>
+<div id="simulación-de-monte-carlo" class="section level3" number="11.2.2">
+<h3>
+<span class="header-section-number">11.2.2</span> Simulación de Monte Carlo<a class="anchor" aria-label="anchor" href="#simulaci%C3%B3n-de-monte-carlo"><i class="fas fa-link"></i></a>
+</h3>
 <p>Utilizando el modelo GARCH utilizado en el capítulo pasado podemos haccer una simulacion de los coeficientes. Esto para ver si, dado una simulacion Monte Carlo, son consistentes a lo que calculamos.</p>
 <div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#-------------------------</span></span>
@@ -512,6 +514,11 @@ beat1
 </td>
 </tr></tbody>
 </table></div>
+<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#-------------</span></span>
+<span><span class="co"># PALETTE</span></span>
+<span><span class="co">#-------------</span></span>
+<span><span class="va">palette</span> <span class="op">&lt;-</span> <span class="fu">met.brewer</span><span class="op">(</span>name<span class="op">=</span><span class="st">"Monet"</span>, n<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <p>Veamos los histogramas de los coeficientes</p>
 <pre><code>#&gt; Warning: Using `size` aesthetic for lines was deprecated in ggplot2
 #&gt; 3.4.0.
@@ -574,28 +581,19 @@ Figure 11.6: Histograma de <span class="math inline">\(eta_1\)</span>
 </div>
 </div>
 </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
   <div class="chapter-nav">
 <div class="prev"><a href="heterocedasticidad-condicionada.html"><span class="header-section-number">10</span> Heterocedasticidad condicionada</a></div>
-<div class="empty"></div>
+<div class="next"><a href="setar-star-linear-test.html"><span class="header-section-number">12</span> SETAR-STAR-LINEAR-TEST</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#markov-switching-regime-model"><span class="header-section-number">11</span> Markov Switching Regime Model</a></li>
 <li><a class="nav-link" href="#motivaci%C3%B3n"><span class="header-section-number">11.1</span> Motivación</a></li>
 <li>
-<a class="nav-link" href="#ejemplo-4"><span class="header-section-number">11.2</span> Ejemplo</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#cambio-de-r%C3%A9gimen"><span class="header-section-number">11.2.1</span> Cambio de Régimen</a></li></ul>
+<a class="nav-link" href="#ejemplo-4"><span class="header-section-number">11.2</span> Ejemplo</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#cambio-de-r%C3%A9gimen"><span class="header-section-number">11.2.1</span> Cambio de Régimen</a></li>
+<li><a class="nav-link" href="#simulaci%C3%B3n-de-monte-carlo"><span class="header-section-number">11.2.2</span> Simulación de Monte Carlo</a></li>
+</ul>
 </li>
 </ul>
 
@@ -614,7 +612,7 @@ Figure 11.6: Histograma de <span class="math inline">\(eta_1\)</span>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-11-14.</p>
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-11-17.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -325,7 +325,7 @@ garch.amzn011
 #> 4    50     337.6    9.995e-45
 #> 
 #> 
-#> Elapsed time : 0.1353078
+#> Elapsed time : 0.1179602
 summary(garch.amzn011)
 #>    Length     Class      Mode 
 #>         1 uGARCHfit        S4

@@ -89,7 +89,7 @@ Por lo que el régimen $s_j$ puede ser dibujado fácilmente como una distribuci�
 #install.packages("pacman")
 #pacman nos permite cargar varias librerias en una sola línea
 library(pacman)
-pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl,forecast,stats,stargazer,knitr,tseries,aTSA, TSA, rugarch, MSwM, MSGARCH, fGarch, ggpubr, knitr, MSGARCH)
+pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl,forecast,stats,stargazer,knitr,tseries,aTSA, TSA, rugarch, MSwM, MSGARCH, fGarch, ggpubr, knitr, MSGARCH,paletteer,MetBrewer)
 library(MSGARCH)
 ```
 
@@ -240,7 +240,7 @@ garch.amzn011
 #> 4    50     337.6    9.995e-45
 #> 
 #> 
-#> Elapsed time : 0.1384768
+#> Elapsed time : 0.1644711
 ```
 
 ### Cambio de Régimen
@@ -372,7 +372,7 @@ plot(s, pch = 20,cex = 0.5)
 <p class="caption">(\#fig:simplot)Simulacion de las trancisiones del primer y segundo régimen</p>
 </div>
 
-#### Simulación de Monte Carlo
+### Simulación de Monte Carlo
 Utilizando el modelo GARCH utilizado en el capítulo pasado podemos haccer una simulacion de los coeficientes. Esto para ver si, dado una simulacion Monte Carlo, son consistentes a lo que calculamos.
 
 
@@ -449,6 +449,14 @@ kable(as.data.frame(cbind(mu=sd(dist.garch.amzn011$mu,na.rm=TRUE),ma1=sd(dist.ga
   </tr>
 </tbody>
 </table>
+
+
+```r
+#-------------
+# PALETTE
+#-------------
+palette <- met.brewer(name="Monet", n=3)
+```
 
 Veamos los histogramas de los coeficientes
 

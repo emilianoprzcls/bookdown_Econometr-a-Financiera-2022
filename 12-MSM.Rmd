@@ -88,7 +88,7 @@ Por lo que el régimen $s_j$ puede ser dibujado fácilmente como una distribuci�
 #install.packages("pacman")
 #pacman nos permite cargar varias librerias en una sola línea
 library(pacman)
-pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl,forecast,stats,stargazer,knitr,tseries,aTSA, TSA, rugarch, MSwM, MSGARCH, fGarch, ggpubr, knitr, MSGARCH)
+pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl,forecast,stats,stargazer,knitr,tseries,aTSA, TSA, rugarch, MSwM, MSGARCH, fGarch, ggpubr, knitr, MSGARCH,paletteer,MetBrewer)
 library(MSGARCH)
 ```
 
@@ -175,7 +175,7 @@ for(t in 2:t.end) {
 plot(s, pch = 20,cex = 0.5)
 ```
 
-#### Simulación de Monte Carlo
+### Simulación de Monte Carlo
 Utilizando el modelo GARCH utilizado en el capítulo pasado podemos haccer una simulacion de los coeficientes. Esto para ver si, dado una simulacion Monte Carlo, son consistentes a lo que calculamos.
 
 ```{r, message=FALSE, warning=FALSE}
@@ -199,29 +199,36 @@ kable(as.data.frame(cbind(mu=mean(dist.garch.amzn011$mu,na.rm=TRUE),ma1=mean(dis
 kable(as.data.frame(cbind(mu=sd(dist.garch.amzn011$mu,na.rm=TRUE),ma1=sd(dist.garch.amzn011$ma1,na.rm=TRUE),ma2=sd(dist.garch.amzn011$ma2,na.rm=TRUE),omega=sd(dist.garch.amzn011$omega,na.rm=TRUE),beat1=sd(dist.garch.amzn011$beta1,na.rm=TRUE))),"html", caption = "Desviaciones estándar de los coeficientes")
 ```
 
+```{r}
+#-------------
+# PALETTE
+#-------------
+palette <- met.brewer(name="Monet", n=3)
+```
+
 Veamos los histogramas de los coeficientes
 ```{r Mu, fig.cap = "Histograma de $\\mu$", echo=FALSE, out.width="100%"}
-mu_hist<-ggplot(dist.garch.amzn011,aes(x=mu))+geom_histogram(aes(fill=..count..))+scale_fill_gradient(low="#1e313b", high="#65c7f7")+theme_light()+geom_vline(xintercept = mean(x=dist.garch.amzn011$mu, na.rm=TRUE), color="black", size=1)+annotate(geom = "text", x = (mean(x=dist.garch.amzn011$mu,na.rm=TRUE)+sd(x=dist.garch.amzn011$mu,na.rm=TRUE)), y=40, label=paste("Media=",mean(x=dist.garch.amzn011$mu,na.rm=TRUE)))+labs(title="Disttibución Mu",x="Mu", y="Frecuencia", fill = "Frecuencia")
+mu_hist<-ggplot(dist.garch.amzn011,aes(x=mu))+geom_histogram(aes(fill=..count..))+scale_fill_gradientn(colors = palette)+theme_light()+geom_vline(xintercept = mean(x=dist.garch.amzn011$mu, na.rm=TRUE), color="black", size=1)+annotate(geom = "text", x = (mean(x=dist.garch.amzn011$mu,na.rm=TRUE)+sd(x=dist.garch.amzn011$mu,na.rm=TRUE)), y=40, label=paste("Media=",mean(x=dist.garch.amzn011$mu,na.rm=TRUE)))+labs(title="Disttibución Mu",x="Mu", y="Frecuencia", fill = "Frecuencia")
 mu_hist
 ```
 
 ```{r Ma1, fig.cap = "Histograma de $MA_1$", echo=FALSE, out.width="100%"}
-ma1_hist<-ggplot(dist.garch.amzn011,aes(x=ma1))+geom_histogram(aes(fill=..count..))+scale_fill_gradient(low="#1e313b", high="#65c7f7")+theme_light()+geom_vline(xintercept = mean(x=dist.garch.amzn011$ma1, na.rm=TRUE), color="black", size=1)+annotate(geom = "text", x = (mean(x=dist.garch.amzn011$ma1,na.rm=TRUE)+sd(x=dist.garch.amzn011$ma1,na.rm=TRUE)), y=40, label=paste("Media=",mean(x=dist.garch.amzn011$ma1,na.rm=TRUE)))+labs(title="Disttibución ma1",x="ma1", y="Frecuencia", fill = "Frecuencia")
+ma1_hist<-ggplot(dist.garch.amzn011,aes(x=ma1))+geom_histogram(aes(fill=..count..))+scale_fill_gradientn(colors = palette)+theme_light()+geom_vline(xintercept = mean(x=dist.garch.amzn011$ma1, na.rm=TRUE), color="black", size=1)+annotate(geom = "text", x = (mean(x=dist.garch.amzn011$ma1,na.rm=TRUE)+sd(x=dist.garch.amzn011$ma1,na.rm=TRUE)), y=40, label=paste("Media=",mean(x=dist.garch.amzn011$ma1,na.rm=TRUE)))+labs(title="Disttibución ma1",x="ma1", y="Frecuencia", fill = "Frecuencia")
 ma1_hist
 ```
 
 ```{r Ma2, fig.cap = "Histograma de $MA_2$", echo=FALSE, out.width="100%"}
-ma2_hist<-ggplot(dist.garch.amzn011,aes(x=ma2))+geom_histogram(aes(fill=..count..))+scale_fill_gradient(low="#1e313b", high="#65c7f7")+theme_light()+geom_vline(xintercept = mean(x=dist.garch.amzn011$ma2, na.rm=TRUE), color="black", size=1)+annotate(geom = "text", x = (mean(x=dist.garch.amzn011$ma2,na.rm=TRUE)+sd(x=dist.garch.amzn011$ma2,na.rm=TRUE)), y=40, label=paste("Media=",mean(x=dist.garch.amzn011$ma2,na.rm=TRUE)))+labs(title="Disttibución ma2",x="ma2", y="Frecuencia", fill = "Frecuencia")
+ma2_hist<-ggplot(dist.garch.amzn011,aes(x=ma2))+geom_histogram(aes(fill=..count..))+scale_fill_gradientn(colors = palette)+theme_light()+geom_vline(xintercept = mean(x=dist.garch.amzn011$ma2, na.rm=TRUE), color="black", size=1)+annotate(geom = "text", x = (mean(x=dist.garch.amzn011$ma2,na.rm=TRUE)+sd(x=dist.garch.amzn011$ma2,na.rm=TRUE)), y=40, label=paste("Media=",mean(x=dist.garch.amzn011$ma2,na.rm=TRUE)))+labs(title="Disttibución ma2",x="ma2", y="Frecuencia", fill = "Frecuencia")
 ma2_hist
 ```
 
 ```{r omega, fig.cap = "Histograma de $\\Omega$", echo=FALSE, out.width="100%"}
-omega_hist<-ggplot(dist.garch.amzn011,aes(x=omega))+geom_histogram(aes(fill=..count..))+scale_fill_gradient(low="#1e313b", high="#65c7f7")+theme_light()+geom_vline(xintercept = mean(x=dist.garch.amzn011$omega, na.rm=TRUE), color="black", size=1)+annotate(geom = "text", x = (mean(x=dist.garch.amzn011$omega,na.rm=TRUE)+sd(x=dist.garch.amzn011$omega,na.rm=TRUE)), y=40, label=paste("Media=",mean(x=dist.garch.amzn011$omega,na.rm=TRUE)))+labs(title="Disttibución omega",x="omega", y="Frecuencia", fill = "Frecuencia")
+omega_hist<-ggplot(dist.garch.amzn011,aes(x=omega))+geom_histogram(aes(fill=..count..))+scale_fill_gradientn(colors = palette)+theme_light()+geom_vline(xintercept = mean(x=dist.garch.amzn011$omega, na.rm=TRUE), color="black", size=1)+annotate(geom = "text", x = (mean(x=dist.garch.amzn011$omega,na.rm=TRUE)+sd(x=dist.garch.amzn011$omega,na.rm=TRUE)), y=40, label=paste("Media=",mean(x=dist.garch.amzn011$omega,na.rm=TRUE)))+labs(title="Disttibución omega",x="omega", y="Frecuencia", fill = "Frecuencia")
 omega_hist
 ```
 
 ```{r beta1, fig.cap = "Histograma de $\beta_1$", echo=FALSE, out.width="100%"}
-beta1_hist<-ggplot(dist.garch.amzn011,aes(x=beta1))+geom_histogram(aes(fill=..count..))+scale_fill_gradient(low="#1e313b", high="#65c7f7")+theme_light()+geom_vline(xintercept = mean(x=dist.garch.amzn011$beta1, na.rm=TRUE), color="black", size=1)+annotate(geom = "text", x = (mean(x=dist.garch.amzn011$beta1,na.rm=TRUE)+sd(x=dist.garch.amzn011$beta1,na.rm=TRUE)), y=40, label=paste("Media=",mean(x=dist.garch.amzn011$beta1,na.rm=TRUE)))+labs(title="Disttibución beta1",x="beta1", y="Frecuencia", fill = "Frecuencia")
+beta1_hist<-ggplot(dist.garch.amzn011,aes(x=beta1))+geom_histogram(aes(fill=..count..))+scale_fill_gradientn(colors = palette)+theme_light()+geom_vline(xintercept = mean(x=dist.garch.amzn011$beta1, na.rm=TRUE), color="black", size=1)+annotate(geom = "text", x = (mean(x=dist.garch.amzn011$beta1,na.rm=TRUE)+sd(x=dist.garch.amzn011$beta1,na.rm=TRUE)), y=40, label=paste("Media=",mean(x=dist.garch.amzn011$beta1,na.rm=TRUE)))+labs(title="Disttibución beta1",x="beta1", y="Frecuencia", fill = "Frecuencia")
 beta1_hist
 ```
 

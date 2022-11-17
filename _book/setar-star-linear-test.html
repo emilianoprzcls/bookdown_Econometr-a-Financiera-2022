@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 12 SETAR-STAR-LINEAR-TEST | Diplomado de Econometría Financiera</title>
+<meta name="author" content="Benjamin Oliva y Emiliano Pérez Caullieres">
+<meta name="description" content="12.1 SETAR Y STAR Como lo estudiamos en el capitulo anterior, existen muchos modelos de cambio de régimen. Otro de los modelos más utilizados es el Self-Exciting Threshold Autorregressive model o...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 12 SETAR-STAR-LINEAR-TEST | Diplomado de Econometría Financiera">
+<meta property="og:type" content="book">
+<meta property="og:description" content="12.1 SETAR Y STAR Como lo estudiamos en el capitulo anterior, existen muchos modelos de cambio de régimen. Otro de los modelos más utilizados es el Self-Exciting Threshold Autorregressive model o...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 12 SETAR-STAR-LINEAR-TEST | Diplomado de Econometría Financiera">
+<meta name="twitter:description" content="12.1 SETAR Y STAR Como lo estudiamos en el capitulo anterior, existen muchos modelos de cambio de régimen. Otro de los modelos más utilizados es el Self-Exciting Threshold Autorregressive model o...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Diplomado de Econometría Financiera</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Mínimos Cuadrados Ordinarios</a></li>
+<li><a class="" href="m%C3%A1xima-verosimilitud.html"><span class="header-section-number">2</span> Máxima Verosimilitud</a></li>
+<li><a class="" href="m%C3%A9todo-generalizado-de-momentos-mgm.html"><span class="header-section-number">3</span> Método Generalizado de Momentos (MGM)</a></li>
+<li><a class="" href="capital-asset-pricing-model-capm.html"><span class="header-section-number">4</span> Capital Asset Pricing Model (CAPM)</a></li>
+<li><a class="" href="estacionariedad.html"><span class="header-section-number">5</span> Estacionariedad</a></li>
+<li><a class="" href="procesos-estacionarios-univariados.html"><span class="header-section-number">6</span> Procesos estacionarios univariados</a></li>
+<li><a class="" href="estacionalidad.html"><span class="header-section-number">7</span> Estacionalidad</a></li>
+<li><a class="" href="raiz-unitaria.html"><span class="header-section-number">8</span> Raiz Unitaria</a></li>
+<li><a class="" href="volatilidad-y-heterocedasticidad.html"><span class="header-section-number">9</span> Volatilidad y Heterocedasticidad</a></li>
+<li><a class="" href="heterocedasticidad-condicionada.html"><span class="header-section-number">10</span> Heterocedasticidad condicionada</a></li>
+<li><a class="" href="markov-switching-regime-model.html"><span class="header-section-number">11</span> Markov Switching Regime Model</a></li>
+<li><a class="active" href="setar-star-linear-test.html"><span class="header-section-number">12</span> SETAR-STAR-LINEAR-TEST</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="setar-star-linear-test" class="section level1" number="12">
+<h1>
+<span class="header-section-number">12</span> SETAR-STAR-LINEAR-TEST<a class="anchor" aria-label="anchor" href="#setar-star-linear-test"><i class="fas fa-link"></i></a>
+</h1>
+<div id="setar-y-star" class="section level2" number="12.1">
+<h2>
+<span class="header-section-number">12.1</span> SETAR Y STAR<a class="anchor" aria-label="anchor" href="#setar-y-star"><i class="fas fa-link"></i></a>
+</h2>
+<p>Como lo estudiamos en el capitulo anterior, existen muchos modelos de cambio de régimen.
+Otro de los modelos más utilizados es el <em>Self-Exciting Threshold Autorregressive model</em> o (SETAR) por sus siglas. Este modelo se denota de la siguiente manera, veamos AR(1):</p>
+<p><span class="math display">\[\begin{equation}
+y_t = \left\lbrace
+\begin{array}{ll}
+\phi_{0,1}+\phi_{1,1}y_{t-1}+\epsilon_t\mathrm{ si }  y_{t-1}\leq c\\
+\phi_{0,2}+\phi_{1,2}y_{t-1}+\epsilon_t\mathrm{ si }  y_{t-1}&gt;c
+\end{array}
+\right.
+\end{equation}\]</span></p>
+<p>Donde c representa un limite el cual determina el régimen en el que nos encontramos y <span class="math inline">\(\epsilon\)</span> es una serie de ruido blanco condicional a la historia que esta denotada por <span class="math inline">\(\Omega_{t-1}=(y_{t-1},y_{t-2}, \dots, y_{1-(p-1)}, y_{t-p})\)</span> y su valor esperado <span class="math inline">\(E[\epsilon_t|\Omega_{t-1}]=0\)</span> y <span class="math inline">\(E[\epsilon_t^2|\Omega_{t-1}]=\sigma^2\)</span>.</p>
+<p>Queda claro que el cambio se hace de manera discreta; sin embargo, se puede construir un modelo continuo donde se construye un indicador contiunuo <span class="math inline">\(G(y_t-1;\gamma,c)\)</span> que cambia suavizadamente a de 0 a 1 cuando <span class="math inline">\(y_{t-1}\)</span> aumenta. Se ve así y se le conoce como <strong>Smooth Transition Auto-Regressive Model</strong> (STAR):</p>
+<p><span class="math display">\[\begin{equation}
+    y_t=(\phi_{0,1}+\phi_{1,1}y_{t-1})(1-G(y_t-1;\gamma,c)+ y_t=(\phi_{0,2}+\phi_{1,2}y_{t-1})(G(y_t-1;\gamma,c))
+\end{equation}\]</span></p>
+<p>En práctica realmente no siempre se utilizan modelos de AR(1), por lo mismo de órdenes más altos vemos:
+<span class="math display">\[\begin{equation}
+y_t = \left\lbrace
+\begin{array}{ll}
+\phi_{0,1}+\phi_{1,1}y_{t-1}+\dots+\phi_{p_{1},1}y_{t-p_1}+\epsilon_t\mathrm{ si }  y_{t-1}\leq c\\
+\phi_{0,2}+\phi_{1,2}y_{t-1}+\dots+\phi_{p_{2},2}y_{t-p_2}+\epsilon_t\mathrm{ si }  y_{t-1}&gt;c
+\end{array}
+\right.
+\end{equation}\]</span></p>
+<p>SETAR(p) se ve así:</p>
+<p><span class="math display">\[\begin{equation}
+   y_t=(\phi_{0,1}+\phi_{1,1}y_{t-1}+\dots+\phi_{p_{1},1}y_{t-p_1})(1-G(y_t-1;\gamma,c)+ y_t=(\phi_{0,2}+\phi_{1,2}y_{t-1}+\dots+\phi_{p_{2},2}y_{t-p_2})(G(y_t-1;\gamma,c))
+\end{equation}\]</span></p>
+</div>
+<div id="pruebas-de-detección-lineal." class="section level2" number="12.2">
+<h2>
+<span class="header-section-number">12.2</span> Pruebas de detección lineal.<a class="anchor" aria-label="anchor" href="#pruebas-de-detecci%C3%B3n-lineal."><i class="fas fa-link"></i></a>
+</h2>
+<div id="test-setar" class="section level3" number="12.2.1">
+<h3>
+<span class="header-section-number">12.2.1</span> Test SETAR<a class="anchor" aria-label="anchor" href="#test-setar"><i class="fas fa-link"></i></a>
+</h3>
+<p>Concretamente, utilizamos los estimados del modelo SETAR para definir F que comprueba las restricciones de la hipótesis nula.
+<span class="math display">\[\begin{equation}
+        F(\hat{c})=n\left(\frac{\tilde{\sigma^2}-\hat{\sigma^2}}{\hat{\sigma^2}} \right)
+    \end{equation}\]</span>
+Donde <span class="math inline">\(\tilde{\sigma^2}\)</span> es un estimado de la varianza residual. <span class="math inline">\(\tilde{\sigma^2}=\sum a_{t=1}^n\tilde{\varepsilon^2_t}\)</span> donde <span class="math inline">\(\tilde{\varepsilon^2_t}=y_t-\hat{\phi^{'}}x_t\)</span> y <span class="math inline">\(\hat{\sigma^2}=\sum a_{t=1}^n\hat{\varepsilon^2_t}(c)\)</span>.</p>
+</div>
+<div id="test-star" class="section level3" number="12.2.2">
+<h3>
+<span class="header-section-number">12.2.2</span> Test STAR<a class="anchor" aria-label="anchor" href="#test-star"><i class="fas fa-link"></i></a>
+</h3>
+<p>Aprovechando este test, resulta relevante tomar en cuenta variables problematicas que pueden colapsar un STAR a un simple AR. L hipótesis nula se puede expresar <span class="math inline">\(H_0:\gamma=0\)</span>. Tambien si <span class="math inline">\(\gamma=0\)</span> entonces:
+<span class="math display">\[\begin{equation}
+        G(y_{t-1};\gamma,c)=\frac{1}{1+exp(-\gamma[t_{t-1}-c])}
+    \end{equation}\]</span>
+<span class="math inline">\(G(y_{t-1};\gamma,c)=0.5\)</span> para todo <span class="math inline">\(x_t\)</span> y los parámetros son iguales a <span class="math inline">\((\phi_1+\phi_2)/2\)</span>. Los parámetros <span class="math inline">\(\gamma\)</span> y <span class="math inline">\(c\)</span> pueden ser problemáticos y difíciles de identificar. Para resolver este problema se utiliza el Multiplicado de Lagrange (LM) que tiene una distribuscion <span class="math inline">\(\chi^2\)</span>.
+El modelo STAR se puede reescribir:
+<span class="math display" id="eq:mdstar">\[\begin{equation}
+            \tag{12.1}
+    y_t=\frac{1}{2}(\phi_1+\phi_2)^{'}x_t+(\phi_2-\phi_1)^{'}x_tG^{*}(y_{t-1};\gamma,c)+\epsilon_t
+\end{equation}\]</span>
+Donde <span class="math inline">\(G^{*}(y_{t-1};\gamma,c)=G(y_{t-1};\gamma,c)-\frac{1}{2}\)</span>. La hipotesis nula hace que <span class="math inline">\(G^{*}(y_{t-1};\gamma,c)=0\)</span>. Si hacemos una aproximación de Taylor de <span class="math inline">\(G^{*}(y_{t-1};\gamma,c)\)</span>:
+<span class="math display">\[\begin{eqnarray}
+    T_1(t_{t-1};c)&amp;\approx&amp; G^{*}(y_{t-1};0,c)+\gamma\frac{\partial G^{*}(y_{t-1};\gamma,c)}{\partial\gamma}\bigg|_{\gamma=0}\\
+    &amp;=&amp;\frac{1}{4}\gamma(y_{t-1}-c)
+\end{eqnarray}\]</span></p>
+<p>Metiendo <span class="math inline">\(T_1\)</span> en <span class="math inline">\(G_1^*\)</span> obtenemos una regresión auxiliar.
+<span class="math display" id="eq:regaux">\[\begin{equation}
+    \tag{12.2}
+    y_t=\beta_{0,0}+\beta_0^{'}\tilde{x_t}+\beta_1^{'}\tilde{x_t}y_{t-1}+\eta
+    \end{equation}\]</span>
+Donde <span class="math inline">\(tilde{x_t}=(y_{t-1},\dots,y_{t-p})^{'}\)</span> y <span class="math inline">\(\beta_j=(\beta_{1,j},\dots,\beta_{p,j})^{'}\)</span>. La relación entre <a href="setar-star-linear-test.html#eq:mdstar">(12.1)</a> y <a href="setar-star-linear-test.html#eq:regaux">(12.2)</a> se ve:</p>
+<p><span class="math display">\[\begin{eqnarray}
+    \beta_{0,0}&amp;=&amp;(\phi_{0,1}+\phi_{0,2})/2-\frac{1}{4}\gamma c\gamma c(\phi_{0,2}-\phi_{0,1})\\
+    \beta_{1,0}&amp;=&amp;(\phi_{1,1}+\phi_{1,2})/2-\frac{1}{4}\gamma (c(\phi_{1,2}-\phi_{1,1})-(\phi_{0,2}-\phi_{0,1}))\\
+    \beta_{i,0}&amp;=&amp;(\phi_{i,1}+\phi_{i,2})/2-\frac{1}{4}\gamma c\gamma c(\phi_{i,2}-\phi_{i,1}),\quad i=2,\dots,p\\
+    \beta_{i,1}&amp;=&amp;\gamma c\frac{1}{4}\gamma c(\phi_{i,2}-\phi_{i,1}),\quad i=1,\dots,p
+\end{eqnarray}\]</span>
+En las ecuaciones de arriba podemos ver que si <span class="math inline">\(\gamma=0\)</span> en <a href="setar-star-linear-test.html#eq:mdstar">(12.1)</a>, entonces <span class="math inline">\(\beta_{i,1}=0\)</span> en <a href="setar-star-linear-test.html#eq:regaux">(12.2)</a>. Lo cual se refiere a nuestra variable de prueba en la .<span class="math inline">\(H_0^{'}:\gamma=0\)</span> y <span class="math inline">\(H_0^{''}:\beta_1=0\)</span> Esto se distribuye como <span class="math inline">\(\chi^2\)</span> con <span class="math inline">\(p\)</span> grados de libertad.</p>
+<p>Finalmente hay que hacer una especificación en la que se permite que el intercepto sea diferente, pero los coeficientes no. Es decir, <span class="math inline">\(\phi_{0,1}\neq\phi_{0,2}\)</span>, pero <span class="math inline">\(\phi_{i,1}=\phi_{i,2}\)</span> donde <span class="math inline">\(i=1,\dots,p\)</span>. Por su parte <span class="math inline">\(G(y_{t-1};\gamma,c)\)</span> es:
+<span class="math display">\[\begin{eqnarray}
+        T_3(y_{t-1};\gamma,c)&amp;\approx&amp;\gamma\frac{\partial G^{*}(y_{t-1};\gamma,c))}{\partial\gamma}\bigg|_{\gamma=0}+\frac{1}{6}\gamma^3\frac{\partial^3 G^{*}(y_{t-1};\gamma,c))}{\partial\gamma^3}\bigg|_{\gamma=0}\\
+        &amp;=&amp;\frac{1}{4}\gamma(y_{t-1}-c)+\frac{1}{48}\gamma^3(y_{t-1}-c)^3
+    \end{eqnarray}\]</span>
+El modelo auxiliar se ve de la siguiente manera cuando evaluamos en 0.
+<span class="math display" id="eq:regaux">\[\begin{equation}
+        \tag{12.2}
+        y_t=\beta_{0,0}+\beta_0^{'}\tilde{x_t}+\beta_1^{'}\tilde{x_t}y_{t-1}+\beta_2^{'}\tilde{x_t}y_{t-2}+\beta_3^{'}\tilde{x_t}y_{t-3}+\eta_t.
+    \end{equation}\]</span>
+De esta manera las pruebas son <span class="math inline">\(H_0^{'}:\gamma=0\)</span> y <span class="math inline">\(H_0^{''}:\beta_1=\beta_2=\beta_3=0\)</span> con distribución <span class="math inline">\(\chi^2\)</span> y <span class="math inline">\(3p\)</span> grados de libertad.</p>
+<p>Finalmente hay que hacer una especificación en la que se permite que el intercepto sea diferente, pero los coeficientes no. Es decir, <span class="math inline">\(\phi_{0,1}\neq\phi_{0,2}\)</span>, pero <span class="math inline">\(\phi_{i,1}=\phi_{i,2}\)</span> donde <span class="math inline">\(i=1,\dots,p\)</span>. Por su parte <span class="math inline">\(G(y_{t-1};\gamma,c)\)</span> es:
+<span class="math display">\[\begin{eqnarray}
+        T_3(y_{t-1};\gamma,c)&amp;\approx&amp;\gamma\frac{\partial G^{*}(y_{t-1};\gamma,c))}{\partial\gamma}\bigg|_{\gamma=0}+\frac{1}{6}\gamma^3\frac{\partial^3 G^{*}(y_{t-1};\gamma,c))}{\partial\gamma^3}\bigg|_{\gamma=0}\\
+        &amp;=&amp;\frac{1}{4}\gamma(y_{t-1}-c)+\frac{1}{48}\gamma^3(y_{t-1}-c)^3
+    \end{eqnarray}\]</span>
+El modelo auxiliar se ve de la siguiente manera cuando evaluamos en 0.
+<span class="math display" id="eq:regaux">\[\begin{equation}
+    \tag{12.2}
+    y_t=\beta_{0,0}+\beta_0^{'}\tilde{x_t}+\beta_1^{'}\tilde{x_t}y_{t-1}+\beta_2^{'}\tilde{x_t}y_{t-2}+\beta_3^{'}\tilde{x_t}y_{t-3}+\eta_t.
+    \end{equation}\]</span>
+De esta manera las pruebas son <span class="math inline">\(H_0^{'}:\gamma=0\)</span> y <span class="math inline">\(H_0^{''}:\beta_1=\beta_2=\beta_3=0\)</span> con distribución <span class="math inline">\(\chi^2\)</span> y <span class="math inline">\(3p\)</span> grados de libertad.</p>
+<p>El F test se puede computar
+- Estimar el modelo de la hipótesis nula regresando <span class="math inline">\(y_t\)</span> en <span class="math inline">\(x_t\)</span> y computar los residuales <span class="math inline">\(\tilde{\epsilon}\)</span> y el SSR (suma de residos al cuadrado: <span class="math inline">\(SSR_0=\sum_{t=1}^n\tilde{\epsilon}^2\)</span>
+- Estimamos la regression auxiliar de <span class="math inline">\(\tilde{\epsilon}\)</span> en <span class="math inline">\(x_t\)</span> y <span class="math inline">\(\tilde{x_t}y_{t-1}^j\)</span> donde <span class="math inline">\(j=1,2,3\)</span> y obtener la suma de los errores al cuadrado <span class="math inline">\(SSR_1\)</span>.
+- Finalmente:
+<span class="math display">\[\begin{equation}
+        LM=\frac{(SSR_0-SSR_1)/3p}{SSR/(n-4p-1}
+    \end{equation}\]</span></p>
+</div>
+<div id="test-markov" class="section level3" number="12.2.3">
+<h3>
+<span class="header-section-number">12.2.3</span> Test MARKOV<a class="anchor" aria-label="anchor" href="#test-markov"><i class="fas fa-link"></i></a>
+</h3>
+<p>Ahora veamos el modelo de cambio de régimen de Markov. El test necesita de <span class="math inline">\(h_t(\theta)\)</span> que esta definido por la derivada del logaritmo de la densidad condicional definida como <span class="math inline">\(f(y_t|\Omega_{t-1};\theta)\)</span>.</p>
+<p><span class="math display" id="eq:denscon">\[\begin{eqnarray}
+    f(y_t|\Omega_{t-1};\theta)&amp;=&amp;f(y_t,st=1|\Omega_{t-1};\theta)+f(y_t,st=2|\Omega_{t-1};\theta)\\
+    \tag{12.3}
+    &amp;=&amp; \sum_{j=1}^2f(y_t,st=j|\Omega_{t-1};\theta)\cdot P(y_t|\Omega_{t-1};\theta)
+\end{eqnarray}\]</span>
+<span class="math display">\[\begin{equation}
+    h_t(\theta)\equiv \frac{\partial ln[f(y_t|\Omega_{t-1};\theta)]}{\partial\theta}
+\end{equation}\]</span>
+Para dos regímenes:
+{
+<span class="math display">\[\begin{eqnarray}
+    \frac{\partial ln[f(y_t|\Omega_{t-1};\theta)]}{\partial\theta}=\frac{1}{\sigma^2}(y_t-\phi^{'}_jx_t)x_t\cdot P(st=j|\Omega)+\frac{1}{\sigma^2}(y_{\tau}-\phi^{'}_jx_{\tau})x_{\tau}\cdot (P(st=j|\Omega_t;\theta)-P(st=j|\Omega_{t-1};\theta)
+\end{eqnarray}\]</span></p>
+<p>Por construcción, el resultado evaluado por ML estima <span class="math inline">\(\hat{\theta}\)</span> tiene media cero. <span class="math inline">\(\sum_{t-1}^nh_t(\hat{\theta})\)</span>.</p>
+<p>Por lo mismo, se construye las estadísticas LM. Para dos regímenes agregamos variables <span class="math inline">\(z_t\)</span> que se han omitido y queremos probar contra la alternativa:
+<span class="math display">\[\begin{equation}
+        y_t=\phi_{0,s_t}+\phi_{1,s_t}y_{t-1}+\dots+\phi_{p,s_t}y_{t-p}+\delta^{'}z_t+\epsilon_t.
+    \end{equation}\]</span>
+La ecuación evaluada respecto a <span class="math inline">\(\delta\)</span> –que es un vector de variable omitidas– construye la hipótesis <span class="math inline">\(H_0:\delta=0\)</span> es igual a:</p>
+<p><span class="math display">\[\begin{equation}
+    \frac{\partial ln[f(y_t|\Omega_{t-1};\theta)]}{\partial\theta}\bigg|_{\delta=0}=\sum_{j=1}^2(y_t-\phi_j^{'}x_t)z_t\cdot P(s_t=j|\Omega_n;\hat{\theta})
+\end{equation}\]</span>
+Donde estima el vector <span class="math inline">\(\theta^{'}=(\phi_1{'},\phi_2,p_{11},p_{22},\delta)\)</span> debajo la hipótesis nula. Por lo mismo LM se obtiene con:
+<span class="math display">\[\begin{equation}
+    n\left(\frac{1}{n}\sum_{t=1}^nh_t(\hat{\theta)}\right)^{'}\left(\frac{1}{n}\sum_{t=1}^nh_t(\hat{\theta})h_t(\hat{\theta}^{'})\right)\left(\frac{1}{n}\sum_{t=1}^nh_t(\hat{\theta})\right)
+\end{equation}\]</span>
+se distribuye asintóticamente <span class="math inline">\(\chi^2\)</span> con el número de variables en <span class="math inline">\(z_t\)</span>.</p>
+</div>
+<div id="test-garch" class="section level3" number="12.2.4">
+<h3>
+<span class="header-section-number">12.2.4</span> Test GARCH<a class="anchor" aria-label="anchor" href="#test-garch"><i class="fas fa-link"></i></a>
+</h3>
+<p>El test está basado en el modelo de ARCH(q). La varianza condicional es constante si los parámetros de los residuos al cuadrado (<span class="math inline">\(\epsilon_{t-1}^2,i=1,\dots,q\)</span>) son iguales a cero. Por tanto, la hipótesis nula de la heterocedasticidad condicional es <span class="math inline">\(H_0:\alpha_1=\dots=\alpha_q\)</span>. El LM correspondiente se computa como <span class="math inline">\(nR^2\)</span> donde n es la cantidad de datos y <span class="math inline">\(R^2\)</span> se obtiene de de la regresión de los residuos al cuadrado respecto a los <span class="math inline">\(q\)</span> lags constantes:</p>
+<p><span class="math display">\[\begin{equation}
+\hat{\epsilon_t^2}=\omega+\alpha_1\hat{\epsilon_{t-1}^2}+\dots+\alpha_p\hat{\epsilon_{t-p}^2}+u_t
+\end{equation}\]</span></p>
+<p>Por lo que donde los residuales <span class="math inline">\(\hat{\epsilon_t^2}\)</span> se obtienen del del modelo de media condicional de la serie de tiempo observada. Se distribuye <span class="math inline">\(\chi^2(q)\)</span>. Este test es equivalente a hacer uno para el GARCH(p,q)</p>
+
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="chapter-nav">
+<div class="prev"><a href="markov-switching-regime-model.html"><span class="header-section-number">11</span> Markov Switching Regime Model</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#setar-star-linear-test"><span class="header-section-number">12</span> SETAR-STAR-LINEAR-TEST</a></li>
+<li><a class="nav-link" href="#setar-y-star"><span class="header-section-number">12.1</span> SETAR Y STAR</a></li>
+<li>
+<a class="nav-link" href="#pruebas-de-detecci%C3%B3n-lineal."><span class="header-section-number">12.2</span> Pruebas de detección lineal.</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#test-setar"><span class="header-section-number">12.2.1</span> Test SETAR</a></li>
+<li><a class="nav-link" href="#test-star"><span class="header-section-number">12.2.2</span> Test STAR</a></li>
+<li><a class="nav-link" href="#test-markov"><span class="header-section-number">12.2.3</span> Test MARKOV</a></li>
+<li><a class="nav-link" href="#test-garch"><span class="header-section-number">12.2.4</span> Test GARCH</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rstudio/bookdown-demo/blob/master/13-SETAR-LINEARTEST.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rstudio/bookdown-demo/edit/master/13-SETAR-LINEARTEST.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-11-17.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
