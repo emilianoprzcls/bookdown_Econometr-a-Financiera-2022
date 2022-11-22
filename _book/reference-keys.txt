@@ -159,6 +159,7 @@ fig:beta1
 eq:mdstar
 eq:regaux
 eq:denscon
+fig:cambgarch
 mínimos-cuadrados-ordinarios
 el-problema
 estimación-r
@@ -245,8 +246,11 @@ cambio-de-régimen
 simulación-de-monte-carlo
 setar-star-linear-test
 setar-y-star
+setar-ejemplo
+star-ejemplo
 pruebas-de-detección-lineal.
 test-setar
+ejemplo-5
 test-star
 test-markov
 test-garch

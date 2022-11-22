@@ -298,10 +298,10 @@ Figura \@ref(fig:LAGSCAMINATA1) se ven tan correlacionados.
 #Primero determinamos el lapso de tiempo
 pd<-Sys.Date()-(365*20) #primer fecha
 pd
-#> [1] "2002-11-22"
+#> [1] "2002-11-27"
 ld<-Sys.Date() #última fecha
 ld
-#> [1] "2022-11-17"
+#> [1] "2022-11-22"
 #Intervalos de tiempo
 int<-"monthly"
 #Datos a elegir
@@ -326,7 +326,7 @@ colnames(data_precio_amzn)
 #necesitamos convertir la serie de tiempo de precios en retornos continuos compuestos de los precios de apertura
 data_precio_amzn$ccrAMZN<-c(NA ,100*diff(log(data_precio_amzn$price.open)))#agregamos un valor NA al principio
 data_precio_amzn$ccrAMZN#estos son los retornos
-#>   [1]           NA   4.01321014 -22.98950701  13.39221448
+#>   [1]           NA   1.79658060 -22.98950701  13.39221448
 #>   [5]   0.95260416  14.27998202  11.55626991  24.11122449
 #>   [9]  -0.46684144  13.08785513  11.63599301   3.89974592
 #>  [13]  12.48104071  -0.73260401  -3.06108260  -4.08140972
@@ -416,7 +416,7 @@ head(data_precio_amzn)#dado que ya estaba en orden cronológico nuestro df no ca
 #> # A tibble: 6 × 11
 #>   ticker ref.date     volume price…¹ price…² price…³ price…⁴
 #>   <chr>  <date>        <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
-#> 1 AMZN   2002-11-22   7.29e8   1.16     1.23   1.16    1.17 
+#> 1 AMZN   2002-11-27   1.65e8   1.19     1.22   1.17    1.17 
 #> 2 AMZN   2002-12-02   3.11e9   1.21     1.25   0.922   0.944
 #> 3 AMZN   2003-01-02   3.38e9   0.960    1.16   0.928   1.09 
 #> 4 AMZN   2003-02-03   2.32e9   1.10     1.12   0.980   1.10 

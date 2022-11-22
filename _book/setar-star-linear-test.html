@@ -98,6 +98,163 @@ y_t = \left\lbrace
 <p><span class="math display">\[\begin{equation}
    y_t=(\phi_{0,1}+\phi_{1,1}y_{t-1}+\dots+\phi_{p_{1},1}y_{t-p_1})(1-G(y_t-1;\gamma,c)+ y_t=(\phi_{0,2}+\phi_{1,2}y_{t-1}+\dots+\phi_{p_{2},2}y_{t-p_2})(G(y_t-1;\gamma,c))
 \end{equation}\]</span></p>
+<div id="setar-ejemplo" class="section level3" number="12.1.1">
+<h3>
+<span class="header-section-number">12.1.1</span> SETAR EJEMPLO<a class="anchor" aria-label="anchor" href="#setar-ejemplo"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#---------------------</span></span>
+<span><span class="co"># Dependencias</span></span>
+<span><span class="co">#---------------------</span></span>
+<span></span>
+<span><span class="co">#install.packages("pacman")</span></span>
+<span><span class="co">#pacman nos permite cargar varias librerias en una sola línea</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,<span class="va">BatchGetSymbols</span>,<span class="va">ggplot2</span>,<span class="va">lubridate</span>,<span class="va">readxl</span>,<span class="va">forecast</span>,<span class="va">stats</span>,<span class="va">stargazer</span>,<span class="va">knitr</span>,<span class="va">tseries</span>,<span class="va">aTSA</span>, <span class="va">TSA</span>, <span class="va">rugarch</span>, <span class="va">MSwM</span>, <span class="va">MSGARCH</span>, <span class="va">fGarch</span>, <span class="va">ggpubr</span>, <span class="va">knitr</span>, <span class="va">MSGARCH</span>, <span class="va">paletteer</span>, <span class="va">MetBrewer</span>, <span class="va">tsDyn</span>, <span class="va">knitr</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Primero determinamos el lapso de tiempo</span></span>
+<span><span class="va">pd</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2002/9/30"</span><span class="op">)</span> <span class="co">#primer fecha</span></span>
+<span><span class="va">pd</span></span>
+<span><span class="co">#&gt; [1] "2002-09-30"</span></span>
+<span><span class="co">#&gt; [1] "2021-09-18"</span></span>
+<span><span class="va">ld</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2021/09/30"</span><span class="op">)</span><span class="co">#última fecha</span></span>
+<span><span class="va">ld</span></span>
+<span><span class="co">#&gt; [1] "2021-09-30"</span></span>
+<span><span class="co">#Intervalos de tiempo</span></span>
+<span><span class="va">int</span><span class="op">&lt;-</span><span class="st">"monthly"</span></span>
+<span></span>
+<span><span class="co">#Datos a elegir</span></span>
+<span><span class="va">dt</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AMZN"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Descargando los valores</span></span>
+<span><span class="va">data1</span><span class="op">&lt;-</span> <span class="fu">BatchGetSymbols</span><span class="op">(</span>tickers <span class="op">=</span> <span class="va">dt</span>,</span>
+<span>                       first.date <span class="op">=</span> <span class="va">pd</span>,</span>
+<span>                       last.date <span class="op">=</span> <span class="va">ld</span>,</span>
+<span>                       freq.data <span class="op">=</span> <span class="va">int</span>,</span>
+<span>                       do.cache <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                       thresh.bad.data <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Generando data frame con los valores</span></span>
+<span><span class="va">data_precio_amzn</span><span class="op">&lt;-</span><span class="va">data1</span><span class="op">$</span><span class="va">df.tickers</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "ticker"              "ref.date"           </span></span>
+<span><span class="co">#&gt;  [3] "volume"              "price.open"         </span></span>
+<span><span class="co">#&gt;  [5] "price.high"          "price.low"          </span></span>
+<span><span class="co">#&gt;  [7] "price.close"         "price.adjusted"     </span></span>
+<span><span class="co">#&gt;  [9] "ret.adjusted.prices" "ret.closing.prices"</span></span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#original</span></span>
+<span><span class="va">price_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">09</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#logartimo</span></span>
+<span><span class="va">lprice_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span>, frequency <span class="op">=</span> <span class="fl">12</span>,start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">09</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#diferencias logaritmicas(cambio porcential)</span></span>
+<span><span class="va">dlprice_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span><span class="op">-</span><span class="fu">lag</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data_precio_amzn</span><span class="op">$</span><span class="va">price.open</span><span class="op">)</span>,<span class="fl">1</span><span class="op">)</span>, frequency <span class="op">=</span> <span class="fl">12</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2002</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dlprice_amazn_ts</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">dlprice_amazn_ts</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">selectSETAR</span><span class="op">(</span><span class="va">price_amazn_ts</span>, m<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Using maximum autoregressive order for low regime: mL = 1 </span></span>
+<span><span class="co">#&gt; Using maximum autoregressive order for high regime: mH = 1 </span></span>
+<span><span class="co">#&gt; Searching on 158 possible threshold values within regimes with sufficient ( 15% ) number of observations</span></span>
+<span><span class="co">#&gt; Searching on  158  combinations of thresholds ( 158 ), thDelay ( 1 ), mL ( 1 ) and MM ( 1 )</span></span></code></pre></div>
+<div class="inline-figure"><img src="13-SETAR-LINEARTEST_files/figure-html/unnamed-chunk-4-1.png" width="672"></div>
+<pre><code>#&gt; Results of the grid search for 1 threshold
+#&gt;    thDelay mL mH      th pooled-AIC
+#&gt; 1        0  1  1 15.6845   826.1945
+#&gt; 2        0  1  1 15.6295   828.5923
+#&gt; 3        0  1  1 15.2065   829.0579
+#&gt; 4        0  1  1 15.3120   830.3599
+#&gt; 5        0  1  1 13.9500   832.8452
+#&gt; 6        0  1  1 15.6290   833.4052
+#&gt; 7        0  1  1 14.2365   833.6059
+#&gt; 8        0  1  1 13.4480   833.8387
+#&gt; 9        0  1  1 15.1540   834.0295
+#&gt; 10       0  1  1 21.5200   834.2624
+setar &lt;- setar(price_amazn_ts, m=2, mL=1, MH=1, thDelay=0)
+#&gt; Warning: Possible unit root in the low regime. Roots are:
+#&gt; 0.9745
+summary(setar)
+#&gt; 
+#&gt; Non linear autoregressive model
+#&gt; 
+#&gt; SETAR model ( 2 regimes)
+#&gt; Coefficients:
+#&gt; Low regime:
+#&gt;      const.L       phiL.1 
+#&gt; -0.002008592  1.026173699 
+#&gt; 
+#&gt; High regime:
+#&gt;   const.H    phiH.1 
+#&gt; 4.9224719 0.9787845 
+#&gt; 
+#&gt; Threshold:
+#&gt; -Variable: Z(t) = + (1) X(t)+ (0)X(t-1)
+#&gt; -Value: 49.93
+#&gt; Proportion of points in low regime: 79.74%    High regime: 20.26% 
+#&gt; 
+#&gt; Residuals:
+#&gt;         Min          1Q      Median          3Q         Max 
+#&gt; -22.7005989  -0.7170736  -0.0014706   0.4991115  19.1291281 
+#&gt; 
+#&gt; Fit:
+#&gt; residuals variance = 16.9,  AIC = 657, MAPE = 8.001%
+#&gt; 
+#&gt; Coefficient(s):
+#&gt; 
+#&gt;           Estimate  Std. Error  t value Pr(&gt;|t|)    
+#&gt; const.L -0.0020086   0.4190008  -0.0048  0.99618    
+#&gt; phiL.1   1.0261737   0.0245249  41.8421  &lt; 2e-16 ***
+#&gt; const.H  4.9224719   1.9252131   2.5568  0.01122 *  
+#&gt; phiH.1   0.9787845   0.0166682  58.7215  &lt; 2e-16 ***
+#&gt; ---
+#&gt; Signif. codes:  
+#&gt; 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Threshold
+#&gt; Variable: Z(t) = + (1) X(t) + (0) X(t-1)
+#&gt; 
+#&gt; Value: 49.93</code></pre>
+</div>
+<div id="star-ejemplo" class="section level3" number="12.1.2">
+<h3>
+<span class="header-section-number">12.1.2</span> STAR Ejemplo<a class="anchor" aria-label="anchor" href="#star-ejemplo"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">star</span> <span class="op">&lt;-</span> <span class="fu">star</span><span class="op">(</span><span class="va">price_amazn_ts</span>, m<span class="op">=</span><span class="fl">2</span>, noRegimes<span class="op">=</span><span class="fl">2</span>, d <span class="op">=</span> <span class="fl">1</span>, trace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Using default threshold variable: thDelay=0</span></span>
+<span><span class="co">#&gt; Testing linearity...   p-Value =  3.966884e-10 </span></span>
+<span><span class="co">#&gt; The series is nonlinear. Incremental building procedure:</span></span>
+<span><span class="co">#&gt; Building a 2 regime STAR.</span></span>
+<span><span class="co">#&gt; Using default threshold variable: thDelay=0</span></span>
+<span><span class="co">#&gt; Performing grid search for starting values...</span></span>
+<span><span class="co">#&gt; Starting values fixed: gamma =  100 , th =  88.33759 ; SSE =  3795.842 </span></span>
+<span><span class="co">#&gt; Grid search selected lower/upper bound gamma (was:  1 100 ]). </span></span>
+<span><span class="co">#&gt;                    Might try to widen bound with arg: 'starting.control=list(gammaInt=c(1,200))'</span></span>
+<span><span class="co">#&gt; Optimization algorithm converged</span></span>
+<span><span class="co">#&gt; Optimized values fixed for regime 2  : gamma =  100 , th =  88.33716 ; SSE =  3795.842 </span></span>
+<span><span class="co">#&gt; Finished building a MRSTAR with 2 regimes</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">star</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Non linear autoregressive model</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multiple regime STAR model</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Regime  1 :</span></span>
+<span><span class="co">#&gt;     Linear parameters: -0.179361, 0.8515913, 0.2003287 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Regime  2 :</span></span>
+<span><span class="co">#&gt;     Linear parameters: 0.9058675, 0.1825174, -0.2279061 </span></span>
+<span><span class="co">#&gt;     Non-linear parameters:</span></span>
+<span><span class="co">#&gt; 100.0000006, 88.3371573</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;          Min           1Q       Median           3Q </span></span>
+<span><span class="co">#&gt; -21.30360652  -0.79297830   0.08150576   0.50008703 </span></span>
+<span><span class="co">#&gt;          Max </span></span>
+<span><span class="co">#&gt;  19.07138218 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Fit:</span></span>
+<span><span class="co">#&gt; residuals variance = 16.58,  AIC = 659, MAPE = 8.584%</span></span></code></pre></div>
+</div>
 </div>
 <div id="pruebas-de-detección-lineal." class="section level2" number="12.2">
 <h2>
@@ -112,6 +269,27 @@ y_t = \left\lbrace
         F(\hat{c})=n\left(\frac{\tilde{\sigma^2}-\hat{\sigma^2}}{\hat{\sigma^2}} \right)
     \end{equation}\]</span>
 Donde <span class="math inline">\(\tilde{\sigma^2}\)</span> es un estimado de la varianza residual. <span class="math inline">\(\tilde{\sigma^2}=\sum a_{t=1}^n\tilde{\varepsilon^2_t}\)</span> donde <span class="math inline">\(\tilde{\varepsilon^2_t}=y_t-\hat{\phi^{'}}x_t\)</span> y <span class="math inline">\(\hat{\sigma^2}=\sum a_{t=1}^n\hat{\varepsilon^2_t}(c)\)</span>.</p>
+<div id="ejemplo-5" class="section level4" number="12.2.1.1">
+<h4>
+<span class="header-section-number">12.2.1.1</span> Ejemplo<a class="anchor" aria-label="anchor" href="#ejemplo-5"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#1vs2 para indicar ARvsSETAR</span></span>
+<span><span class="fu">setarTest</span><span class="op">(</span></span>
+<span>      <span class="va">price_amazn_ts</span>,</span>
+<span>      m<span class="op">=</span><span class="fl">1</span>,</span>
+<span>      thDelay <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>      trim <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>      nboot <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>      seed <span class="op">=</span> <span class="fl">1234</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Test of linearity against setar(2) and setar(3)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;          Test Pval</span></span>
+<span><span class="co">#&gt; 1vs2 7.364584 0.57</span></span>
+<span><span class="co">#&gt; 1vs3 8.599106 0.97</span></span></code></pre></div>
+<p>Por tanto sabemos que no es lineal.</p>
+</div>
 </div>
 <div id="test-star" class="section level3" number="12.2.2">
 <h3>
@@ -217,6 +395,40 @@ se distribuye asintóticamente <span class="math inline">\(\chi^2\)</span> con e
 \hat{\epsilon_t^2}=\omega+\alpha_1\hat{\epsilon_{t-1}^2}+\dots+\alpha_p\hat{\epsilon_{t-p}^2}+u_t
 \end{equation}\]</span></p>
 <p>Por lo que donde los residuales <span class="math inline">\(\hat{\epsilon_t^2}\)</span> se obtienen del del modelo de media condicional de la serie de tiempo observada. Se distribuye <span class="math inline">\(\chi^2(q)\)</span>. Este test es equivalente a hacer uno para el GARCH(p,q)</p>
+<p><strong>En el capítulo anterior al hacer las simulaciones de Monte Carlo demostramos como nuestros estimadores son consistentes y, por consiguiente, se hace cierto test demostrando que no hay necesidad de cambiar de tener más de un régimen.</strong> Esto se puede ver en la Figura <a href="setar-star-linear-test.html#fig:cambgarch">12.1</a>.</p>
+<p>Con la matriz:</p>
+<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">kable</span><span class="op">(</span><span class="va">P.matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.9577</span>,<span class="fl">0.7307</span>,<span class="fl">0.0423</span>,<span class="fl">0.2693</span><span class="op">)</span>,<span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>, caption <span class="op">=</span> <span class="st">"Matriz de transicion GARCH"</span>, <span class="st">"html"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:unnamed-chunk-7">Table 11.1: </span>Matriz de transicion GARCH
+</caption>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.9577
+</td>
+<td style="text-align:right;">
+0.0423
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.7307
+</td>
+<td style="text-align:right;">
+0.2693
+</td>
+</tr>
+</tbody>
+</table></div>
+Y el plot de las transiciones:
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:cambgarch"></span>
+<img src="imagenes/rplot.jpg" alt="Cambios de régimen en el modelo GARCH" width="100%"><p class="caption">
+Figure 12.1: Cambios de régimen en el modelo GARCH
+</p>
+</div>
 
 </div>
 </div>
@@ -239,7 +451,12 @@ se distribuye asintóticamente <span class="math inline">\(\chi^2\)</span> con e
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#setar-star-linear-test"><span class="header-section-number">12</span> SETAR-STAR-LINEAR-TEST</a></li>
-<li><a class="nav-link" href="#setar-y-star"><span class="header-section-number">12.1</span> SETAR Y STAR</a></li>
+<li>
+<a class="nav-link" href="#setar-y-star"><span class="header-section-number">12.1</span> SETAR Y STAR</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#setar-ejemplo"><span class="header-section-number">12.1.1</span> SETAR EJEMPLO</a></li>
+<li><a class="nav-link" href="#star-ejemplo"><span class="header-section-number">12.1.2</span> STAR Ejemplo</a></li>
+</ul>
+</li>
 <li>
 <a class="nav-link" href="#pruebas-de-detecci%C3%B3n-lineal."><span class="header-section-number">12.2</span> Pruebas de detección lineal.</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#test-setar"><span class="header-section-number">12.2.1</span> Test SETAR</a></li>
@@ -265,7 +482,7 @@ se distribuye asintóticamente <span class="math inline">\(\chi^2\)</span> con e
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-11-17.</p>
+    <p>"<strong>Diplomado de Econometría Financiera</strong>" was written by Benjamin Oliva y Emiliano Pérez Caullieres. It was last built on 2022-11-22.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

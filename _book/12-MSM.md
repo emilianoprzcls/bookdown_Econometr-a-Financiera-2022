@@ -240,7 +240,7 @@ garch.amzn011
 #> 4    50     337.6    9.995e-45
 #> 
 #> 
-#> Elapsed time : 0.1644711
+#> Elapsed time : 0.1398311
 ```
 
 ### Cambio de Régimen

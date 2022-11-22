@@ -208,7 +208,7 @@ data3<-BatchGetSymbols(tickers = dt3,
 #>    tickers =AAPL
 #>    Downloading data for benchmark ticker
 #> ^GSPC | yahoo (1|1)
-#> AAPL | yahoo (1|1) - Got 100% of valid prices | OK!
+#> AAPL | yahoo (1|1) - Got 100% of valid prices | Mais contente que cusco de cozinheira!
 data_precio_AAPL<-data3$df.tickers
 colnames(data_precio_AAPL)
 #>  [1] "ticker"              "ref.date"           

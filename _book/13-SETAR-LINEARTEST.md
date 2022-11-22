@@ -39,6 +39,175 @@ SETAR(p) se ve así:
    y_t=(\phi_{0,1}+\phi_{1,1}y_{t-1}+\dots+\phi_{p_{1},1}y_{t-p_1})(1-G(y_t-1;\gamma,c)+ y_t=(\phi_{0,2}+\phi_{1,2}y_{t-1}+\dots+\phi_{p_{2},2}y_{t-p_2})(G(y_t-1;\gamma,c))
 \end{equation}
 
+### SETAR EJEMPLO
+
+
+```r
+#---------------------
+# Dependencias
+#---------------------
+
+#install.packages("pacman")
+#pacman nos permite cargar varias librerias en una sola línea
+library(pacman)
+pacman::p_load(tidyverse,BatchGetSymbols,ggplot2,lubridate,readxl,forecast,stats,stargazer,knitr,tseries,aTSA, TSA, rugarch, MSwM, MSGARCH, fGarch, ggpubr, knitr, MSGARCH, paletteer, MetBrewer, tsDyn, knitr)
+```
+
+
+```r
+#Primero determinamos el lapso de tiempo
+pd<-as.Date("2002/9/30") #primer fecha
+pd
+#> [1] "2002-09-30"
+#> [1] "2021-09-18"
+ld<- as.Date("2021/09/30")#última fecha
+ld
+#> [1] "2021-09-30"
+#Intervalos de tiempo
+int<-"monthly"
+
+#Datos a elegir
+dt<-c("AMZN")
+
+#Descargando los valores
+data1<- BatchGetSymbols(tickers = dt,
+                       first.date = pd,
+                       last.date = ld,
+                       freq.data = int,
+                       do.cache = FALSE,
+                       thresh.bad.data = 0)
+
+#Generando data frame con los valores
+data_precio_amzn<-data1$df.tickers
+colnames(data_precio_amzn)
+#>  [1] "ticker"              "ref.date"           
+#>  [3] "volume"              "price.open"         
+#>  [5] "price.high"          "price.low"          
+#>  [7] "price.close"         "price.adjusted"     
+#>  [9] "ret.adjusted.prices" "ret.closing.prices"
+```
+
+
+```r
+#original
+price_amazn_ts<-ts(data_precio_amzn$price.open, frequency = 12, start=c(2002,09))
+#logartimo
+lprice_amazn_ts<-ts(log(data_precio_amzn$price.open), frequency = 12,start=c(2002,09))
+#diferencias logaritmicas(cambio porcential)
+dlprice_amazn_ts<-ts(log(data_precio_amzn$price.open)-lag(log(data_precio_amzn$price.open),1), frequency = 12, start=c(2002,10))
+dlprice_amazn_ts<-na.omit(dlprice_amazn_ts)
+```
+
+
+```r
+selectSETAR(price_amazn_ts, m=1)
+#> Using maximum autoregressive order for low regime: mL = 1 
+#> Using maximum autoregressive order for high regime: mH = 1 
+#> Searching on 158 possible threshold values within regimes with sufficient ( 15% ) number of observations
+#> Searching on  158  combinations of thresholds ( 158 ), thDelay ( 1 ), mL ( 1 ) and MM ( 1 )
+```
+
+<img src="13-SETAR-LINEARTEST_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+
+```
+#> Results of the grid search for 1 threshold
+#>    thDelay mL mH      th pooled-AIC
+#> 1        0  1  1 15.6845   826.1945
+#> 2        0  1  1 15.6295   828.5923
+#> 3        0  1  1 15.2065   829.0579
+#> 4        0  1  1 15.3120   830.3599
+#> 5        0  1  1 13.9500   832.8452
+#> 6        0  1  1 15.6290   833.4052
+#> 7        0  1  1 14.2365   833.6059
+#> 8        0  1  1 13.4480   833.8387
+#> 9        0  1  1 15.1540   834.0295
+#> 10       0  1  1 21.5200   834.2624
+setar <- setar(price_amazn_ts, m=2, mL=1, MH=1, thDelay=0)
+#> Warning: Possible unit root in the low regime. Roots are:
+#> 0.9745
+summary(setar)
+#> 
+#> Non linear autoregressive model
+#> 
+#> SETAR model ( 2 regimes)
+#> Coefficients:
+#> Low regime:
+#>      const.L       phiL.1 
+#> -0.002008592  1.026173699 
+#> 
+#> High regime:
+#>   const.H    phiH.1 
+#> 4.9224719 0.9787845 
+#> 
+#> Threshold:
+#> -Variable: Z(t) = + (1) X(t)+ (0)X(t-1)
+#> -Value: 49.93
+#> Proportion of points in low regime: 79.74% 	 High regime: 20.26% 
+#> 
+#> Residuals:
+#>         Min          1Q      Median          3Q         Max 
+#> -22.7005989  -0.7170736  -0.0014706   0.4991115  19.1291281 
+#> 
+#> Fit:
+#> residuals variance = 16.9,  AIC = 657, MAPE = 8.001%
+#> 
+#> Coefficient(s):
+#> 
+#>           Estimate  Std. Error  t value Pr(>|t|)    
+#> const.L -0.0020086   0.4190008  -0.0048  0.99618    
+#> phiL.1   1.0261737   0.0245249  41.8421  < 2e-16 ***
+#> const.H  4.9224719   1.9252131   2.5568  0.01122 *  
+#> phiH.1   0.9787845   0.0166682  58.7215  < 2e-16 ***
+#> ---
+#> Signif. codes:  
+#> 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> 
+#> Threshold
+#> Variable: Z(t) = + (1) X(t) + (0) X(t-1)
+#> 
+#> Value: 49.93
+```
+
+### STAR Ejemplo
+
+```r
+star <- star(price_amazn_ts, m=2, noRegimes=2, d = 1, trace=TRUE)
+#> Using default threshold variable: thDelay=0
+#> Testing linearity...   p-Value =  3.966884e-10 
+#> The series is nonlinear. Incremental building procedure:
+#> Building a 2 regime STAR.
+#> Using default threshold variable: thDelay=0
+#> Performing grid search for starting values...
+#> Starting values fixed: gamma =  100 , th =  88.33759 ; SSE =  3795.842 
+#> Grid search selected lower/upper bound gamma (was:  1 100 ]). 
+#> 					  Might try to widen bound with arg: 'starting.control=list(gammaInt=c(1,200))'
+#> Optimization algorithm converged
+#> Optimized values fixed for regime 2  : gamma =  100 , th =  88.33716 ; SSE =  3795.842 
+#> Finished building a MRSTAR with 2 regimes
+summary(star)
+#> 
+#> Non linear autoregressive model
+#> 
+#> Multiple regime STAR model
+#> 
+#> Regime  1 :
+#>     Linear parameters: -0.179361, 0.8515913, 0.2003287 
+#> 
+#> Regime  2 :
+#>     Linear parameters: 0.9058675, 0.1825174, -0.2279061 
+#>     Non-linear parameters:
+#> 100.0000006, 88.3371573
+#> 
+#> Residuals:
+#>          Min           1Q       Median           3Q 
+#> -21.30360652  -0.79297830   0.08150576   0.50008703 
+#>          Max 
+#>  19.07138218 
+#> 
+#> Fit:
+#> residuals variance = 16.58,  AIC = 659, MAPE = 8.584%
+```
+
 ## Pruebas de detección lineal.
 
 ### Test SETAR
@@ -48,6 +217,28 @@ Concretamente, utilizamos los estimados del modelo SETAR para definir F que comp
         F(\hat{c})=n\left(\frac{\tilde{\sigma^2}-\hat{\sigma^2}}{\hat{\sigma^2}} \right)
     \end{equation}
 Donde $\tilde{\sigma^2}$ es un estimado de la varianza residual. $\tilde{\sigma^2}=\sum a_{t=1}^n\tilde{\varepsilon^2_t}$ donde $\tilde{\varepsilon^2_t}=y_t-\hat{\phi^{'}}x_t$ y $\hat{\sigma^2}=\sum a_{t=1}^n\hat{\varepsilon^2_t}(c)$.
+
+#### Ejemplo
+
+```r
+#1vs2 para indicar ARvsSETAR
+setarTest(
+      price_amazn_ts,
+      m=1,
+      thDelay = 0,
+      trim = 0.1,
+      nboot = 100,
+      seed = 1234
+)
+#> Test of linearity against setar(2) and setar(3)
+#> 
+#>          Test Pval
+#> 1vs2 7.364584 0.57
+#> 1vs3 8.599106 0.97
+```
+
+Por tanto sabemos que no es lineal.
+
 
 ### Test STAR
 
@@ -158,3 +349,32 @@ se distribuye asintóticamente $\chi^2$ con el número de variables en $z_t$.
 \end{equation}
     
 Por lo que donde los residuales $\hat{\epsilon_t^2}$ se obtienen del  del modelo de media condicional de la serie de tiempo observada. Se distribuye $\chi^2(q)$. Este test es equivalente a hacer uno para el GARCH(p,q)
+
+__En el capítulo anterior al hacer las simulaciones de Monte Carlo demostramos como nuestros estimadores son consistentes y, por consiguiente, se hace cierto test demostrando que no hay necesidad de cambiar de tener más de un régimen.__ Esto se puede ver en la Figura \@ref(fig:cambgarch).
+
+ Con la matriz:
+
+
+```r
+kable(P.matrix <- matrix(c(0.9577,0.7307,0.0423,0.2693),2,2), caption = "Matriz de transicion GARCH", "html")
+```
+
+<table>
+<caption>(\#tab:unnamed-chunk-7)Matriz de transicion GARCH</caption>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 0.9577 </td>
+   <td style="text-align:right;"> 0.0423 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.7307 </td>
+   <td style="text-align:right;"> 0.2693 </td>
+  </tr>
+</tbody>
+</table>
+
+Y el plot de las transiciones:
+<div class="figure" style="text-align: center">
+<img src="imagenes/rplot.jpg" alt="Cambios de régimen en el modelo GARCH" width="100%" />
+<p class="caption">(\#fig:cambgarch)Cambios de régimen en el modelo GARCH</p>
+</div>
